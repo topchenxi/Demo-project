@@ -1,0 +1,15 @@
+
+// left
+$left-24 = (24/40)rem
+
+// right
+$right-24 = (24/40)rem
+
+// border-color
+$color-border = rgba(0,0,0,0.12)
+
+// font-color
+$fs-color-active = #FF0030
+
+//cell-height
+$cell-height = (96/40)rem

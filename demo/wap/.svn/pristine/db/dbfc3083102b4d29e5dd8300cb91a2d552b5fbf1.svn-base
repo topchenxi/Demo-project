@@ -1,0 +1,19 @@
+ 
+
+upload-btn($bordertype=true)
+ height: 2.4rem
+ width: 100%
+ display: block
+ font-size: .8rem;
+ color: #0066cc
+ letter-spacing: -0.81px;
+ line-height: 2.4rem;
+ text-align: center
+ background: #fff
+ if $bordertype
+   position: fixed
+   z-index: 2000
+   bottom: 0
+   border-1px-t(rgba(0, 0, 0, .12))
+ else
+   margin-top: .6rem  
