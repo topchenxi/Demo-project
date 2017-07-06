@@ -1,0 +1,50 @@
+
+
+mecell($icon, $border=true)
+ display: block
+ height: 2.4rem  
+ background:#fff url($icon) no-repeat .6rem center
+ background-size: 1.2rem 1.2rem
+ font-size: .8rem;
+ color: rgba(0,0,0,0.87);
+ letter-spacing: -0.81px;
+ line-height: 2.4rem;
+ text-indent: 2.4rem;
+ position relative
+ if $border
+  border-1px-b(rgba(0, 0, 0, .12))
+ if true 
+  .arrow-r
+   width: .8rem
+   height: 1.2rem
+   display: block
+   background: url("./images/icon_list_arrow.png") no-repeat
+   background-size: .8rem 1.2rem
+   position: absolute
+   left: 16.8rem
+   top: 50%
+   transform: translateY(-50%)
+
+
+
+no-result($icon)
+ background: url($icon) no-repeat center 3rem
+ background-size: 5.05rem 3.1rem
+ height 20rem
+ span
+  display block
+  font-size: .7rem;
+  color: rgba(0,0,0,0.26);
+  letter-spacing: -0.61px;
+  line-height: 1rem
+  padding-top: 7rem
+  text-align center
+   
+status($color)  
+ font-size: .7rem
+ color:$color
+ letter-spacing: -0.61px
+ position:absolute
+ left: 50%
+ transform: translateX(-50%)
+ 

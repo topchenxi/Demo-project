@@ -1,0 +1,86 @@
+
+
+border-1px-t($color, pos-exist = true)
+ if !pos-exist
+    position: relative
+ if true
+    &:after
+     display: block
+     width: 100%
+     position: absolute
+     top: 0
+     left: 0
+     border-top: 1px solid $color
+     content: ""
+
+border-1px-r($color, pos-exist = true)
+ if !pos-exist
+     position: relative
+ if true   
+    &:after
+     display: block
+     height: 100%
+     position: absolute
+     top: 0
+     right: 0
+     border-left: 1px solid $color
+     content: ""
+
+border-1px-b($color, pos-exist = true)
+ if !pos-exist
+    position relative
+ if true
+    &:after
+     display: block
+     width: 100%
+     position: absolute
+     bottom: 0
+     left: 0
+     border-top: 1px solid $color
+     content: ""
+
+border-1px-l($color, pos-exist = true, $height=100%, $top=0)
+ if !pos-exist
+    position: relative
+ if !$top   
+    &:after
+     display: block
+     position: absolute
+     top: $top
+     left: 0
+     border-left: 1px solid $color
+     content: ""
+     height: $height  
+ else
+    &:after
+     display: block
+     position: absolute
+     top: $top
+     left: 0
+     border-left: 1px solid $color
+     content: ""
+     transform: translateY(-50%)
+     height: $height 
+
+
+border-1px-tb($color, pos-exist = true)
+ if !pos-exist
+     position: relative
+ if true
+    &:after
+     display: block
+     width: 100%
+     position: absolute
+     bottom: 0
+     left: 0
+     border-top: 1px solid $color
+     content: ""
+    &:before
+     display: block
+     width: 100%
+     position: absolute
+     top: 0
+     left: 0
+     border-top: 1px solid $color
+     content: ""
+
