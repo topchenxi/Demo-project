@@ -74,7 +74,8 @@ export default {
         let params = {
           selectType: 0,
           sign: this.accountData.sign,
-          userId: this.accountData.userId
+          userId: this.accountData.userId,
+          appFlag:2
         };
        this.axios({
           method: "post",
@@ -89,7 +90,8 @@ export default {
         let params = {
           selectType: 1,
           sign: this.accountData.sign,
-          userId: this.accountData.userId
+          userId: this.accountData.userId,
+          appFlag:2
         };
 
         this.axios({

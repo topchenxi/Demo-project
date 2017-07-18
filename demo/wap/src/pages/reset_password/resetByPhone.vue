@@ -79,7 +79,8 @@ export default {
           resetCode: this.accountData.resetCode,
           userId: this.accountData.userId,
           newPassword:this.newPassword,
-          newPasswordConfirm: this.confirmPassword
+          newPasswordConfirm: this.confirmPassword,
+          appFlag:2
         };
          this.axios({   
           method: "post",

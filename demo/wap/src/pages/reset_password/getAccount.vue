@@ -46,7 +46,14 @@ export default {
 
     //  拉取账号
         fetchAccount() {
-          this.axios.get("/user/resetPasswordByAccount.cf?username=" + this.account)
+          this.axios({
+              method:'get',
+              url:'/user/resetPasswordByAccount.cf',
+              params:{
+                  username:this.account,
+                  appFlag:2
+              }
+          })
           .then(res => {
             if (res.data.status==="success") {
             this.$router.push({name:"accountChoose", params:{"accountData": res.data.data}});
