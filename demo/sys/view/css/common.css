@@ -1,0 +1,489 @@
+body{
+	background-color: #F3F0E9;
+	font-family: '微软雅黑';
+}
+
+.header{
+	width: 100%;
+	height: 60px;
+	background-color: #FFF;
+}
+
+.header-center{
+	width: 1200px;
+	height: 60px;
+	margin: 0 auto;
+}
+
+.aTag{
+	cursor: pointer;
+	color: #FFF;
+}
+
+.marLeft10{
+	margin-left: 10px;
+}
+ul{padding:0;}
+ul li{
+	list-style-type: none;
+	font-size: 15px;
+}
+/*li{
+	padding: 0px;
+	margin: 0px;
+}*/
+
+/*sidebar*/
+.gly{
+	margin: 14px;
+    font-size: 15px;
+    color:#FFF;
+    text-align: center;
+    line-height: 30px;
+    width: 32px;
+    height: 32px;
+    border:2px solid #FFF;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    float: left;
+}
+
+.arrow{
+	width: 20px;
+	height: 60px;
+	margin: 0 14px;
+	color: #FFF;
+	line-height: 60px;
+	float: right;
+}
+
+.arrow span{
+	cursor: pointer;
+}
+
+.sidebar{
+	width: 21.66666%;
+	background-color:#E04D2C;
+	height: 60px;
+	clear:both;
+	float: left;
+}
+
+.top{
+	padding-top:10px;
+	padding-left: 20px; 
+	height: 60px;
+	/*width: 78.33333%;
+	float: left;*/
+}
+
+.logo{
+	width: 190px;
+	height: 35px;
+	background: url(../images/logo.png) 0 5px no-repeat;
+	float: left;
+	padding-top:5px;
+	display: inline;
+}
+
+.user{
+	float: right;
+	margin-right: 40px;
+	display: inline;
+	font-size: 18px;
+}
+
+.exit{
+	font-size: 18px;
+	float: right;
+}
+.exit a:hover,.exit .glyphicon:hover{
+	color:#e04d2c;
+}
+.exit a,
+.user a{
+	color: #000;
+	text-decoration: none;
+	line-height: 40px;
+}
+.user img{
+	margin-right:10px;
+}
+.nav{
+	padding-top: 10px;
+	min-height: 920px;
+	background-color: #DD5E42;
+	color: #FFF;
+}
+.nav a{
+	color:#fff;
+}
+
+#ul .nav-hd{
+	padding-left:40px;
+	padding-bottom: 10px;
+	padding-top:10px;
+}
+#ul li i{
+	font-style: normal;
+	font-size: 12px;
+	display: inline-block;
+	width:16px;
+	height: 16px;
+	text-align: center;;
+	color:#dd5e42;
+	background:#fff;
+
+}
+#ul .active .glyphicon{
+
+	  right:0;
+}
+#ul li .glyphicon{
+		top:0;
+	  right:-1px;
+}
+#ul .active .glyphicon:before{
+	  content: "\2212";
+}
+#ul li .glyphicon:before{
+	  content: "\2b";
+}
+#ul li ul{display: none;}
+#ul .active ul,.active{
+	display: block;
+	background-color: #D7411F;
+}
+#ul li ul li{
+	padding-left: 60px;
+	padding-bottom:20px;
+}
+#ul li:hover{
+	background-color: #D7411F;
+}
+#ul >li>ul>li:hover{
+	cursor: pointer;
+	background:url(../images/navHoverBg.png) right 0 no-repeat;
+}
+.container-list{
+	margin-top:0;
+	border-top: 20px solid rgb(243,240,233);
+}
+/*centent-center*/
+.search{
+	height: 40px;
+	width: 100%;
+	background-color:rgb(243,240,233);
+	margin:0 auto;
+}
+.search input:focus,.search select:focus,.search input:active,.search select:active{
+	outline: none;
+	border-radius: 0;
+}
+.search-text{
+	display: inline-block;
+	width: 496px;
+	height: 40px;
+	float: left;
+}
+
+.search-text input{
+	width: 485px;
+	height: 40px;
+	padding-left:10px;
+	border: 3px solid #E04D2C;
+}
+.search-text input:focus{
+	outline: none;
+}
+.search-but{
+	display: inline-block;
+	width: 85px;
+	height: 40px;
+	background-color: #E04D2C;
+	line-height: 26px;
+	text-align: center;
+	color: #FFF;
+	font-size: 16px;
+	margin-right: -5px;
+	float: left;
+	border-radius: 0;
+}
+.search-from-to{
+	float:left;
+	display: inline-block;;
+	width:30px;
+	height:40px;
+	line-height: 40px;
+	text-align: center;
+}
+/*slidebar-sellerReview.html*/
+.search-sellerReview-text
+{
+	display: inline-block;
+  width: 53.88888888888889%;
+  height: 40px;
+  float: left;
+}
+.search-sellerReview-text input{
+	width: 100%;
+  height: 40px;
+  padding-left: 10px;
+  border: 3px solid #E04D2C;
+  border-radius: 0;
+}
+.search-date-from,.search-date-to{
+	float:left;
+	width:142px;
+	height:40px;
+	background:#fff;
+	border:1px solid #e7e5e6;
+}
+.search-date-from{
+	margin-left:20px;
+}
+.search-date-from input,.search-date-to input{
+	float:left;
+	width:100px;
+	height:38px;
+	*line-height: 38px;
+	padding-left:10px;
+	border:0;
+	outline: 0;
+}
+.search-date-from .glyphicon,.search-date-to .glyphicon{
+ float:left;
+ width:40px;
+ height:40px;
+ top:0;
+ color:#e04c30;
+ line-height: 40px;
+ text-align: center;
+ cursor: pointer;
+}
+/*sidebar-goodList.html*/
+.search-goodsList-class,.search-goodsList-putaway{
+	float:left;
+	height:40px;
+	/*padding-left:10px;*/
+	margin:0;
+	line-height: 40px;
+	background:#fff;
+	border:1px solid #e7e7e5;
+}
+.search-goodsList-class{
+	width:146px;
+}
+.search-goodsList-putaway{
+	width:91px;
+  margin-left:20px;
+}
+.search-goodsList-class p{
+	width:88px;
+	float:left;
+}
+.search-goodsList-putaway p{
+	width:47px;
+	float:left;
+}
+.search-goodsList-text
+{
+	margin-left:20px;
+	width:59.66666666666667%;
+}
+.search-goodsList-class select{
+	width:146px;
+	height:40px;
+	border:0;
+	margin:0;
+	padding:0;
+	outline: 0;
+}
+.search-goodsList-class input{
+	float:left;
+	width:88px;
+	height:38px;
+	border:0;
+	padding:0;
+	margin:0;
+	background:#fff;
+}
+.search-goodsList-class-Btn{
+	float:left;
+	width:45px;
+	height:38px;
+	background:url(../images/goodsList-ICO.jpg);
+	cursor: pointer;
+}
+.search-goodsList-putaway .glyphicon{
+	display: inline-block;
+	width:32px;
+	height:38px;
+	top:0;
+	line-height: 38px;
+	text-align: center;
+	cursor: pointer;
+}
+
+		
+.search-goodsList-text input{
+	float:left;
+	width:72%;
+	height:40px;
+	padding:8px 0;
+	border-left:0;
+}
+.search-goodsList-text select{
+	float:left;
+	width:150px;
+	height:40px;
+	padding-left:10px;
+	line-height: 37px;
+	background:#fff;
+	border: 3px solid #E04D2C;
+	border-right:0;
+	border-radius: 0;
+}
+.search-goodsList-text span{
+	float:left;
+}
+.search-goodsList-text .glyphicon{
+	width:28px;
+	height:20px;
+	color:#c2c2c2;
+	margin:7px 0 7px;
+	line-height: 20px;
+	padding-left:7px;
+	border-right:1px solid #cacaca;
+  cursor: pointer;
+}
+.content-center{
+	width: 1200px;
+	min-height: 990px;
+	margin: 0 auto;
+}
+/*sidebar-buyerList.html*/
+.search-buyerList-text{
+	width:55.11111111111111%;
+	margin:0;
+}
+.search-buyerList-text input{
+	float:left;
+	width: 100%;
+  height: 40px;
+  padding-left: 10px;
+  border: 3px solid #E04D2C;
+  border-radius: 0;
+}
+.search-buyerlist-country,.search-buyerList-from{
+ 	float:left;
+	width:142px;
+	height:40px;
+	line-height: 40px;
+	background:#fff;
+	border:1px solid #e7e5e6;
+}
+.search-buyerlist-country,.search-buyerList-from{
+	padding-left:10px;
+	margin-left:20px;
+}
+.search-buyerlist-country p,.search-buyerList-from p
+{
+  width:100px;
+  line-height: 40px;
+  float:left;
+}
+.search-buyerlist-country .glyphicon,.search-buyerList-from .glyphicon
+{
+	top:0;
+	float:left;
+  width:30px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+.content{
+	margin-top: 20px;
+	min-height: 770px;
+	padding-left: 21.6667%;
+}
+/*siderbar-sellerList.html*/
+.search-sellerList-text{
+	display: inline-block;
+  width: 90.44444444444444%;
+  height: 40px;
+  float: left;
+}
+.search-sellerList-text input{
+	float:left;
+	width:83.921376%;
+	padding-left:10px;
+	border-left:0;
+}
+.search-sellerList-text select{
+	float:left;
+	width:130px;
+	height:40px;
+	padding-left:10px;
+	line-height: 37px;
+	background:#fff;
+	border: 3px solid #E04D2C;
+	border-right:0;
+	outline-right:1px solid #000;
+	border-radius: 0;
+}
+.search-sellerList-text select:focus{
+	outline: none;
+}
+.search-sellerList-text span{
+	float:left;
+}
+.search-sellerList-text .glyphicon{
+	width:28px;
+	height:20px;
+	color:#c2c2c2;
+	margin:7px 0 7px;
+	line-height: 20px;
+	padding-left:7px;
+	border-right:1px solid #cacaca;
+	cursor: pointer;
+
+}
+.content-content{
+	min-height: 770px;
+	width: 95.745%;
+	margin: 0 auto;
+	background-color: #FFF;
+	margin-top: 20px;
+}
+
+/*footer*/
+.footer{
+	margin-top: 20px;
+	padding-left: 21.6667%;
+	height: 50px;
+	text-align: center;
+	color: #ACACAC;
+	font-size: 13px;
+	line-height: 50px;
+}
+
+.footer-content{
+	width: 95.745%;
+	margin: 0 auto;
+	height: 50px;
+	background-color: #FFF;
+}
+
+.midcontainer{
+    width: 1200px !important;
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+
+.leftside{
+	width: 21.66666%;
+	padding: 0px;
+}
