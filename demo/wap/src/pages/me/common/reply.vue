@@ -113,7 +113,8 @@ export default {
         content:this.replyContent,
         messageId:this.$route.params.messageId,
         filePath:this.uploadImg.join(","),
-        fileName:this.fileName.join(",")
+        fileName:this.fileName.join(","),
+        appFlag:2
       };
 
                     this.axios({
@@ -151,7 +152,8 @@ export default {
         receiverId:this.$route.params.receiverId,
         content:this.replyContent,
         filePath:this.uploadImg.join(","),
-        fileName:this.fileName.join(",")
+        fileName:this.fileName.join(","),
+        appFlag:2
       };
 
         this.axios({
@@ -203,6 +205,7 @@ export default {
           // let blob = new Blob([this.result]);
           let fd = new FormData();
           fd.append("file", imgFiles[0]);
+          fd.append("appFlag", 2);
           _this.axios({
             method: "post",
             url: "/fdfsUpload/uploadImage.cf?",

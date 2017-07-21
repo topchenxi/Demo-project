@@ -86,7 +86,15 @@ export default {
               this.isLoading = true;
             if (this.page < this.maxPage) {
                 Indicator.open("Loading...");
-            this.axios.get("/message/inquirys.cf?page="+(++this.page)+"&token=" + this.localToken)
+            this.axios({
+                method:'get',
+                url:'/message/inquirys.cf',
+                params:{
+                    page:++this.page,
+                    token:this.localToken,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
                     for (let value of res.data.data) {
                           this.inquiryList.push(value);
@@ -110,7 +118,15 @@ export default {
         this.isLoadDone = false;
         Indicator.open("Loading...");
         this.localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
-        this.axios.get("/message/inquirys.cf?page=1&token=" + this.localToken)
+        this.axios({
+            method:'get',
+            url:'/message/inquirys.cf',
+            params:{
+                page:1,
+                token:this.localToken,
+                appFlag:2
+            }
+        })
             .then((res) => {
                 this.inquiryList = res.data.data;
                 this.maxPage = res.data.page.maxPage;

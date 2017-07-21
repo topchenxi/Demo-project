@@ -6,6 +6,7 @@ export const IMG_URL = String(window.location).indexOf("m.e-cantonfair.com") > -
 
 // 跳转应用中心链接
 export const appLink = {
-    android: "https://play.google.com/store/apps/details?id=com.cantonfair",
+    // 987 
+    android: "https://play.google.com/store/apps/details?id=com.cantonfair&referrer=utm_source=h5",
     ios: "https://itunes.apple.com/app/apple-store/id628980015?pt=1984774&ct=h5&mt=8"
 };

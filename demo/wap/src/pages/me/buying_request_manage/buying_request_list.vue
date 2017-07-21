@@ -62,7 +62,15 @@ export default {
         loadMoreHere() {
             this.isLoading = true;
             Indicator.open("Loading...");
-            this.axios.get(("/buyer/buyingRequest/list.cf?page=" + (++this.page) + "&token=" + this.localToken))
+            this.axios({
+                method:'get',
+                url:'/buyer/buyingRequest/list.cf',
+                params:{
+                    page:++this.page,
+                    token:this.localToken,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
 
                     if (!res.data.data.length) {
@@ -89,7 +97,14 @@ export default {
             this.isLoadDone = false;
             Indicator.open("Loading...");
             this.localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
-            this.axios.get("/buyer/buyingRequest/list.cf?token=" + this.localToken)
+            this.axios({
+                method:'get',
+                url:'/buyer/buyingRequest/list.cf',
+                params:{
+                    token:this.localToken,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
                     Indicator.close();
                     this.buyingRequestList = res.data.data;

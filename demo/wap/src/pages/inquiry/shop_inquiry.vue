@@ -132,7 +132,7 @@ export default {
                     let fd = new FormData();
 
                     fd.append("fieldname", blob);
-
+                    fd.append("appFlag", 2);
                     _this.axios({
 
                         method: "post",
@@ -206,7 +206,7 @@ export default {
                 receiverId: this.userId,
                 subject: this.inquiryInputTitle, // 主题
                 token: localToken,
-                appFlag: 1
+                appFlag: 2
             };
 
             this.uploadImg ? params.filePath = this.uploadImg.join(",") : "";

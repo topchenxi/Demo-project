@@ -151,7 +151,14 @@ export default {
         },
         // 拉取商品信息的方法
         fetchProductInfo(_productId) {
-            this.axios.get(`/search/toProductDetail.cf?productId=${_productId}`)
+            this.axios({
+                method:'get',
+                url:'/search/toProductDetail.cf',
+                params:{
+                    appFlag:2,
+                    productId:_productId
+                }
+            })
                 .then((res) => {
                     let product = res.data.data.product;
                     let shopInfo = res.data.data.shopInfo;
@@ -201,7 +208,7 @@ export default {
                 let fd = new FormData();
 
                 fd.append("file", imgFiles[0]);
-
+                fd.append('appFlag',2);
                 _this.axios({
                     method: "post",
                     url: "/fdfsUpload/uploadImage.cf?",

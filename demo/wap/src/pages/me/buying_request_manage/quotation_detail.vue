@@ -62,7 +62,14 @@ export default {
         "c-header": header
     },
     created() {
-           this.axios.get("/buyer/quotation/detail.cf?quoteId=" + this.$route.params.quotedId)
+           this.axios({
+               method:'get',
+               url:'/buyer/quotation/detail.cf',
+               params:{
+                   quoteId:this.$route.params.quotedId,
+                   appFlag:2
+               }
+           })
             .then((res) => {  
               this.quoteDetail = Object.assign({}, this.quoteDetail, res.data.data.quoteDetail);
         }); 

@@ -296,10 +296,26 @@ export default {
             Indicator.open("Loading...");
             let _this = this;
             let getProducts = function () {
-                return _this.axios.get("/search/products.cf?keyword=" + _this.$store.state.keyword + "&page=1");
+                return _this.axios({
+                    method:'get',
+                    url:'/search/products.cf',
+                    params:{
+                        keyword:_this.$store.state.keyword,
+                        page:1,
+                        appFlag:2
+                    }
+                })
             };
             let getSuppliers = function () {
-                return _this.axios.get("/search/shops.cf?keyword=" + _this.$store.state.keyword + "&page=1");
+                return _this.axios({
+                    method:'get',
+                    url:'/search/shops.cf',
+                    params:{
+                        keyword:_this.$store.state.keyword,
+                        page:1,
+                        appFlag:2
+                    }
+                })
             };
 
             this.$refs.focus.blur();
@@ -336,10 +352,17 @@ export default {
             this.isLoading = false;
             switch (this.searchType) {
                 case 1:
-                    let searchPro = `/search/products.cf?keyword=${this.$store.state.keyword}&page=${++this.proPage}`;
                     if (this.proPage <= this.proMaxPage) {
                         this.isBtnLoading = true;
-                        this.axios.get(searchPro)
+                        this.axios({
+                            method:'get',
+                            url:'/search/products.cf',
+                            params:{
+                                keyword:this.$store.state.keyword,
+                                page:++this.proPage,
+                                appFlag:2
+                            }
+                        })
                             .then((res) => {
                                 this.$nextTick(() => {
                                    this.isBtnLoading = false;
@@ -361,10 +384,17 @@ export default {
                     }
                     break;
                 case 2:
-                    let searchSup = `/search/shops.cf?keyword=${this.$store.state.keyword}&page=${++this.supPage}`;
                     if (this.supPage <= this.supMaxPage) {
                         this.isBtnLoading = true;
-                        this.axios.get(searchSup)
+                        this.axios({
+                            method:'get',
+                            url:'/search/shops.cf',
+                            params:{
+                                keyword:this.$store.state.keyword,
+                                page:++this.supPage,
+                                appFlag:2
+                            }
+                        })
                             .then((res) => {
                                 this.$nextTick(() => {
                                    this.isBtnLoading = false;

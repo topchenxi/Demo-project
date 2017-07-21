@@ -65,7 +65,14 @@ export default {
     // 获取属性列表
     getAttribute(_categoryId) {
       Indicator.open("Loading");
-      this.axios.get("/dict/categoryProperties.cf?lastCategoryId=" + _categoryId)
+      this.axios({
+        method:'get',
+        url:'/dict/categoryProperties.cf',
+        params:{
+          lastCategoryId:_categoryId,
+          appFlag:2
+        }
+      })
         .then((res) => {
           Indicator.close();
           
@@ -108,6 +115,7 @@ export default {
       requsetParams.procurementStr.productLastCategoryId = this.categoryId;
       requsetParams.token = localToken;
       requsetParams.procurementStr.procurementProductProperties = a;
+      requestParams.appFlag = 2;
       
       this.axios({
                     method: "post",

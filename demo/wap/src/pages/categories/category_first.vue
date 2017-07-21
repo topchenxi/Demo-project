@@ -46,7 +46,14 @@ export default {
             //    `/dict/category/search.cf?parentId=${0}`./api/categoriesData
             // ./api/categoriesData
             Indicator.open("Loadig...");
-            this.axios.get(`/dict/category/search.cf?parentId=${0}`)
+            this.axios({
+                method:'get',
+                url:'/dict/category/search.cf',
+                params:{
+                    parentId:0,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
                     Indicator.close();
                     this.categoryFirst.list = res.data.data;

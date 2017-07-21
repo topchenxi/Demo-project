@@ -69,7 +69,15 @@ export default {
             this.isLoading = true;
             if (this.page < this.maxPage) {
                 Indicator.open("Loading...");
-                this.axios.get("/search/products.cf?sellerId=" + this.sellerId + "&page=" + (++this.page))
+                this.axios({
+                    method:'get',
+                    url:'/search/products.cf',
+                    params:{
+                        sellerId:this.sellerId,
+                        page:++this.page,
+                        appFlag:2
+                    }
+                })
                     .then((res) => {
                         for (let value of res.data.data.productList) {
                             this.productsList.push(value);
@@ -92,7 +100,15 @@ export default {
             this.page = 1;
             this.isLoadDone = false;
             Indicator.open("Loading...");
-            this.axios.get("/search/products.cf?page=1&sellerId=" + this.sellerId)
+            this.axios({
+                method:'get',
+                url:'/search/products.cf',
+                params:{
+                    page:1,
+                    sellerId:this.sellerId,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
                     this.productsList = res.data.data.productList;
                     this.maxPage = res.data.page.maxPage;

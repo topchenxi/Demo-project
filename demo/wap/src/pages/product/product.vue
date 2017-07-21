@@ -126,7 +126,14 @@ export default {
         //  拉取商品详情数据
         fetchProductDetial(productId) {
             Indicator.open("Loading...");
-            this.axios.get(`/search/toProductDetail.cf?productId=${productId}`)
+            this.axios({
+                method:'get',
+                url:'/search/toProductDetail.cf',
+                params:{
+                    appFlag:2,
+                    productId:productId
+                }
+            })
                 .then((res) => {
                     this.$nextTick(() => {
                         this.detail = Object.assign({}, this.detail, res.data.data);
@@ -151,7 +158,17 @@ export default {
                         } catch (err) { }
 
 
-                        this.axios.get(`/shop/getBoothInfo.cf?searchType=1&sellerId=${product.sellerId}&fairNo=121&productId=${productId}`)
+                        this.axios({
+                            method:'get',
+                            url:'/shop/getBoothInfo.cf',
+                            params:{
+                                searchType:1,
+                                sellerId:product.sellerId,
+                                fairNo:121,
+                                productId:productId,
+                                appFlag:2
+                            }
+                        })
                             .then((res) => {
                                 Indicator.close();
                                 this.productBooth = res.data.data;

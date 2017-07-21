@@ -54,7 +54,14 @@ export default {
         // 获取二级类目
         fetchCategorySecond(categoryId) {
             Indicator.open("Loading");
-            this.axios.get(`/dict/category/search.cf?parentId=${categoryId}`)
+            this.axios({
+                method:'get',
+                url:'/dict/category/search.cf',
+                params:{
+                    parentId:categoryId,
+                    appFlag:2
+                }
+            })
 
                 .then((res) => {
                     this.$nextTick(() => {

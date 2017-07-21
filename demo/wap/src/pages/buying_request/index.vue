@@ -66,9 +66,7 @@
             <section class="c-upload-wrap-img f-clear">
                 <div v-for="(item, index) of uploadImg">
                     <img src="./images/icon_clean.png" @click="delImg(index)" class="c-upload-del-icon">
-    
                     <img :src="imgUrl+item" alt="" class="c-upload-img">
-    
                 </div>
             </section>
     
@@ -360,6 +358,7 @@ export default {
                 // let blob = new Blob([this.result]);
                 let fd = new FormData();
                 fd.append("file", imgFiles[0]);
+                fd.append('appFlag',2);
                 _this.axios({
                     method: "post",
                     url: "/fdfsUpload/uploadImage.cf?",

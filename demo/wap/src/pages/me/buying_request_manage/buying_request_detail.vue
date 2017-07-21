@@ -97,12 +97,28 @@ export default {
 
     // 获取采购需求详情
     let buyingRequestDetail = function () {
-      return _this.axios.get("/buyer/buyingRequest/detail.cf?procurementId=" + _this.$route.params.procurementId + "&token=" + localToken);
+      return _this.axios({
+        method:'get',
+        url:'/buyer/buyingRequest/detail.cf',
+        params:{
+          procurementId:_this.$route.params.procurementId,
+          token:localToken,
+          appFlag:2
+        }
+      })
     };
 
     //  报价列表
     let quotationList = function () {
-      return _this.axios.get("/buyer/buyingRequest/quotation/list.cf?procurementId=" + _this.$route.params.procurementId + "&token=" + localToken);
+      return _this.axios({
+        method:'get',
+        url:'/buyer/buyingRequest/quotation/list.cf',
+        params:{
+          procurementId:_this.$route.params.procurementId,
+          token:localToken,
+          appFlag:2
+        }
+      })
     };
 
     this.axios.all([buyingRequestDetail(), quotationList()])

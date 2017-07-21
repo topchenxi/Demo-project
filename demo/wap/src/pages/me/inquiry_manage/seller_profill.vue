@@ -61,7 +61,14 @@ export default {
     
     created() {
         // 获取数据
-        this.axios.get("/personProfile/seller/show.cf?userId=" + this.$route.params.userId)
+        this.axios({
+            method:'get',
+            url:'/personProfile/seller/show.cf',
+            params:{
+                userId:this.$route.params.userId,
+                appFlag:2
+            }
+        })
             .then((res) => {
                 this.sellerProfile = Object.assign({}, this.sellerProfile, res.data.data);
             });

@@ -229,10 +229,17 @@ export default {
             this.isLoading = true;
             switch (this.searchType) {
                 case 1:
-                    let searchPro = `/search/products.cf?catId=${this.$route.params.categoryId}&page=${++this.proPage}`;
                     if (this.proPage <= this.proMaxPage) {
                        this.isBtnLoading = true;
-                        this.axios.get(searchPro)
+                        this.axios({
+                            method:'get',
+                            url:'/search/products.cf',
+                            params:{
+                                catId:this.$route.params.categoryId,
+                                page:++this.proPage,
+                                appFlag:2
+                            }
+                        })
                             .then((res) => {
                                 this.$nextTick(() => {
                                       this.isBtnLoading = false;
@@ -254,11 +261,18 @@ export default {
                     }
                     break;
                 case 2:
-                    let searchSup = `/search/shopCategories.cf?categoryIds=${this.$route.params.categoryId}&page=${++this.supPage}`;
-                    //    this.supMaxPage
                     if (this.supPage <= this.supMaxPage) {
                          this.isBtnLoading = true;
-                        this.axios.get(searchSup)
+                        this.axios({
+                            method:'get',
+                            url:'/search/shopCategories.cf',
+                            params:{
+                                categoryIds:this.$route.params.categoryId,
+                                page:++this.supPage,
+                                appFlag:2
+                            }
+
+                        })
                             .then((res) => {
                                 this.$nextTick(() => {
                                    this.isBtnLoading = false;
@@ -288,11 +302,27 @@ export default {
             this.categoryTitle = this.$route.params.categoryEname;
             let getProducts = function () {
 
-                return _this.axios.get("/search/products.cf?catId=" + categoryId + "&page=1");
+                return _this.axios({
+                    method:'get',
+                    url:'/search/products.cf',
+                    params:{
+                        catId:categoryId,
+                        page:1,
+                        appFlag:2
+                    }
+                })
             };
             let getSuppliers = function () {
 
-                return _this.axios.get("/search/shopCategories.cf?categoryIds=" + categoryId + "&page=1");
+                return _this.axios({
+                    method:'get',
+                    url:'/search/shopCategories.cf',
+                    params:{
+                        categoryIds:categoryId,
+                        page:1,
+                        appFlag:2
+                    }
+                })
             };
 
             this.axios.all([getProducts(), getSuppliers()])

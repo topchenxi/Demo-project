@@ -29,7 +29,14 @@ export default {
      },
     //  获取类目
      created() {
-        this.axios.get("/dict/suggestCategory2.cf?prefix=" + this.$route.params.productName)
+        this.axios({
+            method:'get',
+            url:'/dict/suggestCategory2.cf',
+            params:{
+                prefix:this.$route.params.productName,
+                appFlag:2
+            }
+        })
             .then((res) => {
                 this.categoryList = res.data.data;
                 this.status = res.data.status;

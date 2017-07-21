@@ -72,7 +72,7 @@
 
                 // 匹配所有图片地址入组，并且进行替换
                 let imgMatch = /<img[^>]*>/g;
-                let imgSrcMatch = /http:\/\/image|http:\/\/img\.e-cantonfair\.com\/[^"]*\.(?:png|jpg|bmp|gif)/g;
+                let imgSrcMatch = /http:\/\/(image|img)\.e-cantonfair\.com\/[^"]*\.(?:png|jpg|bmp|gif)/g;
                 let imgArrTemp = str.match(imgMatch);
                 if (imgArrTemp) {
                     if (imgArrTemp.length > 0) {
@@ -80,6 +80,7 @@
                         for (let i = 0; i < imgArrTemp.length; i++) {
                             if (imgArrTemp[i].match(imgSrcMatch)) {
                                 let tempSrc = imgArrTemp[i].match(imgSrcMatch)[0];
+                                console.log(imgArrTemp[i].match(imgSrcMatch));
                                 let newSrc = that.filterImg(imgArrTemp[i]);
                                 resultStr = resultStr.replace(tempSrc, newSrc);
                             }
@@ -94,7 +95,7 @@
             // 处理移动端图片地址
             filterImg(_src) {
                 var imgTypeMatch = /\.(?:png|jpg|bmp|gif)/;
-                var imgSrcMatch = /http:\/\/image|http:\/\/img\.e-cantonfair\.com\/[^"]*\.(?:png|jpg|bmp|gif)/g;
+                var imgSrcMatch = /http:\/\/(image|img)\.e-cantonfair\.com\/[^"]*\.(?:png|jpg|bmp|gif)/g;
                 var tempSrc = _src.match(imgSrcMatch)[0];
                 var tempImgType = _src.match(imgTypeMatch)[0];
                 var newSrc = _src.match(imgSrcMatch)[0].replace(tempImgType, '') + '_750x750_1' + tempImgType;

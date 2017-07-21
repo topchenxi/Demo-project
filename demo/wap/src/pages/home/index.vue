@@ -129,27 +129,23 @@ created() {
   
     // 做预览功能需要获取的参数
     let urlParams = location.search;
+    let params = {
+      appFlag:2
+    };
 
+    // 如果首页URL有自带参数，则处理为json格式
     if (urlParams.indexOf("?") > -1) {
 
-      let _urlParams = urlParams.substring(1);  
-      let urlParamsArr = _urlParams.split("&");
-      let newArr = [];
-
-      for (let item of urlParamsArr) {
-        if (item.substring(item.indexOf("=") + 1)) {
-          newArr.push(item);
-        }
-      };
-      
-      urlParams = "/home/getHomepage.cf?" + newArr.join("&");
-
-      this.fetchData(urlParams);
-
-    } else {
-
-      this.fetchData();
+      let paramStr = urlParams.split('?')[1];
+      // xxx=1&aaa=2
+      let paramArr = paramStr.split('&');
+      for(let item of paramArr){
+        let key_val = item.split('=');
+        params[key_val[0]] = key_val[1];
+      }
     }
+
+    this.fetchData(params);
 
   },
   methods: {
@@ -160,9 +156,13 @@ created() {
    //  获取首页数据
     fetchData(params) { 
 
-      let url = params || "/home/getHomepage.cf";
+      let url = "/home/getHomepage.cf";
 
-      this.axios.get(url)
+      this.axios({
+        method:'get',
+        url:url,
+        params:params
+      })
         .then((res) => {
           this.distribute(res);
         });

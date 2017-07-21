@@ -159,7 +159,15 @@ export default {
     created() {
         Indicator.open("Loading...");
         let localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
-        this.axios.get("/message/getInquiryDetail.cf?token=" + localToken + "&messageId=" + this.$route.params.messageId)
+        this.axios({
+            method:'get',
+            url:'/message/getInquiryDetail.cf',
+            params:{
+                token:localToken,
+                messageId:this.$route.params.messageId,
+                appFlag:2
+            }
+        })
             .then((res) => {
                 let d = res.data.data;
                 this.messageDTO = Object.assign({}, this.messageDTO, d.messageDTO);

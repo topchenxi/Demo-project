@@ -64,7 +64,14 @@ export default {
     },
     created() {
         // 拉取国家列表数据 
-        this.axios.get("/dict/countries.cf?isOrderBySortOrder=1")
+        this.axios({
+            method:'get',
+            url:'/dict/countries.cf',
+            params:{
+                isOrderBySortOrder:1,
+                appFlag:2
+            }
+        })
             .then((res) => {
                 
                 this.countryList = res.data.data;

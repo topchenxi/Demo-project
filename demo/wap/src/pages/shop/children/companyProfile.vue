@@ -188,7 +188,14 @@ export default {
         // 拉取公司简介方法
         fetchCompanyProFile(companyId) {
             Indicator.open("Loading");
-            this.axios.get(`/sellerCompany/viewCompanyInfo.cf?companyId=${companyId}`)
+            this.axios({
+                method:'get',
+                url:'/sellerCompany/viewCompanyInfo.cf',
+                params:{
+                    companyId:companyId,
+                    appFlag:2
+                }
+            })
                 .then((res) => {
                     Indicator.close();  
                     let _profile = res.data.data;

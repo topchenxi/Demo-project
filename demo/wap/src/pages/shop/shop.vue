@@ -141,12 +141,28 @@ export default {
             Indicator.open("Loading");
 
             let shopDetail = function () {
-                return _this.axios.get(`/shop/detail.cf?sellerId=${sellerId}`);
+                return _this.axios({
+                    method:'get',
+                    url:'/shop/detail.cf',
+                    params:{
+                        sellerId:sellerId,
+                        appFlag:2
+                    }
+                })
             };
 
             // 拉取摊位数据
             let shopBooth = function () {
-                return _this.axios.get(`/shop/getBoothInfo.cf?searchType=1&sellerId=${sellerId}&fairNo=121`);
+                return _this.axios({
+                    method:'get',
+                    url:'/shop/getBoothInfo.cf',
+                    params:{
+                        searchType:1,
+                        sellerId:sellerId,
+                        fairNo:121,
+                        appFlag:2
+                    }
+                })
             };
 
             let _this = this;

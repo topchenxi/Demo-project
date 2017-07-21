@@ -32,7 +32,13 @@
             }
         },
        created() {
-            this.axios.get("/home/getLatestHotKeyWords.cf")
+            this.axios({
+                method:'get',
+                url:'/home/getLatestHotKeyWords.cf',
+                params:{
+                    appFlag:2
+                }
+            })
 
                 .then((res) => {
                     this.keyWords1 = res.data.data[0].keyword.split(",");
