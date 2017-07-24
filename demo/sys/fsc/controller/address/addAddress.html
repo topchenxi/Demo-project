@@ -1,0 +1,109 @@
+<div class="modal-header">
+     <!-- 添加地址 -->
+      <h3 class="modal-title">{{'ADD_ADDR' | translate}}</h3>
+  </div>
+  <div className="modal-body">
+    <div class="alert">
+      <span class="glyphicon glyphicon-exclamation-sign"></span>
+      <!-- 带*号的为必填项 -->
+      {{'TIPS.REQUIRED' | translate}}
+    </div>
+    <form  class="form-horizontal" name="add" novalidate ng-submit="submit()">
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span> <!-- 收货人 -->  {{'RECIEVER' | translate}}：</label>
+        <div class="col-sm-8">
+          <input type="text" name="name" id="" class="form-control"
+            ng-model="address.supplierName" required>
+          <div class="error" ng-show="add.name.$dirty && add.name.$invalid">
+             <!--必填项-->
+              {{'REQUIRED_S' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span><!-- 国家 -->  {{'COUNTRY' | translate}}：</label>
+        <div class="col-sm-8">
+          <select name="countryId" class="form-control"
+          ng-model="address.countryId"
+          ng-options="county.countryId as county.countryCnName group by county.tradeAreaId for county in areaDict.countys">
+          </select>
+          {{address.countryId}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span> <!-- 省,州或直辖市 --> {{'AREAS' | translate}}：</label>
+        <div class="col-sm-8">
+          <select name="province" class="form-control"
+          ng-model="address.provinceCode"
+          ng-options="province.districtCode as province.districtCnName for province in areaDict.provinces" required>
+          </select>
+          <select name="city" class="form-control"
+          ng-model="address.cityCode"
+          ng-options="city.districtCode as city.districtCnName for city in areaDict.citys" required>
+          </select>
+          <select name="region" class="form-control"
+          ng-model="address.regionCode"
+          ng-options="region.districtCode as region.districtCnName for region in areaDict.regions" required>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span> <!-- 详细地址 --> {{'DETAIL_ADDR' | translate}}：</label>
+        <div class="col-sm-8">
+          <input type="text" name="address" id="" class="form-control"
+            ng-minlength=4
+            ng-model="address.supplierAddress" required/>
+          <div class="error" ng-show="add.address.$dirty && add.address.$invalid">
+              详细地址必须要4个字以上
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span><!-- 邮箱 -->  {{'EMAIL' | translate}}：</label>
+        <div class="col-sm-8">
+          <input type="email" name="email" id="" class="form-control"
+            ng-model="address.email"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span>  <!-- 邮编 -->{{'ZIP_CODE' | translate}}：</label>
+        <div class="col-sm-8">
+          <input type="text" name="zipCode" id="" class="form-control"
+            ng-model="address.zipCode" required/>
+          <div class="error" ng-show="add.zipCode.$dirty && add.zipCode.$invalid">
+                <!--必填项-->
+                {{'REQUIRED_S' | translate}}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span>  {{'MOBILE' | translate}}：</label>
+        <div class="col-sm-8">
+          <input type="text" name="mobile" id="" class="form-control"
+            ng-model="address.mobile" required/>
+          <div class="error" ng-show="add.zipCode.$dirty && add.zipCode.$invalid">
+                <!--必填项-->
+               {{'REQUIRED_S' | translate}}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label htmlFor="" class="col-sm-3  control-label"><span class="red">*</span> <!-- 电话 --> {{'TEL' | translate }} :</label>
+        <div class="col-sm-8">
+          <input type="text" name="tel" id="" class="form-control"
+            ng-model="address.telephone">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-3">
+          <input type="checkbox" name="isDefaultAddress" ng-model="address.isDefaultAddress"/> <!-- 设置为默认地址 -->{{'DEFAULT_ADDR' | translate}}
+        </div>
+      </div>
+      <div class="col-sm-offset-3">
+        <button type="submit" class="btn btn-primary" ng-disabled="add.$invalid"> <!-- 保存 -->{{'OPR.SAVE' | translate}}</button>
+        <button type="button" class="btn btn-error" ng-click="cancel()"> <!-- 取消 -->{{'OPR.CANCEL' | translate}}</button>
+      </div>
+    </form>
+  </div>
