@@ -1,0 +1,49 @@
+<div class="main-container">
+  <div class="cnt-title">
+    <h3>修改密码</h3>
+  </div>
+  <div class="cnt-main">
+
+    <form class="form-horizontal" name="password" ng-submit="submit()">      
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">原密码:</label>
+        <div class="col-sm-5">
+          <input type="password" class="form-control" 
+          placeholder="输入原密码"
+          name="cur"
+          ng-maxlength="20"
+          ng-minlength="6"
+          ng-model="pass.oldPass" required>
+        </div>
+        <div class="col-sm-5 error" ng-show="password.cur.$dirty && password.cur.$invalid">请填写正确的密码</div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">新密码:</label>
+        <div class="col-sm-5">
+          <input type="password" class="form-control" 
+          placeholder="6-20个字符"
+          name="new"
+          ng-maxlength="20"
+          ng-minlength="6"
+          ng-model="pass.password" required></div>
+        <div class="col-sm-5 error" ng-show="password.new.$dirty && password.new.$invalid">请填写正确的密码</div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">确认密码:</label>
+        <div class="col-sm-5">
+          <input type="password" class="form-control" 
+          placeholder="再次输入密码"
+          name="repeat_new"
+          ng-maxlength="20"
+          ng-minlength="6"
+          ng-model="pass.repeatPass" repeat="new" required></div>
+        <div class="col-sm-5 error" ng-show="password.news.$dirty && password.news.$invalid">请填写正确的密码</div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary" ng-disabled="password.$invalid">确定</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
