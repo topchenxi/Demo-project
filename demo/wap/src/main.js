@@ -24,6 +24,9 @@ import { Popup } from "mint-ui";
 import { Picker } from "mint-ui";
 import { Switch } from "mint-ui";
 
+// 滚动插件
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
 
 window.addEventListener(
     "load",
@@ -41,6 +44,7 @@ Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+Vue.use(VueAwesomeSwiper);
 
 axios.defaults.baseURL = "/app_center1";
 // axios.defaults.baseURL = "/app_center";

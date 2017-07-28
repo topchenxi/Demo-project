@@ -16,7 +16,7 @@
         <li v-if="productsDetail.product.propertyList" v-for="(item, index) of productsDetail.product.propertyList" :key="index" class="border-1px"><span>{{item.propertyEnName}}:</span> <span class="f-ellipsis-2">{{item.propertyEnValue}}</span></li>
    </ul>
    <div class="products-detail-productdes border-1px">
-       <p class="productdes-title">Product Descript:</p>
+       <p class="productdes-title">Product Description:</p>
        <p class="productdes-content f-breakword" v-html="replaceDes"></p>
    </div>
 </div>
@@ -78,11 +78,26 @@
                     if (imgArrTemp.length > 0) {
                         let imgArr = [];
                         for (let i = 0; i < imgArrTemp.length; i++) {
-                            if (imgArrTemp[i].match(imgSrcMatch)) {
-                                let tempSrc = imgArrTemp[i].match(imgSrcMatch)[0];
-                                console.log(imgArrTemp[i].match(imgSrcMatch));
-                                let newSrc = that.filterImg(imgArrTemp[i]);
-                                resultStr = resultStr.replace(tempSrc, newSrc);
+                            // if (imgArrTemp[i].match(imgSrcMatch)) {
+                            //     let tempSrc = imgArrTemp[i].match(imgSrcMatch)[0];
+                            //     let newSrc = that.filterImg(imgArrTemp[i]);
+                            //     resultStr = resultStr.replace(tempSrc, newSrc);
+                            // }
+
+
+                            let thisTemp = imgArrTemp[i];
+                            if (thisTemp.indexOf('data-src') != -1) {
+                                let placeholderSrc = thisTemp.match(/src=[^=]*"/)[0].replace('src="', '').replace('"', '');
+                                let attrDataSrc = thisTemp.match(/data-src=[^=]*"/)[0].replace('data-src="', '').replace('"', '');
+                                attrDataSrc = that.filterImg(attrDataSrc);
+                                let imgStr = String(thisTemp).replace(placeholderSrc, attrDataSrc);
+                                resultStr = resultStr.replace(thisTemp, imgStr);
+                            } else {
+                                if (thisTemp.match(imgSrcMatch)) {
+                                    let tempSrc = thisTemp.match(imgSrcMatch)[0];
+                                    let newSrc = that.filterImg(thisTemp);
+                                    resultStr = resultStr.replace(tempSrc, newSrc);
+                                }
                             }
                         }
                     }

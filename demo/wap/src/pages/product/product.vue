@@ -134,49 +134,49 @@ export default {
                     productId:productId
                 }
             })
-                .then((res) => {
-                    this.$nextTick(() => {
-                        this.detail = Object.assign({}, this.detail, res.data.data);
-                        let product = res.data.data.product;
-                        let shopInfo = res.data.data.shopInfo;
+            .then((res) => {
+                this.$nextTick(() => {
+                    this.detail = Object.assign({}, this.detail, res.data.data);
+                    let product = res.data.data.product;
+                    let shopInfo = res.data.data.shopInfo;
 
-                        this.$set(this.products, "name", product.name);
-                        this.$set(this.products, "fobPriceFrom", product.fobPriceFrom);
-                        this.$set(this.products, "fobPriceTo", product.fobPriceTo);
-                        this.$set(this.products, "fobPriceUnitEnName", product.fobPriceUnitEnName);
-                        this.$set(this.products, "minOrder", product.minOrder);
-                        this.$set(this.products, "minOrderUnitEnName", product.minOrderUnitEnName);
-                        this.$set(this.products, "sellerId", product.sellerId);
+                    this.$set(this.products, "name", product.name);
+                    this.$set(this.products, "fobPriceFrom", product.fobPriceFrom);
+                    this.$set(this.products, "fobPriceTo", product.fobPriceTo);
+                    this.$set(this.products, "fobPriceUnitEnName", product.fobPriceUnitEnName);
+                    this.$set(this.products, "minOrder", product.minOrder);
+                    this.$set(this.products, "minOrderUnitEnName", product.minOrderUnitEnName);
+                    this.$set(this.products, "sellerId", product.sellerId);
 
-                        this.$set(this.shopInfo, "companyEnName", shopInfo.companyEnName);
-                        this.$set(this.shopInfo, "fairNo", shopInfo.fairNo);
+                    this.$set(this.shopInfo, "companyEnName", shopInfo.companyEnName);
+                    this.$set(this.shopInfo, "fairNo", shopInfo.fairNo);
 
-                        try {
-                            this.slide = product.imgs.split(",");
+                    try {
+                        this.slide = product.imgs.split(",");
 
-                            this.$set(this.shopInfo, "logo", shopInfo.logo.split(","));
-                        } catch (err) { }
+                        this.$set(this.shopInfo, "logo", shopInfo.logo.split(","));
+                    } catch (err) { }
 
 
-                        this.axios({
-                            method:'get',
-                            url:'/shop/getBoothInfo.cf',
-                            params:{
-                                searchType:1,
-                                sellerId:product.sellerId,
-                                fairNo:121,
-                                productId:productId,
-                                appFlag:2
-                            }
-                        })
-                            .then((res) => {
-                                Indicator.close();
-                                this.productBooth = res.data.data;
-                            });
-                    });
+                    this.axios({
+                        method:'get',
+                        url:'/shop/getBoothInfo.cf',
+                        params:{
+                            searchType:1,
+                            sellerId:product.sellerId,
+                            fairNo:121,
+                            productId:productId,
+                            appFlag:2
+                        }
+                    })
+                        .then((res) => {
+                            Indicator.close();
+                            this.productBooth = res.data.data;
+                        });
+                });
 
-                })
-                .catch(() => { Indicator.close(); Toast("Network Timeout"); });
+            })
+            .catch(() => { Indicator.close(); Toast("Network Timeout"); });
         }
     }
 };

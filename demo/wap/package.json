@@ -17,6 +17,7 @@
     "mint-ui": "^2.1.1",
     "vue": "^2.1.10",
     "vue-analytics": "^4.1.2",
+    "vue-awesome-swiper": "^2.5.4",
     "vue-axios": "^1.2.2",
     "vue-router": "^2.2.0",
     "vuex": "^2.2.1"

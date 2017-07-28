@@ -1,95 +1,203 @@
 <template>
   <div class="home-wrap">
+  <!--顶部引导下载App-->
+  <section class="home-top-app">
+    <img src="./images/logo.png" alt="">
+    <span @click="toAppCenter">Get App</span>
+  </section>
+  <!--顶部引导下载App-->
 
-    <!--顶部引导下载App-->
-      <section class="home-top-app">
-        <img src="./images/logo.png" alt="">
-        <span @click="toAppCenter">Get App</span>
-      </section>
-    <!--顶部引导下载App-->
-
-    <!--搜索框-->
-      <router-link to="/search" class="home-search-box">
-        <span>Search products or suppliers</span>
-      </router-link>
-    <!--搜索框-->
+  <!--搜索框-->
+  <router-link to="/search" class="home-search-box">
+    <span>Search products or suppliers</span>
+  </router-link>
+  <!--搜索框-->
    
-    <!--轮播-->
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(item, index) of slide"
-                     v-if="slide"
-                     :key="index">
-        <div @click="navRoute(index, 1)">
-          <img :src="IMG_URL + item.imgUrlAndroidBackend"
-               alt="">
-        </div>
-      </mt-swipe-item>
-    </mt-swipe>
-   <!--轮播-->
+  <!--轮播-->
+  <mt-swipe :auto="4000">
+    <mt-swipe-item v-for="(item, index) of homepageCarouselFigure.homepageDetails"
+                    v-if="homepageCarouselFigure.homepageDetails.length>0"
+                    :key="index">
+      <div @click="navRoute(item.contentType, item.contentValue)">
+        <img :src="IMG_URL + item.imgUrlAndroidBackend"
+              alt="">
+      </div>
+    </mt-swipe-item>
+  </mt-swipe>
+  <!--轮播-->
 
-   <!--菜单-->
-    <nav class="menu">
-      <router-link to="/categoryFirst"
-                   @click.native="toCaterory"><span>Categories</span></router-link>
-      <a :href="'http://app.e-cantonfair.com/app_center1/map/map.html#type=0&vol=1&url=http://'+encodeURI(homeUrl.substr(7))"><span>Pavilion</span></a>
-      <router-link to="/buyingRequest"><span>Get Quotation</span></router-link>
-    </nav>
-   <!--菜单-->
+  <!--菜单-->
+  <nav class="menu">
+    <router-link to="/categoryFirst" @click.native="toCaterory"><span>Categories</span></router-link>
+    <a :href="'http://app.e-cantonfair.com/app_center1/map/map.html#type=0&vol=1&url=http://'+encodeURI(homeUrl.substr(7))"><span>Pavilion</span></a>
+    <router-link to="/buyingRequest"><span>Get Quotation</span></router-link>
+  </nav>
+  <!--菜单-->
 
-   <!--热门-->
-    <section class="hot-wrap">
-      <div class="inner border-1px">
-        <div class="inner-l border-1px-r"
-             @click="navRoute(0, 2)">
-          <img :src="hotProducts.hotPro.img1"
-               alt="">
+  <!-- 文字滚动轮播 -->
+  <section class="textSlide" v-if="homepageWordFigure.homepageDetails.length>0">
+    <span class="icon"></span>
+    <span class="line"></span>
+    <div class="textList">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <swiper-slide v-for="(item, index) in homepageWordFigure.homepageDetails" :key="index">
+          <div><a @click="navRoute(item.contentType, item.contentValue)">{{item.contentName}}</a></div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </section>
+  <!-- 文字滚动轮播 -->
+
+  <!-- 两栏广告 -->
+  <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality.homepageDetails.length>0">
+    <div class="fl" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[0].contentType, homepageAdvertisementVerticality.homepageDetails[0].contentValue)">
+      <img :src="IMG_URL + this.homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" alt="">
+    </div>
+    <div class="fr" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[1].contentType, homepageAdvertisementVerticality.homepageDetails[1].contentValue)">
+      <img :src="IMG_URL + this.homepageAdvertisementVerticality.homepageDetails[1].imgUrlAndroidBackend" alt="">
+    </div>
+  </section>
+  <!-- 两栏广告 -->
+
+  <!--热门-->
+  <section class="hot-wrap" v-if="homepageWindow.homepageDetails.length>0">
+    <div class="inner">
+      <div class="inner-l" @click="navRoute(homepageWindow.homepageDetails[0].contentType, homepageWindow.homepageDetails[0].contentValue)">
+        <img :src="IMG_URL + this.homepageWindow.homepageDetails[0].imgUrlIosFront" alt="" class="frontImg">
+        <img :src="IMG_URL + this.homepageWindow.homepageDetails[0].imgUrlIosBackend" alt="" class="backImg">
+      </div>
+      <div class="inner-r ">
+        <div class="inner-r-t" @click="navRoute(homepageWindow.homepageDetails[1].contentType, homepageWindow.homepageDetails[1].contentValue)">
+          <img :src="IMG_URL + this.homepageWindow.homepageDetails[1].imgUrlIosFront" alt="" class="frontImg">
+        <img :src="IMG_URL + this.homepageWindow.homepageDetails[1].imgUrlIosBackend" alt="" class="backImg">
         </div>
-        <div class="inner-r ">
-          <div class="inner-r-t"
-               @click="navRoute(1, 2)">
-            <img :src="hotProducts.hotPro.img2"
-                 alt="">
+        <div class="inner-r-b" @click="navRoute(homepageWindow.homepageDetails[2].contentType, homepageWindow.homepageDetails[2].contentValue)">
+          <img :src="IMG_URL + this.homepageWindow.homepageDetails[2].imgUrlIosFront" alt="" class="frontImg">
+        <img :src="IMG_URL + this.homepageWindow.homepageDetails[2].imgUrlIosBackend" alt="" class="backImg">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--热门-->
+
+  <!--通栏广告-->
+  <section class="oneColAd" v-if="homepageAd1.homepageDetails.length>0">
+    <div @click="navRoute(homepageAd1.homepageDetails[0].contentType, homepageAd1.homepageDetails[0].contentValue)">
+      <img :src="IMG_URL + this.homepageAd1.homepageDetails[0].imgUrlAndroidBackend" alt="">
+    </div>
+  </section>
+  <!--通栏广告-->
+
+  <!-- 行业类目 -->
+  <section class="category-wrap" v-if="homepageCategory.homepageDetails.length>0">
+    <c-moduleTitle 
+      :title="this.homepageCategory.title"
+      :contentType="this.homepageCategory.homepageTitle.contentType"
+      :contentValue="this.homepageCategory.homepageTitle.contentValue"
+      :contentName="this.homepageCategory.homepageTitle.contentName"
+      :logo="this.homepageCategory.homepageTitle.imgUrlAndroidBackend"
+    ></c-moduleTitle>
+    <swiper :options="categorySwiperOption" ref="categorySwiper">
+      <swiper-slide v-for="(item, index) in homepageCategory.homepageDetails" :key="index">
+        <div class="item" @click="navRoute(item.contentType, item.contentValue)">
+          <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+          <div class="text">
+            <div>
+              <span>{{item.contentName}}</span>
+            </div>
           </div>
-          <div class="inner-r-b border-1px"
-               @click="navRoute(2, 2)">
-            <img :src="hotProducts.hotPro.img3"
-                 alt="">
+        </div>
+      </swiper-slide>
+    </swiper>
+  </section>
+  <!-- 行业类目 -->
+
+  <!-- 新商品推荐 -->
+  <section class="newProduct" v-if="homepageNewProduct.homepageDetails.length>0">
+    <c-moduleTitle 
+      :title="this.homepageNewProduct.title"
+      :contentType="this.homepageNewProduct.homepageTitle.contentType"
+      :contentValue="this.homepageNewProduct.homepageTitle.contentValue"
+      :contentName="this.homepageNewProduct.homepageTitle.contentName"
+      :logo="this.homepageNewProduct.homepageTitle.imgUrlAndroidBackend"
+      v-if="this.homepageNewProduct.homepageTitle"
+    ></c-moduleTitle>
+    <div class="newProductContent clearfix">
+      <div class="item" v-for="(item, index) in homepageNewProduct.homepageDetails" :key="index" @click="navRoute(item.contentType, item.contentValue)">
+        <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+        <div class="text">
+          <div>
+            <span>{{item.contentName}}</span>
           </div>
         </div>
       </div>
-    </section>
-    <!--热门-->
+    </div>
+  </section>
+  <!-- 新商品推荐 -->
 
-   <!--广告-->
-    <section class="adment-wrap">
-      <div v-for="(item, index) of advertisement.list"
-           class="ad-item"
-           :key="index">
-        <img :src="IMG_URL + item.imgUrlAndroidBackend"
-             alt=""
-             @click="navRoute(index, 3)">
+  <!-- 新广告页 -->
+  <section class="newAdPage" v-if="homepageNewAdvertisement.homepageDetails.length>0">
+    <c-moduleTitle 
+      :title="this.homepageNewAdvertisement.title"
+      :contentType="this.homepageNewAdvertisement.homepageTitle.contentType"
+      :contentValue="this.homepageNewAdvertisement.homepageTitle.contentValue"
+      :contentName="this.homepageNewAdvertisement.homepageTitle.contentName"
+      :logo="this.homepageNewAdvertisement.homepageTitle.imgUrlAndroidBackend"
+      v-if="this.homepageNewAdvertisement.homepageTitle"
+    ></c-moduleTitle>
+    <div class="newAdPageContent">
+      <div class="topImg" @click="navRoute(homepageNewAdvertisement.homepageDetails[0].contentType,homepageNewAdvertisement.homepageDetails[0].contentValue)">
+        <img :src="IMG_URL + this.homepageNewAdvertisement.homepageDetails[0].imgUrlAndroidBackend" alt="">
       </div>
-    </section>
-   <!--广告 -->
+      <div class="bottomContent clearfix">
+        <div class="item" v-for="(item, index) in homepageNewAdvertisementList" :key="index" @click="navRoute(item.contentType, item.contentValue)">
+          <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+          <div class="text">
+            <div>
+              <span>{{item.contentName}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 新广告页 -->
 
-   <!--推荐-->
-    <ul class="recommend">
-      <router-link tag="li"
-                   :to="'/product/' + item.contentValue"
-                   v-for="(item, index) of recommend"
-                   :key="index">
-        <img :src="IMG_URL + item.imgUrlAndroidBackend"
-             alt="">
-        <p class="ellipsis-2">{{item.contentName}}</p>
-      </router-link>
-    </ul>
-    <!--推荐-->
+  <!-- 推荐商品 -->
+  <section class="hotProduct">
+    <c-moduleTitle 
+      :title="this.homepageRecommendProduct.title"
+      :contentType="this.homepageRecommendProduct.homepageTitle.contentType"
+      :contentValue="this.homepageRecommendProduct.homepageTitle.contentValue"
+      :contentName="this.homepageRecommendProduct.homepageTitle.contentName"
+      :logo="this.homepageRecommendProduct.homepageTitle.imgUrlAndroidBackend"
+      v-if="this.homepageRecommendProduct.homepageTitle"
+    ></c-moduleTitle>
+    <div class="hotProductContent clearfix" v-for="(item1,index1) of homepageRecommendProductList">
+      <div class="item fl" v-bind:class="[index2==0 ? 'kItem' : 'pItem']" v-for="(item2,index2) of item1" @click="navRoute(item2.contentType,item2.contentValue)">
+        <div class="itemContent" v-if="index2==0">
+          <span v-for="(item3,index3) of item2.homepageDetails" @click="navRoute(item3.contentType,item3.contentValue)">{{item3.contentName}}</span>
+        </div>
+        <div class="itemContent" v-if="index2!=0">
+          <img :src="IMG_URL + item2.imgUrlAndroidBackend" alt="">
+          <div class="text">
+            <div>
+              <span>{{item2.contentName}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 推荐商品 -->
 
-    <!--版权声明-->
-      <section class="home-copy-right">
-        2012-2017 CantonFair E-commerce Co,.Ltd All Rights Reserved.
-      </section>
-    <!--版权声明-->
+
+
+  <!--版权声明-->
+  <section class="home-copy-right">
+    2012-2017 CantonFair E-commerce Co,.Ltd All Rights Reserved.
+  </section>
+  <!--版权声明-->
 
     <!--底部下载App弹窗-->
     <c-downLayer></c-downLayer>
@@ -102,40 +210,106 @@ import { IMG_URL, appLink } from "common/js/common";
 import {localStorage} from "common/js/util.js";
 import { mapMutations } from "vuex";
 import downLayer from "components/down_layer";
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import moduleTitle from 'components/moduleTitle'; 
 
 export default {
   data() {
     return {
-      slide: [], // 轮播图片路径
-      hotDetail: [],
-      recommend: [],
-      hotProducts: { // 热门产品
-        hotPro: {}
+      // 轮播图
+      homepageCarouselFigure: {
+        homepageDetails:[]
       },
-      advertisement: { // 广告
-        list: []
+      // 文字滚动轮播
+      homepageWordFigure:{
+        homepageDetails:[]
       },
-      routerFlag: null,  
+      // 两栏广告
+      homepageAdvertisementVerticality:{
+        homepageDetails:[]
+      },
+      // 橱窗
+      homepageWindow: {
+        homepageDetails:[]
+      },
+      // 通栏广告
+      homepageAd1:{
+        homepageDetails:[]
+      },
+      // 行业类目
+      homepageCategory:{
+        homepageDetails:[]
+      },
+      // 新商品推荐
+      homepageNewProduct:{
+        homepageDetails:[]
+      },
+      // 新广告页
+      homepageNewAdvertisement:{
+        homepageDetails:[]
+      },
+      homepageNewAdvertisementList:[],
+      // 推荐商品
+      homepageRecommendProduct:{
+        homepageDetails:[]
+      },
+      // 推荐商品列表
+      homepageRecommendProductList:[],
+      // 推荐关键词1
+      homepageKeywordGroup1:{
+        homepageDetails:[]
+      },
+      // 推荐关键词2
+      homepageKeywordGroup2:{
+        homepageDetails:[]
+      },
+
       IMG_URL,
-      homeUrl: window.location.href //  传给地图导航页面的本站链接
+      //  传给地图导航页面的本站链接
+      homeUrl: window.location.href, 
+      // 文字滚动配置
+      swiperOption: {
+        notNextTick: true,
+        autoplay: 4000,
+        direction : 'vertical',
+        grabCursor : false,
+        setWrapperSize :true,
+        height:42,
+        autoHeight: true,
+        paginationClickable :false,
+        mousewheelControl : false,
+        observeParents:true,
+        debugger: false,
+        onlyExternal:true
+      },
+      // 行业类目滚动配置
+      categorySwiperOption:{
+        notNextTick: true,
+        autoplay: false,
+        direction : 'horizontal',
+        slidesPerView:4,
+        spaceBetween: 6,
+        slidesOffsetBefore:12,
+        slidesOffsetAfter:12
+      },
     };
   },
   
   components:{
-    "c-downLayer": downLayer
+    "c-downLayer": downLayer,
+    "c-moduleTitle":moduleTitle,
+    swiper,
+    swiperSlide
   },
 
 created() {
-  
     // 做预览功能需要获取的参数
     let urlParams = location.search;
     let params = {
       appFlag:2
     };
-
     // 如果首页URL有自带参数，则处理为json格式
     if (urlParams.indexOf("?") > -1) {
-
       let paramStr = urlParams.split('?')[1];
       // xxx=1&aaa=2
       let paramArr = paramStr.split('&');
@@ -144,9 +318,7 @@ created() {
         params[key_val[0]] = key_val[1];
       }
     }
-
     this.fetchData(params);
-
   },
   methods: {
   ...mapMutations([
@@ -163,75 +335,91 @@ created() {
         url:url,
         params:params
       })
-        .then((res) => {
-          this.distribute(res);
-        });
+      .then((res) => {
+        this.distribute(res);
+      });
     },
 
     //  拆分数据
     distribute(_res) { 
 
       let homeInfo = _res.data.data;
-
+      // 推荐商品
+      this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
       // 轮播
-      this.slide = homeInfo.homepageCarouselFigure.homepageDetails;
+      this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
+      // 文字滚动轮播
+      this.homepageWordFigure = homeInfo.homepageWordFigure;
+      // 两栏广告
+      this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
+      // 橱窗 
+      this.homepageWindow = homeInfo.homepageWindow;
+      // 通栏广告
+      this.homepageAd1 = homeInfo.homepageAd1;
+      // 行业类目
+      this.homepageCategory = homeInfo.homepageCategory;
+      // 新商品推荐
+      this.homepageNewProduct = homeInfo.homepageNewProduct;
+      // 新广告页
+      this.homepageNewAdvertisement = homeInfo.homepageNewAdvertisement;
+      for(let i=0;i<this.homepageNewAdvertisement.homepageDetails.length;i++){
+        if(i > 0){
+          this.homepageNewAdvertisementList.push(this.homepageNewAdvertisement.homepageDetails[i]);
+        }
+      }
+      
+      // 推荐关键词1
+      this.homepageKeywordGroup1 = homeInfo.homepageKeywordGroup1;
+      // 推荐关键词2
+      this.homepageKeywordGroup2 = homeInfo.homepageKeywordGroup2;
 
-      // 热门 
-      this.hotDetail = homeInfo.homepageWindow.homepageDetails;
-      for (let [key, value] of this.hotDetail.entries()) {
-        this.hotProducts.hotPro["img" + (key + 1)] = IMG_URL + value.imgUrlAndroidBackend;
+      // 推荐商品列表
+      let keywordGroupLen = 0;
+      if(this.homepageKeywordGroup1){
+        keywordGroupLen+=1;
+      }
+      if(this.homepageKeywordGroup2){
+        keywordGroupLen+=1;
+      }
+      if(keywordGroupLen > 0){
+        let tempObj = [];
+        let arrLen = this.homepageRecommendProduct.homepageDetails.length/keywordGroupLen;
+        for(let i=0;i<keywordGroupLen;i++){
+          tempObj[i] = [];
+          tempObj[i].push(homeInfo['homepageKeywordGroup'+(i+1)]);
+          tempObj[i] = tempObj[i].concat(this.homepageRecommendProduct.homepageDetails.splice(0,arrLen));
+          if(tempObj[i].length%2 == 1){
+            tempObj[i].pop();
+          }
+        }
+        this.homepageRecommendProductList = tempObj;
       }
 
-      // 广告 
-      let advertisementInfo = homeInfo.homepageAdvertisement;
-      this.advertisement.list = advertisementInfo.homepageDetails;
-
-      // 推荐
-      this.recommend = homeInfo.homepageRecommendProduct.homepageDetails;
     },
 
     //  跳转到应用中心
     toAppCenter() {
-
-    window.location.href = localStorage.get("userAgent") === "ios" ? appLink.ios : appLink.android;
-
+      window.location.href = localStorage.get("userAgent") === "ios" ? appLink.ios : appLink.android;
     },
   
     //  跳转不同页面
-    navRoute(index, flag) {
-
-      switch (flag) {
-        // 轮播
-        case 1:
-          this.routerFlag = this.slide[index];
-          break;
-
-        // 热门
-        case 2:
-          this.routerFlag = this.hotDetail[index];
-          break;
-
-        // 广告
-        case 3:
-          this.routerFlag = this.advertisement.list[index];
-      }
-
-      switch (this.routerFlag.contentType) {
+    navRoute(contentType, contentValue) {
+      switch (contentType) {
         //  跳转商品详情页
         case 1:
           return this.$router.push({
-            path: "/product/" + this.routerFlag.contentValue
+            path: "/product/" + contentValue
           });
 
        //  跳转店铺详情页 
         case 2:
           return this.$router.push({
-            path: "/shop/" + this.routerFlag.contentValue
+            path: "/shop/" + contentValue
           });
 
        //  跳转类目搜索页
         case 3:
-          let params = this.routerFlag.contentValue.split(";");
+          let params = contentValue.split(";");
           return this.$router.push({
             path: "/categorySearch/" + params[0] + "/" + params[1]
           });
@@ -240,20 +428,22 @@ created() {
         case 4:
           this.HOME_TO_SEARCH(false);
           return this.$router.push({
-            path: "/search/" + this.routerFlag.contentValue
+            path: "/search/" + contentValue
           });
 
       //  跳转店铺关键词搜索
         case 5:
           this.HOME_TO_SEARCH(false);
           return this.$router.push({
-            path: "/search/" + this.routerFlag.contentValue
+            path: "/search/" + contentValue
           });
 
       //  直接跳转链接
-        // case 6:
+        case 6:
+        window.location.href = contentValue;
+        break;
         // return this.$router.push({
-        //   path: this.routerFlag.contentValue
+        //   path: contentValue
         // });
       }
     },
@@ -269,50 +459,46 @@ created() {
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import "../../common/stylus/mixins/index.styl"
-
-
-   /*slide*/
-    .mint-swipe 
-      height: 8rem
-      img 
-        width: 100%
-        height: 8rem
-        display: block
-
-  
-
-     /*nav   */
-    .menu 
-      height: 4.95rem
-      background: #fff
-      a
-        text-align center
-        float: left
-        display: inline-block
-        width: 33.3%
-        height: 100%
-        text-align: center
-        display: block
-        color: rgba(0, 0, 0, 0.87)
-        font-size: .7rem
-        line-height: .7rem
-        white-space: nowrap
-        position: relative
-        span
-          display block
-          width 100%
-          position: absolute
-          bottom:.75rem
-          left: 0
-        &:nth-child(1)
-         background:url("images/icon_home_categories@3x.png") no-repeat center .75rem
-         background-size: 2rem
-        &:nth-child(2)
-         background:url("images/icon_home_pavilion@3x.png") no-repeat center .75rem
-         background-size: 2rem
-        &:nth-child(3)
-         background:url("images/icon_home_getquotations@3x.png") no-repeat center .75rem
-         background-size: 2rem
+/*slide*/
+.mint-swipe 
+  height: 8rem
+  img 
+    width: 100%
+    height: 8rem
+    display: block
+/*nav*/
+.menu 
+  height: 4.95rem
+  background: #fff
+  margin-bottom:0.6rem
+  a
+    text-align center
+    float: left
+    display: inline-block
+    width: 33.3%
+    height: 100%
+    text-align: center
+    display: block
+    color: rgba(0, 0, 0, 0.87)
+    font-size: .7rem
+    line-height: .7rem
+    white-space: nowrap
+    position: relative
+    span
+      display block
+      width 100%
+      position: absolute
+      bottom:.75rem
+      left: 0
+    &:nth-child(1)
+      background:url("images/icon_grid_categories.png") no-repeat center .75rem
+      background-size: 2rem
+    &:nth-child(2)
+      background:url("images/icon_grid_pavilion.png") no-repeat center .75rem
+      background-size: 2rem
+    &:nth-child(3)
+      background:url("images/icon_grid_getquotations.png") no-repeat center .75rem
+      background-size: 2rem
 
 .ad-title-warp
   height: 3.035rem
@@ -362,80 +548,58 @@ sup
     position: relative;
     top: .4rem
 
-.adment-wrap
- padding-bottom: .6rem
- img
-  width: 100%
-  height: 100%
-
-.recommend
- overflow hidden
- li
-  background: #fff
-  width: 50%
-  float: left
-  padding: .6rem .6rem .6rem .575rem
-  box-sizing border-box
-  position relative
-  img
-   width: 8.2rem
-   height: 8.2rem
-  p
-   height 2rem
-   line-height:1rem;
-   font-size: .7rem;
-   color: rgba(0,0,0,0.87);
-   letter-spacing: -0.61px; 
-  &:before
-   display: block
-   position: absolute
-   width: 100%
-   right:0
-   top: 0
-   border-top: 1px solid rgba(0, 0, 0, .12)
-   content: "" 
-   transform: scaleY(.5)
-  &:nth-child(odd)
-   &:after
-    display: block
-    position: absolute
-    height: 100%
-    right:0
-    top: 0
-    border-right: 1px solid rgba(0, 0, 0, .12)
-    content: "" 
-    transform: scaleX(.5)
-    // border-1px-r(rgba(0, 0, 0, .12))
 
 
    /*hotProducts*/
 .hot-wrap 
-  border-top: .6rem solid #f3f4f6
-  border-bottom: .6rem solid #f3f4f6
+  margin-bottom: .6rem
   img 
-   width: 100%
-   height: 100%
+   display:block
+   position:absolute
+  .frontImg
+   z-index:2
+  .backImg
+   z-index:1
   .inner
    height: 9rem
    width: 100%
    overflow: hidden
-   border-1px-t(rgba(0, 0, 0, .12))
   a
    display: block
   .inner-l 
-   width: 40.5%
+   width: 40%
    height: 100%
    float:left
-   border-1px-r(rgba(0, 0, 0, .12), false)
+   position:relative
+   img
+    width:100%
+   .frontImg
+    bottom:0
+    left:0
+   .backImg
+    top:0
+    left:0
+    height:100%
   .inner-r
-   width:59.5%
+   width:60%
    height: 100% 
    float left
    .inner-r-t,
    .inner-r-b
     height: 50%;
+    position:relative
+    border-left:1px solid rgba(0,0,0,0.12)
    .inner-r-b
-    border-1px-t(rgba(0, 0, 0, .12), false)
+    border-top:1px solid rgba(0,0,0,0.12)
+   .frontImg
+    top:0
+    left:0
+    width:54%
+   .backImg
+    top:0
+    right:0
+    width:100%
+    height:100%
  
 .home-top-app
  height: (96/40)rem
@@ -499,6 +663,7 @@ sup
   color: rgba(0,0,0,0.54)
   letter-spacing: -0.41px
   text-align: center
+  line-height:1rem;
 
 .home-bottom-app
  height: (128/40)rem
@@ -546,5 +711,228 @@ sup
   transform: translateY(-50%)
 
 .home-wrap
- padding-bottom:2.425rem 
+ padding-bottom:2.425rem
+
+.textSlide
+ height:48px;
+ background: #fff;
+ padding:1% 4%
+ position:relative
+ margin-bottom:0.6rem
+ .icon
+  display:block;
+  float:left;
+  width: 12%;
+  height: 100%;
+  background:url("images/icon_full_notice.png") no-repeat 0 center
+  background-size: 1.6rem
+ .line
+  display:block
+  width:1px
+  height:50%
+  background-color:rgba(0,0,0,0.12);
+  position:absolute
+  left:15%
+  top:25%
+ .textList
+  float:right
+  padding:3px 0 3px 4%
+  height: 100%
+  width:84%
+  overflow:hidden
+  .swiper-slide
+   width:100%;
+   height: 100%
+   overflow:hidden
+   div
+    display:table
+    width:100%;
+    height: 100%
+    a
+     width:100%
+     height:42px
+     display:table-cell
+     line-height:21px
+     font-size: 0.7rem
+     color:rgba(0,0,0,0.87)
+     vertical-align: middle
+     word-break: break-word
+.twoColAd
+ padding:0 3.2%
+ margin-bottom:0.6rem
+ div
+  width:48.3%
+  img
+   display:block
+   width:100%
+.oneColAd
+ margin-bottom:0.6rem
+ img
+  width:100%
+  display:block
+.category-wrap
+ margin-bottom:0.6rem;
+ .swiper-container
+  width:100%;
+  .swiper-slide
+   width:4rem;
+   .item
+    img
+      display:block;
+      width:100%;
+    .text
+      background-color:#fff;
+      display:table;
+      width:100%;
+      overflow:hidden;
+      height:2rem;
+      max-height:2rem;
+      div
+        width:100%;
+        vertical-align: middle;
+        display: table-cell;
+        text-align:center;
+        span
+          display:inline-block;
+          -webkit-line-clamp: 2;
+          text-overflow: ellipsis;
+          word-break: break-word;
+          overflow: hidden;
+          line-height:0.6rem;
+          font-size:0.5rem;
+          max-height:2rem;
+          padding: 0 0.4rem;
+.newProduct
+ margin-bottom:0.6rem;
+ .newProductContent
+  background-color:#fff;
+  .item
+   width:25%;
+   float:left;
+   img
+    display:block;
+    width:100%;
+   .text
+    background-color:#fff;
+    display:table;
+    width:100%;
+    overflow:hidden;
+    height:2rem;
+    max-height:2rem;
+    div
+      width:100%;
+      vertical-align: middle;
+      display: table-cell;
+      text-align:center;
+      span
+        display:inline-block;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        overflow: hidden;
+        line-height:0.6rem;
+        font-size:0.5rem;
+        max-height:2rem;
+        padding: 0 0.4rem;
+.newAdPage
+ margin-bottom:0.6rem;
+ .newAdPageContent
+  background-color:#fff;
+  .topImg
+   padding:3.2% 3.2% 0;
+   img
+    width:100%;
+    display:block;
+  .bottomContent
+   background-color:#fff;
+   .item
+    width:33.33%;
+    float:left;
+    img
+     width:100%;
+     display:block;
+    .text
+     background-color:#fff;
+     display:table;
+     width:100%;
+     overflow:hidden;
+     height:2rem;
+     max-height:2rem;
+     div
+      width:100%;
+      vertical-align: top;
+      display: table-cell;
+      text-align:center;
+      span
+        display:inline-block;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        overflow: hidden;
+        line-height:0.7rem;
+        font-size:0.5rem;
+        max-height:2rem;
+        padding: 0 0.4rem;
+.hotProduct
+  margin-bottom:0.6rem;
+ .hotProductContent
+  .item
+   width:50%;
+   padding: .6rem .6rem .6rem .575rem
+   box-sizing border-box
+   background:#fff;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   border-bottom:1px solid rgba(0,0,0,0.12);
+   &:nth-child(odd){
+     border-right:1px solid rgba(0,0,0,0.12);
+   }
+   .itemContent
+    height: 10.2rem
+    overflow:hidden;
+  .kItem
+   background:#E1E2E5;
+   span
+    display:block;
+    background-color:#fff;
+    width:90%;
+    padding:0 5%;
+    height:1.7rem;
+    line-height:1.7rem;
+    margin-bottom:0.4rem;
+    text-align:center;
+    font-size:0.7rem;
+    color: rgba(0,0,0,0.54);
+    border-radius:0.2rem;
+    word-wrap: break-word;
+    overflow:hidden;
+    &:last-child
+     margin-bottom:0;
+  .pItem
+   img
+    width: 8.2rem
+    height: 8.2rem
+    display:block;
+   .text
+    background-color:#fff;
+    display:table;
+    width:100%;
+    overflow:hidden;
+    height:2rem;
+    max-height:2rem;
+    div
+      width:100%;
+      vertical-align: middle;
+      display: table-cell;
+      text-align:center;
+      span
+       display:inline-block;
+       -webkit-line-clamp: 2;
+       text-overflow: ellipsis;
+       word-break: break-word;
+       overflow: hidden;
+       line-height:1rem;
+       font-size:0.7rem;
+       max-height:2rem;
 </style>
