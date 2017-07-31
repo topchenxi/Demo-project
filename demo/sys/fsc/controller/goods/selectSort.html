@@ -1,0 +1,49 @@
+<h1>{{title}}</h1>
+
+<div class="tools pull-right">
+  <a href="">1.选择类目</a>
+  <a href="">2.填写信息</a>
+  <a href="">3.提交审核</a>
+</div>
+
+<p>
+  您曾经使用过的类目：
+  <select name="" id="">
+    <option value="">你曾经使用过的类目</option>
+  </select>
+</p>
+
+<h3>分类选择器</h3>
+<div class="row panel-container">
+  <div  ng-style="containerWidth">
+    <div class="level">
+      <ul>
+        <li cid="{{value.categoryId}}" ng-repeat="(key, value) in a" ng-click="getb(value.indusId, value.indusName)" ng-class="{'active': aCatCrumbs[0] === value.indusName}">
+          {{value.indusName}}
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="level" ng-if="b">
+      <ul>
+        <li cid="{{value.categoryId}}" ng-repeat="(key, value) in b" ng-click="getc(value.categoryId,value.categoryName)" ng-class="{'active': aCatCrumbs[1] === value.categoryName}">
+          {{value.categoryName}}
+          <span class="glyphicon glyphicon-chevron-right" ng-hide="{{value.categoryType == 3}}"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="level" ng-if="midders" ng-repeat="midder in midders">
+      <ul>
+        <li cid="{{value.categoryId}}" ng-repeat="(key, value) in midder" ng-click="getd(value.categoryId, value.categoryName, $parent.$index)" ng-class="{'active': aCatCrumbs[$parent.$index+2] === value.categoryName}">
+          {{value.categoryName}}
+          <span class="glyphicon glyphicon-chevron-right" ng-hide="{{value.categoryType == 3}}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="select-sort">当前已经选择的类目：{{catCrumbs}}</div>
+<div class="text-center">
+  <button type="submit" ng-click="goPublish()" class="btn btn-primary" ng-class="{'disabled': !isSelect}">立即发布商品</button>
+</div>
