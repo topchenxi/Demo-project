@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { localStorage } from "common/js/util.js";
+import { localStorage,CFEC } from "common/js/util.js";
 import { Indicator, Toast } from "mint-ui";
 import header from "components/header";
 export default {
@@ -97,27 +97,27 @@ export default {
 
     // 获取采购需求详情
     let buyingRequestDetail = function () {
+      let params = {
+        procurementId:_this.$route.params.procurementId,
+        token:localToken
+      }
       return _this.axios({
         method:'get',
         url:'/buyer/buyingRequest/detail.cf',
-        params:{
-          procurementId:_this.$route.params.procurementId,
-          token:localToken,
-          appFlag:2
-        }
+        params:CFEC.addConfig(params)
       })
     };
 
     //  报价列表
     let quotationList = function () {
+      let params = {
+          procurementId:_this.$route.params.procurementId,
+          token:localToken
+      }
       return _this.axios({
         method:'get',
         url:'/buyer/buyingRequest/quotation/list.cf',
-        params:{
-          procurementId:_this.$route.params.procurementId,
-          token:localToken,
-          appFlag:2
-        }
+        params:CFEC.addConfig(params)
       })
     };
 

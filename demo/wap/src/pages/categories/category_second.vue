@@ -19,6 +19,7 @@
 <script>
 import header from "components/header";
 import { Indicator, Toast } from "mint-ui";
+import {CFEC} from "common/js/util.js";
 export default {
     data() {
         return {
@@ -54,13 +55,13 @@ export default {
         // 获取二级类目
         fetchCategorySecond(categoryId) {
             Indicator.open("Loading");
+            let params = {
+                parentId:categoryId
+            }
             this.axios({
                 method:'get',
                 url:'/dict/category/search.cf',
-                params:{
-                    parentId:categoryId,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
 
                 .then((res) => {

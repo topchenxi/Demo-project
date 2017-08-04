@@ -88,7 +88,7 @@
 </template>
 
 <script>
-
+import {CFEC} from "common/js/util.js";
 import { Indicator, Toast } from "mint-ui";
 import header from "components/header";
 
@@ -358,7 +358,8 @@ export default {
                 // let blob = new Blob([this.result]);
                 let fd = new FormData();
                 fd.append("file", imgFiles[0]);
-                fd.append('appFlag',2);
+                // 增加公共参数
+                fd = CFEC.addConfig(fd);
                 _this.axios({
                     method: "post",
                     url: "/fdfsUpload/uploadImage.cf?",

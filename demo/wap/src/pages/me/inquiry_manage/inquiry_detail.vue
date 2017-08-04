@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { localStorage } from "common/js/util.js";
+import { localStorage,CFEC } from "common/js/util.js";
 import header from "components/header";
 import { IMG_URL } from "common/js/common";
 import { Indicator, Toast } from "mint-ui";
@@ -159,14 +159,14 @@ export default {
     created() {
         Indicator.open("Loading...");
         let localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
+        let params = {
+            token:localToken,
+            messageId:this.$route.params.messageId
+        }
         this.axios({
             method:'get',
             url:'/message/getInquiryDetail.cf',
-            params:{
-                token:localToken,
-                messageId:this.$route.params.messageId,
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 let d = res.data.data;

@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {CFEC} from "common/js/util.js";
 export default {
   data() {
     return {
@@ -74,13 +75,12 @@ export default {
         let params = {
           selectType: 0,
           sign: this.accountData.sign,
-          userId: this.accountData.userId,
-          appFlag:2
+          userId: this.accountData.userId
         };
        this.axios({
           method: "post",
           url: "/user/resetPasswordByMode.cf",
-          params: params
+          params: CFEC.addConfig(params)
         })
         .then((res) => {
          res.data.status === "success" ? this.$router.replace({name:"resetSuccess", params:{type: 1}}) : alert(res.data.message);
@@ -90,14 +90,13 @@ export default {
         let params = {
           selectType: 1,
           sign: this.accountData.sign,
-          userId: this.accountData.userId,
-          appFlag:2
+          userId: this.accountData.userId
         };
 
         this.axios({
           method: "post",
           url: "/user/resetPasswordByMode.cf",
-          params: params
+          params: CFEC.addConfig(params)
         })
         .then((res) => {
          let newAccountData = Object.assign({}, res.data.data, {mobile: this.accountData.mobile});

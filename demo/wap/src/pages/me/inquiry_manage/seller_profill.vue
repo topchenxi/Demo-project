@@ -36,6 +36,7 @@
 <script>
 import header from "components/header";
 import {IMG_URL} from "common/js/common";
+import {CFEC} from "common/js/util.js";
 export default {
     data() {
         return {
@@ -61,13 +62,13 @@ export default {
     
     created() {
         // 获取数据
+        let params = {
+            userId:this.$route.params.userId
+        }
         this.axios({
             method:'get',
             url:'/personProfile/seller/show.cf',
-            params:{
-                userId:this.$route.params.userId,
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 this.sellerProfile = Object.assign({}, this.sellerProfile, res.data.data);

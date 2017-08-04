@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import {CFEC} from "common/js/util.js";
 export default {
     data() {
         return {
@@ -63,14 +64,14 @@ export default {
         }
     },
     created() {
+        let params = {
+            isOrderBySortOrder:1
+        }
         // 拉取国家列表数据 
         this.axios({
             method:'get',
             url:'/dict/countries.cf',
-            params:{
-                isOrderBySortOrder:1,
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 

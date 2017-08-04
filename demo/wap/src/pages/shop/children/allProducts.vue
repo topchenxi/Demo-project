@@ -37,6 +37,7 @@ import {
 import {
     IMG_URL
 } from "common/js/common";
+import {CFEC} from 'common/js/util.js';
 
 export default {
     components: {
@@ -69,14 +70,14 @@ export default {
             this.isLoading = true;
             if (this.page < this.maxPage) {
                 Indicator.open("Loading...");
+                let params = {
+                    sellerId:this.sellerId,
+                    page:++this.page
+                }
                 this.axios({
                     method:'get',
                     url:'/search/products.cf',
-                    params:{
-                        sellerId:this.sellerId,
-                        page:++this.page,
-                        appFlag:2
-                    }
+                    params:CFEC.addConfig(params)
                 })
                     .then((res) => {
                         for (let value of res.data.data.productList) {
@@ -100,14 +101,14 @@ export default {
             this.page = 1;
             this.isLoadDone = false;
             Indicator.open("Loading...");
+            let params = {
+                page:1,
+                sellerId:this.sellerId
+            }
             this.axios({
                 method:'get',
                 url:'/search/products.cf',
-                params:{
-                    page:1,
-                    sellerId:this.sellerId,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
                     this.productsList = res.data.data.productList;

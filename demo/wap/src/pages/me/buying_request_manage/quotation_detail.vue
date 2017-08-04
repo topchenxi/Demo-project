@@ -51,6 +51,7 @@
 <script>
 import header from "components/header";
 import {IMG_URL} from "common/js/common";
+import {CFEC} from "common/js/util.js";
 export default {
     data() {
         return {
@@ -62,13 +63,13 @@ export default {
         "c-header": header
     },
     created() {
+            let params = {
+                quoteId:this.$route.params.quotedId
+            }
            this.axios({
                method:'get',
                url:'/buyer/quotation/detail.cf',
-               params:{
-                   quoteId:this.$route.params.quotedId,
-                   appFlag:2
-               }
+               params:CFEC.addConfig(params)
            })
             .then((res) => {  
               this.quoteDetail = Object.assign({}, this.quoteDetail, res.data.data.quoteDetail);

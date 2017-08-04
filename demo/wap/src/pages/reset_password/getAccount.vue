@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import {CFEC} from "common/js/util.js";
 export default {
     data() {
         return {
@@ -46,13 +47,13 @@ export default {
 
     //  拉取账号
         fetchAccount() {
+            let params = {
+                username:this.account
+            }
           this.axios({
               method:'get',
               url:'/user/resetPasswordByAccount.cf',
-              params:{
-                  username:this.account,
-                  appFlag:2
-              }
+              params:CFEC.addConfig(params)
           })
           .then(res => {
             if (res.data.status==="success") {

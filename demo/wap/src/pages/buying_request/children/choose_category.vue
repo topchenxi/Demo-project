@@ -17,6 +17,7 @@
 
 <script>
   import header from "components/header";
+  import {CFEC} from "common/js/util.js";
 export default {
      data() {
          return {
@@ -29,13 +30,13 @@ export default {
      },
     //  获取类目
      created() {
+         let params = {
+             prefix:this.$route.params.productName
+         }
         this.axios({
             method:'get',
             url:'/dict/suggestCategory2.cf',
-            params:{
-                prefix:this.$route.params.productName,
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 this.categoryList = res.data.data;

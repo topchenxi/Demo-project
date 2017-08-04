@@ -150,6 +150,7 @@
 import header from "components/header/header";
 import { Indicator, Toast } from "mint-ui";
 import { IMG_URL } from "common/js/common";
+import {CFEC} from 'common/js/util.js';
 
 export default {
     data() {
@@ -188,13 +189,13 @@ export default {
         // 拉取公司简介方法
         fetchCompanyProFile(companyId) {
             Indicator.open("Loading");
+            let params = {
+                companyId:companyId
+            }
             this.axios({
                 method:'get',
                 url:'/sellerCompany/viewCompanyInfo.cf',
-                params:{
-                    companyId:companyId,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
                     Indicator.close();  

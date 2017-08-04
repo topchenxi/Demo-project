@@ -63,13 +63,12 @@ export default {
          let params = {
           selectType: 1,
           sign: this.accountData.sign,
-          userId: this.accountData.userId,
-          appFlag:2
+          userId: this.accountData.userId
         };
         this.axios({
           method: "post",
           url: " /user/sendMobileCode.cf",
-          params: params
+          params: CFEC.addConfig(params)
         })
         .then((res) => {
           res.data.status==="success"? this.intervalTime() : alert(res.data.message);
@@ -89,13 +88,12 @@ export default {
           selectType: 1,
           sign: this.accountData.sign,
           resetCode: this.code,
-          userId: this.accountData.userId,
-          appFlag:2
+          userId: this.accountData.userId
         };
          this.axios({
           method: "post",
           url: "/user/validateResetCode.cf",
-          params: params
+          params: CFEC.addConfig(params)
         })
         .then((res) => {
          res.data.status==="success" ? this.$router.replace({name:"resetByPhone", params:{accountData:res.data.data}}) : alert(res.data.message);

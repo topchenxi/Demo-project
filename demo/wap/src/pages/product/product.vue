@@ -73,6 +73,7 @@ import productDetail from "@/pages/product/children/productDetail";
 import header from "components/header";
 import downLayer from "components/down_layer";
 import { Indicator, Toast } from "mint-ui";
+import {CFEC} from "common/js/util.js";
 
 export default {
     data() {
@@ -126,13 +127,13 @@ export default {
         //  拉取商品详情数据
         fetchProductDetial(productId) {
             Indicator.open("Loading...");
+            let params = {
+                productId:productId
+            }
             this.axios({
                 method:'get',
                 url:'/search/toProductDetail.cf',
-                params:{
-                    appFlag:2,
-                    productId:productId
-                }
+                params:CFEC.addConfig(params)
             })
             .then((res) => {
                 this.$nextTick(() => {
@@ -157,17 +158,16 @@ export default {
                         this.$set(this.shopInfo, "logo", shopInfo.logo.split(","));
                     } catch (err) { }
 
-
+                    let params = {
+                        searchType:1,
+                        sellerId:product.sellerId,
+                        fairNo:121,
+                        productId:productId
+                    }
                     this.axios({
                         method:'get',
                         url:'/shop/getBoothInfo.cf',
-                        params:{
-                            searchType:1,
-                            sellerId:product.sellerId,
-                            fairNo:121,
-                            productId:productId,
-                            appFlag:2
-                        }
+                        params:CFEC.addConfig(params)
                     })
                         .then((res) => {
                             Indicator.close();

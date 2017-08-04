@@ -21,6 +21,7 @@
 <script>
 import header from "components/header";
 import {Indicator} from "mint-ui";
+import {CFEC} from 'common/js/util.js';
 export default {
     data() {
         return {
@@ -34,13 +35,13 @@ export default {
     created() {
         // 拉取单位列表数据
         Indicator.open("Loading");
+        let params = {
+            keys:'order_unit'
+        }
         this.axios({
             method:'get',
             url:'/commonData/list.cf',
-            params:{
-                keys:'order_unit',
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 this.unitList = res.data.data.order_unit;

@@ -12,6 +12,7 @@
     </div>
 </template>
 <script>
+import {CFEC} from 'common/js/util.js';
     export default {
         data() {
             return {
@@ -32,12 +33,13 @@
             }
         },
        created() {
+           let params = {
+               appFlag:2
+           }
             this.axios({
                 method:'get',
                 url:'/home/getLatestHotKeyWords.cf',
-                params:{
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
 
                 .then((res) => {

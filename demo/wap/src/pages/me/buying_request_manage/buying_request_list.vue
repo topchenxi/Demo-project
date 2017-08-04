@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { localStorage } from "common/js/util.js";
+import { localStorage,CFEC } from "common/js/util.js";
 // import header from "components/header/header";
 import { IMG_URL } from "common/js/common";
 import { Indicator, Toast } from "mint-ui";
@@ -62,14 +62,14 @@ export default {
         loadMoreHere() {
             this.isLoading = true;
             Indicator.open("Loading...");
+            let params = {
+                page:++this.page,
+                token:this.localToken
+            }
             this.axios({
                 method:'get',
                 url:'/buyer/buyingRequest/list.cf',
-                params:{
-                    page:++this.page,
-                    token:this.localToken,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
 
@@ -97,13 +97,13 @@ export default {
             this.isLoadDone = false;
             Indicator.open("Loading...");
             this.localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
+            let params = {
+                token:this.localToken
+            }
             this.axios({
                 method:'get',
                 url:'/buyer/buyingRequest/list.cf',
-                params:{
-                    token:this.localToken,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
                     Indicator.close();

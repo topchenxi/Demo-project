@@ -42,7 +42,7 @@
 
 <script>
 import {Indicator, Toast} from "mint-ui";
-import { localStorage } from "common/js/util.js";
+import { localStorage,CFEC } from "common/js/util.js";
 import header from "components/header";
 export default {
   data() {
@@ -113,14 +113,13 @@ export default {
         content:this.replyContent,
         messageId:this.$route.params.messageId,
         filePath:this.uploadImg.join(","),
-        fileName:this.fileName.join(","),
-        appFlag:2
+        fileName:this.fileName.join(",")
       };
 
                     this.axios({
                         method: "post",
                         url: "/message/replyInquiry.cf",
-                        params: params
+                        params: CFEC.addConfig(params)
                     })
         .then((res) => {
             Indicator.close();
@@ -152,14 +151,13 @@ export default {
         receiverId:this.$route.params.receiverId,
         content:this.replyContent,
         filePath:this.uploadImg.join(","),
-        fileName:this.fileName.join(","),
-        appFlag:2
+        fileName:this.fileName.join(",")
       };
 
         this.axios({
                         method: "post",
                         url: "/message/saveInquiry.cf",
-                        params: params
+                        params: CFEC.addConfig(params)
                     })
         .then((res) => {
               Indicator.close();
@@ -205,7 +203,7 @@ export default {
           // let blob = new Blob([this.result]);
           let fd = new FormData();
           fd.append("file", imgFiles[0]);
-          fd.append("appFlag", 2);
+          fd = CFEC.addConfig(fd);
           _this.axios({
             method: "post",
             url: "/fdfsUpload/uploadImage.cf?",

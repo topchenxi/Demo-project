@@ -105,7 +105,7 @@
 
 <script>
 import { IMG_URL, appLink } from "common/js/common"; 
-import {localStorage} from "common/js/util.js";
+import {localStorage,CFEC} from "common/js/util.js";
 import { mapMutations } from "vuex";
 import downLayer from "components/down_layer";
 
@@ -134,9 +134,7 @@ export default {
 created() {
     // 做预览功能需要获取的参数
     let urlParams = location.search;
-    let params = {
-      appFlag:2
-    };
+    let params = {};
     // 如果首页URL有自带参数，则处理为json格式
     if (urlParams.indexOf("?") > -1) {
       let paramStr = urlParams.split('?')[1];
@@ -147,6 +145,8 @@ created() {
         params[key_val[0]] = key_val[1];
       }
     }
+    params = CFEC.addConfig(params);
+    params.appVersion = '2.0';
     this.fetchData(params);
   },
   methods: {
@@ -158,7 +158,6 @@ created() {
     fetchData(params) { 
 
       let url = "/home/getHomepage.cf";
-
       this.axios({
         method:'get',
         url:url,
@@ -386,6 +385,7 @@ sup
    font-size: .7rem;
    color: rgba(0,0,0,0.87);
    letter-spacing: -0.61px; 
+   text-align:center;
   &:before
    display: block
    position: absolute

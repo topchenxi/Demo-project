@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { localStorage } from "common/js/util.js";
+import { localStorage,CFEC } from "common/js/util.js";
 import header from "components/header";
 import { IMG_URL } from "common/js/common";
 import { Indicator, Toast } from "mint-ui";
@@ -86,15 +86,15 @@ export default {
               this.isLoading = true;
             if (this.page < this.maxPage) {
                 Indicator.open("Loading...");
-            this.axios({
-                method:'get',
-                url:'/message/inquirys.cf',
-                params:{
+                let params = {
                     page:++this.page,
-                    token:this.localToken,
-                    appFlag:2
+                    token:this.localToken
                 }
-            })
+                this.axios({
+                    method:'get',
+                    url:'/message/inquirys.cf',
+                    params:CFEC.addConfig(params)
+                })
                 .then((res) => {
                     for (let value of res.data.data) {
                           this.inquiryList.push(value);
@@ -118,14 +118,14 @@ export default {
         this.isLoadDone = false;
         Indicator.open("Loading...");
         this.localToken = JSON.parse(localStorage.get("localUserInfo")).message;    // 获取token
+        let params = {
+            page:1,
+            token:this.localToken
+        }
         this.axios({
             method:'get',
             url:'/message/inquirys.cf',
-            params:{
-                page:1,
-                token:this.localToken,
-                appFlag:2
-            }
+            params:CFEC.addConfig(params)
         })
             .then((res) => {
                 this.inquiryList = res.data.data;

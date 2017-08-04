@@ -21,6 +21,7 @@
 
 <script>
 import { MessageBox } from "mint-ui";
+import { CFEC } from "common/js/util.js";
 export default {
     data() {
         return {
@@ -85,7 +86,7 @@ export default {
          this.axios({   
           method: "post",
           url: "/user/moblieWayToPasswordUpdate.cf",
-          params: params
+          params: CFEC.addConfig(params)
         })
         .then((res) => {
             if (res.data.status==="success") {

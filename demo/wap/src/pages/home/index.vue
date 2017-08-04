@@ -35,7 +35,7 @@
   <!--菜单-->
 
   <!-- 文字滚动轮播 -->
-  <section class="textSlide" v-if="homepageWordFigure.homepageDetails.length>0">
+  <section class="textSlide" v-if="homepageWordFigure">
     <span class="icon"></span>
     <span class="line"></span>
     <div class="textList">
@@ -49,7 +49,7 @@
   <!-- 文字滚动轮播 -->
 
   <!-- 两栏广告 -->
-  <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality.homepageDetails.length>0">
+  <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality">
     <div class="fl" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[0].contentType, homepageAdvertisementVerticality.homepageDetails[0].contentValue)">
       <img :src="IMG_URL + this.homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" alt="">
     </div>
@@ -60,7 +60,7 @@
   <!-- 两栏广告 -->
 
   <!--热门-->
-  <section class="hot-wrap" v-if="homepageWindow.homepageDetails.length>0">
+  <section class="hot-wrap" v-if="homepageWindow">
     <div class="inner">
       <div class="inner-l" @click="navRoute(homepageWindow.homepageDetails[0].contentType, homepageWindow.homepageDetails[0].contentValue)">
         <img :src="IMG_URL + this.homepageWindow.homepageDetails[0].imgUrlIosFront" alt="" class="frontImg">
@@ -81,7 +81,7 @@
   <!--热门-->
 
   <!--通栏广告-->
-  <section class="oneColAd" v-if="homepageAd1.homepageDetails.length>0">
+  <section class="oneColAd" v-if="homepageAd1">
     <div @click="navRoute(homepageAd1.homepageDetails[0].contentType, homepageAd1.homepageDetails[0].contentValue)">
       <img :src="IMG_URL + this.homepageAd1.homepageDetails[0].imgUrlAndroidBackend" alt="">
     </div>
@@ -89,7 +89,7 @@
   <!--通栏广告-->
 
   <!-- 行业类目 -->
-  <section class="category-wrap" v-if="homepageCategory.homepageDetails.length>0">
+  <section class="category-wrap" v-if="homepageCategory">
     <c-moduleTitle 
       :title="this.homepageCategory.title"
       :contentType="this.homepageCategory.homepageTitle.contentType"
@@ -113,7 +113,7 @@
   <!-- 行业类目 -->
 
   <!-- 新商品推荐 -->
-  <section class="newProduct" v-if="homepageNewProduct.homepageDetails.length>0">
+  <section class="newProduct" v-if="homepageNewProduct">
     <c-moduleTitle 
       :title="this.homepageNewProduct.title"
       :contentType="this.homepageNewProduct.homepageTitle.contentType"
@@ -136,7 +136,7 @@
   <!-- 新商品推荐 -->
 
   <!-- 新广告页 -->
-  <section class="newAdPage" v-if="homepageNewAdvertisement.homepageDetails.length>0">
+  <section class="newAdPage" v-if="homepageNewAdvertisement">
     <c-moduleTitle 
       :title="this.homepageNewAdvertisement.title"
       :contentType="this.homepageNewAdvertisement.homepageTitle.contentType"
@@ -164,7 +164,7 @@
   <!-- 新广告页 -->
 
   <!-- 推荐商品 -->
-  <section class="hotProduct">
+  <section class="hotProduct" v-if="homepageRecommendProduct">
     <c-moduleTitle 
       :title="this.homepageRecommendProduct.title"
       :contentType="this.homepageRecommendProduct.homepageTitle.contentType"
@@ -207,7 +207,7 @@
 
 <script>
 import { IMG_URL, appLink } from "common/js/common"; 
-import {localStorage} from "common/js/util.js";
+import {localStorage,CFEC} from "common/js/util.js";
 import { mapMutations } from "vuex";
 import downLayer from "components/down_layer";
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
@@ -305,9 +305,11 @@ export default {
 created() {
     // 做预览功能需要获取的参数
     let urlParams = location.search;
-    let params = {
-      appFlag:2
-    };
+    let params = {};
+    if(localStorage.get("localUserInfo")){
+        params.token = JSON.parse(localStorage.get("localUserInfo")).message;
+    }
+    
     // 如果首页URL有自带参数，则处理为json格式
     if (urlParams.indexOf("?") > -1) {
       let paramStr = urlParams.split('?')[1];
@@ -318,6 +320,7 @@ created() {
         params[key_val[0]] = key_val[1];
       }
     }
+    params = CFEC.addConfig(params);
     this.fetchData(params);
   },
   methods: {
@@ -798,9 +801,9 @@ sup
           text-overflow: ellipsis;
           word-break: break-word;
           overflow: hidden;
-          line-height:0.6rem;
+          line-height:0.7rem;
           font-size:0.5rem;
-          max-height:2rem;
+          max-height:1.4rem;
           padding: 0 0.4rem;
 .newProduct
  margin-bottom:0.6rem;

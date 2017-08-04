@@ -71,6 +71,10 @@ const resetSuccess = resolve => require(["@/pages/reset_password/resetSuccess"],
 const verifyCode = resolve => require(["@/pages/reset_password/verifyCode"], resolve);
 const resetByPhone = resolve => require(["@/pages/reset_password/resetByPhone"], resolve);
 
+// 引导
+
+const versionLead = rs => require(["@/pages/lead/version"], rs);
+
 export default [{
         path: "/",
         component: footer,
@@ -78,7 +82,6 @@ export default [{
                 path: "",
                 redirect: "/home"
             },
-
             {
                 path: "/home",
                 name: "home",
@@ -353,5 +356,10 @@ export default [{
         path: "/resetByPhone",
         name: "resetByPhone",
         component: resetByPhone
+    },
+    {
+        path: "/lead",
+        name: "version",
+        component: versionLead
     }
 ];

@@ -100,6 +100,7 @@ import header from "components/header";
 import downLayer from "components/down_layer";
 import { Indicator, Toast } from "mint-ui";
 import { IMG_URL } from "common/js/common";
+import {CFEC} from 'common/js/util.js';
 
 export default {
     data() {
@@ -141,27 +142,27 @@ export default {
             Indicator.open("Loading");
 
             let shopDetail = function () {
+                let params = {
+                    sellerId:sellerId
+                }
                 return _this.axios({
                     method:'get',
                     url:'/shop/detail.cf',
-                    params:{
-                        sellerId:sellerId,
-                        appFlag:2
-                    }
+                    params:CFEC.addConfig(params)
                 })
             };
 
             // 拉取摊位数据
             let shopBooth = function () {
+                let params = {
+                    searchType:1,
+                    sellerId:sellerId,
+                    fairNo:121
+                }
                 return _this.axios({
                     method:'get',
                     url:'/shop/getBoothInfo.cf',
-                    params:{
-                        searchType:1,
-                        sellerId:sellerId,
-                        fairNo:121,
-                        appFlag:2
-                    }
+                    params:CFEC.addConfig(params)
                 })
             };
 

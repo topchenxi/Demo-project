@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    import {CFEC} from "common/js/util.js";
     import { Indicator, Toast } from "mint-ui";
     import header from "components/header";
     export default {
@@ -69,14 +70,13 @@
                  
                     let params = {
                          userEmail:  this.userEmail,
-                         password: this.password,
-                         appFlag: 2
+                         password: this.password
                     };
                     
                     this.axios({
                         method: "post",
                         url: "/user/login.cf",
-                        params: params
+                        params: CFEC.addConfig(params)
                     })
                     .then(res => {                        
                         if (res.data.status === "success") {

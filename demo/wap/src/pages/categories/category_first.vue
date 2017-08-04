@@ -20,6 +20,7 @@
 
 <script>
 import header from "components/header";
+import {CFEC} from "common/js/util.js";
 import {
     Indicator,
     Toast
@@ -46,13 +47,13 @@ export default {
             //    `/dict/category/search.cf?parentId=${0}`./api/categoriesData
             // ./api/categoriesData
             Indicator.open("Loadig...");
+            let params = {
+                parentId:0
+            }
             this.axios({
                 method:'get',
                 url:'/dict/category/search.cf',
-                params:{
-                    parentId:0,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
                     Indicator.close();

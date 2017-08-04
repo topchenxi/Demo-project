@@ -131,6 +131,7 @@
 import { IMG_URL } from "common/js/common";
 import products from "@/pages/search/children/searchDefault";
 import { Indicator, Toast } from "mint-ui";
+import {CFEC} from 'common/js/util.js';
 
 export default {
     data() {
@@ -296,25 +297,25 @@ export default {
             Indicator.open("Loading...");
             let _this = this;
             let getProducts = function () {
+                let params = {
+                    keyword:_this.$store.state.keyword,
+                    page:1
+                }
                 return _this.axios({
                     method:'get',
                     url:'/search/products.cf',
-                    params:{
-                        keyword:_this.$store.state.keyword,
-                        page:1,
-                        appFlag:2
-                    }
+                    params:CFEC.addConfig(params)
                 })
             };
             let getSuppliers = function () {
+                let params = {
+                    keyword:_this.$store.state.keyword,
+                    page:1
+                }
                 return _this.axios({
                     method:'get',
                     url:'/search/shops.cf',
-                    params:{
-                        keyword:_this.$store.state.keyword,
-                        page:1,
-                        appFlag:2
-                    }
+                    params:CFEC.addConfig(params)
                 })
             };
 
@@ -354,14 +355,14 @@ export default {
                 case 1:
                     if (this.proPage <= this.proMaxPage) {
                         this.isBtnLoading = true;
+                        let params = {
+                            keyword:this.$store.state.keyword,
+                            page:++this.proPage
+                        }
                         this.axios({
                             method:'get',
                             url:'/search/products.cf',
-                            params:{
-                                keyword:this.$store.state.keyword,
-                                page:++this.proPage,
-                                appFlag:2
-                            }
+                            params:CFEC.addConfig(params)
                         })
                             .then((res) => {
                                 this.$nextTick(() => {
@@ -386,14 +387,14 @@ export default {
                 case 2:
                     if (this.supPage <= this.supMaxPage) {
                         this.isBtnLoading = true;
+                        let params = {
+                            keyword:this.$store.state.keyword,
+                            page:++this.supPage
+                        }
                         this.axios({
                             method:'get',
                             url:'/search/shops.cf',
-                            params:{
-                                keyword:this.$store.state.keyword,
-                                page:++this.supPage,
-                                appFlag:2
-                            }
+                            params:CFEC.addConfig(params)
                         })
                             .then((res) => {
                                 this.$nextTick(() => {

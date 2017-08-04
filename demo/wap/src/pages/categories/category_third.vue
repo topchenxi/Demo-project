@@ -18,6 +18,7 @@
 
 <script>
 import header from "components/header";
+import {CFEC} from "common/js/util.js";
 import {
     Indicator,
     Toast
@@ -63,13 +64,13 @@ export default {
         // 获取三级类目
         fetchCategoryThird(categoryId) {
             Indicator.open("Loading");
+            let params = {
+                parentId:categoryId
+            }
             this.axios({
                 method:'get',
                 url:'/dict/category/search.cf',
-                params:{
-                    parentId:categoryId,
-                    appFlag:2
-                }
+                params:CFEC.addConfig(params)
             })
                 .then((res) => {
                     this.$nextTick(() => {

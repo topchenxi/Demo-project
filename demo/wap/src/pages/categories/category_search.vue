@@ -109,6 +109,7 @@
 
 <script>
 import { IMG_URL } from "common/js/common";
+import {CFEC} from "common/js/util.js";
 import { Indicator, Toast } from "mint-ui";
 
 export default {
@@ -231,14 +232,14 @@ export default {
                 case 1:
                     if (this.proPage <= this.proMaxPage) {
                        this.isBtnLoading = true;
+                       let params = {
+                           catId:this.$route.params.categoryId,
+                           page:++this.proPage
+                       }
                         this.axios({
                             method:'get',
                             url:'/search/products.cf',
-                            params:{
-                                catId:this.$route.params.categoryId,
-                                page:++this.proPage,
-                                appFlag:2
-                            }
+                            params:CFEC.addConfig(params)
                         })
                             .then((res) => {
                                 this.$nextTick(() => {
@@ -263,14 +264,14 @@ export default {
                 case 2:
                     if (this.supPage <= this.supMaxPage) {
                          this.isBtnLoading = true;
+                         let params = {
+                             categoryIds:this.$route.params.categoryId,
+                             page:++this.supPage
+                         }
                         this.axios({
                             method:'get',
                             url:'/search/shopCategories.cf',
-                            params:{
-                                categoryIds:this.$route.params.categoryId,
-                                page:++this.supPage,
-                                appFlag:2
-                            }
+                            params:CFEC.addConfig(params)
 
                         })
                             .then((res) => {
@@ -305,11 +306,10 @@ export default {
                 return _this.axios({
                     method:'get',
                     url:'/search/products.cf',
-                    params:{
+                    params:CFEC.addConfig({
                         catId:categoryId,
-                        page:1,
-                        appFlag:2
-                    }
+                        page:1
+                    })
                 })
             };
             let getSuppliers = function () {
@@ -317,11 +317,10 @@ export default {
                 return _this.axios({
                     method:'get',
                     url:'/search/shopCategories.cf',
-                    params:{
+                    params:CFEC.addConfig({
                         categoryIds:categoryId,
-                        page:1,
-                        appFlag:2
-                    }
+                        page:1
+                    })
                 })
             };
 
