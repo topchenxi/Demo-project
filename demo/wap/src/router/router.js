@@ -72,8 +72,13 @@ const verifyCode = resolve => require(["@/pages/reset_password/verifyCode"], res
 const resetByPhone = resolve => require(["@/pages/reset_password/resetByPhone"], resolve);
 
 // 引导
-
 const versionLead = rs => require(["@/pages/lead/version"], rs);
+
+// 专题页
+const topic = resolve => require(["@/pages/topic"], resolve);
+
+// 学生重置密码
+const studentRspwd = resolve => require(["@/pages/studentRspwd"], resolve);
 
 export default [{
         path: "/",
@@ -361,5 +366,17 @@ export default [{
         path: "/lead",
         name: "version",
         component: versionLead
+    },
+    // 专题页
+    {
+        path: "/topic/:topicId",
+        name: "topic",
+        component: topic
+    },
+    // 学生重置密码
+    {
+        path: "/studentRspwd",
+        name: "studentRspwd",
+        component: studentRspwd
     }
 ];

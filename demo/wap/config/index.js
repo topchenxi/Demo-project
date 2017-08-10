@@ -30,23 +30,23 @@ module.exports = {
         // 172.17.200.72
         proxyTable: {
             "/app_center1": {
-                // target: "http://172.17.200.72:8080/app_center1",
-                // 临时地址
-                target: "http://192.168.10.144:8090/app_center1",
+                target: "http://172.17.200.72:8080/app_center1",
+                // 临时地址 
+                // target: "http://sit1.m.e-cantonfair.com/app_center1",
                 changeOrigin: true,
                 pathRewrite: {
                     "^/app_center1": ""
                 }
             }
         },
-        //   proxyTable: {
-        //   "/app_center": {
-        //     target: "http://172.17.200.72:8080/app_center",
-        //     changeOrigin: true,
-        //     pathRewrite: {
-        //       "^/app_center": ""
+        // proxyTable: {
+        //     "/app_center": {
+        //         target: "http://172.17.200.72:8080/app_center",
+        //         changeOrigin: true,
+        //         pathRewrite: {
+        //             "^/app_center": ""
+        //         }
         //     }
-        //   }
         // },
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README

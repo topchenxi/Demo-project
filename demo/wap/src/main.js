@@ -10,6 +10,8 @@ import VueAxios from "vue-axios";
 import App from "@/App";
 import FastClick from "fastclick";
 
+
+
 // GA统计
 import VueAnalytics from 'vue-analytics';
 
@@ -23,9 +25,12 @@ import { InfiniteScroll } from "mint-ui";
 import { Popup } from "mint-ui";
 import { Picker } from "mint-ui";
 import { Switch } from "mint-ui";
+import { Field } from 'mint-ui';
+import { Button } from 'mint-ui';
 
 // 滚动插件
-import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueScroller from 'vue-scroller';
 
 
 window.addEventListener(
@@ -39,12 +44,15 @@ window.addEventListener(
 Vue.component(Picker.name, Picker); //  第一个参数取组件名称
 Vue.component(Switch.name, Switch);
 Vue.component(Popup.name, Popup);
+Vue.component(Field.name, Field);
+Vue.component(Button.name, Button);
 Vue.use(InfiniteScroll);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
+Vue.use(VueScroller);
 
 axios.defaults.baseURL = "/app_center1";
 // axios.defaults.baseURL = "/app_center";

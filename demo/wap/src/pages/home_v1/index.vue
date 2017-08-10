@@ -92,9 +92,7 @@
     <!--推荐-->
 
     <!--版权声明-->
-      <section class="home-copy-right">
-        2012-2017 CantonFair E-commerce Co,.Ltd All Rights Reserved.
-      </section>
+    <c-copyright></c-copyright>
     <!--版权声明-->
 
     <!--底部下载App弹窗-->
@@ -108,6 +106,7 @@ import { IMG_URL, appLink } from "common/js/common";
 import {localStorage,CFEC} from "common/js/util.js";
 import { mapMutations } from "vuex";
 import downLayer from "components/down_layer";
+import copyRight from 'components/copyRight';
 
 export default {
   data() {
@@ -128,7 +127,8 @@ export default {
   },
   
   components:{
-    "c-downLayer": downLayer
+    "c-downLayer": downLayer,
+    "c-copyright":copyRight
   },
 
 created() {
@@ -508,14 +508,6 @@ sup
     -webkit-transform: scale(0.5,0.5)
     transform: scale(0.5,0.5)
     -webkit-transform-origin: top left
-
-.home-copy-right  
-  margin-top: (48/40)rem
-  padding-bottom: (40/40)rem
-  font-size: (20/40)rem
-  color: rgba(0,0,0,0.54)
-  letter-spacing: -0.41px
-  text-align: center
 
 .home-bottom-app
  height: (128/40)rem
