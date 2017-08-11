@@ -1,0 +1,74 @@
+<h2 id="-">#按钮</h2>
+<p>##默认样式</p>
+<div class="docs-example">
+    <button type="button" class="btn">默认样式</button>
+    <button type="button" class="btn btn-primary">主色按钮</button>
+    <button type="button" class="btn btn-broken">配合色按钮</button>
+    <button type="button" class="btn btn-positive">补色按钮</button>
+    <button type="button" class="btn btn-azure">湛蓝色按钮</button>
+    <button type="button" class="btn btn-blue">蓝色按钮</button>
+    <button type="button" class="btn btn-green">绿色按钮</button>
+    <button type="button" class="btn btn-orange">橘色按钮</button>
+    <button type="button" class="btn btn-op">补色按钮</button><br></div>
+
+<pre><code class="lang-html">&lt;button type=&quot;button&quot; class=&quot;btn&quot;&gt;默认样式&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;主色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-broken&quot;&gt;配合色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-positive&quot;&gt;补色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-azure&quot;&gt;湛蓝色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-blue&quot;&gt;蓝色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-green&quot;&gt;绿色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-orange&quot;&gt;橘色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-op&quot;&gt;补色按钮&lt;/button&gt;
+</code></pre>
+<p>##椭圆形按钮</p>
+<p>在默认样式的基础上添加 <code>.round</code> class.</p>
+<div class="docs-example">
+    <button type="button" class="btn round">默认样式</button><br>    <button type="button" class="btn btn-primary round">主色按钮</button><br>    <button type="button" class="btn btn-broken round">配合色按钮</button><br>    <button type="button" class="btn btn-positive round">补色按钮</button>
+    <button type="button" class="btn btn-azure round">湛蓝色按钮</button>
+</div>
+
+<pre><code class="lang-html">&lt;button type=&quot;button&quot; class=&quot;btn round&quot;&gt;默认样式&lt;/button&gt;    
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary round&quot;&gt;主色按钮&lt;/button&gt;    
+&lt;button type=&quot;button&quot; class=&quot;btn btn-broken round&quot;&gt;配合色按钮&lt;/button&gt;    
+&lt;button type=&quot;button&quot; class=&quot;btn btn-positive round&quot;&gt;补色按钮&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-azure round&quot;&gt;湛蓝色按钮&lt;/button&gt;
+</code></pre>
+<p>##禁用状态</p>
+<div class="docs-example">
+    <button type="button" class="btn"  disabled="disabled">默认样式</button>
+    <button type="button" class="btn btn-primary"  disabled="disabled">主色按钮</button><br>    <br>
+    <a href="#" class="btn btn-primary disabled">链接按钮禁用状态</a>
+    <a href="#" class="btn disabled">链接按钮禁用状态</a>
+</div>
+
+<pre><code class="lang-html">&lt;button type=&quot;button&quot; class=&quot;btn&quot;  disabled=&quot;disabled&quot;&gt;默认样式&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;  disabled=&quot;disabled&quot;&gt;主色按钮&lt;/button&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary disabled&quot;&gt;链接按钮禁用状态&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn disabled&quot;&gt;链接按钮禁用状态&lt;/a&gt;
+</code></pre>
+<div class="tips">IE7~9 会把设置了 disabled 属性的 button 元素文字渲染成灰色并加上白色阴影，CSS 无法控制这个默认样式。</div>
+
+
+
+<p>##尺寸</p>
+<div class="docs-example">
+    <button type="button" class="btn btn-primary btn-lg">大的</button> <br>
+    <button type="button" class="btn btn-primary">默认大小</button><br>
+    <button type="button" class="btn btn-primary btn-sm" >小的</button><br>
+    <button type="button" class="btn btn-primary btn-xs">小小的</button>
+</div>
+
+<pre><code class="lang-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;大的&lt;/button&gt; 
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;默认大小&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-sm&quot; &gt;小的&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-xs&quot;&gt;小小的&lt;/button&gt;
+</code></pre>
+<p>##块级</p>
+<div class="docs-example">
+    <button type="button" class="btn btn-primary btn-block">块级按钮</button>
+</div>
+
+<pre><code class="lang-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-block&quot;&gt;块级按钮&lt;/button&gt;
+</code></pre>
+<p>##带图标按钮</p>

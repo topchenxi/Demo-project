@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>layer</title>
+  <link rel="stylesheet" href="../../../static/cfec/dev/view/css/cfec.css">
+   <link rel="stylesheet" href="../../css/demo.css">
+  <link rel="stylesheet" href="../../../static/cfec/dev/view/css/component/icon.css">
+ <link rel="stylesheet" href="../../../static/cfec/dev/view/css/component/layer.css">
+  <style type="text/css">
+     html body{
+      background:#fff;
+      min-width: 860px;
+     }
+   </style>
+</head>
+<body>
+<div class="col-md-9 markdown-body ng-scope" ui-view="main">
+     <h1 id="superslide-" class="ng-scope">弹窗</h1>
+     <h2>依赖文件</h2>
+     <ul>
+      <li><strong>cfec.css</strong></li>
+      <li><strong>jquery.js</strong></li>
+      <li><strong>layer.js</strong></li>
+      <li><strong>artTemplate.js</strong></li>
+     </ul>
+     <dl>
+       <dt><h2>使用方法</h2></dt>
+       <dd>1.先使用requireJS导入所需的依赖js文件</dd>
+       <dd>2.拷贝对应<strong>代码</strong>进去，就可以实现。</dd>
+       <dd>3.js API参考多对应的js模块的文档</dd>
+        <dd>4.layer插件的icon对应  1：ok  2：error 3：警告</dd>
+     </dl>
+     <h2><strong>实例</strong></h2>
+     <p></span><a href="/docs/view/css-component/layer.html" target="_blank" class="blue">在新窗口查看效果</a><span class="icon-tip icon-input-warm" style="margin-left:5px;"></p>
+     <p>
+         <button class="j-alert btn-submit btn">单行文字弹窗</button>
+            <button class="j-alert_multi btn-submit btn">多行弹窗</button>
+            <!--<button class="j-alert-status">有图标提示弹窗</button>-->
+            <button class="j-alert-status-multi btn-submit btn">有图标提示弹窗</button>
+     </p>
+  </div>
+  <div class="col-md-9 markdown-body ng-scope" ui-view="main">
+    <h2>单行文字代码</h2>
+           <pre>
+             <code>
+                require(['jquery','layer','artTemplate'],function($,layer,template){
+                           $(".j-alert").click(function(){
+                             var html_tpl= template('layer_base', new Object());
+                             var layer1= layer.open({
+                                  area: "420px",
+                                  fix: false,
+                                  shadeClose: true,
+                                  title: "提示",
+                                  btn: ['确认', '取消'],
+                                  content:html_tpl
+                                });
+                          })
+                })
+                    &lt;!--基础弹窗[--&gt;
+                        &lt;script id="layer_base" type="text/html"&gt;
+                            &lt;p class="tac"&gt;我是提示信息.&lt;/p&gt;
+                        &lt;/script&gt;
+                    &lt;!--基础弹窗]--&gt;
+             </code>
+           </pre>
+
+    <h2>多行文字代码</h2>
+           <pre>
+             <code>
+                require(['jquery','layer','artTemplate'],function($,layer,template){
+                           $(".j-alert").click(function(){
+                             var html_tpl= template('layer_base_multi', new Object());
+                             var layer1= layer.open({
+                                  area: "420px",
+                                  fix: false,
+                                  shadeClose: true,
+                                  title: "提示",
+                                  btn: ['确认', '取消'],
+                                  content:html_tpl
+                                });
+                          })
+                })
+                    &lt;!--多行弹窗[--&gt;
+                        &lt;script id="layer_base_multi" type="text/html"&gt;
+                            &lt;p"&gt;我是提示信息我是提示信息.我是提示信息.我是提示信息.我是提示信息.我是提示信息.我是提示信息......&lt;/p&gt;
+                        &lt;/script&gt;
+                    &lt;!--多行弹窗]--&gt;
+             </code>
+           </pre>
+           <h2>带图标弹窗代码</h2>
+           <pre>
+             <code>
+                require(['jquery','layer','artTemplate'],function($,layer,template){
+                          $(".j-alert-status-multi").click(function(){
+                                var html_tpl= template('layer_status_multi', new Object());
+                                var layer2= layer.open({
+                                    area: "420px",
+                                    fix: false,
+                                    shadeClose: true,
+                                    title: "提示",
+                                    icon: 1,
+                                    btn: ['确认', '取消'],
+                                    content:html_tpl
+                               });
+                            });
+                });            
+                    &lt;!--有图标弹窗[--&gt;
+                       &lt;script id="layer_status_multi" type="text/html"&gt;
+                           &lt;h5&gt;我是状态提示文字.&lt;/h5&gt;
+                           &lt;p&gt;我是状态提示内容我是状态提示内容&lt;/p&gt;
+                       &lt;/script&gt;
+                    &lt;!--有图标弹窗[--&gt;
+             </code>
+           </pre>
+  </div>
+<script>
+var assetsUrl = 'http://dev.static.e-cantonfair.com';
+var image_url ='http://192.168.10.17';
+var commonApi = 'http://dev.seller.e-cantonfair.com/commonapi';
+var projectName= '/seller_center';
+var project_order_url = 'http://dev.order.e-cantonfair.com/order_center';
+var project_ec_url = 'http://dev.e-cantonfair.com';
+var imageInterfaceUrl= 'http://dev.seller.e-cantonfair.com/seller_center';
+var project_buyer_url = 'http://dev.buyer.e-cantonfair.com/buyer_center';
+var userName = 'sxm2';
+var auditStatus = 999;//状态 -新增：0 ; 修改：1 ; 审核中（待审核）: 2 ; 审核通过：3 ; 审核不通过：-1 ; 上线：9 ; 下线：10 ; 删除：-3 ; 商机异常（待审核）：-4 ; 商机异常（审核不通过）：-5 ;
+var companyInfoStatus = 999;//公司资料审核，内容审核状态：0 未提交，2 未审核，3 审核通过，-1 审核不通过，-3 删除
+var companyAuditStatus = 999;//公司资质审核,资质审核状态（状态 -新增：0 ; 修改：1 ; 审核中（待审核）: 2 ; 审核通过：3 ; 审核不通过：-1 ;）
+</script>
+<script src="http://dev.static.e-cantonfair.com/global/js/require-config.min.js"></script>
+<script src="http://dev.static.e-cantonfair.com/global/js/global.js"></script>
+<script type="text/javascript">
+  require(['jquery','layer','artTemplate'],function($,layer,template){
+    //基础弹窗
+     $(".j-alert").click(function(){
+         var html_tpl= template('layer_base', new Object());
+         var layer1= layer.open({
+              area: "420px",
+              fix: false,
+              shadeClose: true,
+              title: "提示",
+              btn: ['确认', '取消'],
+              content:html_tpl
+            });
+      })
+     //基础弹窗多行
+     $(".j-alert_multi").click(function(){
+         var html_tpl= template('layer_base_multi', new Object());
+         var layer1= layer.open({
+              area: "420px",
+              fix: false,
+              shadeClose: true,
+              title: "提示",
+              btn: ['确认', '取消'],
+              content:html_tpl
+            });
+         //确定
+         $(".j-btn-submit").click(function(){
+           /*这里执行代码*/
+           layer.close(layer1);
+         })
+         //取消
+         $(".j-btn-cancel").click(function(){
+            layer.close(layer1);
+         })
+      })
+
+    //单行有图标弹窗
+     $(".j-alert-status").click(function(){
+       
+         var html_tpl= template('layer_status', new Object());
+          var layer2= layer.open({
+              area: "420px",
+              fix: false,
+              shadeClose: true,
+              title: "提示",
+               icon: 1,
+              content:html_tpl
+            });
+         $(".j-btn-submit").click(function(){
+           /*这里执行代码*/
+           layer.close(layer2);;
+         })
+         //取消
+         $(".j-btn-cancel").click(function(){
+            layer.close(layer2);
+         })
+      })
+      //多行有图标弹窗
+     $(".j-alert-status-multi").click(function(){
+       
+         var html_tpl= template('layer_status_multi', new Object());
+          var layer2= layer.open({
+              area: "420px",
+              fix: false,
+              shadeClose: true,
+              title: "提示",
+              icon: 1,
+              btn: ['确认', '取消'],
+              content:html_tpl
+            });
+         $(".j-btn-submit").click(function(){
+           /*这里执行代码*/
+           layer.close(layer2);
+         })
+         //取消
+         $(".j-btn-cancel").click(function(){
+            layer.close(layer2);
+         })
+      })
+
+  })
+</script>
+<!--基础弹窗[-->
+  <script id="layer_base" type="text/html">
+    <p class="tac">我是提示信息.</p>
+  </script>
+  <!--基础弹窗]-->
+  <!--基础弹窗多行[-->
+  <script id="layer_base_multi" type="text/html">
+      <p>我是提示信息我是提示信息.我是提示信息.我是提示信息.我是提示信息.我是提示信息.我是提示信息.....</p>
+  </script>
+  <!--基础弹窗多行]-->
+  <!--有图标单行弹窗[-->
+  <script id="layer_status" type="text/html">
+     <h2 class="clearfix">我是状态提示文字.</h2>
+  </script>
+  <!--有图标单行弹窗[-->
+   <!--有图标单行弹窗[-->
+ <script id="layer_status_multi" type="text/html">
+     <h5>我是状态提示文字.</h5>
+    <p>我是状态提示内容我是状态提示内容</p>
+  </script>
+  <!--有图标单行弹窗[-->
+</body>
+</html>

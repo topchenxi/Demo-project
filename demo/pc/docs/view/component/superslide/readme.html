@@ -1,0 +1,58 @@
+<h3 id="superslide-">SuperSlide组件文档</h3>
+<ul>
+<li>依赖：<code>require.js</code> <code>superslide.js</code> <code>jquery.js</code></li>
+<li>调用方式：<h2 id="-">页面结构：</h2>
+```<div class="slideTxtBox">
+  <div class="hd">
+      <ul><li>教育</li><li>培训</li><li>出国</li></ul>
+  </div>
+  <div class="bd">
+      <ul>
+          <li><a href="http://www.SuperSlide2.com" target="_blank">哈哈哈哈哈</a></li>
+          ...
+      </ul>
+      <ul>
+          <li><a href="http://www.SuperSlide2.com" target="_blank">呵呵呵呵呵</a></li>
+          ...
+      </ul>
+      <ul>
+          <li><a href="http://www.SuperSlide2.com" target="_blank">嘿嘿嘿嘿嘿</a></li>
+          ...
+      </ul>
+  </div>
+</div>
+
+</li>
+</ul>
+<pre><code>## js:
+</code></pre><p>  define([&#39;jquery&#39;, &#39;jqzoom&#39;], function($)
+  $(&quot;.slideTxtBox&quot;).slide({
+    mainCell: &quot;.bd ul&quot;,
+    titCell: &quot;.hd i&quot;,
+    effect: &quot;fade&quot;,
+    autoPlay: true,
+    interTime: &quot;5000&quot;,
+    delayTime: &quot;1000&quot;,
+    titOnClassName: &quot;pointer-active&quot;
+  });
+   });</p>
+<pre><code>
+
+### 基础参数
+</code></pre><p> $(&quot;.slideTxtBox&quot;).slide({
+    autoPage: false,          //程序自动分页需结合titCell使用，若为true，则titCell为导航元素的包裹层对象。
+    mainCell: &quot;.bd ul&quot;,       //导航元素对象。
+    titCell: &quot;.hd i&quot;,         //切换元素的包裹层对象。
+    effect: &quot;fade&quot;,           //动画效果 fade(渐显) top(滚动)  left(左滚动)  topLoop(上循环滚动) 。
+                              //leftLoop(左循环滚动) topMarquee(上无缝循环滚动) leftMarquee(左无缝循环滚动)。
+                              //fold(淡入淡出)(ps:v2.0) slideDown(下拉效果)(ps:v2.1)。</p>
+<pre><code>autoPlay: true,           //自动运行
+interTime: &quot;5000&quot;,        //毫秒,自动运行间隔。
+delayTime: &quot;1000&quot;,        //毫秒；切换效果持续时间。
+trigger:&quot;mouseover&quot;,      //titCell触发方式: mouseover(鼠标移过触发) click(鼠标点击触发)。
+scroll:&quot;1&quot;                //每次滚动个数。
+vis:&quot;1&quot;                   //visible缩写，mainCell的可视范围个数。
+titOnClassName: &quot;.class&quot;  //当前titCell位置自动增加的class名称。
+easing:&quot;swing&quot;            //缓动效果,使效果更流畅。
+</code></pre><p>  });  </p>
+<p>```</p>

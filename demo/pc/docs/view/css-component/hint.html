@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hint</title>
+   <link rel="stylesheet" href="../../../static/cfec/dev/view/css/cfec.css">
+   <link rel="stylesheet" href="../../css/demo.css">
+    <link rel="stylesheet" href="../../../static/cfec/dev/view/css/component/icon.css">
+ <link rel="stylesheet" href="../../../static/cfec/dev/view/css/component/hint.css">
+ <style type="text/css">
+     html body{
+      background:#fff;
+      min-width: 860px;
+     }
+   </style>
+
+</head>
+<body>
+<div class="col-9 markdown-body ng-scope" ui-view="main">
+    <h1 id="superslide-" class="ng-scope">提示</h1>
+       <h3>依赖文件</h3>
+       <ul>
+        <li><strong>cfec.css</strong></li>
+       </ul>
+       <h3><strong>实例 <small> --温馨提示</small></strong></h3>
+    <!--温馨提示[-->
+     <div class="hint hint-bd hint-warm">
+        <strong>温馨提示</strong>
+        <p>我是温馨提示内容</p>
+     </div>
+    <!--温馨提示]-->
+    <h3><strong>代码</strong></h3>
+    <p>如果不需要边框，可以把hint-bd移除</p>
+       <pre>
+         <code>
+             &lt;!--温馨提示[--&gt;
+               &lt;div class="hint hint-bd hint-warm"&gt;
+                   &lt;strong&gt;温馨提示&lt;/strong&gt;
+                   &lt;p&gt;我是温馨提示内容&lt;/p&gt;
+               &lt;/div&gt;
+            &lt;!--温馨提示]--&gt;
+         </code>
+       </pre>
+
+    <h3><strong>实例 <small>--小内容提示</small></strong></h3>
+     <p>小内容提示实例1</p>
+    <!--小提示[-->
+     <div class="hint hint-small hint-small-multi">
+         <span class="icon icon-tip icon-bulb"></span>
+       <h5>
+         我是小提示内容我是小提示内容
+       </h5>
+        <strong>我是强调内容我是强调内容</strong>
+     </div>
+    <!--小提示]-->
+    <h3><strong>代码</strong></h3>
+     <pre>
+        <code>
+           &lt;!--小提示[--&gt;
+             &lt;div class="hint  hint-small hint-small-multi"&gt;
+                 &lt;span class="icon"&gt;&lt;/span&gt;
+                 &lt;h5&gt;
+                     我是小提示内容我是小提示内容
+                 &lt;/5s&gt;
+                 &lt;strong&gt;我是强调内容我是强调内容&lt;/strong&gt;
+             &lt;/div&gt;
+           &lt;!--小提示]--&gt;
+        </code>
+     </pre>
+     <p>小内容提示实例2</p>
+     <!--小提示[-->
+     <div class="hint hint-small">
+         <span class="icon icon-tip icon-bulb"></span>
+       <h5>
+         我是小提示内容我是小提示内容
+      </h5>
+    </div>
+    <!--小提示]-->
+    <!--小提示]-->
+    <h3><strong>代码</strong></h3>
+     <pre>
+        <code>
+          &lt;!--小提示[--&gt;
+           &lt;div class="hint hint-small"&gt;
+            &lt;span class="icon"&gt;&lt;/span&gt;
+               &lt;h5&gt;
+                  我是小提示内容我是小提示内容
+               &lt;/h5&gt;
+           &lt;/div&gt;
+          &lt;!--小提示]--&gt;
+        </code>
+     </pre>
+     <h3><strong>实例 <small>--进行中反馈提示</small></strong></h3>
+     <!--页面进行中[-->
+     <div class="hint hint-bd hint-feedback">
+         <span class="icon"></span>
+         <h5>
+          交易转态:等待收货
+        </h5>
+       <p>
+         距离交易时间结束还有: <span class="strong">03天10小时10分10秒</span>
+       </p>
+        <p>
+        发货时间: 2015年05月03日 18:00
+       </p>
+     </div>
+     <h3><strong>代码</strong></h3>
+     <pre>
+      <code>
+          &lt;!--页面进行中[--&gt;
+             &lt;div class="hint hint-bd hint-feedback"&gt;
+          &lt;span class="icon"&gt;&lt;/span&gt;
+                 &lt;h5&gt;
+                      交易转态:等待收货
+                 &lt;/h5&gt;
+                 &lt;p&gt;
+                     距离交易时间结束还有: &lt;span class="strong"&gt;03天10小时10分10秒&lt;/span&gt;
+                 &lt;/p&gt;
+                 &lt;p&gt;
+                     发货时间: 2015年05月03日 18:00
+                 &lt;/p&gt;
+             &lt;/div&gt;
+         &lt;!--页面进行中]--&gt;
+      </code>
+      </pre>
+    <!--页面进行中]-->
+    <h3><strong>实例 <small>--失败反馈提示</small></strong></h3>
+    <!--失败反馈[-->
+     <div class="hint hint-feedback hint-error">
+         <span class="icon"></span>
+        <h5>
+          对不起，您的绑定审核不通过!
+        </h5>  
+       <p>
+         原因：这里填写不同原因
+       </p>
+        <p>
+        您可以尝试：<a href="#">修改申请</a>
+       </p>
+     </div>
+     <h3><strong>代码</strong></h3>
+     <pre>
+      <code>
+          &lt;!--失败反馈[--&gt;
+             &lt;div class="hint hint-feedback hint-error"&gt;
+                 &lt;span class="icon"&gt;&lt;/span&gt;
+                 &lt;h5&gt;
+                    对不起，您的绑定审核不通过!
+                 &lt;/h5&gt;
+                 &lt;p&gt;
+                     原因：这里填写不同原因
+                 &lt;/p&gt;
+                 &lt;p&gt;
+                     您可以尝试：&lt;a href="#"&gt;修改申请&lt;/a&gt;
+                 &lt;/p&gt;
+             &lt;/div&gt;
+         &lt;!--失败反馈]--&gt;
+      </code>
+      </pre>
+     <!--失败反馈]-->
+     
+    <h3><strong>实例 <small>--交易成功提示</small></strong></h3>
+     <!--交易成功[-->
+     <div class="hint  hint-feedback hint-success">
+         <span class="icon"></span>
+        <h5>
+          恭喜，支付成功
+        </h5>
+       <p>
+         您的订单号为：1212334541224
+       </p>
+        <p>
+        您还可以: <a href="#">查看详情</a> | <a href="#">返回首页</a>
+       </p>
+     </div>
+     <h3><strong>代码</strong></h3>
+     <pre>
+      <code>
+          &lt;!--交易成功[--&gt;
+             &lt;div class="hint  hint-feedback hint-success"&gt;
+                 &lt;span class="icon"&gt;&lt;/span&gt;
+                 &lt;h5&gt;
+                        恭喜，支付成功;
+                 &lt;/h5&gt;
+                 &lt;p&gt;
+                     您的订单号为：1212334541224
+                 &lt;/p&gt;
+                 &lt;p&gt;
+                     您还可以: &lt;a href="#"&gt;查看详情&lt;/a&gt; | &lt;a href="#"&gt;返回首页&lt;/a&gt;
+                 &lt;/p&gt;
+             &lt;/div&gt;
+         &lt;!--交易成功]--&gt;
+      </code>
+      </pre>
+    <!--交易成功]-->
+  </div>    
+</body>
+</html>

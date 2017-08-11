@@ -1,0 +1,279 @@
+<h2 id="-javascript-">#Javascript 编码风格</h2>
+<p>##编码
+统一用 utf-8   </p>
+<p>##长度
+长度不超过 80 个字符。别小看这一条规则，如果严格去遵循，你会发现代码变清晰了。而且，你一定能做到的。</p>
+<p>##缩进
+缩进使用 2个 或 4个 空格，组件内保持统一，不混用。禁用 tab。</p>
+<p>sublime设置tab为2个空格：</p>
+<pre><code class="lang-json">&quot;tab_size&quot;: 2,
+&quot;translate_tabs_to_spaces&quot;: true
+</code></pre>
+<p>##花括号</p>
+<p>###花括号不换行
+好</p>
+<pre><code class="lang-js">if (foo) {
+}
+</code></pre>
+<p>坏</p>
+<pre><code class="lang-js">if (foo)
+{
+}
+</code></pre>
+<p>不允许一行判断，一律换行
+坏</p>
+<pre><code class="lang-js">if (foo) return;
+</code></pre>
+<p>##命名约定</p>
+<ol>
+<li>常量 UPPERCASE_WORD （大写）</li>
+<li>变量 camelName （骆驼峰）</li>
+<li>函数 camelName （骆驼峰）</li>
+<li>类名 CamelName （大骆驼峰）</li>
+</ol>
+<p>##空格</p>
+<p>操作符之间需要空格</p>
+<p>好</p>
+<pre><code class="lang-js">var x = y + z
+</code></pre>
+<p>坏</p>
+<pre><code class="lang-js">var x=y+z
+</code></pre>
+<p>只空一格</p>
+<p>好</p>
+<pre><code class="lang-js">{
+    a: &#39;short&#39;,
+    looooongname: &#39;long&#39;
+}
+</code></pre>
+<p>坏</p>
+<pre><code class="lang-js">{
+    a           : &#39;short&#39;,
+    looooongname: &#39;long&#39;
+}
+</code></pre>
+<p>##逗号与换行</p>
+<pre><code class="lang-js">//good
+{
+   a: &#39;a&#39;,
+   b: &#39;b&#39;,
+   c: &#39;c&#39;
+}
+//bad
+{
+   a: &#39;a&#39;
+  ,b: &#39;b&#39;
+  ,c: &#39;c&#39;
+}
+</code></pre>
+<p>##注释规范
+原则</p>
+<ol>
+<li>As short as possible（如无必要，勿增注释）。尽量提高代码本身的清晰性、可读性。</li>
+<li>As long as necessary（如有必要，尽量详尽）。合理的注释、空行排版等，可以让代码更易阅读、更具美感。</li>
+<li>每个文件头请填写作者。以方便后期维护<pre><code class="lang-js">/**
+* 文件说明
+* @author 周王献
+* @date 2016-01-10
+* @version 1.0
+**/
+</code></pre>
+</li>
+</ol>
+<p>##变量声明</p>
+<p>变量、函数在使用前必须先定义。</p>
+<p>示例：</p>
+<pre><code class="lang-javascript">// good
+var name = &#39;MyName&#39;;
+
+// bad
+name = &#39;MyName&#39;;
+</code></pre>
+<p>每个 <code>var</code> 只能声明一个变量。</p>
+<p>##条件
+使用类型严格的 <code>===</code>。仅当判断 <code>null</code> 或 <code>undefined</code> 时，允许使用 <code>== null</code>。</p>
+<p>示例：</p>
+<pre><code class="lang-javascript">// good
+if (age === 30) {
+    // ......
+}
+
+// bad
+if (age == 30) {
+    // ......
+}
+</code></pre>
+<p>尽可能使用简洁的表达式。</p>
+<p>示例：</p>
+<pre><code class="lang-javascript">// 字符串为空
+
+// good
+if (!name) {
+    // ......
+}
+
+// bad
+if (name === &#39;&#39;) {
+    // ......
+}
+</code></pre>
+<pre><code class="lang-javascript">// 字符串非空
+
+// good
+if (name) {
+    // ......
+}
+
+// bad
+if (name !== &#39;&#39;) {
+    // ......
+}
+</code></pre>
+<pre><code class="lang-javascript">// 数组非空
+
+// good
+if (collection.length) {
+    // ......
+}
+
+// bad
+if (collection.length &gt; 0) {
+    // ......
+}
+</code></pre>
+<pre><code class="lang-javascript">// 布尔不成立
+
+// good
+if (!notTrue) {
+    // ......
+}
+
+// bad
+if (notTrue === false) {
+    // ......
+}
+</code></pre>
+<pre><code class="lang-javascript">// null 或 undefined
+
+// good
+if (noValue == null) {
+  // ......
+}
+
+// bad
+if (noValue === null || typeof noValue === &#39;undefined&#39;) {
+  // ......
+}
+</code></pre>
+<h3 id="-">按执行频率排列分支的顺序。</h3>
+<p>按执行频率排列分支的顺序好处是：</p>
+<ol>
+<li>阅读的人容易找到最常见的情况，增加可读性。</li>
+<li>提高执行效率。</li>
+</ol>
+<p>###对于相同变量或表达式的多值条件，用 <code>switch</code> 代替 <code>if</code>。</p>
+<pre><code class="lang-javascript">// good
+switch (typeof variable) {
+    case &#39;object&#39;:
+        // ......
+        break;
+    case &#39;number&#39;:
+    case &#39;boolean&#39;:
+    case &#39;string&#39;:
+        // ......
+        break;
+}
+
+// bad
+var type = typeof variable;
+if (type === &#39;object&#39;) {
+    // ......
+}
+else if (type === &#39;number&#39; || type === &#39;boolean&#39; || type === &#39;string&#39;) {
+    // ......
+}
+</code></pre>
+<p>##循环</p>
+<ol>
+<li>不要在循环体中包含函数表达式，事先将函数提取到循环体外。</li>
+<li>对循环内多次使用的不变值，在循环外用变量缓存。</li>
+<li>对有序集合进行遍历时，缓存 <code>length</code></li>
+</ol>
+<p>##类型</p>
+<p>###类型检测
+类型检测优先使用 <code>typeof</code>。对象类型检测使用 <code>instanceof</code>。<code>null</code> 或 <code>undefined</code> 的检测使用 <code>== null</code>。</p>
+<pre><code class="lang-js">// string
+typeof variable === &#39;string&#39;
+
+// number
+typeof variable === &#39;number&#39;
+
+// boolean
+typeof variable === &#39;boolean&#39;
+
+// Function
+typeof variable === &#39;function&#39;
+
+// Object
+typeof variable === &#39;object&#39;
+
+// RegExp
+variable instanceof RegExp
+
+// Array
+variable instanceof Array
+
+// null
+variable === null
+
+// null or undefined
+variable == null
+
+// undefined
+typeof variable === &#39;undefined&#39;
+</code></pre>
+<p>###类型转换</p>
+<ol>
+<li>转换成 <code>string</code> 时，使用 <code>+ &#39;&#39;</code>。</li>
+</ol>
+<pre><code class="lang-js">// good
+num + &#39;&#39;;
+
+// bad
+new String(num);
+num.toString();
+String(num);
+</code></pre>
+<ol>
+<li>转换成 <code>number</code> 时，通常使用 <code>+</code>。</li>
+</ol>
+<pre><code class="lang-javascript">// good
++str;
+
+// bad
+Number(str);
+</code></pre>
+<ol>
+<li><code>string</code> 转换成 <code>number</code>，要转换的字符串结尾包含非数字并期望忽略时，使用 <code>parseInt</code>。</li>
+</ol>
+<pre><code class="lang-javascript">var width = &#39;200px&#39;;
+parseInt(width, 10);
+</code></pre>
+<ol>
+<li>转换成 <code>boolean</code> 时，使用 <code>!!</code>。</li>
+</ol>
+<pre><code class="lang-javascript">var num = 3.14;
+!!num;
+</code></pre>
+<p>##对象</p>
+<ol>
+<li><code>for in</code> 遍历对象时, 使用 <code>hasOwnProperty</code> 过滤掉原型中的属性。<pre><code class="lang-javascript">var newInfo = {};
+for (var key in info) {
+ if (info.hasOwnProperty(key)) {
+     newInfo[key] = info[key];
+ }
+}
+</code></pre>
+</li>
+</ol>
+<p>(详细文档)[<a href="https://github.com/ecomfe/spec/blob/master/javascript-style-guide.md">https://github.com/ecomfe/spec/blob/master/javascript-style-guide.md</a>]</p>

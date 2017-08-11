@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>广电商前端架构</title>
+  <link rel="stylesheet" href="/static/global/css/cfec.css">
+  <link rel="stylesheet" href="./css/docs.css">
+  <link rel="stylesheet" href="./lib/prism.css">
+  <!-- <script src="http://tools.regou.me/libs/html5shiv.js"></script> -->
+</head>
+<body ng-controller="MainCtrl">
+  <header class="navbar navbar-static-top" id="top" role="banner">
+    <div class="logo"> <img src="./images/logo.png" height="20px" alt="广电商前端文档" class="vm"></div>
+    <ul class="nav navbar-nav">
+      <li ui-sref-active="active" ng-click="switchs()" class="clearfix"><a ui-sref="css">css</a></li>
+      <li ui-sref-active="active" ng-click="switchs()" class="clearfix"><a ui-sref="module">模块</a></li>
+      <li ui-sref-active="active" ng-click="switchs()" class="clearfix"><a ui-sref="blog">blog</a></li>
+      <li ui-sref-active="active" ng-click="switchs()" class="clearfix"><a ui-sref="view">页面</a></li>
+    </ul>
+  </header>
+  <div ui-view ng-class="slide" class="main markdown-body"></div>
+  <script src="/components_module/jquery/jquery.js"></script>
+  <script src="/components_module/requirejs/require.js" data-main="main"></script>
+  <script src="./lib/prism.js"></script>
+</body>
+</html>

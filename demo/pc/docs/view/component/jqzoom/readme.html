@@ -1,0 +1,47 @@
+<h3 id="jqzoom-">jqzoom组件文档</h3>
+<ul>
+<li>依赖：<code>require.js</code> <code>jqzoom.js</code> <code>jquery.js</code></li>
+<li>调用方式：<h2 id="-img-src-img-a-href-">准备两张一大一小大小相同的图片，小图片放在<img>标签的&quot;src&quot;属性里，给img标签加个a标签标签的&quot;href&quot;属性链向大图片</h2>
+<h2 id="-">页面结构：</h2>
+```<body>
+  <div style="margin-left:500px;">
+      <a id="img1" href="/1big.jpg" title="我的星星" ><img src="/1small.jpg" alt="" /></a>
+  </div>
+</body>
+
+</li>
+</ul>
+<pre><code>## js:
+</code></pre><pre><code> define([&#39;jquery&#39;, &#39;jqzoom&#39;], function($)
+        $(&#39;#img1&#39;).jqzoom({
+            zoomWidth:200,
+            zoomHeight:200,
+            position:&quot;bottom&quot;,
+            yOffset:50,
+            lens:true,
+            imageOpacity:1.0
+            });
+        });
+</code></pre><pre><code>
+
+### 基础参数
+</code></pre><p>  $(&#39;#img1&#39;).jqzoom({
+    zoomType:standard,                //默认值: standard,如果设为reverse，在小图片仲，移入鼠标时，所选区域高亮，非选中区域淡灰色。
+    zoomWidth:200,                    //默认值: 200，放大窗口的宽度。
+    zoomHeight:200,                   //默认值：200，放大窗口的高度。
+    xOffset:10,                       //默认值：10，放大窗口相对于原图的x轴偏移值，可以为负。
+    yOffset:50,                       //默认值：0，放大窗口相对于原图的y轴偏移值，可以为负。
+    position:&quot;bottom&quot;,                //默认值：right，放大窗口的位置，值还可以是:’right’ ,’left’ ,’top’ ,’bottom’。
+    lens:true,                        //默认值：true，若为false，则不在原图上显示镜头。
+    imageOpacity:1.0,                 //默认值：0.2，当zoomType的值为’reverse’时，这个参数用于指定遮罩的透明度。
+    title:true,                       //默认值：true，在放大窗口中显示标题，值可以为a标记的title值，若无，则为原图的title值。
+    showEffect:show,                  //默认值：’show’，显示放大窗口时的效果，值可以为: ‘show’ ,’fadein’。
+    hideEffect:hide,                  //默认值：’hide’，隐藏放大窗口时的效果: ‘hide’ ,’fadeout’。
+    fadeinSpeed:fast,                 //默认值：’fast’，放大窗口的渐显速度(选项: ‘fast’,&#39;slow’,&#39;medium’)。
+    fadeoutSpeed:slow,                //默认值：’slow’，放大窗口的渐隐速度(选项: ‘fast’,&#39;slow’,&#39;medium’)。
+    showPreload:true,                 //默认值：true，是否显示加载提示Loading zoom(选项: ‘true’,&#39;false’)。
+    preloadText:Loading zoom,         //默认值：’Loading zoom’，自定义加载提示文本。
+    preloadPosition:center            //默认值：’center’，加载提示的位置，值也可以为’bycss’，以通过css指定位置。
+    });
+});</p>
+<p>```</p>
