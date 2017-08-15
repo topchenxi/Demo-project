@@ -28,6 +28,7 @@
     <v-header 
       :title="topicData.topicName"
       :isFixed="false"
+      v-if="appId==null"
     >
         <img slot="right" @click="backHome" 
         class="c-header-right-icon f-vermiddle" 
@@ -62,8 +63,8 @@
       </div>
     </section>
 
-    <!--产品列表-->
-    <section class="productList clearfix">
+    <!--产品列表 WAP-->
+    <section class="productList clearfix" v-if="appId==null">
       <router-link class="item fl" v-for="(item, index) in topicData.floors" :key="index" v-if="item.floorId==currentFloor" :to="'/product/' + getProductId(item.productLink)">
           <div class="itemContent">
             <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600)" alt="">
@@ -75,10 +76,22 @@
           </div>
       </router-link>
     </section>
-
+    <!--产品列表 APP-->
+    <section class="productList clearfix" v-if="appId!=null">
+      <a class="item fl" v-for="(item, index) in topicData.floors" :key="index" v-if="item.floorId==currentFloor" :href="item.productLink">
+          <div class="itemContent">
+            <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600)" alt="">
+            <div class="text">
+              <div>
+                <span>{{item.productTitle}}</span>
+              </div>
+            </div>
+          </div>
+      </a>
+    </section>
 
     <!--版权声明-->
-    <c-copyright></c-copyright>
+    <c-copyright v-if="appId==null"></c-copyright>
     <!--版权声明-->
     </scroller>
   </div>
@@ -86,9 +99,11 @@
 
 <script>
   import { IMG_URL} from "common/js/common";
+  import {CFEC} from "common/js/util.js";
   import header from "components/header";
   import copyRight from 'components/copyRight';
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  require('../../../static/css/swiper-3.4.2.min.css');
 
   export default {
     data() {
@@ -113,7 +128,8 @@
         selectBoxDisplay:false,
         timer:0,
         scrollY:0,
-        isFixed:false
+        isFixed:false,
+        appId:null
       };
     },
     
@@ -125,6 +141,7 @@
     },
 
     created() {
+        this.appId = CFEC.getUrlParam('appId');
         this.fetchData(this.$route.params.topicId);
     },
     computed: {
@@ -219,7 +236,7 @@
       },
       // 图片过滤器，生成符合WAP端的图片
       imgUrlFilter(src,w,h){
-        var imgTypeMatch = /\.(?:png|jpg|bmp|gif)/;
+        var imgTypeMatch = /\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)/;
         var tempImgType = src.match(imgTypeMatch)[0];
         var newSrc = src.replace(tempImgType, '') + '_'+w+'x'+h+'_1' + tempImgType;
         return newSrc;

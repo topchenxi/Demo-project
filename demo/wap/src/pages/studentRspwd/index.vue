@@ -15,7 +15,7 @@
       <mt-field placeholder="学生帐号" :state="validateModel('studentAccount')" type="tel" v-model="form.studentAccount.value"></mt-field>
       <mt-field placeholder="学生密码" :state="validateModel('studentPsw')" type="password" v-model="form.studentPsw.value"></mt-field>
       <mt-field placeholder="采购商帐号（email/CFID）" :state="validateModel('buyerAccount')" v-model="form.buyerAccount.value"></mt-field>
-      <mt-field placeholder="新密码" :state="validateModel('buyerPsw')" type="password" v-model="form.buyerPsw.value"></mt-field>
+      <mt-field placeholder="采购商新密码（6-25位字符）" :state="validateModel('buyerPsw')" type="password" v-model="form.buyerPsw.value"></mt-field>
       <mt-field placeholder="重复密码" :state="validateModel('buyerPswConfirm')" type="password" v-model="form.buyerPswConfirm.value"></mt-field>
     </section>
     <section class="btnGroup">
@@ -56,7 +56,7 @@
           buyerPsw:{
             value:'',
             state:'warning',
-            msg:'采购商密码要求至少使用1个阿拉伯数字和1个英文字符进行组合，请核对'
+            msg:'采购商密码要求6-25位，至少使用1个阿拉伯数字和1个英文字符进行组合，请核对'
           },
           buyerPswConfirm:{
             value:'',
@@ -75,8 +75,8 @@
     created() {
         if(localStorage.get('student')){
           let student = JSON.parse(localStorage.get('student'));
-          this.studentAccount = student.studentAccount;
-          this.studentPsw = student.studentPsw;
+          this.form.studentAccount.value = student.studentAccount;
+          this.form.studentPsw.value = student.studentPsw;
         }
     },
     
@@ -92,7 +92,7 @@
           studentAccount:{
             validate:function(val){
               let reg = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
-              if(val.length == 11 && reg.test(val)){
+              if(String(val).length == 11 && reg.test(val)){
                 return true;
               }else{
                 return false;
@@ -102,7 +102,7 @@
           studentPsw:{
             validate:function(val){
               let reg = /(\d+)$/;
-              if(val.length==6){
+              if(String(val).length==6){
                 return true;
               }else{
                 return false;
@@ -124,7 +124,7 @@
             validate:function(val){
               let reg1 = /[a-zA-Z]+/;
               let reg2 = /(\d)/;
-              if(reg1.test(val) && reg2.test(val) && val.length >=8 && val.length <= 25){
+              if(reg1.test(val) && reg2.test(val) && String(val).length >=6 && String(val).length <= 25){
                 return true;
               }else{
                 return false;
@@ -134,8 +134,8 @@
           buyerPswConfirm:{
             validate:function(val){
               let reg1 = /[a-zA-Z]+/;
-              let reg2 = /(\d+)$/;
-              if(reg1.test(val) && reg2.test(val) && val==_this.form.buyerPsw.value){
+              let reg2 = /(\d+)/;
+              if(reg1.test(val) && reg2.test(val) && String(val)==String(_this.form.buyerPsw.value)){
                 return true;
               }else{
                 return false;
@@ -164,6 +164,7 @@
         return true;
       },
       submitAction(){
+        let _this = this;
         if(this.checkAll()){
           let url = "/student/resetPass.cf";
           let params = {
@@ -180,7 +181,16 @@
           })
           .then((res) => {
             if(res.data.status == 'success'){
+              let studentObj = {
+                studentAccount:_this.form.studentAccount.value,
+                studentPsw:_this.form.studentPsw.value
+              }
+              localStorage.set('student',JSON.stringify(studentObj));
+              
               alert('修改成功');
+              this.form.buyerAccount.value = '';
+              this.form.buyerPsw.value = '';
+              this.form.buyerPswConfirm.value = '';
             }else{
               alert(res.data.message);
             }
