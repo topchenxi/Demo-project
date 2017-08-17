@@ -11,7 +11,7 @@
         <mt-swipe :auto="4000">
             <mt-swipe-item v-for="(item, index) of slide"
                            :key="index">
-                <img :src="IMG_URL + item"
+                <img :src="IMG_URL + imgUrlFilter(item,200,200,3)"
                      alt="">
             </mt-swipe-item>
         </mt-swipe>
@@ -177,6 +177,9 @@ export default {
 
             })
             .catch(() => { Indicator.close(); Toast("Network Timeout"); });
+        },
+        imgUrlFilter(src,w,h,type){
+            return CFEC.imgUrlFilter(src,w,h,type);
         }
     }
 };

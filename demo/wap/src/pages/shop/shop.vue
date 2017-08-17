@@ -11,7 +11,7 @@
 
         <section class="company-main">
         
-                <img  class="company-logo" v-if="sellerShopInfo.companyLogo" :src="IMG_URL + sellerShopInfo.companyLogo"
+                <img  class="company-logo" v-if="sellerShopInfo.companyLogo" :src="IMG_URL + imgUrlFilter(sellerShopInfo.companyLogo,150,150,3)"
                      alt="">
 
                 <img  class="company-logo" v-else :src="require('./images/default-img.png')" alt="">
@@ -69,7 +69,7 @@
                              tag="li"
                              v-for="(item, index) of productInfos"
                              :key="index">
-                    <img :src="IMG_URL + item.img"
+                    <img :src="IMG_URL + imgUrlFilter(item.img,100,100,3)"
                          alt="">
                     <div class="product-info-wrap">
                         <span class="f-ellipsis-2">{{item.name}}</span>
@@ -192,6 +192,9 @@ export default {
                     Indicator.close();
                     Toast("Network Timeout");
                 });
+        },
+        imgUrlFilter(src,w,h,type){
+            return CFEC.imgUrlFilter(src,w,h,type);
         }
     }
 };

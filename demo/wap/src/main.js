@@ -31,6 +31,7 @@ import { Button } from 'mint-ui';
 // 滚动插件
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import VueScroller from 'vue-scroller';
+require('../static/css/swiper-3.4.2.min.css');
 
 
 window.addEventListener(
@@ -67,6 +68,23 @@ const router = new VueRouter({
 Vue.use(VueAnalytics, {
     id: 'UA-65077502-1',
     router
+})
+
+// title指令
+Vue.directive('docTitle', {
+
+    update: function(el, binding) {
+        let titleStr = el.dataset.doctitle;
+        if (titleStr != '' && titleStr != undefined && titleStr != null) {
+            let maxLen = 22;
+            if (titleStr.length > maxLen) {
+                titleStr = titleStr.substring(0, maxLen) + '...';
+            }
+        } else {
+            titleStr = 'e-cantonfair';
+        }
+        document.title = titleStr;
+    }
 })
 
 /* eslint-disable no-new */

@@ -81,7 +81,7 @@
                              tag="div">
                     <p class="company-name ellipsis-2"><span v-html="item.companyEnName"></span></p>
                     <div>
-                        <img :src="commonUrl + item"
+                        <img :src="commonUrl + imgUrlFilter(item,64,64,3)"
                              alt=""
                              v-for="(item, index) of productMapImg(item.sellerId)"
                              class="s-img">
@@ -185,7 +185,7 @@ export default {
         },
         //  获取图片
         getImg(value) {
-            return `${IMG_URL}${value.split(",")[0]}`;
+            return IMG_URL + CFEC.imgUrlFilter(value.split(",")[0],100,100,3)
         },
         //  获取logo
         getLogos(value) {
@@ -341,6 +341,10 @@ export default {
                     Indicator.close();
                     Toast("Network Timeout");
                 });
+        },
+        // 图片过滤器，生成符合WAP端的图片
+        imgUrlFilter(src,w,h,type){
+            return CFEC.imgUrlFilter(src,w,h,type);
         }
     },
     // directives: {

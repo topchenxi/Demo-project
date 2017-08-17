@@ -56,7 +56,7 @@ export default {
     methods: {
         //  获取图片路径
         getImg(value) {
-            return `${IMG_URL}${value.split(",")[0]}`;
+            return IMG_URL + CFEC.imgUrlFilter(value.split(",")[0],100,100,3);
         },
         // 加载更多判断
         loadMore() {

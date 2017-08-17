@@ -2,7 +2,7 @@
   <div class="studentRspsw-wrap">
     <!--公共头部-->
     <v-header 
-      title="采购商密码重置"
+      title="Password Reset"
       :isFixed="false"
     >
         <img slot="right" @click="backHome" 
@@ -12,14 +12,14 @@
 
     <!--表单-->
     <section class="resetForm">
-      <mt-field placeholder="学生帐号" :state="validateModel('studentAccount')" type="tel" v-model="form.studentAccount.value"></mt-field>
-      <mt-field placeholder="学生密码" :state="validateModel('studentPsw')" type="password" v-model="form.studentPsw.value"></mt-field>
-      <mt-field placeholder="采购商帐号（email/CFID）" :state="validateModel('buyerAccount')" v-model="form.buyerAccount.value"></mt-field>
-      <mt-field placeholder="采购商新密码（6-25位字符）" :state="validateModel('buyerPsw')" type="password" v-model="form.buyerPsw.value"></mt-field>
-      <mt-field placeholder="重复密码" :state="validateModel('buyerPswConfirm')" type="password" v-model="form.buyerPswConfirm.value"></mt-field>
+      <mt-field placeholder="Consultant's Account" :state="validateModel('studentAccount')" type="tel" v-model="form.studentAccount.value"></mt-field>
+      <mt-field placeholder="Consultant's Password" :state="validateModel('studentPsw')" type="password" v-model="form.studentPsw.value"></mt-field>
+      <mt-field placeholder="Buyer's Account(email/CFID)" :state="validateModel('buyerAccount')" v-model="form.buyerAccount.value"></mt-field>
+      <mt-field placeholder="New Password(Please enter 6-25 characters)" :state="validateModel('buyerPsw')" type="password" v-model="form.buyerPsw.value"></mt-field>
+      <mt-field placeholder="Input new password again" :state="validateModel('buyerPswConfirm')" type="password" v-model="form.buyerPswConfirm.value"></mt-field>
     </section>
     <section class="btnGroup">
-      <mt-button type="default" size="large" @click.native="submitAction">提交</mt-button>
+      <mt-button type="default" size="large" @click.native="submitAction">Submit</mt-button>
     </section>
 
     <!--版权声明-->
@@ -41,27 +41,27 @@
           studentAccount:{
             value:'',
             state:'warning',
-            msg:'学生帐号为学生手机号，请核对'
+            msg:'Consultant\'s Account can not be empty, please check!'
           },
           studentPsw:{
             value:'',
             state:'warning',
-            msg:'学生帐号密码默认为手机号后6位，请核对'
+            msg:'Consultant\'s Password can not be empty, please check!'
           },
           buyerAccount:{
             value:'',
             state:'warning',
-            msg:'采购商帐号为Email或者CantonfairID，请核对'
+            msg:'Buyer\'s account is your email or CantonfairID, please check!'
           },
           buyerPsw:{
             value:'',
             state:'warning',
-            msg:'采购商密码要求6-25位，至少使用1个阿拉伯数字和1个英文字符进行组合，请核对'
+            msg:'Please enter 6-25 characters，at least one number and one letter.'
           },
           buyerPswConfirm:{
             value:'',
             state:'warning',
-            msg:'采购商密码两次输入不相同，请核对'
+            msg:'Passwords do not match. Please check and enter again.'
           }
         }
       };
@@ -91,8 +91,7 @@
         let validateObj = {
           studentAccount:{
             validate:function(val){
-              let reg = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
-              if(String(val).length == 11 && reg.test(val)){
+              if(String(val).length>0){
                 return true;
               }else{
                 return false;
@@ -101,8 +100,7 @@
           },
           studentPsw:{
             validate:function(val){
-              let reg = /(\d+)$/;
-              if(String(val).length==6){
+              if(String(val).length>0){
                 return true;
               }else{
                 return false;
@@ -187,7 +185,7 @@
               }
               localStorage.set('student',JSON.stringify(studentObj));
               
-              alert('修改成功');
+              alert('Submitted successfully!');
               this.form.buyerAccount.value = '';
               this.form.buyerPsw.value = '';
               this.form.buyerPswConfirm.value = '';

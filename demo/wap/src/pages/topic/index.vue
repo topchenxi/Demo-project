@@ -25,8 +25,12 @@
     <scroller ref="cScroller">
     
     <!--公共头部-->
+    <div
+      v-docTitle
+      :data-docTitle="topicTitle"
+    ></div>
     <v-header 
-      :title="topicData.topicName"
+      :title="topicTitle"
       :isFixed="false"
       v-if="appId==null"
     >
@@ -39,7 +43,6 @@
     <section class="banner" v-if="topicData.topicBannerWap">
       <img :src="IMG_URL + topicData.topicBannerWap" alt="">
     </section>
-
     <!--类目菜单 不浮动-->
     <section class="menuGroup" ref="menuGroup">
       <!--滑动菜单-->
@@ -54,7 +57,7 @@
         </swiper>
       </div>
       <!--下拉按钮-->
-      <div class="slideBtn" @click="selectBoxDisplayAction()"></div>
+      <div :class="['slideBtn',selectBoxDisplay==true?'slideDownStyle':'']" @click="selectBoxDisplayAction()"></div>
       <!--下拉菜单-->
       <div class="selectMain clearfix" v-if="selectBoxDisplay">
         <div class="selectItem" @click="selectSlide(index,item.floorId)" v-for="(item, index) in floor" :key="index" ref="selectItem">
@@ -67,7 +70,7 @@
     <section class="productList clearfix" v-if="appId==null">
       <router-link class="item fl" v-for="(item, index) in topicData.floors" :key="index" v-if="item.floorId==currentFloor" :to="'/product/' + getProductId(item.productLink)">
           <div class="itemContent">
-            <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600)" alt="">
+            <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600,3)" alt="">
             <div class="text">
               <div>
                 <span>{{item.productTitle}}</span>
@@ -80,7 +83,7 @@
     <section class="productList clearfix" v-if="appId!=null">
       <a class="item fl" v-for="(item, index) in topicData.floors" :key="index" v-if="item.floorId==currentFloor" :href="item.productLink">
           <div class="itemContent">
-            <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600)" alt="">
+            <img :src="IMG_URL + imgUrlFilter(item.productImg,600,600,3)" alt="">
             <div class="text">
               <div>
                 <span>{{item.productTitle}}</span>
@@ -103,12 +106,12 @@
   import header from "components/header";
   import copyRight from 'components/copyRight';
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
-  require('../../../static/css/swiper-3.4.2.min.css');
 
   export default {
     data() {
       return {
         IMG_URL,
+        topicTitle:'',
         topicId: this.$route.params.topicId,
         topicData:{},
         floor:[],
@@ -139,10 +142,17 @@
       swiperSlide,
       swiper
     },
-
+    beforeMount(){
+      if(String(window.location).toLowerCase().indexOf('?appid=') != -1 || String(window.location).toLowerCase().indexOf('&appid=') != -1){
+        let appIdStr = String(window.location).toLowerCase().match(/appid\=(.*)/g)[0];
+        if(String(appIdStr).indexOf('=') != -1){
+          this.appId = String(appIdStr).split('=')[1];
+        }
+      }
+      this.fetchData(this.$route.params.topicId);
+    },
     created() {
-        this.appId = CFEC.getUrlParam('appId');
-        this.fetchData(this.$route.params.topicId);
+        
     },
     computed: {
       swiper() {
@@ -173,6 +183,7 @@
       },
       distribute(data){
         this.topicData = data;
+        this.topicTitle = data.topicName;
         this.getFloorData(data);
       },
       //  顶部的直接返回HOME页面
@@ -235,11 +246,8 @@
         this.selectBoxDisplay = !this.selectBoxDisplay;
       },
       // 图片过滤器，生成符合WAP端的图片
-      imgUrlFilter(src,w,h){
-        var imgTypeMatch = /\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)/;
-        var tempImgType = src.match(imgTypeMatch)[0];
-        var newSrc = src.replace(tempImgType, '') + '_'+w+'x'+h+'_1' + tempImgType;
-        return newSrc;
+      imgUrlFilter(src,w,h,type){
+        return CFEC.imgUrlFilter(src,w,h,type);
       },
       // 设置菜单浮动
       setMenuFixed(top){
@@ -318,8 +326,12 @@
   width:2rem;
   height:2rem;
   border-left:1px solid #d5d6d8;
-  background:url(./images/icon_slideArrow.png) no-repeat center center #ffffff;
+  background:url(./images/icon_slide_downArrow.png) no-repeat center center #ffffff;
   background-size:40%;
+.slideDownStyle{
+  background:url(./images/icon_slide_upArrow.png) no-repeat center center #ffffff;
+  background-size:40%;
+}
 .selectMain
   background-color:#fff;
   height:auto;

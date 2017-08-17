@@ -19,7 +19,7 @@
                     v-if="homepageCarouselFigure.homepageDetails.length>0"
                     :key="index">
       <div @click="navRoute(item.contentType, item.contentValue)">
-        <img :src="IMG_URL + item.imgUrlAndroidBackend"
+        <img v-if="item.imgUrlAndroidBackend" :src="IMG_URL + item.imgUrlAndroidBackend"
               alt="">
       </div>
     </mt-swipe-item>
@@ -51,10 +51,10 @@
   <!-- 两栏广告 -->
   <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality">
     <div class="fl" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[0].contentType, homepageAdvertisementVerticality.homepageDetails[0].contentValue)">
-      <img :src="IMG_URL + this.homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" alt="">
+      <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[0]" alt="">
     </div>
     <div class="fr" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[1].contentType, homepageAdvertisementVerticality.homepageDetails[1].contentValue)">
-      <img :src="IMG_URL + this.homepageAdvertisementVerticality.homepageDetails[1].imgUrlAndroidBackend" alt="">
+      <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[1]" alt="">
     </div>
   </section>
   <!-- 两栏广告 -->
@@ -63,39 +63,42 @@
   <section class="hot-wrap" v-if="homepageWindow">
     <div class="inner">
       <div class="inner-l" @click="navRoute(homepageWindow.homepageDetails[0].contentType, homepageWindow.homepageDetails[0].contentValue)">
-        <img :src="IMG_URL + this.homepageWindow.homepageDetails[0].imgUrlIosFront" alt="" class="frontImg">
-        <img :src="IMG_URL + this.homepageWindow.homepageDetails[0].imgUrlIosBackend" alt="" class="backImg">
+        <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[0]" alt="" class="frontImg">
+        <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[0]" alt="" class="backImg">
       </div>
       <div class="inner-r ">
         <div class="inner-r-t" @click="navRoute(homepageWindow.homepageDetails[1].contentType, homepageWindow.homepageDetails[1].contentValue)">
-          <img :src="IMG_URL + this.homepageWindow.homepageDetails[1].imgUrlIosFront" alt="" class="frontImg">
-        <img :src="IMG_URL + this.homepageWindow.homepageDetails[1].imgUrlIosBackend" alt="" class="backImg">
+          <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[1]" alt="" class="frontImg">
+        <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[1]" alt="" class="backImg">
         </div>
         <div class="inner-r-b" @click="navRoute(homepageWindow.homepageDetails[2].contentType, homepageWindow.homepageDetails[2].contentValue)">
-          <img :src="IMG_URL + this.homepageWindow.homepageDetails[2].imgUrlIosFront" alt="" class="frontImg">
-        <img :src="IMG_URL + this.homepageWindow.homepageDetails[2].imgUrlIosBackend" alt="" class="backImg">
+          <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[2]" alt="" class="frontImg">
+        <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[2]" alt="" class="backImg">
         </div>
       </div>
     </div>
   </section>
+  
   <!--热门-->
 
   <!--通栏广告-->
   <section class="oneColAd" v-if="homepageAd1">
     <div @click="navRoute(homepageAd1.homepageDetails[0].contentType, homepageAd1.homepageDetails[0].contentValue)">
-      <img :src="IMG_URL + this.homepageAd1.homepageDetails[0].imgUrlAndroidBackend" alt="">
+      <img :src="IMG_URL + homepageAd1.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAd1.homepageDetails[0]" alt="">
     </div>
   </section>
+  
   <!--通栏广告-->
 
   <!-- 行业类目 -->
   <section class="category-wrap" v-if="homepageCategory">
     <c-moduleTitle 
-      :title="this.homepageCategory.title"
-      :contentType="this.homepageCategory.homepageTitle.contentType"
-      :contentValue="this.homepageCategory.homepageTitle.contentValue"
-      :contentName="this.homepageCategory.homepageTitle.contentName"
-      :logo="this.homepageCategory.homepageTitle.imgUrlAndroidBackend"
+      :title="homepageCategory.title"
+      :contentType="homepageCategory.homepageTitle.contentType"
+      :contentValue="homepageCategory.homepageTitle.contentValue"
+      :contentName="homepageCategory.homepageTitle.contentName"
+      :logo="homepageCategory.homepageTitle.imgUrlAndroidBackend"
+      v-if="homepageCategory.homepageTitle"
     ></c-moduleTitle>
     <swiper :options="categorySwiperOption" ref="categorySwiper">
       <swiper-slide v-for="(item, index) in homepageCategory.homepageDetails" :key="index">
@@ -110,17 +113,18 @@
       </swiper-slide>
     </swiper>
   </section>
+  
   <!-- 行业类目 -->
 
   <!-- 新商品推荐 -->
   <section class="newProduct" v-if="homepageNewProduct">
     <c-moduleTitle 
-      :title="this.homepageNewProduct.title"
-      :contentType="this.homepageNewProduct.homepageTitle.contentType"
-      :contentValue="this.homepageNewProduct.homepageTitle.contentValue"
-      :contentName="this.homepageNewProduct.homepageTitle.contentName"
-      :logo="this.homepageNewProduct.homepageTitle.imgUrlAndroidBackend"
-      v-if="this.homepageNewProduct.homepageTitle"
+      :title="homepageNewProduct.title"
+      :contentType="homepageNewProduct.homepageTitle.contentType"
+      :contentValue="homepageNewProduct.homepageTitle.contentValue"
+      :contentName="homepageNewProduct.homepageTitle.contentName"
+      :logo="homepageNewProduct.homepageTitle.imgUrlAndroidBackend"
+      v-if="homepageNewProduct.homepageTitle"
     ></c-moduleTitle>
     <div class="newProductContent clearfix">
       <div class="item" v-for="(item, index) in homepageNewProduct.homepageDetails" :key="index" @click="navRoute(item.contentType, item.contentValue)">
@@ -133,21 +137,22 @@
       </div>
     </div>
   </section>
+  
   <!-- 新商品推荐 -->
 
   <!-- 新广告页 -->
   <section class="newAdPage" v-if="homepageNewAdvertisement">
     <c-moduleTitle 
-      :title="this.homepageNewAdvertisement.title"
-      :contentType="this.homepageNewAdvertisement.homepageTitle.contentType"
-      :contentValue="this.homepageNewAdvertisement.homepageTitle.contentValue"
-      :contentName="this.homepageNewAdvertisement.homepageTitle.contentName"
-      :logo="this.homepageNewAdvertisement.homepageTitle.imgUrlAndroidBackend"
-      v-if="this.homepageNewAdvertisement.homepageTitle"
+      :title="homepageNewAdvertisement.title"
+      :contentType="homepageNewAdvertisement.homepageTitle.contentType"
+      :contentValue="homepageNewAdvertisement.homepageTitle.contentValue"
+      :contentName="homepageNewAdvertisement.homepageTitle.contentName"
+      :logo="homepageNewAdvertisement.homepageTitle.imgUrlAndroidBackend"
+      v-if="homepageNewAdvertisement.homepageTitle"
     ></c-moduleTitle>
     <div class="newAdPageContent">
       <div class="topImg" @click="navRoute(homepageNewAdvertisement.homepageDetails[0].contentType,homepageNewAdvertisement.homepageDetails[0].contentValue)">
-        <img :src="IMG_URL + this.homepageNewAdvertisement.homepageDetails[0].imgUrlAndroidBackend" alt="">
+        <img :src="IMG_URL + homepageNewAdvertisement.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageNewAdvertisement.homepageDetails[0]" alt="">
       </div>
       <div class="bottomContent clearfix">
         <div class="item" v-for="(item, index) in homepageNewAdvertisementList" :key="index" @click="navRoute(item.contentType, item.contentValue)">
@@ -161,17 +166,18 @@
       </div>
     </div>
   </section>
+  
   <!-- 新广告页 -->
 
   <!-- 推荐商品 -->
   <section class="hotProduct" v-if="homepageRecommendProduct">
     <c-moduleTitle 
-      :title="this.homepageRecommendProduct.title"
-      :contentType="this.homepageRecommendProduct.homepageTitle.contentType"
-      :contentValue="this.homepageRecommendProduct.homepageTitle.contentValue"
-      :contentName="this.homepageRecommendProduct.homepageTitle.contentName"
-      :logo="this.homepageRecommendProduct.homepageTitle.imgUrlAndroidBackend"
-      v-if="this.homepageRecommendProduct.homepageTitle"
+      :title="homepageRecommendProduct.title"
+      :contentType="homepageRecommendProduct.homepageTitle.contentType"
+      :contentValue="homepageRecommendProduct.homepageTitle.contentValue"
+      :contentName="homepageRecommendProduct.homepageTitle.contentName"
+      :logo="homepageRecommendProduct.homepageTitle.imgUrlAndroidBackend"
+      v-if="homepageRecommendProduct.homepageTitle"
     ></c-moduleTitle>
     <div class="hotProductContent clearfix" v-for="(item1,index1) of homepageRecommendProductList">
       <div class="item fl" v-bind:class="[index2==0 ? 'kItem' : 'pItem']" v-for="(item2,index2) of item1" @click="navRoute(item2.contentType,item2.contentValue)">
@@ -189,6 +195,7 @@
       </div>
     </div>
   </section>
+   
   <!-- 推荐商品 -->
 
 
@@ -302,7 +309,7 @@ export default {
     swiperSlide
   },
 
-created() {
+beforeMount() {
     // 做预览功能需要获取的参数
     let urlParams = location.search;
     let params = {};

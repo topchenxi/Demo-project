@@ -21,9 +21,19 @@
                       :style="{'height': slideHeight}"
                       class="company-slide">
                 <mt-swipe-item v-for="(item, index) of profile.companyImgs"
-                               :key="index">
+                               :key="index"
+                               v-if="item"
+                               >
                     <img class="company-slide-img"
-                         :src="IMG_URL + item"
+                         :src="IMG_URL + imgUrlFilter(item,200,200,3)"
+                         alt="">
+                </mt-swipe-item>
+                <mt-swipe-item v-for="(item, index) of profile.companyImgs"
+                               :key="index"
+                               v-if="!item"
+                               >
+                    <img class="company-slide-img"
+                         :src="require('./../images/default-img.png')"
                          alt="">
                 </mt-swipe-item>
             </mt-swipe>
@@ -236,6 +246,9 @@ export default {
         },
         showDes() {
             this.isShow = true;
+        },
+        imgUrlFilter(src,w,h,type){
+            return CFEC.imgUrlFilter(src,w,h,type);
         }
     }
 };
