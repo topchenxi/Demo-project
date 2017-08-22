@@ -1,0 +1,124 @@
+<h1><!--身份认证-->{{'SET' | translate}}</h1>
+<div class="alert alert-info">
+  <!--为保障卖家帐户安全，通过身份认证后，禁止卖家出租，出借、转让其帐户。如有相关行为，由此产生的一切风险及相关责任由卖家自行承担，广电商有权关闭被出租，出借或转让的帐户。-->
+  {{'TIPS.AUTH' | translate}}
+</div>
+
+<div class="alert alert-success">
+  <dl class="dl-horizontal">
+    <dt><!-- 联系人姓名 -->{{'CONTACT_PER' | translate}}：</dt>
+    <dd>{{ vm.contactName }}</dd>
+    <dt><!-- 联系人身份证号 -->{{'CONTACT_PERCARD' | translate}}：</dt>
+    <dd>{{ vm.contactIdcard }}</dd>
+    <dt><!-- 公司名称 -->{{'COMP_NAME' | translate}}：</dt>
+    <dd>{{ vm.companyName }}</dd>
+    <dt><!-- 营业执照号 -->{{'BUSI_LICENSE' | translate}}：</dt>
+    <dd>{{ vm.bizLicence }}</dd>
+    <dt><!-- 组织机构代号 -->{{'ORG_CODE' | translate}}：</dt>
+    <dd>{{ vm.orgCode }}</dd>
+    <dt><!-- 税务登记号 -->{{'TAX_CODE' | translate}}：</dt>
+    <dd>{{ vm.taxRegCode }}</dd>
+    <dt><!-- 企业法人 -->{{'LEAL_PERSON' | translate}}：</dt>
+    <dd>{{ vm.bizEntity }}</dd>
+    <dt><!-- 法人身份证号 -->{{'LEAL_PERCARD' | translate}}：</dt>
+    <dd>{{ vm.bizId }}</dd>
+  </dl>
+</div>
+<form name="" ng-submit="save()" class="form-horizontal">
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral">
+      <span class="red">*</span>
+      <!-- 营业执照照片-->{{'PHOTO.BUSI_LICENSE' | translate}}：
+    </label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload7($files,vm.commInstrumentImg)" ngf-multiple="true"
+        ng-model="vm.commInstrumentImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.commInstrumentImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!-- 企业代码证照片 -->{{'PHOTO.COMP_CODE' | translate}}：</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload($files,vm.bizCodeImg)" ngf-multiple="true"
+        ng-model="vm.bizCodeImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.bizCodeImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!--税务登记照片 -->{{'PHOTO.TAX_CODE' | translate}}：</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload1($files,vm.taxRegImg)" ngf-multiple="true"
+        ng-model="vm.taxRegImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.taxRegImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!--法人手持身份证正面头部照 -->{{'PHOTO.BIZ_FRONT' | translate}}：</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload2($files,vm.bizEntityIdcardFrontImg)" ngf-multiple="true"
+        ng-model="vm.bizEntityIdcardFrontImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.bizEntityIdcardFrontImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!-- 法人手持身份证背面头部照 -->{{'PHOTO.BIZ_BACK' | translate}}:</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload3($files,vm.bizEntityIdcardBackImg)" ngf-multiple="true"
+        ng-model="vm.bizEntityIdcardBackImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.bizEntityIdcardBackImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!-- 联系人手持身份证正面头部照 -->{{'PHOTO.CONTACT_FRONT' | translate}}:</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload4($files,vm.contactIdcardFrontImg)" ngf-multiple="true"
+        ng-model="vm.contactIdcardFrontImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.contactIdcardFrontImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!-- 联系人手持身份证背面头部照 -->{{'PHOTO.CONTACT_BACK' | translate}}:</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload5($files,wm.contactIdcardBackImg)" ngf-multiple="true"
+        ng-model="vm.contactIdcardBackImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.contactIdcardBackImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-2 label-contral"><!-- 公司门头照 -->{{'PHOTO.COMPANY' | translate}}:</label>
+    <div class="col-md-10">
+     <!-- 上传图片 -->
+      <input type="button" class="btn btn-primary" value="{{'UPLOAD_PHOTO' | translate}}"
+        ngf-select ngf-change="upload6($files,vm.corpImg)" ngf-multiple="true"
+        ng-model="vm.corpImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.corpImg}}" alt="" width="80px" height="80px"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-2">
+      <button><!-- 提交认证资料 -->{{'OPR.SUBMIT' | translate}}</button>
+    </div>
+  </div>
+</form>

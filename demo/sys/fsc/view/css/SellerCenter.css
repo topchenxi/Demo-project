@@ -1,0 +1,51 @@
+.content-style
+{
+    margin: 0 auto;
+
+    background-color: white;
+}
+
+.content-left
+{
+    float: left;
+
+    width: 160px;
+    height: 180px;
+    padding: 20px 10px;
+}
+
+.content-right
+{
+    float: left;
+
+    height: 180px;
+    padding: 20px 10px;
+}
+
+.content-right-style
+{
+    height: 40px;
+
+}
+
+.person-span-style
+{
+    width: 140px;
+    height: 140px;
+    content: url(../images/head.gif);
+}
+
+
+.identify-span-style
+{
+    content: url(../images/identity.jpg);
+}
+
+.whole-span-left{
+	width: 50px;
+	background-color: 
+}
+
+.whole-span-right{
+	width: 50px;
+}
