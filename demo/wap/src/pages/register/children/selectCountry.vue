@@ -2,32 +2,22 @@
 <template>
     <div>
         <section class="header border-1px">
-              <form action="">
-            <div class="input-wrap">
-                <img v-show="searchText"
-                     class="clear-all"
-                     src="../images/icon_clean.png"
-                     alt=""
-                     @click="clearKeyWord">
-              
-                <input type="search" v-model="searchText" placeholder="Please input key word...">
-              
-            </div>
-              </form>
-            <span class="cancel"
-                  @click="cancel">Cancel</span>
+            <form action="">
+                <div class="input-wrap">
+                    <img v-show="searchText" class="clear-all" src="../images/icon_clean.png" alt="" @click="clearKeyWord">
+                    <input type="search" v-model="searchText" placeholder="Please input key word...">
+                </div>
+            </form>
+            <span class="cancel" @click="cancel">Cancel</span>
         </section>
-        <ul v-show="!searchText" class="country-list-wrap"> 
-            <li class="country-list border-1px" v-for="(item, index) of countryList"
-                :key="index"
-                @click="selectCountry(item)"
-                >
+        <ul v-show="!searchText" class="country-list-wrap">
+            <li class="country-list border-1px" v-for="(item, index) of countryList" :key="index" @click="selectCountry(item)">
                 {{item.countryEnName}}
             </li>
         </ul>
         <ul v-show="searchText" class="country-list-wrap">
             <li class="country-result">Search Result</li>
-            <li class="country-list border-1px" v-for="(item, index) of countryResult" :key="index"  @click="selectCountry(item)">
+            <li class="country-list border-1px" v-for="(item, index) of countryResult" :key="index" @click="selectCountry(item)">
                 {{item.countryEnName}}
             </li>
         </ul>
@@ -35,71 +25,70 @@
 </template>
 
 <script>
-import {CFEC} from "common/js/util.js";
-export default {
-    data() {
-        return {
-            searchText: "",   //  搜索的文字
-            countryList: []   //  保存国家列表
-        };
-    },
-    computed: {
-        //  获得国家
-        countryResult() {
-            let filterCountryList = [];
-            let secrchTextLen;
-            if (this.searchText) {
-                   secrchTextLen = this.searchText.length;
-            }
-            for (let value of this.countryList) {
-                if (this.searchText.toUpperCase().substr(0)=== (value.countryEnName).toUpperCase().substr(0, secrchTextLen)) {
-                   filterCountryList.push({
-                       countryId: value.countryId,
-                       countryEnName: value.countryEnName,
-                       countryCode: value.countryCode
-                   });
+    import {
+        CFEC
+    } from "common/js/util.js";
+    export default {
+        data() {
+            return {
+                searchText: "", //  搜索的文字
+                countryList: [] //  保存国家列表
+            };
+        },
+        computed: {
+            //  获得国家
+            countryResult() {
+                let filterCountryList = [];
+                let secrchTextLen;
+                if (this.searchText) {
+                    secrchTextLen = this.searchText.length;
                 }
+                for (let value of this.countryList) {
+                    if (this.searchText.toUpperCase().substr(0) === (value.countryEnName).toUpperCase().substr(0, secrchTextLen)) {
+                        filterCountryList.push({
+                            countryId: value.countryId,
+                            countryEnName: value.countryEnName,
+                            countryCode: value.countryCode
+                        });
+                    }
+                }
+                return filterCountryList;
             }
-            return filterCountryList;
-        }
-    },
-    created() {
-        let params = {
-            isOrderBySortOrder:1
-        }
-        // 拉取国家列表数据 
-        this.axios({
-            method:'get',
-            url:'/dict/countries.cf',
-            params:CFEC.addConfig(params)
-        })
-            .then((res) => {
-                
-                this.countryList = res.data.data;
-            })
-            .catch(() => {
-            });
-    },
-    methods: {
-        //  清空国家关键字
-        clearKeyWord() {
-            this.searchText = "";
         },
-        cancel() {
-            this.$router.go(-1);
+        created() {
+            let params = {
+                isOrderBySortOrder: 1
+            }
+            // 拉取国家列表数据 
+            this.axios({
+                    method: 'get',
+                    url: '/dict/countries.cf',
+                    params: CFEC.addConfig(params)
+                })
+                .then((res) => {
+                    this.countryList = res.data.data;
+                })
+                .catch(() => {});
         },
-        //  选择并保存国家
-        selectCountry(countryInfo) {
-            this.$store.commit("RECORD_COUNTRY", countryInfo);
-            this.$router.go(-1);
+        methods: {
+            //  清空国家关键字
+            clearKeyWord() {
+                this.searchText = "";
+            },
+            cancel() {
+                this.$router.go(-1);
+            },
+            //  选择并保存国家
+            selectCountry(countryInfo) {
+                this.$store.commit("RECORD_COUNTRY", countryInfo);
+                this.$router.go(-1);
+            }
         }
-    }
-};
-
+    };
 </script>
 
 
-<style lang="stylus" rel="stylesheet/stylus" >
+<style lang="stylus" rel="stylesheet/stylus">
 @import "../../../common/stylus/mixin.styl";
      .country-list-wrap
       padding-top: 2.2rem

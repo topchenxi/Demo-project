@@ -64,6 +64,8 @@ const attachment = resolve => require(["@/pages/me/common/attachment"], resolve)
 const register = resolve => require(["@/pages/register/register"], resolve);
 const selectCountry = resolve => require(["@/pages/register/children/selectCountry"], resolve);
 
+const selectCategories = resolve => require(["@/pages/register/children/selectCategories"], resolve);
+
 //  重置密码
 const getAccount = resolve => require(["@/pages/reset_password/getAccount"], resolve);
 const accountChoose = resolve => require(["@/pages/reset_password/accountChoose"], resolve);
@@ -221,6 +223,12 @@ export default [{
         path: "/selectCountry",
         name: " selectCountry",
         component: selectCountry
+    },
+    // 选择类目
+    {
+        path: "/selectCategories",
+        name: " selectCategories",
+        component: selectCategories
     },
     // 询盘
     {

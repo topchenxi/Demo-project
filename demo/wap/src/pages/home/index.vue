@@ -1,161 +1,106 @@
 <template>
   <div class="home-wrap">
-  <!--顶部引导下载App-->
-  <section class="home-top-app">
-    <img src="./images/logo.png" alt="">
-    <span @click="toAppCenter">Get App</span>
-  </section>
-  <!--顶部引导下载App-->
-
-  <!--搜索框-->
-  <router-link to="/search" class="home-search-box">
-    <span>Search products or suppliers</span>
-  </router-link>
-  <!--搜索框-->
-   
-  <!--轮播-->
-  <mt-swipe :auto="4000">
-    <mt-swipe-item v-for="(item, index) of homepageCarouselFigure.homepageDetails"
-                    v-if="homepageCarouselFigure.homepageDetails.length>0"
-                    :key="index">
-      <div @click="navRoute(item.contentType, item.contentValue)">
-        <img v-if="item.imgUrlAndroidBackend" :src="IMG_URL + item.imgUrlAndroidBackend"
-              alt="">
+    <!--顶部引导下载App-->
+    <section class="home-top-app">
+      <img src="./images/logo.png" alt="">
+      <span @click="toAppCenter">Get App</span>
+    </section>
+    <!--顶部引导下载App-->
+    <!--搜索框-->
+    <router-link to="/search" class="home-search-box">
+      <span>Search products or suppliers</span>
+    </router-link>
+    <!--搜索框-->
+    <!--轮播-->
+    <mt-swipe :auto="4000">
+      <mt-swipe-item v-for="(item, index) of homepageCarouselFigure.homepageDetails" v-if="homepageCarouselFigure.homepageDetails.length>0" :key="index">
+        <div @click="navRoute(item.contentType, item.contentValue)">
+          <img v-if="item.imgUrlAndroidBackend" :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+        </div>
+      </mt-swipe-item>
+    </mt-swipe>
+    <!--轮播-->
+    <!--菜单-->
+    <nav class="menu">
+      <router-link to="/categoryFirst" @click.native="toCaterory"><span>Categories</span></router-link>
+      <a :href="'http://app.e-cantonfair.com/app_center1/map/map.html#type=0&vol=1&url=http://'+encodeURI(homeUrl.substr(7))"><span>Pavilion</span></a>
+      <router-link to="/buyingRequest"><span>Get Quotation</span></router-link>
+    </nav>
+    <!--菜单-->
+    <!-- 文字滚动轮播 -->
+    <section class="textSlide" v-if="homepageWordFigure">
+      <span class="icon"></span>
+      <span class="line"></span>
+      <div class="textList">
+        <swiper :options="swiperOption" ref="mySwiper">
+          <swiper-slide v-for="(item, index) in homepageWordFigure.homepageDetails" :key="index">
+            <div><a @click="navRoute(item.contentType, item.contentValue)">{{item.contentName}}</a></div>
+          </swiper-slide>
+        </swiper>
       </div>
-    </mt-swipe-item>
-  </mt-swipe>
-  <!--轮播-->
-
-  <!--菜单-->
-  <nav class="menu">
-    <router-link to="/categoryFirst" @click.native="toCaterory"><span>Categories</span></router-link>
-    <a :href="'http://app.e-cantonfair.com/app_center1/map/map.html#type=0&vol=1&url=http://'+encodeURI(homeUrl.substr(7))"><span>Pavilion</span></a>
-    <router-link to="/buyingRequest"><span>Get Quotation</span></router-link>
-  </nav>
-  <!--菜单-->
-
-  <!-- 文字滚动轮播 -->
-  <section class="textSlide" v-if="homepageWordFigure">
-    <span class="icon"></span>
-    <span class="line"></span>
-    <div class="textList">
-      <swiper :options="swiperOption" ref="mySwiper">
-        <swiper-slide v-for="(item, index) in homepageWordFigure.homepageDetails" :key="index">
-          <div><a @click="navRoute(item.contentType, item.contentValue)">{{item.contentName}}</a></div>
+    </section>
+    <!-- 文字滚动轮播 -->
+    <!-- 两栏广告 -->
+    <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality">
+      <div class="fl" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[0].contentType, homepageAdvertisementVerticality.homepageDetails[0].contentValue)">
+        <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[0]" alt="">
+      </div>
+      <div class="fr" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[1].contentType, homepageAdvertisementVerticality.homepageDetails[1].contentValue)">
+        <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[1]" alt="">
+      </div>
+    </section>
+    <!-- 两栏广告 -->
+    <!--热门-->
+    <section class="hot-wrap" v-if="homepageWindow">
+      <div class="inner">
+        <div class="inner-l" @click="navRoute(homepageWindow.homepageDetails[0].contentType, homepageWindow.homepageDetails[0].contentValue)">
+          <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[0]" alt="" class="frontImg">
+          <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[0]" alt="" class="backImg">
+        </div>
+        <div class="inner-r ">
+          <div class="inner-r-t" @click="navRoute(homepageWindow.homepageDetails[1].contentType, homepageWindow.homepageDetails[1].contentValue)">
+            <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[1]" alt="" class="frontImg">
+            <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[1]" alt="" class="backImg">
+          </div>
+          <div class="inner-r-b" @click="navRoute(homepageWindow.homepageDetails[2].contentType, homepageWindow.homepageDetails[2].contentValue)">
+            <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[2]" alt="" class="frontImg">
+            <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[2]" alt="" class="backImg">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--热门-->
+    <!--通栏广告-->
+    <section class="oneColAd" v-if="homepageAd1">
+      <div @click="navRoute(homepageAd1.homepageDetails[0].contentType, homepageAd1.homepageDetails[0].contentValue)">
+        <img :src="IMG_URL + homepageAd1.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAd1.homepageDetails[0]" alt="">
+      </div>
+    </section>
+    <!--通栏广告-->
+    <!-- 行业类目 -->
+    <section class="category-wrap" v-if="homepageCategory">
+      <c-moduleTitle :title="homepageCategory.title" :contentType="homepageCategory.homepageTitle.contentType" :contentValue="homepageCategory.homepageTitle.contentValue" :contentName="homepageCategory.homepageTitle.contentName" :logo="homepageCategory.homepageTitle.imgUrlAndroidBackend"
+        v-if="homepageCategory.homepageTitle"></c-moduleTitle>
+      <swiper :options="categorySwiperOption" ref="categorySwiper">
+        <swiper-slide v-for="(item, index) in homepageCategory.homepageDetails" :key="index">
+          <div class="item" @click="navRoute(item.contentType, item.contentValue)">
+            <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+            <div class="text">
+              <div>
+                <span>{{item.contentName}}</span>
+              </div>
+            </div>
+          </div>
         </swiper-slide>
       </swiper>
-    </div>
-  </section>
-  <!-- 文字滚动轮播 -->
-
-  <!-- 两栏广告 -->
-  <section class="twoColAd clearfix" v-if="homepageAdvertisementVerticality">
-    <div class="fl" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[0].contentType, homepageAdvertisementVerticality.homepageDetails[0].contentValue)">
-      <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[0]" alt="">
-    </div>
-    <div class="fr" @click="navRoute(homepageAdvertisementVerticality.homepageDetails[1].contentType, homepageAdvertisementVerticality.homepageDetails[1].contentValue)">
-      <img :src="IMG_URL + homepageAdvertisementVerticality.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageAdvertisementVerticality.homepageDetails[1]" alt="">
-    </div>
-  </section>
-  <!-- 两栏广告 -->
-
-  <!--热门-->
-  <section class="hot-wrap" v-if="homepageWindow">
-    <div class="inner">
-      <div class="inner-l" @click="navRoute(homepageWindow.homepageDetails[0].contentType, homepageWindow.homepageDetails[0].contentValue)">
-        <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[0]" alt="" class="frontImg">
-        <img :src="IMG_URL + homepageWindow.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[0]" alt="" class="backImg">
-      </div>
-      <div class="inner-r ">
-        <div class="inner-r-t" @click="navRoute(homepageWindow.homepageDetails[1].contentType, homepageWindow.homepageDetails[1].contentValue)">
-          <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[1]" alt="" class="frontImg">
-        <img :src="IMG_URL + homepageWindow.homepageDetails[1].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[1]" alt="" class="backImg">
-        </div>
-        <div class="inner-r-b" @click="navRoute(homepageWindow.homepageDetails[2].contentType, homepageWindow.homepageDetails[2].contentValue)">
-          <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidFront" v-if="homepageWindow.homepageDetails[2]" alt="" class="frontImg">
-        <img :src="IMG_URL + homepageWindow.homepageDetails[2].imgUrlAndroidBackend" v-if="homepageWindow.homepageDetails[2]" alt="" class="backImg">
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!--热门-->
-
-  <!--通栏广告-->
-  <section class="oneColAd" v-if="homepageAd1">
-    <div @click="navRoute(homepageAd1.homepageDetails[0].contentType, homepageAd1.homepageDetails[0].contentValue)">
-      <img :src="IMG_URL + homepageAd1.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageAd1.homepageDetails[0]" alt="">
-    </div>
-  </section>
-  
-  <!--通栏广告-->
-
-  <!-- 行业类目 -->
-  <section class="category-wrap" v-if="homepageCategory">
-    <c-moduleTitle 
-      :title="homepageCategory.title"
-      :contentType="homepageCategory.homepageTitle.contentType"
-      :contentValue="homepageCategory.homepageTitle.contentValue"
-      :contentName="homepageCategory.homepageTitle.contentName"
-      :logo="homepageCategory.homepageTitle.imgUrlAndroidBackend"
-      v-if="homepageCategory.homepageTitle"
-    ></c-moduleTitle>
-    <swiper :options="categorySwiperOption" ref="categorySwiper">
-      <swiper-slide v-for="(item, index) in homepageCategory.homepageDetails" :key="index">
-        <div class="item" @click="navRoute(item.contentType, item.contentValue)">
-          <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
-          <div class="text">
-            <div>
-              <span>{{item.contentName}}</span>
-            </div>
-          </div>
-        </div>
-      </swiper-slide>
-    </swiper>
-  </section>
-  
-  <!-- 行业类目 -->
-
-  <!-- 新商品推荐 -->
-  <section class="newProduct" v-if="homepageNewProduct">
-    <c-moduleTitle 
-      :title="homepageNewProduct.title"
-      :contentType="homepageNewProduct.homepageTitle.contentType"
-      :contentValue="homepageNewProduct.homepageTitle.contentValue"
-      :contentName="homepageNewProduct.homepageTitle.contentName"
-      :logo="homepageNewProduct.homepageTitle.imgUrlAndroidBackend"
-      v-if="homepageNewProduct.homepageTitle"
-    ></c-moduleTitle>
-    <div class="newProductContent clearfix">
-      <div class="item" v-for="(item, index) in homepageNewProduct.homepageDetails" :key="index" @click="navRoute(item.contentType, item.contentValue)">
-        <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
-        <div class="text">
-          <div>
-            <span>{{item.contentName}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- 新商品推荐 -->
-
-  <!-- 新广告页 -->
-  <section class="newAdPage" v-if="homepageNewAdvertisement">
-    <c-moduleTitle 
-      :title="homepageNewAdvertisement.title"
-      :contentType="homepageNewAdvertisement.homepageTitle.contentType"
-      :contentValue="homepageNewAdvertisement.homepageTitle.contentValue"
-      :contentName="homepageNewAdvertisement.homepageTitle.contentName"
-      :logo="homepageNewAdvertisement.homepageTitle.imgUrlAndroidBackend"
-      v-if="homepageNewAdvertisement.homepageTitle"
-    ></c-moduleTitle>
-    <div class="newAdPageContent">
-      <div class="topImg" @click="navRoute(homepageNewAdvertisement.homepageDetails[0].contentType,homepageNewAdvertisement.homepageDetails[0].contentValue)">
-        <img :src="IMG_URL + homepageNewAdvertisement.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageNewAdvertisement.homepageDetails[0]" alt="">
-      </div>
-      <div class="bottomContent clearfix">
-        <div class="item" v-for="(item, index) in homepageNewAdvertisementList" :key="index" @click="navRoute(item.contentType, item.contentValue)">
+    </section>
+    <!-- 行业类目 -->
+    <!-- 新商品推荐 -->
+    <section class="newProduct" v-if="homepageNewProduct">
+      <c-moduleTitle :title="homepageNewProduct.title" :contentType="homepageNewProduct.homepageTitle.contentType" :contentValue="homepageNewProduct.homepageTitle.contentValue" :contentName="homepageNewProduct.homepageTitle.contentName" :logo="homepageNewProduct.homepageTitle.imgUrlAndroidBackend"
+        v-if="homepageNewProduct.homepageTitle"></c-moduleTitle>
+      <div class="newProductContent clearfix">
+        <div class="item" v-for="(item, index) in homepageNewProduct.homepageDetails" :key="index" @click="navRoute(item.contentType, item.contentValue)">
           <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
           <div class="text">
             <div>
@@ -164,307 +109,311 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  
-  <!-- 新广告页 -->
-
-  <!-- 推荐商品 -->
-  <section class="hotProduct" v-if="homepageRecommendProduct">
-    <c-moduleTitle 
-      :title="homepageRecommendProduct.title"
-      :contentType="homepageRecommendProduct.homepageTitle.contentType"
-      :contentValue="homepageRecommendProduct.homepageTitle.contentValue"
-      :contentName="homepageRecommendProduct.homepageTitle.contentName"
-      :logo="homepageRecommendProduct.homepageTitle.imgUrlAndroidBackend"
-      v-if="homepageRecommendProduct.homepageTitle"
-    ></c-moduleTitle>
-    <div class="hotProductContent clearfix" v-for="(item1,index1) of homepageRecommendProductList">
-      <div class="item fl" v-bind:class="[index2==0 ? 'kItem' : 'pItem']" v-for="(item2,index2) of item1" @click="navRoute(item2.contentType,item2.contentValue)">
-        <div class="itemContent" v-if="index2==0">
-          <span v-for="(item3,index3) of item2.homepageDetails" @click="navRoute(item3.contentType,item3.contentValue)">{{item3.contentName}}</span>
+    </section>
+    <!-- 新商品推荐 -->
+    <!-- 新广告页 -->
+    <section class="newAdPage" v-if="homepageNewAdvertisement">
+      <c-moduleTitle :title="homepageNewAdvertisement.title" :contentType="homepageNewAdvertisement.homepageTitle.contentType" :contentValue="homepageNewAdvertisement.homepageTitle.contentValue" :contentName="homepageNewAdvertisement.homepageTitle.contentName"
+        :logo="homepageNewAdvertisement.homepageTitle.imgUrlAndroidBackend" v-if="homepageNewAdvertisement.homepageTitle"></c-moduleTitle>
+      <div class="newAdPageContent">
+        <div class="topImg" @click="navRoute(homepageNewAdvertisement.homepageDetails[0].contentType,homepageNewAdvertisement.homepageDetails[0].contentValue)">
+          <img :src="IMG_URL + homepageNewAdvertisement.homepageDetails[0].imgUrlAndroidBackend" v-if="homepageNewAdvertisement.homepageDetails[0]" alt="">
         </div>
-        <div class="itemContent" v-if="index2!=0">
-          <img :src="IMG_URL + item2.imgUrlAndroidBackend" alt="">
-          <div class="text">
-            <div>
-              <span>{{item2.contentName}}</span>
+        <div class="bottomContent clearfix">
+          <div class="item" v-for="(item, index) in homepageNewAdvertisementList" :key="index" @click="navRoute(item.contentType, item.contentValue)">
+            <img :src="IMG_URL + item.imgUrlAndroidBackend" alt="">
+            <div class="text">
+              <div>
+                <span>{{item.contentName}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-   
-  <!-- 推荐商品 -->
-
-
-
-  <!--版权声明-->
-  <c-copyright></c-copyright>
-  <!--版权声明-->
-
-  <!--底部下载App弹窗-->
-  <c-downLayer></c-downLayer>
-  <!--底部下载App弹窗-->
+    </section>
+    <!-- 新广告页 -->
+    <!-- 推荐商品 -->
+    <section class="hotProduct" v-if="homepageRecommendProduct">
+      <c-moduleTitle :title="homepageRecommendProduct.title" :contentType="homepageRecommendProduct.homepageTitle.contentType" :contentValue="homepageRecommendProduct.homepageTitle.contentValue" :contentName="homepageRecommendProduct.homepageTitle.contentName"
+        :logo="homepageRecommendProduct.homepageTitle.imgUrlAndroidBackend" v-if="homepageRecommendProduct.homepageTitle"></c-moduleTitle>
+      <div class="hotProductContent clearfix" v-for="(item1,index1) of homepageRecommendProductList">
+        <div class="item fl" v-bind:class="[index2==0 ? 'kItem' : 'pItem']" v-for="(item2,index2) of item1" @click="navRoute(item2.contentType,item2.contentValue)">
+          <div class="itemContent" v-if="index2==0">
+            <span v-for="(item3,index3) of item2.homepageDetails" @click="navRoute(item3.contentType,item3.contentValue)">{{item3.contentName}}</span>
+          </div>
+          <div class="itemContent" v-if="index2!=0">
+            <img :src="IMG_URL + item2.imgUrlAndroidBackend" alt="">
+            <div class="text">
+              <div>
+                <span>{{item2.contentName}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 推荐商品 -->
+    <!--版权声明-->
+    <c-copyright></c-copyright>
+    <!--版权声明-->
+    <!--底部下载App弹窗-->
+    <c-downLayer></c-downLayer>
+    <!--底部下载App弹窗-->
   </div>
 </template>
 
 <script>
-import { IMG_URL, appLink } from "common/js/common"; 
-import {localStorage,CFEC} from "common/js/util.js";
-import { mapMutations } from "vuex";
-import downLayer from "components/down_layer";
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import moduleTitle from 'components/moduleTitle';
-import copyRight from 'components/copyRight';
-
-export default {
-  data() {
-    return {
-      // 轮播图
-      homepageCarouselFigure: {
-        homepageDetails:[]
-      },
-      // 文字滚动轮播
-      homepageWordFigure:{
-        homepageDetails:[]
-      },
-      // 两栏广告
-      homepageAdvertisementVerticality:{
-        homepageDetails:[]
-      },
-      // 橱窗
-      homepageWindow: {
-        homepageDetails:[]
-      },
-      // 通栏广告
-      homepageAd1:{
-        homepageDetails:[]
-      },
-      // 行业类目
-      homepageCategory:{
-        homepageDetails:[]
-      },
-      // 新商品推荐
-      homepageNewProduct:{
-        homepageDetails:[]
-      },
-      // 新广告页
-      homepageNewAdvertisement:{
-        homepageDetails:[]
-      },
-      homepageNewAdvertisementList:[],
-      // 推荐商品
-      homepageRecommendProduct:{
-        homepageDetails:[]
-      },
-      // 推荐商品列表
-      homepageRecommendProductList:[],
-      // 推荐关键词1
-      homepageKeywordGroup1:{
-        homepageDetails:[]
-      },
-      // 推荐关键词2
-      homepageKeywordGroup2:{
-        homepageDetails:[]
-      },
-
-      IMG_URL,
-      //  传给地图导航页面的本站链接
-      homeUrl: window.location.href, 
-      // 文字滚动配置
-      swiperOption: {
-        notNextTick: true,
-        autoplay: 4000,
-        direction : 'vertical',
-        grabCursor : false,
-        setWrapperSize :true,
-        height:42,
-        autoHeight: true,
-        paginationClickable :false,
-        mousewheelControl : false,
-        observeParents:true,
-        debugger: false,
-        onlyExternal:true
-      },
-      // 行业类目滚动配置
-      categorySwiperOption:{
-        notNextTick: true,
-        autoplay: false,
-        direction : 'horizontal',
-        slidesPerView:4,
-        spaceBetween: 6,
-        slidesOffsetBefore:12,
-        slidesOffsetAfter:12
-      },
-    };
-  },
-  
-  components:{
-    "c-downLayer": downLayer,
-    "c-moduleTitle":moduleTitle,
-    "c-copyright":copyRight,
+  import {
+    IMG_URL,
+    appLink
+  } from "common/js/common";
+  import {
+    localStorage,
+    CFEC
+  } from "common/js/util.js";
+  import {
+    mapMutations
+  } from "vuex";
+  import downLayer from "components/down_layer";
+  import {
     swiper,
     swiperSlide
-  },
-
-beforeMount() {
-    // 做预览功能需要获取的参数
-    let urlParams = location.search;
-    let params = {};
-    if(localStorage.get("localUserInfo")){
-        params.token = JSON.parse(localStorage.get("localUserInfo")).message;
-    }
-    
-    // 如果首页URL有自带参数，则处理为json格式
-    if (urlParams.indexOf("?") > -1) {
-      let paramStr = urlParams.split('?')[1];
-      // xxx=1&aaa=2
-      let paramArr = paramStr.split('&');
-      for(let item of paramArr){
-        let key_val = item.split('=');
-        params[key_val[0]] = key_val[1];
-      }
-    }
-    params = CFEC.addConfig(params);
-    this.fetchData(params);
-  },
-  methods: {
-  ...mapMutations([
-    "CHANGE_CATEGORY_ENTRY", "HOME_TO_SEARCH"
-  ]),
-
-   //  获取首页数据
-    fetchData(params) { 
-
-      let url = "/home/getHomepage.cf";
-
-      this.axios({
-        method:'get',
-        url:url,
-        params:params
-      })
-      .then((res) => {
-        this.distribute(res);
-      });
+  } from 'vue-awesome-swiper';
+  import moduleTitle from 'components/moduleTitle';
+  import copyRight from 'components/copyRight';
+  export default {
+    data() {
+      return {
+        // 轮播图
+        homepageCarouselFigure: {
+          homepageDetails: []
+        },
+        // 文字滚动轮播
+        homepageWordFigure: {
+          homepageDetails: []
+        },
+        // 两栏广告
+        homepageAdvertisementVerticality: {
+          homepageDetails: []
+        },
+        // 橱窗
+        homepageWindow: {
+          homepageDetails: []
+        },
+        // 通栏广告
+        homepageAd1: {
+          homepageDetails: []
+        },
+        // 行业类目
+        homepageCategory: {
+          homepageDetails: []
+        },
+        // 新商品推荐
+        homepageNewProduct: {
+          homepageDetails: []
+        },
+        // 新广告页
+        homepageNewAdvertisement: {
+          homepageDetails: []
+        },
+        homepageNewAdvertisementList: [],
+        // 推荐商品
+        homepageRecommendProduct: {
+          homepageDetails: []
+        },
+        // 推荐商品列表
+        homepageRecommendProductList: [],
+        // 推荐关键词1
+        homepageKeywordGroup1: {
+          homepageDetails: []
+        },
+        // 推荐关键词2
+        homepageKeywordGroup2: {
+          homepageDetails: []
+        },
+        IMG_URL,
+        //  传给地图导航页面的本站链接
+        homeUrl: window.location.href,
+        // 文字滚动配置
+        swiperOption: {
+          notNextTick: true,
+          autoplay: 4000,
+          direction: 'vertical',
+          grabCursor: false,
+          setWrapperSize: true,
+          height: 42,
+          autoHeight: true,
+          paginationClickable: false,
+          mousewheelControl: false,
+          observeParents: true,
+          debugger: false,
+          onlyExternal: true
+        },
+        // 行业类目滚动配置
+        categorySwiperOption: {
+          notNextTick: true,
+          autoplay: false,
+          direction: 'horizontal',
+          slidesPerView: 4,
+          spaceBetween: 6,
+          slidesOffsetBefore: 12,
+          slidesOffsetAfter: 12
+        },
+      };
     },
-
-    //  拆分数据
-    distribute(_res) { 
-
-      let homeInfo = _res.data.data;
-      // 推荐商品
-      this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
-      // 轮播
-      this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
-      // 文字滚动轮播
-      this.homepageWordFigure = homeInfo.homepageWordFigure;
-      // 两栏广告
-      this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
-      // 橱窗 
-      this.homepageWindow = homeInfo.homepageWindow;
-      // 通栏广告
-      this.homepageAd1 = homeInfo.homepageAd1;
-      // 行业类目
-      this.homepageCategory = homeInfo.homepageCategory;
-      // 新商品推荐
-      this.homepageNewProduct = homeInfo.homepageNewProduct;
-      // 新广告页
-      this.homepageNewAdvertisement = homeInfo.homepageNewAdvertisement;
-      for(let i=0;i<this.homepageNewAdvertisement.homepageDetails.length;i++){
-        if(i > 0){
-          this.homepageNewAdvertisementList.push(this.homepageNewAdvertisement.homepageDetails[i]);
+    components: {
+      "c-downLayer": downLayer,
+      "c-moduleTitle": moduleTitle,
+      "c-copyright": copyRight,
+      swiper,
+      swiperSlide
+    },
+    beforeMount() {
+      // 做预览功能需要获取的参数
+      let urlParams = location.search;
+      let params = {};
+      if (localStorage.get("localUserInfo")) {
+        params.token = JSON.parse(localStorage.get("localUserInfo")).message;
+      }
+      // 如果首页URL有自带参数，则处理为json格式
+      if (urlParams.indexOf("?") > -1) {
+        let paramStr = urlParams.split('?')[1];
+        // xxx=1&aaa=2
+        let paramArr = paramStr.split('&');
+        for (let item of paramArr) {
+          let key_val = item.split('=');
+          params[key_val[0]] = key_val[1];
         }
       }
-      
-      // 推荐关键词1
-      this.homepageKeywordGroup1 = homeInfo.homepageKeywordGroup1;
-      // 推荐关键词2
-      this.homepageKeywordGroup2 = homeInfo.homepageKeywordGroup2;
-
-      // 推荐商品列表
-      let keywordGroupLen = 0;
-      if(this.homepageKeywordGroup1){
-        keywordGroupLen+=1;
-      }
-      if(this.homepageKeywordGroup2){
-        keywordGroupLen+=1;
-      }
-      if(keywordGroupLen > 0){
-        let tempObj = [];
-        let arrLen = this.homepageRecommendProduct.homepageDetails.length/keywordGroupLen;
-        for(let i=0;i<keywordGroupLen;i++){
-          tempObj[i] = [];
-          tempObj[i].push(homeInfo['homepageKeywordGroup'+(i+1)]);
-          tempObj[i] = tempObj[i].concat(this.homepageRecommendProduct.homepageDetails.splice(0,arrLen));
-          if(tempObj[i].length%2 == 1){
-            tempObj[i].pop();
+      params = CFEC.addConfig(params);
+      this.fetchData(params);
+    },
+    methods: {
+      ...mapMutations([
+        "CHANGE_CATEGORY_ENTRY", "HOME_TO_SEARCH"
+      ]),
+      //  获取首页数据
+      fetchData(params) {
+        let url = "/home/getHomepage.cf";
+        this.axios({
+            method: 'get',
+            url: url,
+            params: params
+          })
+          .then((res) => {
+            this.distribute(res);
+          });
+      },
+      //  拆分数据
+      distribute(_res) {
+        let homeInfo = _res.data.data;
+        // 推荐商品
+        this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
+        for (let i = 0, len = homeInfo.homepageCarouselFigure.homepageDetails.length; i < len; i++) {
+          let item = homeInfo.homepageCarouselFigure.homepageDetails[i];
+          if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
+            homeInfo.homepageCarouselFigure.homepageDetails.splice(i, 1);
+            i--;
+            len--;
           }
         }
-        this.homepageRecommendProductList = tempObj;
+        // 轮播
+        this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
+        // 文字滚动轮播
+        this.homepageWordFigure = homeInfo.homepageWordFigure;
+        // 两栏广告
+        this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
+        // 橱窗 
+        this.homepageWindow = homeInfo.homepageWindow;
+        // 通栏广告
+        this.homepageAd1 = homeInfo.homepageAd1;
+        // 行业类目
+        this.homepageCategory = homeInfo.homepageCategory;
+        // 新商品推荐
+        this.homepageNewProduct = homeInfo.homepageNewProduct;
+        // 新广告页
+        this.homepageNewAdvertisement = homeInfo.homepageNewAdvertisement;
+        for (let i = 0; i < this.homepageNewAdvertisement.homepageDetails.length; i++) {
+          if (i > 0) {
+            this.homepageNewAdvertisementList.push(this.homepageNewAdvertisement.homepageDetails[i]);
+          }
+        }
+        // 推荐关键词1
+        this.homepageKeywordGroup1 = homeInfo.homepageKeywordGroup1;
+        // 推荐关键词2
+        this.homepageKeywordGroup2 = homeInfo.homepageKeywordGroup2;
+        // 推荐商品列表
+        let keywordGroupLen = 0;
+        if (this.homepageKeywordGroup1) {
+          keywordGroupLen += 1;
+        }
+        if (this.homepageKeywordGroup2) {
+          keywordGroupLen += 1;
+        }
+        if (keywordGroupLen > 0) {
+          let tempObj = [];
+          let arrLen = this.homepageRecommendProduct.homepageDetails.length / keywordGroupLen;
+          for (let i = 0; i < keywordGroupLen; i++) {
+            tempObj[i] = [];
+            tempObj[i].push(homeInfo['homepageKeywordGroup' + (i + 1)]);
+            tempObj[i] = tempObj[i].concat(this.homepageRecommendProduct.homepageDetails.splice(0, arrLen));
+            if (tempObj[i].length % 2 == 1) {
+              tempObj[i].pop();
+            }
+          }
+          this.homepageRecommendProductList = tempObj;
+        }
+      },
+      //  跳转到应用中心
+      toAppCenter() {
+        window.location.href = localStorage.get("userAgent") === "ios" ? appLink.ios : appLink.android;
+      },
+      //  跳转不同页面
+      navRoute(contentType, contentValue) {
+        switch (contentType) {
+          //  跳转商品详情页
+          case 1:
+            return this.$router.push({
+              path: "/product/" + contentValue
+            });
+            //  跳转店铺详情页 
+          case 2:
+            return this.$router.push({
+              path: "/shop/" + contentValue
+            });
+            //  跳转类目搜索页
+          case 3:
+            let params = contentValue.split(";");
+            return this.$router.push({
+              path: "/categorySearch/" + params[0] + "/" + params[1]
+            });
+            //  跳转商品关键词搜索
+          case 4:
+            this.HOME_TO_SEARCH(false);
+            return this.$router.push({
+              path: "/search/" + contentValue
+            });
+            //  跳转店铺关键词搜索
+          case 5:
+            this.HOME_TO_SEARCH(false);
+            return this.$router.push({
+              path: "/search/" + contentValue
+            });
+            //  直接跳转链接
+          case 6:
+            window.location.href = contentValue;
+            break;
+            // return this.$router.push({
+            //   path: contentValue
+            // });
+        }
+      },
+      //  从首页进类目
+      toCaterory() {
+        this.CHANGE_CATEGORY_ENTRY(false);
       }
-
-    },
-
-    //  跳转到应用中心
-    toAppCenter() {
-      window.location.href = localStorage.get("userAgent") === "ios" ? appLink.ios : appLink.android;
-    },
-  
-    //  跳转不同页面
-    navRoute(contentType, contentValue) {
-      switch (contentType) {
-        //  跳转商品详情页
-        case 1:
-          return this.$router.push({
-            path: "/product/" + contentValue
-          });
-
-       //  跳转店铺详情页 
-        case 2:
-          return this.$router.push({
-            path: "/shop/" + contentValue
-          });
-
-       //  跳转类目搜索页
-        case 3:
-          let params = contentValue.split(";");
-          return this.$router.push({
-            path: "/categorySearch/" + params[0] + "/" + params[1]
-          });
-
-      //  跳转商品关键词搜索
-        case 4:
-          this.HOME_TO_SEARCH(false);
-          return this.$router.push({
-            path: "/search/" + contentValue
-          });
-
-      //  跳转店铺关键词搜索
-        case 5:
-          this.HOME_TO_SEARCH(false);
-          return this.$router.push({
-            path: "/search/" + contentValue
-          });
-
-      //  直接跳转链接
-        case 6:
-        window.location.href = contentValue;
-        break;
-        // return this.$router.push({
-        //   path: contentValue
-        // });
-      }
-    },
-
-    //  从首页进类目
-    toCaterory() {
-      this.CHANGE_CATEGORY_ENTRY(false);
     }
-  }
-
-};
+  };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>

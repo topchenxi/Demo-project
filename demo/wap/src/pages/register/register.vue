@@ -1,33 +1,24 @@
-
 <template>
   <div class="register-out-wrap">
-    <header class="border-1px">
-      <span @click="cancel" class="c-head-cancel f-vermiddle">Cancel</span>
-      <span class="c-head-title f-cenmiddle">Sign Up</span>
+    <header class="border-1px"> <span @click="cancel" class="c-head-cancel f-vermiddle">Cancel</span> <span class="c-head-title f-cenmiddle">Sign Up</span>
       <router-link to="/login" replace slot="next" class="c-head-next" :style="{color:'#FF0030'}">Sign in</router-link>
     </header>
     <ul class="register-wrap margin-b">
-      <router-link to="/selectCountry" tag="li" class="country-region-wrap"><span class="country-region">Country / Region</span><span class="country-name" v-if="countryInfo">{{countryInfo.countryEnName}}</span></router-link>
-      <li class="border-1px">
-        <input type="text" placeholder="Email" v-model.trim="email">
-      </li>
-      <li class="border-1px">
-        <img :src="passwordImg" alt="" @click="changePassWordState" class="passwordimg">
-        <input type="password" placeholder="password (6-25 characters)" v-model.trim="password" ref="password">
-      </li>
-      <li class="border-1px">
-        <input type="text" placeholder="Company Name" v-model.trim="companyName">
-      </li>
+      <router-link to="/selectCountry" tag="li" class="country-region-wrap">
+        <span class="country-region">Country / Region</span>
+        <span class="country-name" v-if="countryInfo">{{countryInfo.countryEnName}}</span>
+      </router-link>
+      <router-link to="/selectCategories" tag="li" class="sourcing-warp">
+        <span class="sourcing-font" v-if="!categoriesInfo.length">Sourcing Preference</span>
+        <span class="sourcing-font" v-else>{{categoriesInfo | showCategries}}</span>
+      </router-link>
+      <li class="border-1px"> <input type="text" placeholder="Email" v-model.trim="email"> </li>
+      <li class="border-1px"> <img :src="passwordImg" alt="" @click="changePassWordState" class="passwordimg"> <input type="password" placeholder="password (6-25 characters)" v-model.trim="password" ref="password"> </li>
+      <li class="border-1px"> <input type="text" placeholder="Company Name" v-model.trim="companyName"> </li>
     </ul>
     <ul class="register-wrap">
-      <li class="border-1px">
-        <input type="text" placeholder="Full Name" v-model.trim="fullName">
-      </li>
-      <li class="border-1px" style="overflow: hidden">
-        <input type="text" class="country-code" pattern="\d*" placeholder="Country Code" v-model.trim="countryCode">
-        <span class="border-mid"></span>
-        <input type="text" class="mobile-number" pattern="\d*" placeholder="Mobile Number" v-model.trim="mobileNumber">
-      </li>
+      <li class="border-1px"> <input type="text" placeholder="Full Name" v-model.trim="fullName"> </li>
+      <li class="border-1px" style="overflow: hidden"> <input type="text" class="country-code" pattern="\d*" placeholder="Country Code" v-model.trim="countryCode"> <span class="border-mid"></span> <input type="text" class="mobile-number" pattern="\d*" placeholder="Mobile Number" v-model.trim="mobileNumber">      </li>
     </ul>
     <div @click="checkInput" class="signin-btn" :style="{background: btnBg}">Sign Up</div>
   </div>
@@ -56,6 +47,9 @@
       };
     },
     computed: {
+      categoriesInfo() {
+        return this.$store.state.selectCategories;
+      },
       //  获取国家信息和设置国家代码
       countryInfo() {
         if (this.$store.state.country) {
@@ -65,7 +59,7 @@
       },
       //  检查是否可以注册
       isRight() {
-        return this.email && this.password && this.fullName && this.mobileNumber && this.countryCode && this.countryInfo && this.companyName;
+        return this.categoriesInfo.length&&this.email && this.password && this.fullName && this.mobileNumber && this.countryCode && this.countryInfo && this.companyName;
       },
       //  改变next的颜色
       btnBg() {
@@ -74,6 +68,16 @@
         } else {
           return "#ff99ac";
         }
+      }
+    },
+    filters: {
+      showCategries: function(list) {
+        var array = [];
+        if (!list.length) return '';
+        list.forEach(item => {
+          array.push(item.categoryEname);
+        })
+        return array.join(',');
       }
     },
     methods: {
@@ -87,6 +91,7 @@
         this.countryCode = "";
         this.companyName = "";
         this.$store.commit("RECORD_COUNTRY");
+        this.$store.commit('setSelectCategories');
       },
       //  改变密码的显隐
       changePassWordState(ev) {
@@ -103,6 +108,10 @@
       checkInput() {
         if (this.isRight) {
           Indicator.open("Sending...");
+          let array = [];
+          this.categoriesInfo.forEach(item => {
+            array.push(item.categoryId);
+          })
           let params = {
             source: 64,
             isLogin: false,
@@ -111,7 +120,8 @@
             userEmail: this.email,
             firstname: this.fullName,
             password: this.password,
-            mobile: this.countryInfo.countryCode + "-" + this.mobileNumber
+            mobile: this.countryInfo.countryCode + "-" + this.mobileNumber,
+            productType: array.join(',')
           };
           this.axios({
               method: "post",
@@ -131,6 +141,7 @@
                 this.countryCode = "";
                 this.companyName = "";
                 this.$store.commit("RECORD_COUNTRY");
+                this.$store.commit("setSelectCategories");
                 this.$store.commit("RECORD_USERINFO", res.data);
                 this.$router.replace("/me");
               } else {
@@ -175,6 +186,8 @@
   width: 6.75rem !important
   float: left
 
+
+
  .mobile-number
   float: left
   width: 12rem !important
@@ -210,7 +223,21 @@
 .country-region-wrap
  background: url("./images/icon_list_arrow.png") no-repeat 16.8rem center
  background-size: .8rem 1.2rem;
- 
+
+.sourcing-warp 
+  background: url("./images/icon_list_arrow.png") no-repeat 16.8rem center
+  background-size: .8rem 1.2rem
+  .sourcing-font
+    font-size: .8rem
+    color: rgba(0,0,0,0.87)
+    letter-spacing: -0.81px
+    padding-left: .6rem
+    display: inline-block;
+    width: 80%;
+    text-overflow:ellipsis;
+    vertical-align: top;
+    white-space:nowrap;
+    overflow:hidden
 
 .signin-btn
  width: 17.55rem
