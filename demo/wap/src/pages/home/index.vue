@@ -309,6 +309,7 @@
         let homeInfo = _res.data.data;
         // 推荐商品
         this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
+        // 轮播
         for (let i = 0, len = homeInfo.homepageCarouselFigure.homepageDetails.length; i < len; i++) {
           let item = homeInfo.homepageCarouselFigure.homepageDetails[i];
           if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
@@ -317,9 +318,16 @@
             len--;
           }
         }
-        // 轮播
         this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
         // 文字滚动轮播
+        for (let i = 0, len = homeInfo.homepageWordFigure.homepageDetails.length; i < len; i++) {
+          let item = homeInfo.homepageWordFigure.homepageDetails[i];
+          if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
+            homeInfo.homepageWordFigure.homepageDetails.splice(i, 1);
+            i--;
+            len--;
+          }
+        }
         this.homepageWordFigure = homeInfo.homepageWordFigure;
         // 两栏广告
         this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
