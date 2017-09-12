@@ -1,0 +1,161 @@
+<div class="top-help clearfix ">
+    <div class="help-form-class ng-pristine ng-valid">
+        <p class="p-help-style">
+            物流订单管理 &gt; 物流订单列表
+        </p>
+    </div>
+</div>
+<!-- 查询条件 -->
+<div class="searchTop clearfix">
+    <form>
+        <div class="row pt-10">
+            <div class="col-xs-4 col-pl-5 the-time">
+                <label class="col-xs-4 text-right">公司名称</label>
+                <input ngc-auto-input class="ipt ipt-s" type="text" ng-model="paging.companyName">
+            </div>
+            <div class="col-xs-8 col-pl-5" >
+                <label class="col-xs-2 text-right">物流订单号</label>
+                <div class="col-xs-4" style="padding-left: 0"><input ngc-auto-input class="ipt ipt-s" type="text" ng-model="paging.shippingNo"></div>
+                <label class="col-xs-2 text-right">订单编号</label>
+                <input ngc-auto-input class="ipt ipt-s" type="text" ng-model="paging.orderNo">
+            </div>
+        </div>
+        <div class="row pt-10">
+            <div class="col-xs-4 col-pl-5">
+                <label class="col-xs-4 text-right">目的国家</label>
+                <select class="ipt ipt-s" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryList"
+                        ng-model="paging.countryId" >
+                    <option value="">请选择国家</option>
+                </select>
+            </div>
+            <div class="col-xs-8 col-pl-5">
+                <label class="col-xs-2 text-right">发货省市</label>
+                <select class="ipt ipt-xs" ng-options="obj.districtCode as obj.districtCnName for obj in vm.provinceList"
+                        ng-model="paging.province" ng-change="tools.changeProvince()">
+                    <option value="">请选择</option>
+                </select>
+                <select class="ipt ipt-xs" ng-options="obj.districtCode as obj.districtCnName for obj in vm.cityList"
+                        ng-model="paging.city">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row pt-10">
+            <div class="col-xs-4 col-pl-5">
+                <label class="col-xs-4 text-right">物流供应</label>
+                <select class="ipt ipt-s" ng-model="paging.cooperatorName">
+                    <option value="">请选择</option>
+                    <option value="EMS">EMS</option>
+                    <option value="DHL">DHL</option>
+                    <option value="Y2T">中外运</option>
+                </select>
+            </div>
+            <div class="col-xs-8 col-pl-5 the-time">
+                <label class="col-xs-2 text-right">下单时间</label>
+                <input readonly ng-click="open1($event)" class="ipt ipt-s fl" type="text"  placeholder="起始日期" uib-datepicker-popup="yyyy/MM/dd" is-open="opened1"
+                       min-date="'1997-06-22'"  close-text="Close" max-date="paging.dateEnd" datepicker-options="dateOptions"
+                       ng-model="paging.dateStart">
+                <!-- <span class="glyphicon glyphicon-calendar calendar-in-input" ng-click="open1($event)"></span> -->
+                <label class="fl pl10 pr10">至</label>
+                <input readonly ng-click="open2($event)" class="ipt ipt-s fl" type="text" uib-datepicker-popup="yyyy/MM/dd" placeholder="结束日期" is-open="opened2"
+                       min-date="paging.dateStart"  close-text="Close" datepicker-options="dateOptions" ng-model="paging.dateEnd">
+                <!-- <span class="glyphicon glyphicon-calendar calendar-in-input" ng-click="open2($event)"></span> -->
+            </div>
+        </div>
+
+        <div class="row pt-10 text-right">
+            <div class="col-xs-11 col-pl-5 but">
+                <input ng-click="tools.getList();" type="submit" value="查询"/>
+                <input class="btn-reset" type="reset" ng-click="tools.initCondition(false)" value="重置"/>
+                <input ng-click="tools.exportData()" class="btn-reset" type="button"  value="导出excel表格"/>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 查询列表 -->
+<div class="content">
+    <div class="row">
+        <span class="col-xs-4">物流订单</span>
+        <div class="col-xs-8 text-right font-14 hide">
+            <span>共有<lable class="font-orange">12</lable>个物流订单货</span>
+            <span class="ml-10">货物总重量为:<lable class="font-orange">221</lable>kg</span>
+            <span class="ml-10">总体积为:<lable class="font-orange">221</lable>m3</span>
+            <span class="ml-10">总金额为:<lable class="font-orange">$1200</lable></span>
+
+        </div>
+    </div>
+    <div class="tabTable">
+        <table class="table-hover" style="width: 1400px">
+            <thead>
+            <tr>
+                <td width="5%">序号</td>
+                <td width="18%">订单编号</td>
+                <td width="13%">物流订单编号</td>
+                <td width="10%">发货省市</td>
+                <td width="11%">目的国家</td>
+                <!--
+                <td width="8%">货物重量</br>单位:kg</td>
+                <td width="11%">货物体积</br>单位:cm3</td>
+                <td width="5%">箱形</td>
+                -->
+                <td width="6%">已付金额<br/>(单位:$)</td>
+                <td width="8%">物流供应商</td>
+                <td width="15%">公司名称</td>
+                <td width="10%">下单时间</td>
+                <td width="5%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.items track by $index">
+                <!-- 序号 -->
+                <td>{{$index+1}}</td>
+                <!-- 订单编号 -->
+                <td>{{item.orderId}}</td>
+                <!-- 物流订单编号 -->
+                <td>{{item.shippingCn}}</td>
+                <!-- 发货省市 -->
+                <td>{{item.provinceName}},{{item.cityName}}</td>
+                <!-- 目的国家 -->
+                <td>{{item.countryId}}</td>
+
+                <!-- 货物重量
+                <td>{{item.weight}}</td> -->
+                <!-- 货物体积
+                <td>{{item.volume}}</td>-->
+                <!-- 箱形
+                <td>{{item.boxType}}</td> -->
+                <!-- 已付金额 -->
+                <td>{{item.shippingFee}}</td>
+                <!-- 物流供应商 -->
+                <td>{{item.shippingCorp}}</td>
+                <!-- 公司名称 -->
+                <td>{{item.companyName}}</td>
+                <!-- 下单时间 -->
+                <td>{{item.shippingTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <!-- 操作 -->
+                <td> <a ng-if="item.shippingCorp=='EMS' || item.shippingCorp=='DHL'"
+                        ng-click="tools.toshowDetail(item.orderId,item.shippingId)" href="javascript:;">详情</a></td>
+            </tr>
+            <tr ng-if="vm.items.length==0">
+                <td colspan="13" class="font-16">
+                    <p class="nodata">
+                        <span class="nodata-warn font-orange glyphicon glyphicon-exclamation-sign"></span>没有符合条件的数据!
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="middivs clearfix">
+        <div class="divright clearfix">
+            <select ng-model="paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages"
+                    ng-change="tools.getList()"></select>
+            <button class="btn btn-default lastbuttons" ng-click="tools.getnewpage();">GO</button>
+            <input type="number" class="inputs" ng-model="tools.newpagesize">
+            <label class="page-list-style label-style">转到页</label>
+            <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class="page-list-style" ng-change="tools.getList()" max-size="5"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        </div>
+    </div>
+</div>

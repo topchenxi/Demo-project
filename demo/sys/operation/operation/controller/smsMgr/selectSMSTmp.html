@@ -1,0 +1,41 @@
+<div class="dlg-title">提示</div>
+<div class="dlg-content">
+    <div class="mb20">
+        <input type="text" class="input-cfec" ng-model="tplPaging.tplId" placeholder="消息模版ID">
+        <button class="btn btn-cfec-red" ng-click="tools.tplSearch();">查&nbsp询</button>
+    </div>
+    <div class="list-content table-cfec">
+        <table class="table table-hover ">
+            <colgroup>
+                <col width="20%">
+                <col width="60%">
+                <col width="20%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>模版ID</th>
+                    <th>模版内容</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.tpLitems.length">
+                <tr ng-repeat='item in vm.tpLitems'>
+                    <td>{{item.tpl_id}}</td>
+                    <td>{{item.tpl_content}}</td>
+                    <td>
+                        <button type="button" class="btn btn-cfec-red" ng-click="tools.sendSMS(item);">选择</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row-page clearfix">
+        <select class="item" ng-model="tplPaging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getTplnewpage(0)"></select>
+        <uib-pagination boundary-links="true" total-items="tplPaging.total" ng-model="tplPaging.page" items-per-page="tplPaging.pageSize" class="page-list-style item" ng-change="tools.getTplnewpage()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        <label class="item">共<big>{{tplPaging.total}}</big>条</label>
+        <label class="item">转到第</label>
+        <input class="ngc-jumppage" type="number" class="item" ng-model="tools.newTplpagesize">
+        <label class="item">页</label>
+        <button class="j-jump item" ng-click="tools.getTplnewpage(1);">GO</button>
+    </div>
+</div>

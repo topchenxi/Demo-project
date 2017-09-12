@@ -1,0 +1,129 @@
+<style type="text/css">
+    
+    .message-block{
+      position: relative;
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #e1e2e7;
+        margin-left: 60px;
+        margin-right: 60px;
+        font-size: 14px;
+    }
+    .message-block .read-mark{
+      margin-left: 10px;
+      border: 1px solid #e6e7ec;
+      font-size: 12px;
+      width: auto;
+      display: inline-block;
+      background-color: #e6e7ec;
+      height: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: #99A;
+      position: relative;
+      padding:0 10px;
+      line-height: 20px;
+    }
+    
+    .message-block .readed{
+      background-color: #e6e7ec;
+    }
+    .message-block .no-read{
+      background-color: #fff;
+    }
+    .message-block .message-content{
+      font-size: 12px;
+      color: #737373;
+      white-space: pre-line;
+    }
+    .message-block .date{
+      font-size: 12px;
+      color: #999;
+    }
+    .inline-table{
+      display: inline-table;
+    }
+
+    .triggle-left{
+      display: inline-block;
+      left: -17px;
+      top:16px;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 8px solid;
+      border-top: 8px solid transparent;
+      border-left: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #e1e2e6;
+    }
+    .triggle-left s{
+      position: absolute;
+      top: -8px;
+      left: -6px;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-left: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #fff;
+    }
+
+    .triggle-right{
+      display: inline-block;
+      right: -17px;
+      top:16px;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid #e1e2e6;
+    }
+
+     .triggle-right s{
+      position: absolute;
+      top: -8px;
+      right: -6px;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid #fff;
+    }
+
+</style>
+
+<div class="activeDlg">
+  <div class="dlg-title"></div>
+  <div class="oms-content oms-detail">
+   <div class="ml20 mr20" ng-repeat="(index, ct) in tabs.messages">
+                <img width="40px" height="40px" ng-class="{'1':'fl','2':'fr'}[ct.userType]" ng-src="{{ct.senderImg | setImgSize:40:40}}">
+                <div class="message-block">
+                    <i ng-class="{'1':'triggle-left','2':'triggle-right'}[ct.userType]"><s></s></i>
+                    <p class=""> <span ng-if="ct.userType == 2" ng-bind-html="ct.senderCompanyName"></span> 
+                    <span ng-bind-html="ct.senderCompanyEnName"> </span>({{ct.senderName}}) 
+                    <!-- <span ng-if="ct.isRead=='Y'" class="read-mark readed">已读</span>
+                    <span ng-if="ct.isRead=='N'" class="read-mark no-read">未读</span> -->
+                    <span class="read-mark {{ct.emailState=='open'?'readed':'no-read'}}">{{ct.emailState | emailStateFilter}}</span>
+                    <!-- 询盘-对话刷新 -->
+                    <a href="javascript:void(0)" ng-if="ct.emailState!=null&&ct.emailState!='open'" class="link" ng-click="tools.tab.refreshMessageEmailState(ct,ct.messageId,ct.isReply)">刷新</a>
+                    <a ngc-permission="other_othersendEmail_resendEmail" ng-click="tools.tab.reSendEmail(index)" href="javascript:void(0)" class="link">重发邮件给接收方</a>
+                    </p>
+                    <p class="message-content" ng-bind-html="ct.content"></p>
+                    <div ng-if="ct.fileList.length>0" class="message-content">附件：
+                      <div class="inline-table "><a ng-repeat="fl in ct.fileList" target="_blank" ng-href="{{tabs.imgUrl+fl.filePath}}">{{fl.fileName}} <br/></a></div>
+                     </div>
+                    <span class="date">{{ct.createTime|date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </div>
+   </div>
+  </div>
+</div>
+
+
+  
+  

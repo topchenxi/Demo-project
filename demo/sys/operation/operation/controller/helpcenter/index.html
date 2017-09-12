@@ -1,0 +1,176 @@
+<div class="top-help clearfix {{$root.topclass}}">
+	<form class="help-form-class">
+		<p class="p-help-style">
+			帮助中心
+			<span>&ensp;&gt;&ensp;</span>
+			FAQ分类管理
+			<span>&ensp;&gt;&ensp;</span>
+			FAQ分类类别
+		</p>
+	</form>
+</div>
+
+<div class="container-list">
+	<div class="help-main-div">
+		<div class="divleft ">
+			<button class="help-button"
+			ng-click="tools.addclassify();" >添加分类</button>
+			<button class="help-button"
+			ng-click="tools.del('')" >删除</button>
+		</div>
+		<div class="help-div-right">
+			<button class="search-button"
+			ng-click="tools.search();">搜索</button>
+
+			<input ngc-auto-input type="text" ngc-monitor-enter class="input-help"
+			ng-model="paging.categoryName">
+
+			<label class="label-help">分类名称</label>
+		</div>
+	</div>
+
+	<table class="table table-bordered table-hover tablestyle">
+		<thead>
+			<tr class="help-thead">
+				<th>
+					<input type="checkbox"
+					ng-model="vm.allChecked"
+					ng-change="vm.checkAll(vm.allChecked)"></th>
+				<th>FAQ父分类名称</th>
+				<th>序列号</th>
+				<th>创建人</th>
+				<th>创建时间</th>
+				<th>修改人</th>
+				<th>修改时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="help-tbody"
+			ng-repeat="item in vm.items"
+			ng-click="tools.getindex(item);">
+				<td>
+					<input type="checkbox"
+					ng-click="tools.getindex(item);"
+					ng-model="item.$checked"
+					ng-change="vm.selection()"></td>
+				<td>
+					<a href="javascript:;"
+					ng-click="tools.childclassify(item.faqCategoryId)">{{item.categoryName}}</a>
+				</td>
+				<td >{{item.serialNumber}}</td>
+				<td >{{item.creatorName}}</td>
+				<td >{{item.createTime| date:'yyyy-MM-dd'}}</td>
+				<td >{{item.editorName}}</td>
+				<td >{{item.updateTime| date:'yyyy-MM-dd'}}</td>
+				<td>
+					<a href="javascript:;" class="help-a-style"
+					ng-click="tools.notifyclassify(item)" >修改</a>
+					<a href="javascript:;" class="help-a-style"
+					ng-click="tools.del(item.faqCategoryId)" >删除</a>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 分页 -->
+	<div class=" middivs clearfix">
+
+		<div class="divright clearfix">
+			<select type="button" class="buttons"
+			ng-model="paging.pageSize"
+			ng-options="obj.pageSize as obj.pagename for obj in tools.pages"
+			ng-change="tools.getclassifyList();"></select>
+
+			<button  class="lastbuttons"
+			ng-click="tools.getnewpage();">GO</button>
+
+			<input type="text" class="inputs"
+			ng-model="tools.newpagesize">
+
+			<label class="page-list-style">转到页</label>
+
+			<uib-pagination class="page-list-style"
+			boundary-links="true"
+			total-items="paging.total"
+			ng-model="paging.page"
+			items-per-page="paging.pageSize"
+			ng-change="tools.getclassifyList();"
+			previous-text="&lsaquo;"
+			next-text="&rsaquo;"
+			first-text="&laquo;"
+			last-text="&raquo;"></uib-pagination>
+		</div>
+	</div>
+
+</div>
+
+<div class="ope-footer">当前版本:x.x.xxxxxx 版权申明 © 2012 广交会电子商务公司保留所有权利 粤ICP备 12071919 号</div>
+
+<script type="text/ng-template" id="addclassify.html">
+<div  class="popmenu">
+	<div class="alert alert-info line">添加分类</div>
+	<form class="form-horizontal" novalidate ng-submit="submit()">
+		<div class="form-group">
+			<label class="help-label-left">
+				<span class="help-span-style">*</span>
+				父类名称
+			</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" ng-model="additem.categoryName"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">
+				<span class="help-span-style">*</span>
+				序列号
+			</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" placeholder="序列号不能大于4294967295" ng-model="additem.serialNumber"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">备注</label>
+			<div class="col-md-6">
+				<textarea name="" class="help-text-mark"  ng-model="additem.remark" id="" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<input class=" dialog-button-sure" type="submit" value="确定">
+			<button type="button" class="btn btn-warning col-md-offset-2 col-md-2 help-cancel-button" ng-click="close()">取消</button>
+		</div>
+	</form>
+</div>
+</script>
+
+<script type="text/ng-template" id="notifyclassify.html">
+<div  class="popmenu">
+	<div class="alert alert-info line">修改分类</div>
+	<form class="form-horizontal" novalidate ng-submit="submit()">
+		<div class="form-group">
+			<label class="help-label-left">
+				<span class="help-span-style">*</span>
+				父类名称
+			</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" ng-model="additem.categoryName"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">
+				<span class="help-span-style">*</span>
+				序列号
+			</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right"  placeholder="序列号不能大于4294967295" ng-model="additem.serialNumber"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">备注</label>
+			<div class="col-md-6">
+				<textarea name="" class="help-text-mark"  ng-model="additem.remark" id="" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<input class=" dialog-button-sure" type="submit" value="确定">
+			<button type="button" class="btn btn-warning col-md-offset-2 col-md-2 help-cancel-button" ng-click="close()">取消</button>
+		</div>
+	</form>
+</div>
+</script>

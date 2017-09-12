@@ -1,0 +1,52 @@
+<h1>保存类目</h1>
+
+	<div  class="popmenu">
+	<!-- 	<div class="pop-head">添加类目</div> -->
+		<div class="alert alert-info line"></div>
+
+		<form class="form-horizontal" novalidate ng-submit="submit()">
+			<div class="form-group">
+				<label class="col-md-3  control-label">行业名称：</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="chgAdd.countryId"></div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-3  control-label">英文名称：</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control" ng-model="chgAdd.qwe"></div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-md-3  control-label">logo：</label>
+
+					<div class="col-md-6">
+					 <input type="button" class="btn btn-primary" value="上传图片"
+        ngf-select ngf-change="upload($files,vm.bizCodeImg)" ngf-multiple="true"
+        ng-model="vm.bizCodeImg" required>
+      <div>
+        <img ng-src="http://192.168.10.17{{vm.bizCodeImg}}" alt="" width="80px" height="80px"></div>
+
+
+					</div>
+
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-3  control-label">排序：</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control pointlen"></div>
+	</div>
+
+			<div class="form-group">
+				<label class="col-md-3  control-label">是否重点行业：</label>
+				<div class="col-md-8">
+				<input type="checkbox"  name="checkbox1" id="" ng-model="check" ng-change="vm.selection()">是</div>
+			</div>
+			<div class="form-group">
+				<input class="btn btn-primary col-md-offset-3 col-md-2" type="submit" value="确定">
+				<button type="button" class="btn btn-warning col-md-offset-2 col-md-2" ng-click="close()">取消</button>
+			</div>
+		</form>
+	</div>

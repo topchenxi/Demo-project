@@ -1,0 +1,384 @@
+<div class="oms-crumbs"> <i>添加采购商</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>添加采购商</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <form action="" id="addbuyerform" class="form-group-main">
+            <h4 class="buyer-title">帐号信息</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 邮箱
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="userEmail" placeholder="请输入邮箱" ng-model="buyerInfo.userEmail" />
+                    <div class="checkbox fl">
+                        <label>
+                            <input type="checkbox" value="" ng-model="buyerInfo.emailValidation" ng-true-value="2" ng-disabled="buyerInfo.userEmail.length == null || buyerInfo.userEmail.length == ''">
+                            邮箱是采购商使用中的邮箱
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 用户名
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" disabled class="input-cfec" name="username" placeholder="" ng-model="buyerInfo.userEmail" />
+                </div>
+            </div>
+            <h4 class="buyer-title">个人信息</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 姓名
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="firstName" placeholder="请输入姓名" ng-model="buyerInfo.firstName" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 性别
+                </label>
+                <div class="col-sm-10 radio">
+                    <label class="w100">
+                        <input type="radio" name="gender" value="1" ng-model="buyerInfo.gender">男</label>
+                    <label class="w100">
+                        <input type="radio" name="gender" value="2" ng-model="buyerInfo.gender">女</label>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 头像
+                </label>
+                <div class="col-sm-10">
+                    <img class="mr5" src="" alt="" width="60" height="60" ng-src="{{ buyerInfo.buyerPhoto | ngcSetImgSize:60:60:3:1 }}">
+                    <button class="btn btn-cfec-white" type="button" class="btn btn-cfec-white" value="上传" ngf-select ngf-change="tools.uploadImg($files,'buyerPhoto')" accept="'image/*'">上传</button>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 国籍
+                </label>
+                <div class="col-sm-10">
+                    <select ngc-select-search name="countryId" class="select-oms" name="countryId" ng-model="buyerInfo.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('countryId');">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 地址
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="address" placeholder="" ng-model="buyerInfo.address" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 邮编
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="zipCode" placeholder="" ng-model="buyerInfo.zipCode" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 手机
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec mr10 w95" name="buyerCountryCode" placeholder="国家代码" ng-model="buyerInfo.mobileContry" />
+                    <input type="text" class="input-cfec mr10" name="buyerMobile" placeholder="手机号" ng-model="buyerInfo.mobile" />
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" ng-model="buyerInfo.mobileValidation" ng-true-value="2" ng-disabled="buyerInfo.mobile.length == null || buyerInfo.mobile.length == ''">
+                            手机号码是采购商使用中的号码
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> whatsapp
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec " name="buyerwhatsapp"  ng-model="buyerInfo.whatsapp" />                   
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 固话
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec mr10 w95" name="buyerRegion" placeholder="国家代码" ng-model="buyerInfo.region" />
+                    <input type="text" class="input-cfec mr10 w90" name="buyerArea" placeholder="地区号" ng-model="buyerInfo.area" />
+                    <input type="text" class="input-cfec mr10" name="buyerTelephone" placeholder="固话号" ng-model="buyerInfo.telephone" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> wechat
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="buyerwechat"  ng-model="buyerInfo.wechat" />                   
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> Skype
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="skype" placeholder="" ng-model="buyerInfo.skype" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> Other Contact
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="otherContact" placeholder="" ng-model="buyerInfo.otherContact"  />                   
+                </div>
+            </div>
+            <h4 class="buyer-title">公司信息</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 公司名称
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec mr5" name="companyName" ng-model="buyerInfo.companyName" />
+                    <label for="businessCooper">
+                        <input type="checkbox" class="mr5" style="margin-top: 9px;" name="businessCooper" id="businessCooper" ng-model="buyerInfo.businessCooper">商务合作采购商</label>
+                    <label for="otherExhibition">
+                        <input type="checkbox" class="mr5" style="margin-top: 9px;" name="otherExhibition" id="otherExhibition" ng-model="buyerInfo.otherExhibition">其他展会采购商</label>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 公司logo
+                </label>
+                <div class="col-sm-10">
+                    <img class="mr5" src="" alt="" width="60" height="60" ng-src="{{ buyerInfo.companyLogo | ngcSetImgSize:60:60:3:2 }}">
+                    <button class="btn btn-cfec-white" type="button" class="btn btn-cfec-white" value="上传" ngf-select ngf-change="tools.uploadImg($files,'companyLogo')" accept="'image/*'">上传</button>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 公司国家
+                </label>
+                <div class="col-sm-10">
+                    <select ngc-select-search id="" class="select-oms" name="companyCountryId" ng-model="buyerInfo.companyCountryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('companyCountryId');">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 公司地址
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="companyAddress" ng-model="buyerInfo.companyAddress" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 邮编
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="companyZipCode" ng-model="buyerInfo.companyZipCode" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 公司简介
+                </label>
+                <div class="col-sm-10">
+                    <textarea name="companyDesc" id="" class="textarea-cfec" ng-model="buyerInfo.companyDesc"></textarea>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 公司网址
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec" name="companyWebsite" ng-model="buyerInfo.companyWebsite" />
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 成立年份
+                </label>
+                <div class="col-sm-10">
+                    <select ngc-select-search id="" class="select-oms" name="companyFoundYear" ng-model="buyerInfo.companyFoundYear" ng-options="obj.value as obj.key for obj in vm.companyFoundYearArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 采购商性质
+                </label>
+                <div class="col-sm-10 checkbox-content">
+                    <label class="" ng-repeat="item in vm.companyNatureArray">
+                        <input type="checkbox" name="companyNatureVal" value="{{item.value}}">{{item.key}}</label>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 采购商类型
+                </label>
+                <div class="col-sm-10 checkbox-content">
+                    <label class="" ng-repeat="item in vm.companyTypeArray">
+                        <input type="checkbox" name="companyTypeVal" value="{{item.value}}">{{item.key}}</label>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 年采购量
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms" name="yearBuyingAmt" ng-model="buyerInfo.yearBuyingAmt" ng-options="obj.value as obj.key for obj in vm.yearBuyingAmtArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <h4 class="buyer-title">采购偏好</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 采购产品分类
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" disabled class="input-cfec mr10 w400" name="productType" value="{{$root.categoryArray | getCategoryName}}">
+                    <button class="btn btn-cfec-white" type="button" ng-click="tools.showPanel();">选择分类</button>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 期望供应商的人员规模
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms" name="staffSize" ng-model="buyerInfo.staffSize" ng-options="obj.value as obj.key for obj in vm.staffSizeArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 期望供应商的注册资金
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms" name="registeredCapital" ng-model="buyerInfo.registeredCapital" ng-options="obj.value as obj.key for obj in vm.registeredCapitalArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 期望供应商的年营业额
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms" name="annualTurnover" ng-model="buyerInfo.annualTurnover" ng-options="obj.value as obj.key for obj in vm.annualTurnoverArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 期望供应商的公司类型
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms" name="businessType" ng-model="buyerInfo.businessType" ng-options="obj.value as obj.key for obj in vm.businessTypeArray">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <h4 class="buyer-title">其他信息</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span></span> 备注(只有oms后台可见)
+                </label>
+                <div class="col-sm-10">
+                    <textarea id="remark" class="textarea-cfec" name="remark" ng-model="buyerInfo.remark"></textarea>
+                </div>
+            </div>
+            <h4 class="buyer-title">跟进信息</h4>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 跟进优先级(1优先)
+                </label>
+                <div class="col-sm-10">
+                    <select id="" class="select-oms mr10" name="followBuyerLevel" ng-model="buyerInfo.followBuyerLevel">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 跟进标识
+                </label>
+                <div class="col-sm-10">
+                    <div class="checkbox fl w250" ng-repeat="rs in vm.newfollowSignWayArray track by $index">
+                        <label class="pl0 mr20">
+                            <input id="{{'followFlag'+$index}}" name="followFlag" type="radio" value="{{rs.value}}" ng-model="buyerInfo.flag" class="mr10" /> {{rs.key}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    跟进内容
+                </label>
+                <div class="col-sm-10">
+                    <textarea id="followContent" class="textarea-cfec" name="followContent" ng-model="buyerInfo.followContent"></textarea>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 加入跟进清单
+                </label>
+                <div class="col-sm-10">
+                    <label class="w100">
+                        <input type="radio" class="mr5" name="isFollowing" value="1" ng-model="buyerInfo.isFollowing">是</label>
+                    <label class="w100">
+                        <input type="radio" class="mr5" name="isFollowing" value="0" ng-model="buyerInfo.isFollowing">否</label>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"></label>
+                <div class="col-sm-10">
+                    <button type="button" class="btn btn-cfec-red" ng-click="tools.saveBuyerInfo();">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/ng-template" id="showPanel.html">
+    <div class="dlg-title">选择类目</div>
+    <div class="panel-container">
+        <div class="level">
+            <ul>
+                <li ng-repeat="item in vm.firstLevelCate" ng-click="tools.getChildcate(item.categoryId)">{{item.categoryName}}<span>&gt; </span></li>
+            </ul>
+        </div>
+        <div class="level">
+            <ul>
+                <li ng-repeat="item in vm.Childcate" ng-click="tools.chooseCate(item)">{{item.categoryName}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-result"> <strong>已选择:</strong>
+        <ul>
+            <li ng-repeat="item in $root.categoryArray">{{item.categoryName}}<i class="iconfont" ng-click="tools.delCategory(item)">&#xe60b;</i></li>
+        </ul>
+    </div>
+    <div class="btn-toolbar clearfix p20">
+        <button type="button" class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+        <button type="button" class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+    </div>
+</script>

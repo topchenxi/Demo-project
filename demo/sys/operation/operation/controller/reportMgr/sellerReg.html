@@ -1,0 +1,138 @@
+<div class="oms-crumbs"> <i>数据报表</i>
+    <p>
+        <a href="">卖家注册</a> /
+        <span>数据报表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">卖家ID</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="卖家ID" ng-model="paging.sellerId" id="sellerId"> </div>
+            <div class="form-group fl">
+                <label for="">联系人姓名</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="联系人姓名" ng-model="paging.userName" id="userName"> </div>
+            <div class="form-group fl">
+                <label for="">性别</label>
+                <select class="select-oms" ng-model="paging.gender">
+                    <option value="">请选择</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">公司负责人姓名</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="公司负责人姓名" ng-model="paging.bizEntity" id="bizEntity"> </div>
+            <div class="form-group fl">
+                <label for="">店铺名称</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="店铺名称" ng-model="paging.shopName" id="shopName"> </div>
+            <div class="form-group fl">
+                <label for="">注册时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.startTime" id="startTime" max-date="{{paging.endTime}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.endTime" id="endTime" min-date="{{paging.startTime}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group fl">
+                <label for="">所在地</label>
+                <select ngc-select-search name="provice"  class="select-oms" ng-options="obj.districtCode as obj.districtCnName for obj in vm.provinceList" ng-model="paging.provinceCode" ng-change="tools.changeProvince()">
+                    <option value="">请选择</option>
+                </select>
+                <span class="text-inline">-</span>
+                <select ngc-select-search name="cityName" class="select-oms" ng-options="obj.districtCode as obj.districtCnName for obj in vm.cityList" ng-model="paging.cityCode">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">商业规则分类</label>
+                <select ngc-select-search name="favProductLevelId" class="select-oms" ng-change="tools.changeCategroy()" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys1List" ng-model="paging.favProductLevelId">
+                    <option value="">请选择</option>
+                </select>
+                <span class="text-inline">-</span>
+                <select ngc-select-search name="favProductId" class="select-oms" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys2List" ng-model="paging.favProductId">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">注册资金(万)</label>
+                <input ngc-auto-input type="text" ngc-monitor-enter name="registerStartAmount" ng-model="paging.registerStartAmount" id="registerStartAmount" class="input-cfec" />
+                <span class="text-inline">-</span>
+                <input ngc-auto-input type="text" ngc-monitor-enter name="registerEndAmount" ng-model="paging.registerEndAmount" id="registerEndAmount" class="input-cfec" />
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.getList();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.exportData()">导出excel表格</button>
+                <button class="btn btn-cfec-white" ng-click="tools.initCondition(false)">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec report-data">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="4%">
+                    <col width="10%">
+                    <col width="19%">
+                    <col width="13%">
+                    <col width="7%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="8%">
+                    <col width="10%">
+                    <col width="9%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="ta-c">序号</th>
+                        <th>卖家ID</th>
+                        <th>店铺名称</th>
+                        <th>联系人姓名</th>
+                        <th>性别</th>
+                        <th>公司负责人姓名</th>
+                        <th>注册资金 (万)</th>
+                        <th>所在地</th>
+                        <th>注册时间</th>
+                        <th>商业规则分类</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat="item in vm.items track by $index">
+                        <!-- 序号 -->
+                        <td class="ta-c">{{$index+1}}</td>
+                        <!-- 卖家ID -->
+                        <td>{{item.sellerId}}</td>
+                        <!-- 店铺名称 -->
+                        <td>{{item.shopName}}</td>
+                        <!-- 联系人姓名 -->
+                        <td>{{item.userName}}</td>
+                        <!-- 性别 -->
+                        <td>{{item.gender|gender}}</td>
+                        <!-- 公司负责人姓名 -->
+                        <td>{{item.bizEntity}}</td>
+                        <!-- 公司注册资金 -->
+                        <td>
+                            <p ng-if="item.registerAmount!=null">￥：{{item.registerAmount|number:2}}</p>
+                        </td>
+                        <!-- 所在地 -->
+                        <td>{{item.provinceName}}
+                            <br/>{{item.cityName}}</td>
+                        <!-- 注册时间 -->
+                        <td>
+                            <p>{{item.registerTime|date:'yyyy-MM-dd'}}</p>
+                            <p>{{item.registerTime|date:'HH:mm:ss'}}</p>
+                        </td>
+                        <!-- 商业规则分类 -->
+                        <td>{{item.name}}</td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="10">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>

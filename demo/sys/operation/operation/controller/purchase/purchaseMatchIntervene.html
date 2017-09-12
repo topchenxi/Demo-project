@@ -1,0 +1,436 @@
+<!-- 列表头部导航[[ -->
+<div class="oms-crumbs"> <i>干预匹配</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <a href="">采购需求匹配管理</a> /
+        <a href="">采购需求匹配结果</a> /
+        <span>干预匹配</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">系统匹配结果</div>
+            <div>
+                <div class="search-content form-group-main clearfix">
+                    <!-- 上架商品数 -->
+                    <div class="form-group fl">
+                        <label for="">上架商品数</label>
+                        <select class="select-oms" ng-model="paging.productNumRange" ng-options="obj.key as obj.value for obj in vm.productNumRanges">
+              <option value="">请选择</option>
+            </select>
+                    </div>
+                    <!-- 最后登录时间 -->
+                    <div class="form-group fl">
+                        <label for="">最后登录时间</label>
+                        <select class="select-oms" ng-model="paging.latestLoginTimeNumber" ng-options="obj.key as obj.value for obj in vm.latestLoginTimeNumbers">
+              <option value="">请选择</option>
+            </select>
+                    </div>
+                    <!-- 排序类型 -->
+                    <div class="form-group fl">
+                        <label for="">排序</label>
+                        <select class="select-oms" ng-model="paging.sortName" ng-options="obj.key as obj.value for obj in vm.sortNames">
+              <!-- <option value="weight">默认排序</option>
+            -->
+          </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tools.getPurchaseSysResult()">查&nbsp询</button>
+                        <button class="btn btn-cfec-white" ng-click="tools.init(true);">重&nbsp置</button>
+                    </div>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2 pt20">
+                    <table class="table">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr ng-show="vm.checkedDatas == 'undefined' ||  vm.checkedDatas.length == 0">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.toggleCheckAll(vm.isAllChecked)"></th>
+                                <th>序号</th>
+                                <th>匹配时间</th>
+                                <th>供应商</th>
+                                <th>会员资质</th>
+                                <th>上架商品数</th>
+                                <th>近30天匹配采购需求数</th>
+                                <th>近30天商机回复率</th>
+                                <th>近30天登录数</th>
+                                <th>最后登录时间</th>
+                            </tr>
+                            <tr class="j-sroll-fixed" ng-show="vm.checkedDatas!= 'undefined' && vm.checkedDatas.length >
+            0">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.toggleCheckAll(vm.isAllChecked)"></th>
+                                <th colspan="7">
+                                    <div class="btn-group">
+                                        <button ng-click="tools.addFromSysMatch()" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm fl mr20">添加到干预匹配结果</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.sysItems track by $index">
+                                <!-- {{ad.auditTime|date:'yyyy-MM-dd HH:mm:ss'}} -->
+                                <td>
+                                    <input ng-show="item.inqueryUUID==null" type="checkbox" ng-model="item.$checked" ng-change="tools.setCheckedData()">
+                                    <a class="link-cfec-inherit" ng-href="/#/purchase/purchaseQuoteDetail?inqueryUUID={{item.inqueryUUID}}" ng-show="item.inqueryUUID!=null" target="_blank">已报价</a>
+                                </td>
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.matchTime|date:'yyyy-MM-dd'}}
+                                    <br/> {{item.matchTime|date:'HH:mm:ss'}}
+                                </td>
+                                <td>
+                                    <i ng-if="item.isNewMember==1" class="iconfont" style="color:#4593d5;" title="此供应商首次开通套餐,开通时间为{{item.packageEffectiveTime | date:'yyyy-MM-dd'}}">&#xe624;</i>
+                                    <i ng-if="item.isAmostExpired==1" class="iconfont" style="color:#4593d5;" title="此供应商套餐过期时间为{{item.pageckageExpireTime | date:'yyyy-MM-dd'}}">&#xe623;</i>
+                                    <a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyName}}</a>
+                                    <br/>
+                                    <a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyEnName}}</a>
+                                    <br/>
+                                    <a class="link-cfec-inherit" ng-href="{{item.shopSourceAddr}}" target="_blank">【前台店铺】</a>
+                                </td>
+                                <td>
+                                    <p>{{item.packageTypeId|memPackageType}}</p>
+                                    <p>{{item.isYearExhibitor ==1? '当届参展商':'非当届参展商'}}</p>
+                                    <p>参会{{item.exhitionTimes}}次</p>
+                                </td>
+                                <td>
+                                    {{item.productQty}}
+                                    <a ng-if="item.productQty>
+                0" class="link-cfec-inherit" href="javascript:void(0)" ng-click="toolsdlg.sellerProductCategory(item.sellerId)">（详情）
+              </a>
+                                </td>
+                                <td>{{item.qtyMatchProcurement}}</td>
+                                <td>{{item.monthReversionRate | halfYearTwoRateFilter}}</td>
+                                <td>{{item.loginTimes}}</td>
+                                <td>{{item.latestLoginTime|date:'yyyy-MM-dd'}}</td>
+                            </tr>
+                            <tr ng-if="typeof(vm.sysItems)=='undefined' || vm.sysItems.length<1">
+                                <td colspan="9">
+                                    <p class="noResult-Text pt20 pb20 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有结果
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="oms-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">干预匹配结果</div>
+            <div>
+                <div class="container-list table-cfec table-cfec-theme2 pt20">
+                    <table class="table">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>匹配时间</th>
+                                <th>供应商</th>
+                                <th>会员资质</th>
+                                <th>上架商品数</th>
+                                <th>近30天匹配采购需求数</th>
+                                <th>近30天登录数</th>
+                                <th>最后登录时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.viewItems track by $index">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{item.matchTime|date:'yyyy-MM-dd'}}
+                                    <br/> {{item.matchTime|date:'HH:mm:ss'}}
+                                </td>
+                                <td>
+                                    <i ng-if="item.isNewMember==1" class="iconfont" style="color:#4593d5;" title="此供应商首次开通套餐,开通时间为{{item.packageEffectiveTime | date:'yyyy-MM-dd'}}">&#xe624;</i>
+                                    <i ng-if="item.isAmostExpired==1" class="iconfont" style="color:#4593d5;" title="此供应商套餐过期时间为{{item.pageckageExpireTime | date:'yyyy-MM-dd'}}">&#xe623;</i>
+                                    <a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyName}}</a>
+                                    <br/>
+                                    <a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyEnName}}</a>
+                                    <br/>
+                                    <a class="link-cfec-inherit" ng-href="{{item.shopSourceAddr}}" target="_blank">【前台店铺】</a>
+                                </td>
+                                <td>
+                                    <p>{{item.packageTypeId|memPackageType}}</p>
+                                    <p>{{item.isYearExhibitor ==1? '当届参展商':'非当届参展商'}}</p>
+                                    <p>参会{{item.exhitionTimes}}次</p>
+                                </td>
+                                <td>
+                                    {{item.productQty}}
+                                    <a ng-if="item.productQty>
+              0" class="link-cfec-inherit" href="javascript:void(0)" ng-click="toolsdlg.sellerProductCategory(item.sellerId)">（详情）
+            </a>
+                                </td>
+                                <td>{{item.qtyMatchProcurement}}</td>
+                                <td>{{item.loginTimes}}</td>
+                                <td>{{item.latestLoginTime|date:'yyyy-MM-dd'}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="link-cfec" ng-click="tools.deLFromIntervene($index)">删除</a>
+                                </td>
+                            </tr>
+                            <tr ng-if="(typeof(vm.viewItems)=='undefined') || vm.viewItems.length<1">
+                                <td colspan="9">
+                                    <p class="noResult-Text pt20 pb20 ta-c">
+                                        <i class="iconfont icon-jingshioms"></i> 没有结果
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ngc-permission="purchase_purchasepurchaseMatchList_opear" class="form-group btns-group clear">
+                        <button type="button" class="btn btn-default btn-cfec-white" ng-click="tools.addDialog()">添加</button>
+                        <button type="button" class="btn btn-default btn-cfec-red" ng-click="tools.interveneCommit()" ng-disabled="vmdlg.isdisabled">
+        <span ng-if="!vmdlg.isdisabled">确认完成匹配</span>
+        <span ng-if="vmdlg.isdisabled">提交中...</span>
+      </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addSupplier.html">
+    <div>
+        <div class="dlg-title">添加</div>
+        <!-- 搜索栏[[ -->
+        <div class="form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">搜索</label>
+                <div class="oms-search">
+                    <select ng-model="pagingdlg.personDropdownType">
+                        <option value="0">账号</option>
+                        <option value="1">公司中文名称</option>
+                        <option value="2">公司英语名称 </option>
+                        <option value="3">邮箱 </option>
+                    </select> <em></em>
+                    <input type="text" ng-model="pagingdlg.personDropdownValue" />
+                </div>
+            </div>
+            <div class="form-group fl">
+                <label for="">会员等级</label>
+                <select class="select-oms" ng-model="pagingdlg.packageTypeId">
+                    <option value="">请选择</option>
+                    <option value="1">金牌供应商</option>
+                    <option value="2">认证供应商</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">参展商类型</label>
+                <select class="select-oms" ng-model="pagingdlg.exhibitionType">
+                    <option value="">请选择</option>
+                    <option value="0">不限展供应商</option>
+                    <option value="1">参展供应商</option>
+                    <option value="2">当届供应商</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">主营行业</label>
+                <select ngc-select-search name="indusId" class="select-oms" ng-model="pagingdlg.mainCategory" ng-options="obj.categoryId as obj.categoryName for obj in tools.categorys">
+                    <option value="">-请选择-</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">商品类目</label>
+                <input readonly="readonly" ng-click="toolsdlg.selectCategory()" ng-model="vm.checkedCategoryRs.name" class="input-cfec" type="text" placeholder="请选择" />
+            </div>
+            <div class="form-group fl">
+                <label for="">出口市场</label>
+                <select class="select-oms" ng-model="pagingdlg.exportArea">
+                    <option value="">-请选择-</option>
+                    <option value="1">北美</option>
+                    <option value="2">拉丁美洲</option>
+                    <option value="3">西欧</option>
+                    <option value="4">北欧</option>
+                    <option value="5">东欧</option>
+                    <option value="6">南欧</option>
+                    <option value="7">非洲 </option>
+                    <option value="8">东南亚</option>
+                    <option value="9">中东</option>
+                    <option value="10">南亚 </option>
+                    <option value="11">东亚</option>
+                    <option value="12">大洋洲</option>
+                </select>
+            </div>
+            <div class="form-group clear clearfix">
+                <button class="btn btn-cfec-red fl mr20" ng-click="toolsdlg.getSuppliers();" ng-disabled="vmdlg.isSearching">
+                    <span ng-hide="vmdlg.isSearching">查 询</span>
+                    <span ng-show="vmdlg.isSearching">loading...</span>
+                </button>
+                <button class="btn btn-cfec-white fl" ng-click="toolsdlg.reset()">重 置</button>
+            </div>
+        </div>
+        <!-- 搜索栏]] -->
+        <div class="container-list">
+            <!-- 卖家列表[[ -->
+            <div class="table-cfec table-cfec-theme2" style="min-height: 300px;">
+                <table class="table table-hover">
+                    <colgroup>
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="20%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" ng-model="vmdlg.isAllChecked" ng-change="toolsdlg.toggleCheckAll(vmdlg.isAllChecked)"></th>
+                            <th>序号</th>
+                            <th>供应商名</th>
+                            <th>会员资质</th>
+                            <th>上架商品数</th>
+                            <th>近30天匹配采购需求数</th>
+                            <th>近30天商机回复率</th>
+                            <th>近30天登录数</th>
+                            <th>最后登录时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in vmdlg.items track by $index">
+                            <!-- {{ad.auditTime|date:'yyyy-MM-dd HH:mm:ss'}} -->
+                            <td>
+                                <input ng-show="item.inqueryUUID==null" type="checkbox" ng-model="item.$checked" ng-change="toolsdlg.setCheckedData()">
+                                <a class="link-cfec-inherit" ng-href="/#/purchase/purchaseQuoteDetail?inqueryUUID={{item.inqueryUUID}}" ng-show="item.inqueryUUID!=null" target="_blank">已报价</a></td>
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <i ng-if="item.isNewMember==1" class="iconfont" style="color:#4593d5;" title="此供应商首次开通套餐,开通时间为{{item.packageEffectiveTime | date:'yyyy-MM-dd'}}">&#xe624;</i>
+                                <i ng-if="item.isAmostExpired==1" class="iconfont" style="color:#4593d5;" title="此供应商套餐过期时间为{{item.pageckageExpireTime | date:'yyyy-MM-dd'}}">&#xe623;</i>
+                                <div title="公司中文名"><a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyName}}</a></div>
+                                <div title="公司英文名"><a class="link-cfec-inherit" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" target="_blank">{{item.companyEnName}}</a></div>
+                                <div><a class="link-cfec-inherit" ng-href="{{item.shopSourceAddr}}" target="_blank">【前台店铺】</a></div>
+                            </td>
+                            <td>
+                                <p>{{item.packageTypeId|memPackageType}}</p>
+                                <p>{{item.isYearExhibitor ==1? '当届参展商':'非当届参展商'}}</p>
+                                <p>参会{{item.exhitionTimes}}次</p>
+                            </td>
+                            <td>{{item.productQty}}
+                                <a ng-if="item.productQty>0" class="link-cfec-inherit" href="javascript:void(0)" ng-click="toolsdlg.sellerProductCategory(item.sellerId)">（详情）</a></td>
+                            <td>{{item.qtyMatchProcurement}}</td>
+                            <td>{{item.monthReversionRate | halfYearTwoRateFilter}}</td>
+                            <td>{{item.loginTimes}}</td>
+                            <td>{{item.latestLoginTime|date:'yyyy-MM-dd'}}</td>
+                        </tr>
+                        <tr ng-show="vmdlg.items.length == 0">
+                            <td colspan="8">
+                                <p class="noResult-Text pt20 pb20 ta-c"><i class="iconfont icon-jingshioms"></i> 没有结果</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 分页组件[[ -->
+                <div class="row-page clearfix">
+                    <div class="form-group btns-group clear fl">
+                        <button type="button" class="btn btn-default btn-cfec-red" ng-disabled="!vmdlg.checkedDatas || vmdlg.checkedDatas.length==0" ng-click="toolsdlg.add()">确认</button>
+                        <button type="button" class="btn btn-default btn-cfec-white" ng-click="toolsdlg.closeAddDialog()">取消</button>
+                    </div>
+                    <select class="item" ng-model="pagingdlg.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vmdlg.pages" ng-change="toolsdlg.getnewpage(0)"></select>
+                    <uib-pagination boundary-links="true" total-items="pagingdlg.total" ng-model="pagingdlg.page" items-per-page="pagingdlg.pageSize" class="page-list-style item" ng-change="toolsdlg.getnewpage()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;"
+                        first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                    <label class="item">共<big>{{pagingdlg.total}}</big>条</label>
+                    <label class="item">转到第</label>
+                    <input class="ngc-jumppage" type="number" class="item" ng-model="toolsdlg.newpagesize">
+                    <label class="item">页</label>
+                    <button class="j-jump item" ng-click="toolsdlg.getnewpage(1);">GO</button>
+                </div>
+                <!-- 分页组件[[ -->
+            </div>
+            <!-- 卖家列表]] -->
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="dialogSellerCategory.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content table-cfec table-cfec-theme2">
+            <table class="table">
+                <colgroup>
+                    <col width="75%">
+                    <col width="25%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>商品上传类目</th>
+                        <th>商品数量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="it in vmdlg.productCategoryList track by $index">
+                        <td>{{it.path}}</td>
+                        <td>{{it.quantity}}个</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="hadIntervenedTmpl.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content table-cfec table-cfec-theme2">
+            <p class="mb40 font-14">
+                {{vmdlg.info}},
+                <a ng-click="closeThisDialog()" class="cfec-link" href="/#/purchase/purchaseReqDetail?purchaseId={{tools.procurementId}}&fromIntervene=true">点击查看匹配结果</a>。
+            </p>
+        </div>
+    </div>
+</script>
+<!-- 零匹配原因 -->
+<script type="text/ng-template" id="unMatchDlgId">
+    <div class="unMatchDlg">
+        <div class="dlg-title">零匹配原因</div>
+        <div class="dlg-content form form-group-main">
+            <p class="ta-c mb20">您并没有匹配任何供应商，为了方便以后继续跟进，请选择零匹配原因</p>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                零匹配原因：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="clearfix mb10">
+                        <div class="checkbox fl w160 mb0" ng-repeat="rs in vm.unMatchReasonArr track by $index">
+                            <label class="mr20">
+                          <input id="{{'unMatchReason'+$index}}" type="radio" name="unMatchReasonGroup" value="{{rs.id}}" ng-model="vm.reasonId" class="mr10" ng-change="tools.radioChange()" />{{rs.reason}}
+                        </label>
+                        </div>
+                    </div>
+                    <textarea name="" class="form-control reasonInput clear" rows="3" ng-model="vm.unMatchReason" ng-disabled="vm.needNode" placeholder="其他内容"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

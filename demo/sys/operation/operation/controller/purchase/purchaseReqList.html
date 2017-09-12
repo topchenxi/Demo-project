@@ -1,0 +1,1114 @@
+<!-- 列表头部导航[[ -->
+<div class="oms-crumbs"> <i>采购需求列表</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>采购需求列表</span>
+    </p>
+</div>
+<!-- 查询列表 -->
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0">
+            <uib-tab index="0" select="tools.initTab(0,'tabAll')">
+                <uib-tab-heading class="h5">全部</uib-tab-heading>
+                <div class="scondition-box search-content form-group-main">
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="tabs.tabAll.paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource(tabs.tabAll.paging.source);">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="tabs.tabAll.paging.source!=''&&vm.secondSourceArray.length>0">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="tabs.tabAll.paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">行业</label>
+                        <select ngc-select-search name="indusId1" ng-model="tabs.tabAll.paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司国家</label>
+                        <select ngc-select-search ng-model="tabs.tabAll.paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms" name="country1">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">质量</label>
+                        <select ng-model="tabs.tabAll.paging.quality" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">高</option>
+                            <option value="2">中</option>
+                            <option value="3">低</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select ng-model="tabs.tabAll.paging.dropdwonType" ng-options="obj.id as obj.name for obj in tools.sellerSearchType">
+                            </select>
+                            <em> </em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter ng-model="tabs.tabAll.paging.dropdwonValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">主题</label>
+                        <input ngc-auto-input ngc-monitor-enter ng-model="tabs.tabAll.paging.productName" class="input-cfec" type="text" />
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">审核状态</label>
+                        <select ng-model="tabs.tabAll.paging.procurementState" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">待审核</option>
+                            <option value="2">审核通过（含完成干预）</option>
+                            <option value="3">审核不通过</option>
+                            <!-- 需求 443 20161017 -->
+                            <option value="8">完成干预</option>
+                            <!-- 需求 721 20170505 -->
+                            <option value="7">已删除</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label>发布时间</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabAll.paging.startTime" readonly="readonly" id="startTime_tabAll" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabAll.paging.endTime" readonly="readonly" id="endTime_tabAll" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label>有效期限</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabAll.paging.validStartTime" max-date="{{tabs.tabAll.paging.validEndTime}}" readonly="readonly" id="validStartTime_tabAll" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabAll.paging.validEndTime" min-date="{{tabs.tabAll.paging.validStartTime}}" readonly="readonly" id="validEndTime_tabAll" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">附件</label>
+                        <select ng-model="tabs.tabAll.paging.hasAttachment" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">展会现场采购需求</label>
+                        <select ng-model="tabs.tabAll.paging.boothProcurement " class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <!-- 需求 929 20170717 -->
+                    <div class="form-group fl" ngc-permission="purchase_purchasepurchaseReqList_searchByAgent">
+                        <label for="">代发人</label>
+                        <select ng-if="tabs.tabAll.paging.isMe!=1" class="select-oms" name="haha" id="haha" ngc-select-search ng-model="tabs.tabAll.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                        <select ng-if="tabs.tabAll.paging.isMe==1" class="select-oms" name="haha" id="haha1" disabled="disabled" ng-model="tabs.tabAll.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tabs.tabAll.paging.page=1;tools.getPurchaseList('tabAll')">查 询</button>
+                        <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1,'tabAll')">重 置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <!-- 需求 443 20161017 -->
+                        <dd ng-if="!tabs.tabAll.paging.agentUserId" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabAll.paging.isMe==1]" ng-click="tabs.tabAll.paging.isMe=(tabs.tabAll.paging.isMe==1?0:1);tools.getPurchaseList('tabAll')">我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 929 20170717 -->
+                        <dd ng-if="tabs.tabAll.paging.agentUserId" class="ele-nochecked" disabled>我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 583 20161115 -->
+                        <dd ng-if="vm.isFollowerShowFlag" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabAll.paging.isFollower==1]" ng-click="tabs.tabAll.paging.isFollower = (tabs.tabAll.paging.isFollower==1?0:1);tools.getPurchaseList('tabAll');">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-if="!vm.isFollowerShowFlag" class="ele-checked">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabAll.paging.isIntervene==1]" ng-click="tabs.tabAll.paging.isIntervene = (tabs.tabAll.paging.isIntervene==1?0:1);tools.getPurchaseList('tabAll');">我干预的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabAll.paging.isRepeat==1]" ng-click="tabs.tabAll.paging.isRepeat = (tabs.tabAll.paging.isRepeat==1?0:1);tools.getPurchaseList('tabAll');">重复的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabAll.paging.isError==1]" ng-click="tabs.tabAll.paging.isError=(tabs.tabAll.paging.isError==1?0:1);tools.getPurchaseList('tabAll')">有问题的<span class="icon-checked"></span></dd>
+                    </dl>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <!-- 10列 -->
+                        <colgroup>
+                            <!-- 来源 -->
+                            <col width="10%" />
+                            <!-- 主题 -->
+                            <col width="10%" />
+                            <!-- 行业 -->
+                            <col width="10%" />
+                            <!-- 采购商 -->
+                            <col width="14%" />
+                            <!-- 公司国家 -->
+                            <col width="10%" />
+                            <!-- 状态 -->
+                            <col width="7%" />
+                            <!-- 有效期限 -->
+                            <col width="11%" />
+                            <!-- 发布时间 -->
+                            <col width="11%" />
+                            <!-- 标签 -->
+                            <col width="11%" />
+                            <!-- 操作 -->
+                            <col width="8%" />
+                        </colgroup>
+                        <thead>
+                            <tr class="">
+                                <th>来源</th>
+                                <th>主题</th>
+                                <th>行业</th>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>状态</th>
+                                <th>有效期限</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="tabs.tabAll.items.length>0">
+                            <tr ng-repeat="item in tabs.tabAll.items track by $index">
+                                <!-- 来源 -->
+                                <td>{{item.sourceValue}}
+                                    <p ng-show="item.createByRealName.length>0">({{item.createByRealName}})</p>
+                                </td>
+                                <!-- 主题 -->
+                                <td>
+                                    <span ng-show="item.hasAttachment" class="iconfont" title="有附件">&#xe621;</span>
+                                    <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                                    <a class="link-cfec-inherit" ng-click="tools.showDetail(item.procurementId)" href="javascript:void(0)"><span ng-bind-html="item.productName"></span></a>
+                                </td>
+                                <!-- 行业 -->
+                                <td>{{item.productCategoryName}}</td>
+                                <!-- 采购商 -->
+                                <td>
+                                    <div title="采购商姓名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.publisherName}}</a></div>
+                                    <div title="公司名称"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.companyName}}</a></div>
+                                    <!-- <div title="邮箱">{{item.email}}</div> -->
+                                    <!--<div title="用户名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.username}}</a></div>-->
+                                    <div title="用户ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a></div>
+                                    <div title="广交会ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.cantonfairId}}</a></div>
+                                </td>
+                                <!-- 国家 -->
+                                <td>{{item.countryName}}</td>
+                                <!-- 状态 -->
+                                <td>{{item.procurementState|purchaseState}}</td>
+                                <!-- 有效期限 -->
+                                <td>{{item.endTime|date:'yyyy-MM-dd'}}</td>
+                                <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                                <td>{{item.startTime|date:'yyyy-MM-dd'}}
+                                    <br/>{{item.startTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <p ng-if="item.repeat==1">【重复的】</p>
+                                    <p ng-if="item.error==1">【有问题】</p>
+                                    <p ng-if="item.quality>0" title="质量等级">【{{item.quality|purchaseQuality}}】</p>
+                                </td>
+                                <td>
+                                    <a ng-if="item.procurementState == 1" ngc-permission="purchase_purchasepurchaseReqList_audit" href="javascript:void(0)" ng-click="tools.chgAuditStatus(2,'tabAll',item.procurementId)">通过</a>
+                                    <a ng-if="item.procurementState == 1 || item.procurementState == 2" ngc-permission="purchase_purchasepurchaseReqList_audit" href="javascript:void(0)" ng-click="tools.chgAuditStatus(3,'tabAll',item.procurementId)">不通过</a>
+                                    <a ngc-permission="purchase_purchasepurchaseReqList_detail" href="javascript:void(0)" ng-click="tools.showDetail(item.procurementId)">详情</a></td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="tabs.tabAll.items.length<1" class="ng-scope">
+                            <tr>
+                                <td colspan="10">
+                                    <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="row-page clearfix">
+                        <select class="item" ng-model="tabs.tabAll.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0,'tabAll')"></select>
+                        <uib-pagination boundary-links="true" total-items="tabs.tabAll.paging.total" ng-model="tabs.tabAll.paging.page" items-per-page="tabs.tabAll.paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null,'tabAll')" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        <label class="item">共<big>{{tabs.tabAll.paging.total}}</big>条</label>
+                        <label class="item">转到第</label>
+                        <input class="ngc-jumppage" type="number" class="item" ng-model="tabs.tabAll.newpage">
+                        <label class="item">页</label>
+                        <button class="j-jump item" ng-click="tools.getnewpage(1,'tabAll');">GO</button>
+                    </div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+            <uib-tab index="1" select="tools.initTab(0,'tabWaitAudit')">
+                <uib-tab-heading class="h5">待审核</uib-tab-heading>
+                <div class="scondition-box search-content form-group-main">
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="tabs.tabWaitAudit.paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource(tabs.tabWaitAudit.paging.source);">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="tabs.tabWaitAudit.paging.source!=''&&vm.secondSourceArray.length>0">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="tabs.tabWaitAudit.paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">行业</label>
+                        <select ngc-select-search name="indusId2" ng-model="tabs.tabWaitAudit.paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司国家</label>
+                        <select ngc-select-search ng-model="tabs.tabWaitAudit.paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms" name="country2">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select ng-model="tabs.tabWaitAudit.paging.dropdwonType" ng-options="obj.id as obj.name for obj in tools.sellerSearchType">
+                            </select>
+                            <em> </em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter ng-model="tabs.tabWaitAudit.paging.dropdwonValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">主题</label>
+                        <input ngc-auto-input ngc-monitor-enter ng-model="tabs.tabWaitAudit.paging.productName" class="input-cfec" type="text" />
+                    </div>
+                    <div class="form-group fl">
+                        <label>发布时间</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabWaitAudit.paging.startTime" readonly="readonly" id="startTime_tabWaitAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabWaitAudit.paging.endTime" readonly="readonly" id="endTime_tabWaitAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label>有效期限</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabWaitAudit.paging.validStartTime" max-date="{{tabs.tabWaitAudit.paging.validEndTime}}" readonly="readonly" id="validStartTime_tabWaitAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabWaitAudit.paging.validEndTime" min-date="{{tabs.tabWaitAudit.paging.validStartTime}}" readonly="readonly" id="validEndTime_tabWaitAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">附件</label>
+                        <select ng-model="tabs.tabWaitAudit.paging.hasAttachment" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">展会现场采购需求</label>
+                        <select ng-model="tabs.tabWaitAudit.paging.boothProcurement " class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <!-- 需求 929 20170717 -->
+                    <div class="form-group fl" ngc-permission="purchase_purchasepurchaseReqList_searchByAgent">
+                        <label for="">代发人</label>
+                        <select ng-if="tabs.tabWaitAudit.paging.isMe!=1" class="select-oms" name="haha" id="haha" ngc-select-search ng-model="tabs.tabWaitAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                        <select ng-if="tabs.tabWaitAudit.paging.isMe==1" class="select-oms" name="haha" id="haha1" disabled="disabled" ng-model="tabs.tabWaitAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tabs.tabWaitAudit.paging.page=1;tools.getPurchaseList('tabWaitAudit')">查 询</button>
+                        <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1,'tabWaitAudit')">重 置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <!-- 需求 443 20161017 -->
+                        <dd ng-if="!tabs.tabWaitAudit.paging.agentUserId" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabWaitAudit.paging.isMe==1]" ng-click="tabs.tabWaitAudit.paging.isMe=(tabs.tabWaitAudit.paging.isMe==1?0:1);tools.getPurchaseList('tabWaitAudit')">我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 929 20170717 -->
+                        <dd ng-if="tabs.tabWaitAudit.paging.agentUserId" class="ele-nochecked" disabled>我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 583 20161115 -->
+                        <dd ng-if="vm.isFollowerShowFlag" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabWaitAudit.paging.isFollower==1]" ng-click="tabs.tabWaitAudit.paging.isFollower = (tabs.tabWaitAudit.paging.isFollower==1?0:1);tools.getPurchaseList('tabWaitAudit');">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-if="!vm.isFollowerShowFlag" class="ele-checked">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabWaitAudit.paging.isRepeat==1]" ng-click="tabs.tabWaitAudit.paging.isRepeat = (tabs.tabWaitAudit.paging.isRepeat==1?0:1);tools.getPurchaseList('tabWaitAudit');">重复的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabWaitAudit.paging.isError==1]" ng-click="tabs.tabWaitAudit.paging.isError=(tabs.tabWaitAudit.paging.isError==1?0:1);tools.getPurchaseList('tabWaitAudit');">有问题的<span class="icon-checked"></span></dd>
+                    </dl>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <!-- 10列 -->
+                        <colgroup>
+                            <col width="2%" />
+                            <!-- 来源 -->
+                            <col width="8%" />
+                            <!-- 主题 -->
+                            <col width="10%" />
+                            <!-- 行业 -->
+                            <col width="10%" />
+                            <!-- 采购商 -->
+                            <col width="14%" />
+                            <!-- 国家 -->
+                            <col width="10%" />
+                            <!-- 状态 -->
+                            <col width="7%" />
+                            <!-- 有效期限 -->
+                            <col width="11%" />
+                            <!-- 发布时间 -->
+                            <col width="11%" />
+                            <!-- 标签 -->
+                            <col width="7%" />
+                            <!-- 操作 -->
+                            <col width="8%" />
+                        </colgroup>
+                        <thead>
+                            <tr ng-show="tabs.tabWaitAudit.checkedDatas== 'undefined' || tabs.tabWaitAudit.checkedDatas.length == 0">
+                                <th>
+                                    <input type="checkbox" ng-model="tabs.tabWaitAudit.isAllChecked" ng-change="tools.toggleCheckAll(tabs.tabWaitAudit.isAllChecked,'tabWaitAudit')">
+                                </th>
+                                <th>来源</th>
+                                <th>主题</th>
+                                <th>行业</th>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>状态</th>
+                                <th>有效期限</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-show="tabs.tabWaitAudit.checkedDatas!= 'undefined' && tabs.tabWaitAudit.checkedDatas.length > 0">
+                                <th>
+                                    <input type="checkbox" ng-model="tabs.tabWaitAudit.isAllChecked" ng-change="tools.toggleCheckAll(tabs.tabWaitAudit.isAllChecked,'tabWaitAudit')">
+                                </th>
+                                <th colspan="10">
+                                    <div class="btn-group" ngc-permission="purchase_purchasepurchaseReqList_audit">
+                                        <button ng-click="tools.chgAuditStatus(2,'tabWaitAudit')" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm fl mr20">审核通过</button>
+                                        <button ng-click="tools.chgAuditStatus(3,'tabWaitAudit')" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm fl">审核不通过</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="tabs.tabWaitAudit.items.length>0">
+                            <tr ng-repeat="item in tabs.tabWaitAudit.items track by $index">
+                                <!-- checkbox -->
+                                <td>
+                                    <input type="checkbox" ng-model="item.$checked" ng-change="tools.setCheckedData('tabWaitAudit')">
+                                </td>
+                                <!-- 来源 -->
+                                <td>{{item.sourceValue}}
+                                    <p ng-show="item.createByRealName.length>0">({{item.createByRealName}})</p>
+                                </td>
+                                <!-- 主题 -->
+                                <td>
+                                    <span ng-show="item.hasAttachment" class="iconfont" title="有附件">&#xe621;</span>
+                                    <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                                    <a class="link-cfec-inherit" ng-click="tools.showDetail(item.procurementId)" href="javascript:void(0)"><span ng-bind-html="item.productName"></span></a></td>
+                                <!-- 行业 -->
+                                <td>{{item.productCategoryName}}</td>
+                                <!-- 采购商 -->
+                                <td>
+                                    <div title="采购商姓名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.publisherName}}</a></div>
+                                    <div title="公司名称"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.companyName}}</a></div>
+                                    <!-- <div title="邮箱">{{item.email}}</div> -->
+                                    <!-- <div title="用户名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.username}}</a></div> -->
+                                    <div title="用户ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a></div>
+                                    <div title="广交会ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.cantonfairId}}</a></div>
+                                </td>
+                                <!-- 国家 -->
+                                <td>{{item.countryName}}</td>
+                                <!-- 状态 -->
+                                <td>{{item.procurementState|purchaseState}}</td>
+                                <!-- 有效期限 -->
+                                <td>{{item.endTime|date:'yyyy-MM-dd'}}</td>
+                                <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                                <td>{{item.startTime|date:'yyyy-MM-dd'}}
+                                    <br/>{{item.startTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <p ng-if="item.repeat==1">【重复的】</p>
+                                    <p ng-if="item.error==1">【有问题】</p>
+                                    <p ng-if="item.quality>0">【{{item.quality|purchaseQuality}}】</p>
+                                </td>
+                                <td>
+                                    <span ngc-permission="purchase_purchasepurchaseReqList_audit">
+                        <a href="javascript:void(0)" ng-click="tools.chgAuditStatus(2,'tabWaitAudit',item.procurementId)">通过</a>
+                        <a href="javascript:void(0)" ng-click="tools.chgAuditStatus(3,'tabWaitAudit',item.procurementId)">不通过</a>
+                        </span>
+                                    <a ngc-permission="purchase_purchasepurchaseReqList_detail" href="javascript:void(0)" ng-click="tools.showDetail(item.procurementId)">详情</a></td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="tabs.tabWaitAudit.items.length<1" class="ng-scope">
+                            <tr>
+                                <td colspan="11">
+                                    <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="row-page clearfix">
+                        <select class="item" ng-model="tabs.tabWaitAudit.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0,'tabWaitAudit')"></select>
+                        <uib-pagination boundary-links="true" total-items="tabs.tabWaitAudit.paging.total" ng-model="tabs.tabWaitAudit.paging.page" items-per-page="tabs.tabWaitAudit.paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null,'tabWaitAudit')" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        <label class="item">共 <big>{{tabs.tabWaitAudit.paging.total}}</big>条</label>
+                        <label class="item">转到第</label>
+                        <input class="ngc-jumppage" type="number" class="item" ng-model="tabs.tabWaitAudit.newpage">
+                        <label class="item">页</label>
+                        <button class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+                    </div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+            <uib-tab index="2" select="tools.initTab(0,'tabPassAudit')">
+                <uib-tab-heading class="h5">审核通过（含完成干预）</uib-tab-heading>
+                <div class="scondition-box search-content form-group-main">
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="tabs.tabPassAudit.paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource(tabs.tabPassAudit.paging.source);">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="tabs.tabPassAudit.paging.source!=''&&vm.secondSourceArray.length>0">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="tabs.tabPassAudit.paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">行业</label>
+                        <select ngc-select-search name="indusId3" ng-model="tabs.tabPassAudit.paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司国家</label>
+                        <select ngc-select-search ng-model="tabs.tabPassAudit.paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms" name="country3">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">质量</label>
+                        <select ng-model="tabs.tabPassAudit.paging.quality" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">高</option>
+                            <option value="2">中</option>
+                            <option value="3">低</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select ng-model="tabs.tabPassAudit.paging.dropdwonType" ng-options="obj.id as obj.name for obj in tools.sellerSearchType">
+                            </select>
+                            <em> </em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter ng-model="tabs.tabPassAudit.paging.dropdwonValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">主题</label>
+                        <input ngc-auto-input ngc-monitor-enter ng-model="tabs.tabPassAudit.paging.productName" class="input-cfec" type="text" />
+                    </div>
+                    <div class="form-group fl">
+                        <label>发布时间</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabPassAudit.paging.startTime" readonly="readonly" id="startTime_tabPassAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabPassAudit.paging.endTime" readonly="readonly" id="endTimeWait_tabPassAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label>有效期限</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabPassAudit.paging.validStartTime" max-date="{{tabs.tabPassAudit.paging.validEndTime}}" readonly="readonly" id="validStartTime_tabPassAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabPassAudit.paging.validEndTime" min-date="{{tabs.tabPassAudit.paging.validStartTime}}" readonly="readonly" id="validEndTime_tabPassAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">附件</label>
+                        <select ng-model="tabs.tabPassAudit.paging.hasAttachment" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">展会现场采购需求</label>
+                        <select ng-model="tabs.tabPassAudit.paging.boothProcurement " class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <!-- 需求 929 20170717 -->
+                    <div class="form-group fl" ngc-permission="purchase_purchasepurchaseReqList_searchByAgent">
+                        <label for="">代发人</label>
+                        <select ng-if="tabs.tabPassAudit.paging.isMe!=1" class="select-oms" name="haha" id="haha" ngc-select-search ng-model="tabs.tabPassAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                        <select ng-if="tabs.tabPassAudit.paging.isMe==1" class="select-oms" name="haha" id="haha1" disabled="disabled" ng-model="tabs.tabPassAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tabs.tabPassAudit.paging.page=1;tools.getPurchaseList('tabPassAudit')">查 询</button>
+                        <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1,'tabPassAudit')">重 置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <!-- 需求 443 20161017 -->
+                        <dd ng-if="!tabs.tabPassAudit.paging.agentUserId" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabPassAudit.paging.isMe==1]" ng-click="tabs.tabPassAudit.paging.isMe=(tabs.tabPassAudit.paging.isMe==1?0:1);tools.getPurchaseList('tabPassAudit')">我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 929 20170717 -->
+                        <dd ng-if="tabs.tabPassAudit.paging.agentUserId" class="ele-nochecked" disabled>我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 583 20161115 -->
+                        <dd ng-if="vm.isFollowerShowFlag" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabPassAudit.paging.isFollower==1]" ng-click="tabs.tabPassAudit.paging.isFollower = (tabs.tabPassAudit.paging.isFollower==1?0:1);tools.getPurchaseList('tabPassAudit');">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-if="!vm.isFollowerShowFlag" class="ele-checked">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabPassAudit.paging.isIntervene==1]" ng-click="tabs.tabPassAudit.paging.isIntervene = (tabs.tabPassAudit.paging.isIntervene==1?0:1);tools.getPurchaseList('tabPassAudit');">我干预的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabPassAudit.paging.isRepeat==1]" ng-click="tabs.tabPassAudit.paging.isRepeat = (tabs.tabPassAudit.paging.isRepeat==1?null:1);tools.getPurchaseList('tabPassAudit')">重复的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabPassAudit.paging.isError==1]" ng-click="tabs.tabPassAudit.paging.isError=(tabs.tabPassAudit.paging.isError==1?null:1);tools.getPurchaseList('tabPassAudit')">有问题的<span class="icon-checked"></span></dd>
+                    </dl>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <!-- 10列 -->
+                        <colgroup>
+                            <!-- 来源 -->
+                            <col width="10%" />
+                            <!-- 主题 -->
+                            <col width="10%" />
+                            <!-- 行业 -->
+                            <col width="10%" />
+                            <!-- 采购商 -->
+                            <col width="14%" />
+                            <!-- 公司国家 -->
+                            <col width="10%" />
+                            <!-- 状态 -->
+                            <col width="7%" />
+                            <!-- 有效期限 -->
+                            <col width="11%" />
+                            <!-- 发布时间 -->
+                            <col width="11%" />
+                            <!-- 标签 -->
+                            <col width="11%" />
+                            <!-- 操作 -->
+                            <col width="8%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>主题</th>
+                                <th>行业</th>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>状态</th>
+                                <th>有效期限</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="tabs.tabPassAudit.items.length>0">
+                            <tr ng-repeat="item in tabs.tabPassAudit.items track by $index">
+                                <!-- 来源 -->
+                                <td>{{item.sourceValue}}
+                                    <p ng-show="item.createByRealName.length>0">({{item.createByRealName}})</p>
+                                </td>
+                                <!-- 主题 -->
+                                <td> <span ng-show="item.hasAttachment" class="iconfont" title="有附件">&#xe621;</span>
+                                    <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                                    <a class="link-cfec-inherit" ng-click="tools.showDetail(item.procurementId)" href="javascript:void(0)"><span ng-bind-html="item.productName"></span></a></td>
+                                <!-- 行业 -->
+                                <td>{{item.productCategoryName}}</td>
+                                <!-- 采购商 -->
+                                <td>
+                                    <div title="采购商姓名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.publisherName}}</a></div>
+                                    <div title="公司名称"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.companyName}}</a></div>
+                                    <!-- <div title="邮箱">{{item.email}}</div> -->
+                                    <!-- <div title="用户名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.username}}</a></div> -->
+                                    <div title="用户ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a></div>
+                                    <div title="广交会ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.cantonfairId}}</a></div>
+                                </td>
+                                <!-- 国家 -->
+                                <td>{{item.countryName}}</td>
+                                <!-- 状态 -->
+                                <td>{{item.procurementState|purchaseState}}</td>
+                                <!-- 有效期限 -->
+                                <td>{{item.endTime|date:'yyyy-MM-dd'}}</td>
+                                <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                                <td>{{item.startTime|date:'yyyy-MM-dd'}}
+                                    <br/>{{item.startTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <p ng-if="item.repeat==1">【重复的】</p>
+                                    <p ng-if="item.error==1">【有问题】</p>
+                                    <p ng-if="item.quality>0">【{{item.quality|purchaseQuality}}】</p>
+                                </td>
+                                <td>
+                                    <a ngc-permission="purchase_purchasepurchaseReqList_audit" ng-if="item.procurementState!=8" href="javascript:void(0)" ng-click="tools.chgAuditStatus(3,'tabPassAudit',item.procurementId)">不通过</a>
+                                    <a href="javascript:void(0)" ng-click="tools.showDetail(item.procurementId)">详情</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="tabs.tabPassAudit.items.length<1" class="ng-scope">
+                            <tr>
+                                <td colspan="10">
+                                    <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="row-page clearfix">
+                        <select class="item" ng-model="tabs.tabPassAudit.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0,'tabPassAudit')"></select>
+                        <uib-pagination boundary-links="true" total-items="tabs.tabPassAudit.paging.total" ng-model="tabs.tabPassAudit.paging.page" items-per-page="tabs.tabPassAudit.paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null,'tabPassAudit')" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        <label class="item">共<big>{{tabs.tabPassAudit.paging.total}}</big>条</label>
+                        <label class="item">转到第</label>
+                        <input class="ngc-jumppage" type="number" class="item" ng-model="tabs.tabPassAudit.newpage">
+                        <label class="item">页</label>
+                        <button class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+                    </div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+            <uib-tab index="3" select="tools.initTab(0,'tabFailAudit')">
+                <uib-tab-heading class="h5">审核不通过</uib-tab-heading>
+                <div class="scondition-box search-content form-group-main">
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="tabs.tabFailAudit.paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource(tabs.tabFailAudit.paging.source);">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="tabs.tabFailAudit.paging.source!=''&&vm.secondSourceArray.length>0">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="tabs.tabFailAudit.paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">行业</label>
+                        <select ngc-select-search name="indusId4" ng-model="tabs.tabFailAudit.paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司国家</label>
+                        <select ngc-select-search ng-model="tabs.tabFailAudit.paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms" name="country4">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">主题</label>
+                        <input ngc-auto-input ngc-monitor-enter ng-model="tabs.tabFailAudit.paging.productName" class="input-cfec" type="text" />
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select ng-model="tabs.tabFailAudit.paging.dropdwonType" ng-options="obj.id as obj.name for obj in tools.sellerSearchType">
+                            </select>
+                            <em> </em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter ng-model="tabs.tabFailAudit.paging.dropdwonValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label>发布时间</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabFailAudit.paging.startTime" readonly="readonly" id="startTime_tabFailAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabFailAudit.paging.endTime" readonly="readonly" id="endTime_tabFailAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label>有效期限</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabFailAudit.paging.validStartTime" max-date="{{tabs.tabFailAudit.paging.validEndTime}}" readonly="readonly" id="validStartTime_tabFailAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabFailAudit.paging.validEndTime" min-date="{{tabs.tabFailAudit.paging.validStartTime}}" readonly="readonly" id="validEndTime_tabFailAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">附件</label>
+                        <select ng-model="tabs.tabFailAudit.paging.hasAttachment" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">展会现场采购需求</label>
+                        <select ng-model="tabs.tabFailAudit.paging.boothProcurement " class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <!-- 需求 929 20170717 -->
+                    <div class="form-group fl" ngc-permission="purchase_purchasepurchaseReqList_searchByAgent">
+                        <label for="">代发人</label>
+                        <select ng-if="tabs.tabFailAudit.paging.isMe!=1" class="select-oms" name="haha" id="haha" ngc-select-search ng-model="tabs.tabFailAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                        <select ng-if="tabs.tabFailAudit.paging.isMe==1" class="select-oms" name="haha" id="haha1" disabled="disabled" ng-model="tabs.tabFailAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tabs.tabFailAudit.paging.page=1;tools.getPurchaseList('tabFailAudit')">查 询</button>
+                        <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1,'tabFailAudit')">重 置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <!-- 需求 443 20161017 -->
+                        <dd ng-if="!tabs.tabFailAudit.paging.agentUserId" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabFailAudit.paging.isMe==1]" ng-click="tabs.tabFailAudit.paging.isMe=(tabs.tabFailAudit.paging.isMe==1?0:1);tools.getPurchaseList('tabFailAudit')">我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 929 20170717 -->
+                        <dd ng-if="tabs.tabFailAudit.paging.agentUserId" class="ele-nochecked" disabled>我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 583 20161115 -->
+                        <dd ng-if="vm.isFollowerShowFlag" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabFailAudit.paging.isFollower==1]" ng-click="tabs.tabFailAudit.paging.isFollower = (tabs.tabFailAudit.paging.isFollower==1?0:1);tools.getPurchaseList('tabFailAudit');">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-if="!vm.isFollowerShowFlag" class="ele-checked">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabFailAudit.paging.isRepeat==1]" ng-click="tabs.tabFailAudit.paging.isRepeat = (tabs.tabFailAudit.paging.isRepeat==1?null:1);tools.getPurchaseList('tabFailAudit')">重复的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabFailAudit.paging.isError==1]" ng-click="tabs.tabFailAudit.paging.isError=(tabs.tabFailAudit.paging.isError==1?null:1);tools.getPurchaseList('tabFailAudit')">有问题的<span class="icon-checked"></span></dd>
+                    </dl>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <!-- 10列 -->
+                        <colgroup>
+                            <!-- 来源 -->
+                            <col width="10%" />
+                            <!-- 主题 -->
+                            <col width="10%" />
+                            <!-- 行业 -->
+                            <col width="10%" />
+                            <!-- 采购商 -->
+                            <col width="14%" />
+                            <!-- 公司国家 -->
+                            <col width="10%" />
+                            <!-- 状态 -->
+                            <col width="7%" />
+                            <!-- 有效期限 -->
+                            <col width="11%" />
+                            <!-- 发布时间 -->
+                            <col width="11%" />
+                            <!-- 标签 -->
+                            <col width="11%" />
+                            <!-- 操作 -->
+                            <col width="8%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>主题</th>
+                                <th>行业</th>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>状态</th>
+                                <th>有效期限</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="tabs.tabFailAudit.items.length>0">
+                            <tr ng-repeat="item in tabs.tabFailAudit.items track by $index">
+                                <!-- 来源 -->
+                                <td>{{item.sourceValue}}
+                                    <p ng-show="item.createByRealName.length>0">({{item.createByRealName}})</p>
+                                </td>
+                                <!-- 主题 -->
+                                <td>
+                                    <span ng-show="item.hasAttachment" class="iconfont" title="有附件">&#xe621;</span>
+                                    <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                                    <a class="link-cfec-inherit" ng-click="tools.showDetail(item.procurementId)" href="javascript:void(0)"><span ng-bind-html="item.productName"></span></a></td>
+                                <!-- 行业 -->
+                                <td>{{item.productCategoryName}}</td>
+                                <!-- 采购商 -->
+                                <td>
+                                    <div title="采购商姓名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.publisherName}}</a></div>
+                                    <div title="公司名称"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.companyName}}</a></div>
+                                    <!-- <div title="邮箱">{{item.email}}</div> -->
+                                    <!-- <div title="用户名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.username}}</a></div> -->
+                                    <div title="用户ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a></div>
+                                    <div title="广交会ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.cantonfairId}}</a></div>
+                                </td>
+                                <!-- 国家 -->
+                                <td>{{item.countryName}}</td>
+                                <!-- 状态 -->
+                                <td>{{item.procurementState|purchaseState}}</td>
+                                <!-- 有效时间 -->
+                                <td>{{item.endTime|date:'yyyy-MM-dd'}}</td>
+                                <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                                <td>{{item.startTime|date:'yyyy-MM-dd'}}
+                                    <br/>{{item.startTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <p ng-if="item.repeat==1">【重复的】</p>
+                                    <p ng-if="item.error==1">【有问题】</p>
+                                    <p ng-if="item.quality>0">【{{item.quality|purchaseQuality}}】</p>
+                                </td>
+                                <td><a href="javascript:void(0)" ng-click="tools.showDetail(item.procurementId)">详情</a></td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="tabs.tabFailAudit.items.length<1" class="ng-scope">
+                            <tr>
+                                <td colspan="10">
+                                    <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="row-page clearfix">
+                        <select class="item" ng-model="tabs.tabFailAudit.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0,'tabFailAudit')"></select>
+                        <uib-pagination boundary-links="true" total-items="tabs.tabFailAudit.paging.total" ng-model="tabs.tabFailAudit.paging.page" items-per-page="tabs.tabFailAudit.paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null,'tabFailAudit')" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        <label class="item">共<big>{{tabs.tabFailAudit.paging.total}}</big>条</label>
+                        <label class="item">转到第</label>
+                        <input class="ngc-jumppage" type="number" class="item" ng-model="tabs.tabFailAudit.newpage">
+                        <label class="item">页</label>
+                        <button class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+                    </div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+            <uib-tab index="4" select="tools.initTab(0,'tabSuccessAudit')">
+                <uib-tab-heading class="h5">完成干预</uib-tab-heading>
+                <div class="scondition-box search-content form-group-main">
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="tabs.tabSuccessAudit.paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource(tabs.tabSuccessAudit.paging.source);">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="tabs.tabSuccessAudit.paging.source!='' && vm.secondSourceArray.length>0">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="tabs.tabSuccessAudit.paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">行业</label>
+                        <select ngc-select-search name="indusId5" ng-model="tabs.tabSuccessAudit.paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司国家</label>
+                        <select ngc-select-search ng-model="tabs.tabSuccessAudit.paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms" name="country5">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">质量</label>
+                        <select ng-model="tabs.tabSuccessAudit.paging.quality" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">高</option>
+                            <option value="2">中</option>
+                            <option value="3">低</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select ng-model="tabs.tabSuccessAudit.paging.dropdwonType" ng-options="obj.id as obj.name for obj in tools.sellerSearchType">
+                            </select>
+                            <em> </em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter ng-model="tabs.tabSuccessAudit.paging.dropdwonValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">主题</label>
+                        <input ngc-auto-input ngc-monitor-enter ng-model="tabs.tabSuccessAudit.paging.productName" class="input-cfec" type="text" />
+                    </div>
+                    <div class="form-group fl">
+                        <label>发布时间</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabSuccessAudit.paging.startTime" readonly="readonly" id="startTime_tabSuccessAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabSuccessAudit.paging.endTime" readonly="readonly" id="endTimeWait_tabSuccessAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label>有效期限</label>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabSuccessAudit.paging.validStartTime" max-date="{{tabs.tabSuccessAudit.paging.validEndTime}}" readonly="readonly" id="validStartTime_tabSuccessAudit" class="input-cfec laydate-icon">
+                        <span class="text-inline">至</span>
+                        <input type="text" ngc-lay-date ng-model="tabs.tabSuccessAudit.paging.validEndTime" min-date="{{tabs.tabSuccessAudit.paging.validStartTime}}" readonly="readonly" id="validEndTime_tabSuccessAudit" class="input-cfec laydate-icon">
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">附件</label>
+                        <select ng-model="tabs.tabSuccessAudit.paging.hasAttachment" class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">有</option>
+                            <option value="0">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">展会现场采购需求</label>
+                        <select ng-model="tabs.tabSuccessAudit.paging.boothProcurement " class="select-oms">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <!-- 需求 929 20170717 -->
+                    <div class="form-group fl" ngc-permission="purchase_purchasepurchaseReqList_searchByAgent">
+                        <label for="">代发人</label>
+                        <select ng-if="tabs.tabSuccessAudit.paging.isMe!=1" class="select-oms" name="haha" id="haha" ngc-select-search ng-model="tabs.tabSuccessAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                        <select ng-if="tabs.tabSuccessAudit.paging.isMe==1" class="select-oms" name="haha" id="haha1" disabled="disabled" ng-model="tabs.tabSuccessAudit.paging.agentUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tabs.tabSuccessAudit.paging.page=1;tools.getPurchaseList('tabSuccessAudit')">查 询</button>
+                        <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1,'tabSuccessAudit')">重 置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <!-- 需求 443 20161017 -->
+                        <dd ng-if="!tabs.tabSuccessAudit.paging.agentUserId" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabSuccessAudit.paging.isMe==1]" ng-click="tabs.tabSuccessAudit.paging.isMe=(tabs.tabSuccessAudit.paging.isMe==1?0:1);tools.getPurchaseList('tabSuccessAudit')">我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 929 20170717 -->
+                        <dd ng-if="tabs.tabSuccessAudit.paging.agentUserId" class="ele-nochecked" disabled>我代发的<span class="icon-checked"></span></dd>
+                        <!-- 需求 583 20161115 -->
+                        <dd ng-if="vm.isFollowerShowFlag" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabSuccessAudit.paging.isFollower==1]" ng-click="tabs.tabSuccessAudit.paging.isFollower = (tabs.tabSuccessAudit.paging.isFollower==1?0:1);tools.getPurchaseList('tabSuccessAudit');">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-if="!vm.isFollowerShowFlag" class="ele-checked">我跟进采购商发的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabSuccessAudit.paging.isIntervene==1]" ng-click="tabs.tabSuccessAudit.paging.isIntervene = (tabs.tabSuccessAudit.paging.isIntervene==1?0:1);tools.getPurchaseList('tabSuccessAudit');">我干预的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabSuccessAudit.paging.isRepeat==1]" ng-click="tabs.tabSuccessAudit.paging.isRepeat = (tabs.tabSuccessAudit.paging.isRepeat==1?null:1);tools.getPurchaseList('tabSuccessAudit')">重复的<span class="icon-checked"></span></dd>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[tabs.tabSuccessAudit.paging.isError==1]" ng-click="tabs.tabSuccessAudit.paging.isError=(tabs.tabSuccessAudit.paging.isError==1?null:1);tools.getPurchaseList('tabSuccessAudit')">有问题的<span class="icon-checked"></span></dd>
+                    </dl>
+                </div>
+                <div class="container-list table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <!-- 10列 -->
+                        <colgroup>
+                            <!-- 来源 -->
+                            <col width="10%" />
+                            <!-- 主题 -->
+                            <col width="10%" />
+                            <!-- 行业 -->
+                            <col width="10%" />
+                            <!-- 采购商 -->
+                            <col width="14%" />
+                            <!-- 公司国家 -->
+                            <col width="10%" />
+                            <!-- 状态 -->
+                            <col width="7%" />
+                            <!-- 有效期限 -->
+                            <col width="11%" />
+                            <!-- 发布时间 -->
+                            <col width="11%" />
+                            <!-- 标签 -->
+                            <col width="11%" />
+                            <!-- 操作 -->
+                            <col width="8%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>来源</th>
+                                <th>主题</th>
+                                <th>行业</th>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>状态</th>
+                                <th>有效期限</th>
+                                <th>发布时间</th>
+                                <th>标签</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="tabs.tabSuccessAudit.items.length>0">
+                            <tr ng-repeat="item in tabs.tabSuccessAudit.items track by $index">
+                                <!-- 来源 -->
+                                <td>{{item.sourceValue}}
+                                    <p ng-show="item.createByRealName.length>0">({{item.createByRealName}})</p>
+                                </td>
+                                <!-- 主题 -->
+                                <td> <span ng-show="item.hasAttachment" class="iconfont" title="有附件">&#xe621;</span>
+                                    <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                                    <a class="link-cfec-inherit" ng-click="tools.showDetail(item.procurementId)" href="javascript:void(0)"><span ng-bind-html="item.productName"></span></a></td>
+                                <!-- 行业 -->
+                                <td>{{item.productCategoryName}}</td>
+                                <!-- 采购商 -->
+                                <td>
+                                    <div title="采购商姓名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.publisherName}}</a></div>
+                                    <div title="公司名称"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.companyName}}</a></div>
+                                    <!-- <div title="邮箱">{{item.email}}</div> -->
+                                    <!-- <div title="用户名"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.username}}</a></div> -->
+                                    <div title="用户ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a></div>
+                                    <div title="广交会ID"><a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.cantonfairId}}</a></div>
+                                </td>
+                                <!-- 国家 -->
+                                <td>{{item.countryName}}</td>
+                                <!-- 状态 -->
+                                <td>{{item.procurementState|purchaseState}}</td>
+                                <!-- 有效期限 -->
+                                <td>{{item.endTime|date:'yyyy-MM-dd'}}</td>
+                                <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                                <td>{{item.startTime|date:'yyyy-MM-dd'}}
+                                    <br/>{{item.startTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <p ng-if="item.repeat==1">【重复的】</p>
+                                    <p ng-if="item.error==1">【有问题】</p>
+                                    <p ng-if="item.quality>0">【{{item.quality|purchaseQuality}}】</p>
+                                </td>
+                                <td><a href="javascript:void(0)" ng-click="tools.showDetail(item.procurementId)">详情</a></td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="tabs.tabSuccessAudit.items.length<1" class="ng-scope">
+                            <tr>
+                                <td colspan="10">
+                                    <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="row-page clearfix">
+                        <select class="item" ng-model="tabs.tabSuccessAudit.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0,'tabSuccessAudit')"></select>
+                        <uib-pagination boundary-links="true" total-items="tabs.tabSuccessAudit.paging.total" ng-model="tabs.tabSuccessAudit.paging.page" items-per-page="tabs.tabSuccessAudit.paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null,'tabSuccessAudit')" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        <label class="item">共<big>{{tabs.tabSuccessAudit.paging.total}}</big>条</label>
+                        <label class="item">转到第</label>
+                        <input class="ngc-jumppage" type="number" class="item" ng-model="tabs.tabSuccessAudit.newpage">
+                        <label class="item">页</label>
+                        <button class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+                    </div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<!-- 弹出1 审核通过 -->
+<script type="text/ng-template" id="auditPassConfirm.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content container-fluid form-group-main">
+            <div class="form-group formgroup-cfec-inline row">
+                <label for="" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-r">质量标签</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 form-group-content">
+                    <div class="checkbox fl">
+                        <label>
+                            <input type="radio" value="1" ng-model="confVm.quality">高</label>
+                        <label>
+                            <input type="radio" value="2" ng-model="confVm.quality">中</label>
+                        <label>
+                            <input type="radio" value="3" ng-model="confVm.quality">低</label>
+                    </div>
+                </div>
+            </div>
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i> 确定审核通过吗？</p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="save()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="auditNopassConfirm.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content form-group-main">
+            <div class="form-group formgroup-cfec-inline row">
+                <label for="" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-r"><span>*</span>原因</label>
+                <div class="col-md-9 form-group-content">
+                    <div class="checkbox fl w130" ng-repeat="rs in vm.chkReasons track by $index">
+                        <label>
+                            <input id="{{'chcReason'+$index}}" type="checkbox" ng-change="checkChange()" ng-model="rs.$checked" /> {{rs.zh}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label for="" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-r"><span ng-show="vm.needNode">*</span>备注</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 form-group-content">
+                    <textarea name="reason" class="form-control w250" rows="3" ng-model="vm.note" placeholder="请输入英文，最多250个字符"></textarea>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="confVm.isSendEmail" /> 发送系统邮件和短信提醒
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="save()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,221 @@
+<div class="container container-width">
+  <div class="Detail-div clearfix">
+    <h3>商品详情</h3>
+    <a href="javascript:;" ng-click="tools.getback();">
+      <h4>返回上一层</h4>
+    </a>
+    <div class="clear"></div>
+  </div>
+
+
+  <button class="btn-pass" ng-click="tools.chgAuditStatus(3,'')" 
+          ng-hide="tools.hideButtonFlag.successAudit">审核通过</button>
+
+  <button class="btn-pass" ng-click="tools.chgAuditStatus(-1,'')" 
+          ng-hide="tools.hideButtonFlag.failAudit">审核不通过</button>
+
+  <button class="btn-pass" ng-click="tools.chgAuditStatus('3',1)" 
+          ng-hide="tools.hideButtonFlag.onShelf">上架</button>
+
+  <button class="btn-pass" ng-click="tools.chgAuditStatus('3',-1)" 
+          ng-hide="tools.hideButtonFlag.offShelf">下架</button>
+
+  <button class="btn-pass" ng-click="tools.chgAuditStatus(-3,'')" 
+          ng-hide="tools.hideButtonFlag.delete">删除</button>
+
+  <!-- 基本信息 -->
+  <table class="table table-bordered">
+    <tr>
+      <td class="tdtext" colspan="4">商品基本信息</td>
+    </tr>
+    <tr>
+      <td colspan="1"  class="newtdwith">商品标题</td>
+      <td colspan="3">{{vm.item.name}}</td>
+    </tr>
+    <tr>
+      <td colspan="1">商品关键字</td>
+      <td colspan="3">{{vm.item.keyword}}</td>
+    </tr>
+    <tr>
+      <td colspan="1">商品基本属性</td>
+      <td colspan="3">
+        <ul class="small">
+          <li  ng-repeat='item in vm.item.baseProps'>
+            <span class="col-xs-3">{{ item.propertyChName }}</span>
+            <span class="col-xs-8">{{ item.str }}</span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">商品规格</td>
+      <td colspan="3">
+        <ul class="small">
+          <li  ng-repeat='item in vm.item.specProps'>
+            <span class="col-xs-3">{{ item.propertyChName }}</span>
+            <span class="col-xs-8">{{ item.str }}</span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+    <tr>
+      <td  class="tdtext" colspan="2">商品贸易信息</td>
+    </tr>
+    <tr>
+      <td class="newtdwith">最小批量</td>
+      <td>{{vm.item.minOrder}}{{vm.item.min_order_unit}}</td>
+    </tr>
+    <tr>
+      <td class="newtdwith">备货状态</td>
+      <td>
+        {{ vm.item.stockUpStatus | setStockUpStatus:vm.item.stockUpStatus }}
+      </td>
+
+    </tr>
+    <tr>
+      <td class="newtdwith">备货总量</td>
+      <td>{{vm.item.stockLimitNum}}</td>
+    </tr>
+    <tr>
+      <td class="newtdwith">备货期</td>
+      <td>{{vm.item.stockUpTime}}</td>
+    </tr>
+    <tr>
+      <td>价格区间</td>
+      <td ng-if="vm.item.minPrice==vm.item.maxPrice">{{vm.item.minPrice}}</td>
+      <td ng-if="vm.item.minPrice!=vm.item.maxPrice">${{vm.item.minPrice}} - ${{vm.item.maxPrice}}</td>
+    </tr>
+    <tr>
+      <td>付款方式</td>
+      <td>{{vm.item.payIds}}</td>
+    </tr>
+    <tr style="border:none">
+      <td style="border:none">样品数量</td>
+      <td style="border:none">{{vm.item.productSamplePrices.sampleNum}}</td>
+    </tr>
+    <tr style="border:none">
+      <td style="border:none">样品价格</td>
+      <td style="border:none">
+        {{vm.item.productSamplePrices.price}}{{vm.item.productSamplePrices.monetaryUnitName}}
+      </td>
+    </tr>
+    <tr style="border:none">
+      <td style="border:none">单个id购买限制</td>
+      <td style="border:none">{{vm.item.productSamplePrices.limitSellnumById}}</td>
+    </tr>
+    <tr>
+      <td>商品海关编码</td>
+      <td>{{vm.item.product_cn}}</td>
+    </tr>
+
+  </table>
+
+  <table class="table table-bordered">
+    <tr>
+      <th  class="tdtext" colspan="2">商品内容介绍</th>
+
+    </tr>
+    <tr>
+      <td class="newtdwith">商品图片</td>
+      <td>
+          <a href="javascript:void(0)" ng-repeat="im in vm.item.imgs.split(',')">
+            <img ng-click="tools.baseEnLarge(im)" ng-src="{{im| setImgSize:100:100}}" title="商品图片">
+          </a>
+      </td>
+    </tr>
+    <tr>
+      <td>私密设置</td>
+      <td>
+        {{vm.item.privacyStatus | setPrivacyStatus:vm.item.privacyStatus}}
+      </td>
+    </tr>
+
+    <tr>
+      <td>商品简短描述</td>
+      <td>{{vm.item.productDetail.shortDescription}}</td>
+    </tr>
+
+    <tr>
+      <td>商品描述</td>
+      <td>
+        <div id="text"></div>
+      </td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+
+    <tr>
+      <td  class="tdtext" colspan="2">商品包装信息</td>
+    </tr>
+    <tr>
+      <td class="newtdwith">商品包装后重量</td>
+      <!-- <td>{{vm.item.weight +' kg'}}</td>
+    -->
+    <td ng-if=" vm.item.weight == null " >vm.item.weight</td>
+    <td ng-if=" vm.item.weight != null " >{{ vm.item.weight +' kg' }}</td>
+  </tr>
+  <tr>
+    <td>商品包装后尺寸</td>
+    <td>
+      {{vm.item.length}}
+      <span class="small">cm</span>
+      {{' * '+vm.item.width}}
+      <span class="small">cm</span>
+      {{' * ' + vm.item.height}}
+      <span class="small">cm</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>包装材料</td>
+    <td></td>
+  </tr>
+
+</table>
+<!-- 因需求 id 309 ,屏蔽掉
+<table class="table table-bordered">
+  <tr>
+    <td  class="tdtext" colspan="2">其他信息</td>
+  </tr>
+  <tr>
+    <td class="newtdwith">商品有效期</td>
+    <td ng-if=" vm.item.productValid == null">vm.item.productValid</td>
+    <td ng-if=" vm.item.productValid != null">{{ vm.item.productValid +' 天' }}</td>
+</tr>
+</table>
+-->
+
+<table class="table table-bordered">
+
+<tr>
+  <td  class="tdtext" colspan="2">审核信息</td>
+</tr>
+<tr>
+  <td class="newtdwith">审核人</td>
+  <td>{{ vm.item.auditorName }}</td>
+</tr>
+<tr>
+  <td>审核时间</td>
+  <td>{{ vm.item.auditorTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+</tr>
+<tr>
+  <td>审核原因</td>
+  <td >{{vm.item.reasonCn}}</td>
+</tr>
+</table>
+</div>
+
+<!-- 审核不通过确定对话框[[ -->
+<script type="text/ng-template" id="makesure.html">
+  <div class="SureDiv">
+    <p>确定审核不通过吗？</p>
+    <textarea  class="test-style"></textarea>
+    <button class="Sure-btn" ng-click="submit()">确定</button>
+    <button class="Cancel-Btn" ng-click="close()">取消</button>
+  </div>
+  </script>
+<!-- 审核不通过确定对话框]] -->

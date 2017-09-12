@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../../view/css/category.css">
+</head>
+<body>
+
+<div class="">
+    <h2>新增类目</h2>
+    <hr class="hr-orange"/>
+	
+    <form class="form-horizontal" novalidate>
+       <div class="form-group">
+      		
+       		<label class="col-xs-3" for="">所属类目:</label>
+       		<div class="col-xs-6">
+			<select name="" id=""><option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option></select>
+			<select name="" id=""><option value="1">11</option>
+			<option value="2">22</option>
+			<option value="3">33</option></select>
+			<select name="" id=""><option value="1">111</option>
+			<option value="2">222</option>
+			<option value="3">3333</option></select>
+		   </div>
+		</div>
+      
+        <div class="form-group">
+           
+            <label class="col-xs-3" for="categoryName">类目名称：</label>
+
+            <div class="col-xs-6">
+                <input type="text" name="categoryName" /></div>
+        </div>
+        <div class="form-group not-null">
+            <label class="col-xs-3">英文名称：</label>
+
+            <div class="col-xs-6">
+                <input type="text" ></div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-xs-3 " for="sortNo">排序：</label>
+
+            <div class="col-xs-6">
+                <input type="text" name="sortNo"/></div>
+        </div>
+        <div class="form-group ">
+          <label class="col-xs-3 " for=""></label>
+
+            <div class="col-xs-6">
+           <button class="btn btn-info">再加一个</button></div>
+            
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-3">
+                <label for=""> &nbsp;</label>
+            </div>
+
+            <div class="col-xs-6">
+                <input class="btn btn-info" type="submit" value="保存">
+                <button type="button" class="btn btn-info">预览</button>
+                <button type="button" class="btn btn-info" onclick="setIframe('ctgryList')">返回</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<script src="category.js"></script>
+</body>
+</html>

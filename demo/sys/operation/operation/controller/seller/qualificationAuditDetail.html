@@ -1,0 +1,235 @@
+<div class="oms-crumbs"> <i>卖家管理</i>
+    <p>
+        <a href="">卖家资质详情</a> /
+        <span>卖家管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <div ng-show="vm.isChg != true">
+            <div ngc-permission="seller_sellerqualificationAuditIndex_audit" class="btns-group">
+                <button class="btn btn-cfec-white" ng-click="tools.confirm(vm.item.sellerId,3)" ng-show="vm.item.status!=3">审核通过</button>
+                <button class="btn btn-cfec-white" ng-click="tools.confirm(vm.item.sellerId,-1)" ng-show="vm.item.status!=-1">审核不通过</button>
+                <button class="btn btn-cfec-white" ng-click="tools.toChange()" ng-show="vm.item.status == 3">修改</button>
+            </div>
+            <div class="table-cfec mt20">
+                <table class="table">
+                    <colgroup>
+                        <col width="12%">
+                        <col width="88%">
+					</colgroup>
+                    <thead>
+                        <th colspan="2">卖家信息</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>公司名称</td>
+                            <td>{{ vm.item.companyName }}</td>
+                        </tr>
+                        <tr>
+                            <td>证件类型</td>
+                            <td>{{ vm.item.threeInOne==1 ?"三证合一":"三证" }}</td>
+                        </tr>
+                        <tr>
+                            <td>法人姓名</td>
+                            <td>{{ vm.item.bizEntity }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ vm.item.threeInOne==1 ?"社会信用代码的执照":"营业执照号" }}</td>
+                            <td>{{ vm.item.bizLicence }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ vm.item.threeInOne==1 ?"社会信用代码的执照":"营业执照照片" }}</td>
+                            <td>
+                                <img class="border" ng-src="{{ vm.item.commInstrumentImg | setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.item.commInstrumentImg);"> </td>
+                        </tr>
+                        <tr ng-if="vm.item.threeInOne!=1">
+                            <td>组织机构代码号</td>
+                            <td>{{ vm.item.orgCode }}</td>
+                        </tr>
+                        <tr ng-if="vm.item.threeInOne!=1">
+                            <td>组织机构代码照片</td>
+                            <td>
+                                <img class="border" ng-src="{{ vm.item.bizCodeImg |setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.item.bizCodeImg);"> </td>
+                        </tr>
+                        <tr ng-if="vm.item.threeInOne!=1">
+                            <td>税务登记号</td>
+                            <td>{{ vm.item.taxRegCode }}</td>
+                        </tr>
+                        <tr ng-if="vm.item.threeInOne!=1">
+                            <td>税务登记证照片</td>
+                            <td>
+                                <img class="border" ng-src="{{ vm.item.taxRegImg |setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.item.taxRegImg);"> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-cfec mt20">
+                <table class="table">
+                    <colgroup>
+                        <col width="12%">
+                        <col width="88%"> </colgroup>
+                    <thead>
+                        <th colspan="2">审核信息</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>审核人</td>
+                            <td>{{ vm.item.auditorName }}</td>
+                        </tr>
+                        <tr>
+                            <td>审核时间</td>
+                            <td>{{ vm.item.auditTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                        <tr ng-show="vm.item.status==-1">
+                            <td>审核不通过原因</td>
+                            <td>{{vm.item.remark}}</td>
+                        </tr>
+                        <tr ng-show="vm.item.status==3&& vm.item.updateName !=null">
+                            <td>修改人</td>
+                            <td>{{vm.item.updateName}}</td>
+                        </tr>
+                        <tr ng-show="vm.item.status==3&&vm.item.updateTime !=null">
+                            <td>修改时间</td>
+                            <td>{{ vm.item.updateTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-show="vm.isChg == true">
+            <form name="chgForm" class="form-horizontal chgForm" ng-submit="tools.saveQlfctInfo(chgForm.$valid)">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">公司名称</label>
+                    <div class="col-sm-9">{{vm.newItem.companyName}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2 control-label"> <em class="font-lightred">*</em> 营业执照号
+                        <br/> (社会信用代码的执照号)
+                    </div>
+                    <div class="col-sm-9">
+                        <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" name="bizLicence" ng-model="vm.newItem.bizLicence" required/>
+                        <div class="mt10">
+                            <input type="checkbox" id="_threeInOne" name="threeInOne" ng-model="vm.newItem.threeInOne" />
+                            <label for="_threeInOne">是否三证合一</label>
+                        </div>
+                        <div class="error-valid" ng-show="chgForm.bizLicence.$dirty && chgForm.bizLicence.$invalid">必填项</div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label"> <em class="font-lightred">*</em> 组织机构代码号
+                    </label>
+                    <div class="col-sm-9">
+                        <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" name="orgCode" ng-model="vm.newItem.orgCode" required="vm.newItem.threeInOne!=1" />
+                        <div class="error-valid" ng-show="chgForm.orgCode.$dirty && chgForm.orgCode.$invalid">必填项</div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 税务登记号
+                    </label>
+                    <div class="col-sm-9">
+                        <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" name="taxRegCode" ng-model="vm.newItem.taxRegCode" required="vm.newItem.threeInOne!=1" />
+                        <div class="error-valid" ng-show="chgForm.taxRegCode.$dirty && chgForm.taxRegCode.$invalid">必填项</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> {{ vm.newItem.threeInOne==1 ?"社会信用代码的执照":"营业执照照片" }}
+                    </label>
+                    <div class="col-sm-9">
+                        <img class="border" ng-src="{{ vm.newItem.commInstrumentImg | setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.newItem.commInstrumentImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'commInstrumentImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 组织机构代码照片
+                    </label>
+                    <div class="col-sm-9">
+                        <img class="border" ng-src="{{ vm.newItem.bizCodeImg |setImgSize:60:60 }}" alt="组织机构代码照片" ng-click="tools.enLarge(vm.newItem.bizCodeImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'bizCodeImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 税务登记证照片
+                    </label>
+                    <div class="col-sm-9">
+                        <img class="border" ng-src="{{ vm.newItem.taxRegImg |setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.newItem.taxRegImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'taxRegImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 法人姓名
+                    </label>
+                    <div class="col-sm-9">
+                        <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" name="bizEntity" ng-model="vm.newItem.bizEntity" required/>
+                        <div class="error-valid" ng-show="chgForm.bizEntity.$dirty && chgForm.bizEntity.$invalid">必填项</div>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="vm.newItem.threeInOne!=1">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 法人身份证号
+                    </label>
+                    <div class="col-sm-9">
+                        <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" name="contactIdcard" ng-model="vm.newItem.contactIdcard" required/>
+                        <div class="error-valid" ng-show="chgForm.contactIdcard.$dirty && chgForm.contactIdcard.$invalid">必填项</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 法人身份照片(正面)
+                    </label>
+                    <div class="col-sm-9">
+                        <img class="border" ng-src="{{ vm.newItem.bizEntityIdcardFrontImg |setImgSize:60:60 }}" ng-click="tools.enLarge(vm.newItem.bizEntityIdcardFrontImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'bizEntityIdcardFrontImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 法人身份照片(反面)
+                    </label>
+                    <div class="col-sm-9">
+                        <img class="border" ng-src="{{ vm.newItem.bizEntityIdcardBackImg |setImgSize:60:60 }}" ng-click="tools.enLarge(vm.newItem.bizEntityIdcardBackImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'bizEntityIdcardBackImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <em class="font-lightred">*</em> 公司门头照
+                    </label>
+                    <div class="col-sm-10">
+                        <img class="border" ng-src="{{ vm.newItem.corpImg |setImgSize:60:60 }}" alt="" ng-click="tools.enLarge(vm.newItem.corpImg);">
+                        <!-- 上传图片 -->
+                        <input type="button" class="btn btn-cfec-white" value="更改照片" ngf-select ngf-change="tools.updateImg($files,'corpImg')" accept="'image/*'"> </div>
+                </div>
+                <div class="form-group">
+                    <div class="text-left col-xs-offset-2">
+                        <button class="btn btn-cfec-red" ng-disabled="myForm.$invalid" type="submit">保&nbsp存</button>
+                        <button class="btn btn-cfec-white" type="button" ng-click="tools.cancelChange(-1)">取&nbsp消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="enlarge.html">
+    <div class="EnlargeDiv"> <img ng-src="{{ en_img|setImgSize:600:600 }}">
+        <button ng-click="turnBack();">返回</button>
+    </div>
+</script>
+<script type="text/ng-template" id="confirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c"> <i class="iconfont icon-xunwenoms"></i> 确定审核{{vm.status==-1?"不":""}}通过吗？ </p>
+        <div class="form-group pt20 mb0" ng-if="vm.status ==-1">
+            <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>

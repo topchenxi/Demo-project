@@ -1,0 +1,49 @@
+
+    <div class="navList">人民币账户审核</div>
+    <div class="content">
+        <div class="head clearfix">
+            <div class="tit pull-left">人民币账户审核</div>
+            <div class="search pull-right ">
+                <input ngc-auto-input type="text" class="searchTxt"/>
+                <button></button>
+            </div>
+        </div>
+        <div class="tabTable">
+            <div class="tab clearfix">
+                <button>待审核</button>
+                <button>审核通过</button>
+                <button>审核不通过</button>
+            </div>
+            <div class="msg">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>序号</td>
+                            <td>公司名称</td>
+                            <td>开户人姓名</td>
+                            <td>账户所属银行</td>
+                            <td>开户行名称</td>
+                            <td>银行账户</td>
+                            <td>申请时间</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in vm.items">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.companyName }}</td>
+                            <td>{{ item.userName }}</td>
+                            <td>{{ item.bank }}</td>
+                            <td>{{ item.openAccountBank }}</td>
+                            <td>{{ item.account }}</td>
+                            <td>{{ item.applyTime }}</td>
+                            <td>
+                                <a href="javascript:;" ng-click="tools.showBuyerDetail(item.id)">审核 </a>
+                                <a href="#">查看</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

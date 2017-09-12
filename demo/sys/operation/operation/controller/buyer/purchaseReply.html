@@ -1,0 +1,318 @@
+﻿<div class="oms-crumbs"> <i>采购需求未二次回复列表</i>
+    <p>
+        <a href="/#/buyerTracking">采购商互动行为跟踪</a> /
+        <span>采购需求未二次回复列表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail" style="min-height: 2400px">
+        <div class="table-cfec table-cfec-theme3 mb20">
+            <table class="table">
+                <colgroup>
+                    <col width="12%">
+                    <col width="38%">
+                    <col width="12%">
+                    <col width="38%">
+                </colgroup>
+                <thead>
+                    <th colspan="4">采购商信息</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <td>{{vm.buyerInfo.personInfo.firstName}}</td>
+                        <th>用户ID</th>
+                        <td>
+                            <a href="/#/buyer/detail?buyerId={{paging.buyerId}}" target="_blank" title="{{paging.buyerId}}">{{vm.buyerInfo.personInfo.userId}}</a> （{{vm.buyerInfo.commonUser.valid==1?'已激活':'未激活'}}）
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>邮箱</th>
+                        <td>
+                            {{vm.buyerInfo.personInfo.email}} （{{vm.buyerInfo.commonUser.emailValidation==1?'已验证':'未验证'}}）
+                        </td>
+                        <th>手机</th>
+                        <td>{{vm.buyerInfo.personInfo.mobile}}</td>
+                    </tr>
+                    <tr>
+                        <th>Skype</th>
+                        <td>{{vm.buyerInfo.personInfo.skype}}</td>
+                        <th>公司名称</th>
+                        <td>{{vm.buyerInfo.companyInfo.companyName}}</td>
+                    </tr>
+                    <tr>
+                        <th>公司国家</th>
+                        <td>
+                            {{vm.buyerInfo.country.countryCnName}}
+                            <div class="show-info" ng-if="vm.buyerInfo.country.localTime">
+                                <i class="iconfont">&#xe62e;</i>
+                                <div class="child-warp">
+                                    <ul>
+                                        <li>
+                                            <span>当地时间：</span> {{vm.buyerInfo.country.localTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                        </li>
+                                    </ul>
+                                    <span class="icon-arrow-up"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <th>采购产品分类</th>
+                        <td>{{vm.fullCategory}}</td>
+                    </tr>
+                    <tr>
+                        <th>近30天二次回复率</th>
+                        <td class="va-m">{{vm.buyerInfo.reversionRate | halfYearTwoRateFilter}}</td>
+                        <th>参展信息</th>
+                        <td>
+                            <p ng-if="vm.buyerInfo.exhibitionTimes"> 共{{vm.buyerInfo.exhibitionTimes}}次（最近{{vm.buyerInfo.currentExhibition}}届）
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>最近跟进记录</th>
+                        <td>
+                            <p ng-if="vm.followRecordLsit.length">
+                                {{vm.followRecordLsit[0].flagStr}},{{vm.followRecordLsit[0].followContent}},({{vm.followRecordLsit[0].followerName}},{{vm.followRecordLsit[0].createTime | date:'yyyy-MM-dd HH:mm:ss'}})
+                            </p>
+                            <button ng-if="vm.isMyFollow==1" ngc-permission="buyer_buyerlist_add" class="btn btn-cfec-red btn-cfec-sm mr20" ng-click="tools.followBuyer(paging.buyerId)">跟进采购商</button>
+                        </td>
+                        <th> </th>
+                        <td> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cfec-warp">
+            <div class="tabTable table-cfec table-cfec-theme2 less-detail">
+                <table class="table table-hover">
+                    <colgroup>
+                        <col width="100%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="1" class="ta-l">采购商未二次回复采购需求</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p0">
+                                <div class="list-content table-cfec p0">
+                                    <!-- 全部 -->
+                                    <table class="table table-hover bdn">
+                                        <colgroup>
+                                            <col width="5%">
+                                            <col width="23%">
+                                            <col width="18%">
+                                            <col width="18%">
+                                            <col width="18%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr ng-if="vm.showOperateFlag==false">
+                                                <th>
+                                                    <input type="checkbox" ng-if="vm.items.length" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                                </th>
+                                                <th class="ta-c">采购需求主题</th>
+                                                <th class="ta-c">发布时间</th>
+                                                <th class="ta-c">报价数</th>
+                                                <th class="ta-c">操作</th>
+                                            </tr>
+                                            <tr ng-if="vm.showOperateFlag==true">
+                                                <th>
+                                                    <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                                </th>
+                                                <th colspan="4">
+                                                    <div class="btn-toolbar" ngc-permission="buyer_buyerlist_followbuyerB">
+                                                        <button ng-if="vm.isMyFollow==1" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.followBusiness()">批量跟进选中商机</button>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-if="vm.items.length">
+                                            <tr ng-repeat='item in vm.items'>
+                                                <td>
+                                                    <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                                                </td>
+                                                <!-- 采购需求主题 -->
+                                                <td class="ta-c">
+                                                    <a class="link" href="javascript:void(0);" title="{{item.productName}}" ng-click="tools.getProcurement(item.procurementId);">{{item.productName}}</a>
+                                                    <span class="link"></span>
+                                                </td>
+                                                <!-- 发布时间 -->
+                                                <td class="ta-c">
+                                                    <p>{{item.sendTime | date:'yyyy-MM-dd'}}</p>
+                                                </td>
+                                                <!-- 报价数/供应商发送消息数 -->
+                                                <td class="ta-c">
+                                                    <a class="link" href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}&isQuote=1&quoteAuditState=2" target="_blank" title="{{item.productName}}">{{item.quoteQty}}</a>
+                                                </td>
+                                                <!-- 操作 -->
+                                                <td class="ta-c">
+                                                    <p ng-if="vm.isMyFollow==1" ngc-permission="buyer_buyerlist_followbuyerB">
+                                                        <a class="link" href="javascript:void(0)" ng-click="tools.followBusiness(item.procurementId)">跟进商机</a>
+                                                    </p>
+                                                    <div class="show-info" ng-if="item.latestBusiness">
+                                                        <span class="text">已跟进</span>
+                                                        <div class="child-warp">
+                                                            <ul>
+                                                                <li>
+                                                                    <span>最近商机跟进记录：</span>
+                                                                </li>
+                                                                <li>
+                                                                    <span>最近商机跟进人：</span>{{item.latestBusiness.followerName}}
+                                                                </li>
+                                                                <li>
+                                                                    <span>最近商机跟进时间：</span>{{item.latestBusiness.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                                                </li>
+                                                                <li>
+                                                                    <span>最近商机跟进标识：</span>{{item.latestBusiness.businessTraceFlag.desc}}
+                                                                </li>
+                                                                <li ng-if="item.latestBusiness.content">
+                                                                    <span>最近商机跟进内容：</span>{{item.latestBusiness.content}}
+                                                                </li>
+                                                            </ul>
+                                                            <span class="icon-arrow-up"></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody ng-if="vm.items==undefined||vm.items.length<1" class="ng-scope">
+                                            <tr>
+                                                <td colspan="6">
+                                                    <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的记录
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+            </div>
+            <div class="more-detail" ng-if="vm.procurementInfo!=null">
+                <div class="table-cfec table-cfec-theme3 ">
+                    <table class="table">
+                        <colgroup>
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="25%">
+                        </colgroup>
+                        <thead>
+                            <th colspan="3">采购需求信息</th>
+                            <th class="ta-r">
+                                <a href="/#/purchase/purchaseReqDetail?purchaseId={{vm.procurementInfo.detailInfo.procurementId}}" target="_blank">详细 >></a>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>主题</th>
+                                <td colspan="3">{{vm.procurementInfo.detailInfo.productName}}</td>
+                            </tr>
+                            <tr>
+                                <th>详细描述</th>
+                                <td colspan="3">{{vm.procurementInfo.detailInfo.productDes}}</td>
+                            </tr>
+                            <tr>
+                                <th>行业类目</th>
+                                <td colspan="3">{{vm.procurementInfo.detailInfo.comlpeteCategoryPath}}</td>
+                            </tr>
+                            <tr>
+                                <th>采购数量</th>
+                                <td>
+                                    <p ng-if="vm.procurementInfo.detailInfo.moq==1">MOQ</p>
+                                    <p ng-if="vm.procurementInfo.detailInfo.moq==0&&vm.procurementInfo.detailInfo.expectNum">{{vm.procurementInfo.detailInfo.expectNum}} {{vm.procurementInfo.detailInfo.expectUnit}}</p>
+                                </td>
+                                <th>附件</th>
+                                <td>
+                                    <div ng-repeat="item in vm.procurementInfo.detailInfo.attachmentUrl.split(',') track by $index">
+                                        <a href="javascript:void(0)" ng-click="tools.open(item,true)">
+                                            <p> {{vm.procurementInfo.detailInfo.attachmentName.split(',')[$index]}}</p>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>发布时间</th>
+                                <td>
+                                    {{vm.procurementInfo.detailInfo.startTime|date:'yyyy-MM-dd HH:mm:ss'}}
+                                </td>
+                                <th>有效期限</th>
+                                <td>{{vm.procurementInfo.detailInfo.endTime|date:'yyyy-MM-dd'}}</td>
+                            </tr>
+                            <tr>
+                                <th>来源</th>
+                                <td colspan="3">
+                                    {{vm.procurementInfo.detailInfo.sourceValue}}
+                                    <span ng-if="vm.procurementInfo.detailInfo.createByRealName.length">(代发人：{{vm.procurementInfo.detailInfo.createByRealName}})</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-cfec mt20">
+                    <table class="table table-hover ">
+                        <colgroup>
+                            <col width="30%">
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="20%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="5" class="ta-l">供应商回复情况</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>供应商名称</td>
+                                <td>报价审核通过时间</td>
+                                <td>报价情况</td>
+                                <td>邮件状态</td>
+                                <td>
+                                    <p>消息往来</p>
+                                    <p>(已发送/已接收)</p>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in vm.procurementInfo.MatchSupplier">
+                                <td>
+                                    <a class="link-cfec-inherit" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" title="公司中文名">{{item.sellerCompanyName}}</a>
+                                    <br>
+                                    <a class="link-cfec-inherit" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" title="公司英文名">({{item.sellerCompanyEnName}})</a>
+                                </td>
+                                <td>
+                                    <p> {{item.auditTime | date:'yyyy-MM-dd'}}</p>
+                                    <p> {{item.auditTime | date:'HH:mm:ss'}}</p>
+                                </td>
+                                <td>
+                                    <a class="link-cfec-inherit" target="_blank" ng-href="/#/purchase/purchaseQuoteDetail?inqueryUUID={{item.inqueryUUID}}" ng-if="item.isQuote!=0">
+                                        <p>{{item.isQuote==0?'未报价':'已报价'}}</p>
+                                        <p ng-if="item.isQuote!=0">({{item.quoteAuditState | quoteAuditStateFilter}})</p>
+                                    </a>
+                                    <span ng-if="item.isQuote==0">未报价</span>
+                                </td>
+                                <td>
+                                    <span class="">{{item.emailState | emailStateFilter}}</span>
+                                    <!-- 询盘-对话刷新 -->
+                                    <a href="javascript:void(0)" ng-if="item.emailState&&item.emailState!='open'" class="link mr20" ng-click="tools.refreshQuotePriceEmailState(item)">刷新</a>
+                                    <a ngc-permission="other_othersendEmail_resendEmail" ng-click="tools.reSendEmail(item)" href="javascript:void(0)" class="link">重发邮件给接收方</a>
+                                </td>
+                                <td>
+                                    <p ng-if="item.messageInfo.length" ng-repeat="enitem in item.messageInfo track by $index">
+                                        第{{item.messageInfo.length-$index}}条
+                                        <a class="link-cfec-inherit" href="javascript:void(0)" ng-click="tools.showMsgDialog(enitem.messageId)">{{enitem.msgSendNum}}/{{enitem.msgRecNum}}</a>
+                                    </p>
+                                    <p ng-if="item.messageInfo.length==0">无</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

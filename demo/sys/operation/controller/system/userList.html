@@ -1,0 +1,121 @@
+<div class="oms-crumbs"> <i>用户管理</i>
+    <p>
+        <a href="">系统管理</a> /
+        <span>用户管理</span>
+    </p>
+</div>
+
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <div class="pull-left">
+                <button class="btn btn-cfec-red" ng-click="tools.toAddUser()">添加帐号</button>
+            </div>
+
+            <div class="pull-right">
+                <select class="select-oms mr-10" id="group" ng-model="paging.groupId" ng-options="obj.groupId as obj.groupName for obj in vm.grpList">
+                <option value="">--请选择分组--</option>
+            </select>
+                <div class="oms-search pull-right mr0">
+                    <select class="ipt" name="searchType" id="searchType" ng-model="paging.skey">
+                    <option value="1">帐号</option>
+                    <option value="2">Email</option>
+                    <option value="3">姓名</option>
+                </select>
+                    <em> </em>
+                    <input ngc-auto-input ngc-monitor-enter action="tools.getList" type="text" name="searchValue" ng-model="paging.svalue">
+                    <button ng-click="tools.getList()"><i class="iconfont icon-search"></i> </button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="container-list table-cfec table-cfec-theme2">
+            <table class="table table-hover">
+                <!-- 9列 -->
+                <colgroup>
+                    <col width="2%" />
+                    <col width="12%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="11%" />
+                    <col width="17%" />
+                    <col width="12%" />
+                    <col width="8%" />
+                    <col width="14%" />
+                </colgroup>
+                <thead>
+                    <tr ng-show="vm.checkedDatas == 'undefined' || vm.checkedDatas.length == 0">
+                        <th><input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.checkAll(vm.isAllChecked)"></th>
+                        <th>帐号</th>
+                        <th>姓名</th>
+                        <th>邮箱</th>
+                        <th>角色</th>
+                        <th>分组</th>
+                        <th>创建日期</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-show="vm.checkedDatas!= 'undefined' && vm.checkedDatas.length > 0">
+                        <th><input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.checkAll(vm.isAllChecked)"></th>
+                        <th colspan="8">
+                            <div class="btn-group">
+                                <button ng-click="tools.delUser()" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm fl mr20">删除</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="it in vm.items track by $index">
+                        <td><input type="checkbox" ng-model="it.$checked" ng-change="tools.setCheckedData()"></td>
+                        <td> <a class="link-cfec-inherit" href="/#/system/userDetail?userId={{it.userId}}">{{it.username}}</a> </td>
+                        <td>{{it.realName}}</td>
+                        <td>{{it.userEmail}}</td>
+                        <td>{{it.roleNames}}</td>
+                        <td>{{it.groupName}}</td>
+                        <td>{{it.createTime}}</td>
+                        <td>{{it.validType}}</td>
+                        <td>
+                            <a ng-click="tools.toEdit(it.userId)" href="javascript:;">编辑</a> &nbsp;
+                            <a ng-show="it.valid!=0" ng-click="tools.chgStatus($index,0)" href="javascript:;">禁用</a>
+                            <a ng-show="it.valid==0" ng-click="tools.chgStatus($index,1)" href="javascript:;">启用</a>
+                            <br/>
+                            <a ng-click="tools.resetPassword(it.userId)" href="javascript:;">重置密码</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="middivs">
+                <!-- 分页组件[[ -->
+                <div ng-include="paginationTemplate"></div>
+                <!-- 分页组件[[ -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/ng-template" id="resetPwdDlgId">
+    <div class="activeDlg">
+        <div class="dlg-title">重置密码</div>
+        <form name="resetForm" role="form" ng-submit="tools.chgUserPwdDb()" novalidate="novalidate">
+            <div class="dlg-content form">
+                <div class="row font-14">
+                    <label for="" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r"><span class="notnull">*</span>新密码</label>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <input required maxlength="20" minlength="8" name="pwd" type="password" ng-model="vm.dlgData.password" class="input-cfec" placeholder="请输入新密码" />
+                        <span ng-show="(resetForm.$dirty||resetForm.$submitted) && resetForm.pwd.$invalid" class="error-valid small">
+                        8-20个英文字符
+                    </span>
+                    </div>
+                </div>
+                <div class="btn-toolbar clearfix">
+                    <button class="btn btn-cfec-red" ng-disabled="resetForm.$invalid" type="submit">确定</button>
+                    <button class="btn btn-cfec-white" type="button" ng-click="tools.closeDlg()">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>

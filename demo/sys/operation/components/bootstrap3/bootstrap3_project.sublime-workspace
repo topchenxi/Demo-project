@@ -1,0 +1,2014 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"impo",
+				"important"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"border",
+				"border"
+			],
+			[
+				"colo",
+				"color"
+			],
+			[
+				"fo",
+				"focus"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"boot",
+				"bootstrap.js"
+			],
+			[
+				"dis",
+				"dist/"
+			],
+			[
+				"com",
+				"components"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"fon-s",
+				"font-size"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"hei",
+				"height"
+			],
+			[
+				"tab",
+				"table"
+			],
+			[
+				"oms",
+				"cfec-oms.less"
+			],
+			[
+				"c",
+				"colspan	Attr"
+			],
+			[
+				"widt",
+				"width	Attr"
+			],
+			[
+				"no",
+				"normal"
+			],
+			[
+				"tran",
+				"transparent"
+			],
+			[
+				"borderr",
+				"border-radius"
+			],
+			[
+				"mar",
+				"mar	CSS - margin: 0;"
+			],
+			[
+				"pad",
+				"pad	CSS - padding: 0;"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"jq",
+				"jquery.min.js"
+			],
+			[
+				"ovh",
+				"ov-h	overflow: hidden;"
+			],
+			[
+				"fl",
+				"fl-l	float: left;"
+			],
+			[
+				"le",
+				"lef	CSS - left: 0;"
+			],
+			[
+				"inx",
+				"index"
+			],
+			[
+				"inedx",
+				"index"
+			],
+			[
+				"bak",
+				"background"
+			],
+			[
+				"por",
+				"pos-r	position: relative;"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"index",
+				"index"
+			],
+			[
+				"min",
+				"minlength"
+			],
+			[
+				"vol",
+				"volist"
+			],
+			[
+				"pintc",
+				"pintClsName"
+			],
+			[
+				"inlni",
+				"inline-block"
+			],
+			[
+				"sli",
+				"slideDown	.slideDown()"
+			],
+			[
+				"clo",
+				"colorbox"
+			],
+			[
+				"va",
+				"va	vertical-align: ${1:top};"
+			],
+			[
+				"op",
+				"op+	opacity: $1;\nfilter: alpha(opacity=$2);"
+			],
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"html",
+				"htmlArr"
+			],
+			[
+				"regi",
+				"regionId"
+			],
+			[
+				"reg",
+				"region"
+			],
+			[
+				"proi",
+				"province"
+			],
+			[
+				"mat",
+				"margin-top"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"area",
+				"areaModule_html"
+			],
+			[
+				"unde",
+				"undefined"
+			],
+			[
+				"pid",
+				"provinceId"
+			],
+			[
+				"city",
+				"cityid"
+			],
+			[
+				"cit",
+				"cityid"
+			],
+			[
+				"conten",
+				"content"
+			],
+			[
+				"substr",
+				"substring"
+			],
+			[
+				"display",
+				"display:none"
+			],
+			[
+				"icon",
+				"iconfont"
+			],
+			[
+				"pare",
+				"parents	.parents()"
+			],
+			[
+				"wd",
+				"width"
+			],
+			[
+				"oncl",
+				"onclick"
+			],
+			[
+				"clear",
+				"clearfix"
+			],
+			[
+				"mal",
+				"margin-left"
+			],
+			[
+				"bacn",
+				"background"
+			],
+			[
+				"images",
+				"images/"
+			],
+			[
+				"casel",
+				"case_list2"
+			],
+			[
+				"class",
+				"classic_thumbArr"
+			],
+			[
+				"clic",
+				"classic"
+			],
+			[
+				"lo",
+				"logoDesign/"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"yiyuang",
+				"yiyuangouBtn"
+			],
+			[
+				"hold",
+				"holder"
+			],
+			[
+				"ri",
+				"right"
+			],
+			[
+				"coo",
+				"color"
+			],
+			[
+				"resu",
+				"result"
+			],
+			[
+				"par",
+				"part1"
+			],
+			[
+				"border-c",
+				"border-color"
+			],
+			[
+				"yi",
+				"yiyuanzhucepage"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"cl",
+				"class	Attr"
+			],
+			[
+				"s",
+				"jquery.SuperSlide.2.1.1.js"
+			],
+			[
+				"tea",
+				"text-align"
+			],
+			[
+				"aler",
+				"alertPackage"
+			],
+			[
+				"cur",
+				"cur-d	cursor: default;"
+			],
+			[
+				"sitem",
+				"sItem2"
+			],
+			[
+				"step",
+				"step2"
+			],
+			[
+				"ste",
+				"step.png	w:1190 h:240"
+			],
+			[
+				"yiyuan",
+				"yiyuanzhuce/"
+			],
+			[
+				"java",
+				"javascript:void"
+			],
+			[
+				"wra",
+				"wrap_m"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"part",
+				"part4"
+			],
+			[
+				"pa",
+				"part2_bg.png	w:4 h:4"
+			],
+			[
+				"arr",
+				"arrow.png	w:83 h:42"
+			],
+			[
+				"im",
+				"images/"
+			],
+			[
+				"url",
+				"url()"
+			],
+			[
+				"paren",
+				"parents	.parents()"
+			],
+			[
+				"old",
+				"oldPrice"
+			],
+			[
+				"goo",
+				"goods_id"
+			],
+			[
+				"goodsID",
+				"goodsidstr"
+			],
+			[
+				"oldpr",
+				"oldprice"
+			],
+			[
+				"sidx",
+				"sidx2"
+			],
+			[
+				"chec",
+				"checked"
+			],
+			[
+				"single",
+				"singlePrice"
+			],
+			[
+				"goodi",
+				"goodsid"
+			],
+			[
+				"fid",
+				"find	.find()"
+			],
+			[
+				"hide",
+				"hiddenImagePath"
+			],
+			[
+				"rou",
+				"routes/"
+			],
+			[
+				"src",
+				"src/"
+			],
+			[
+				"pu",
+				"public/"
+			],
+			[
+				"goods",
+				"goods_id"
+			],
+			[
+				"tye",
+				"type_id"
+			],
+			[
+				"bas",
+				"basereq"
+			],
+			[
+				"ad",
+				"articelsData"
+			],
+			[
+				"art",
+				"articelsData"
+			],
+			[
+				"list",
+				"listData"
+			],
+			[
+				"conte",
+				"container"
+			],
+			[
+				"st",
+				"style	Tag"
+			],
+			[
+				"app",
+				"app.js"
+			],
+			[
+				"fir",
+				"first"
+			],
+			[
+				"rq",
+				"require"
+			],
+			[
+				"fot-",
+				"font-size"
+			],
+			[
+				"gaoqi",
+				"gaoqi_03.jpg	w:753 h:90"
+			],
+			[
+				"ke",
+				"kejixingqiyerending_banner.jpg	w:800 h:267"
+			],
+			[
+				"module",
+				"moduleContent"
+			],
+			[
+				"orderup",
+				"orderTurnover_update"
+			],
+			[
+				"orderc",
+				"orderCount_data"
+			],
+			[
+				"json",
+				"jsondata"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/E/oms-branches/controller/seller/index.js",
+			"settings":
+			{
+				"buffer_size": 47449,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/oms-branches/controller/seller/index.html",
+			"settings":
+			{
+				"buffer_size": 7579,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/oms-branches/controller/seller/detail.html",
+			"settings":
+			{
+				"buffer_size": 24126,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "less/cfec.less",
+			"settings":
+			{
+				"buffer_size": 7393,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "less/utilities-cfec.less",
+			"settings":
+			{
+				"buffer_size": 1501,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "less/cfec-oms.less",
+			"settings":
+			{
+				"buffer_size": 13971,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/E/oms-branches/view/css/operation.css",
+			"settings":
+			{
+				"buffer_size": 42779,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "less/type.less",
+			"settings":
+			{
+				"buffer_size": 5954,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "example/FormGroup.html",
+			"settings":
+			{
+				"buffer_size": 19528,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "less/pagination.less",
+			"settings":
+			{
+				"buffer_size": 2085,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "less/variables.less",
+			"settings":
+			{
+				"buffer_size": 28258,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/SASS Build/SASS - Compressed.sublime-build",
+					""
+				],
+				[
+					"Packages/SASS Build/SASS.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/SASS Build/SASS - Compressed.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "json",
+		"selected_items":
+		[
+			[
+				"json",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"bs3-gr",
+				"Snippet: bs3-input-group-btn"
+			],
+			[
+				"bs3-button",
+				"Snippet: bs3-button-group"
+			],
+			[
+				"bs3-col",
+				"Snippet: bs3-col-8"
+			],
+			[
+				"bs3-alert",
+				"Snippet: bs3-alert-danger"
+			],
+			[
+				"bs3-sele",
+				"Snippet: bs3-input-select-h"
+			],
+			[
+				"bs3-buttongr",
+				"Snippet: bs3-button-group"
+			],
+			[
+				"bs3-label",
+				"Snippet: bs3-label"
+			],
+			[
+				"bs3bu",
+				"Snippet: bs3-button"
+			],
+			[
+				"bs3-link",
+				"Snippet: bs3-link-button"
+			],
+			[
+				"bs3-che",
+				"Snippet: bs3-input-checkbox"
+			],
+			[
+				"bs3-pan",
+				"Snippet: bs3-panel"
+			],
+			[
+				"bs3-ta",
+				"Snippet: bs3-tabs"
+			],
+			[
+				"bs3 nav",
+				"Snippet: bs3-navbar"
+			],
+			[
+				"bs-",
+				"Snippet: bs3-select"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"p json",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"git",
+				"Git: Update Project Ignored Files"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"format",
+				"Format: Javascript"
+			],
+			[
+				"file:op",
+				"File: Open In Browser - Production Server"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package→安装插件"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package→安装插件"
+			],
+			[
+				"in",
+				"Package Control: Install Package→安装插件"
+			],
+			[
+				"i",
+				"Package Control: Install Package→安装插件"
+			]
+		],
+		"width": 498.0
+	},
+	"console":
+	{
+		"height": 369.0,
+		"history":
+		[
+			"cd f:\\",
+			"dir",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/E/oms-branches",
+		"/E/oms-branches/components/bootstrap3",
+		"/E/oms-branches/components/bootstrap3/less",
+		"/E/oms-branches/controller/seller",
+		"/E/oms-branches/template"
+	],
+	"file_history":
+	[
+		"/E/oms-branches/components/bootstrap3/example/Table.html",
+		"/E/oms-branches/components/bootstrap/less/pagination.less",
+		"/E/oms-branches/components/angular-bootstrap/ui-bootstrap-tpls.js",
+		"/E/oms-branches/controller/seller/index.html",
+		"/E/oms-branches/components/bootstrap3/less/cfec-oms.less",
+		"/E/oms-branches/index.html",
+		"/E/oms-branches/components/bootstrap3/example/FormGroup.html",
+		"/E/oms-branches/components/bootstrap3/less/cfec.less",
+		"/E/oms-branches/components/bootstrap3/less/alerts.less",
+		"/E/oms-branches/components/bootstrap3/example/Alert.html",
+		"/E/oms-branches/controller/ui/index.js",
+		"/E/oms-branches/controller/ui/index.html",
+		"/E/oms-branches/components/bootstrap3/less/scaffolding.less",
+		"/E/oms-branches/components/bootstrap3/less/navs.less",
+		"/E/oms-branches/controller/buyer/index.html",
+		"/E/oms-branches/view/css/operation.css",
+		"/E/oms-branches/controller/controller.js",
+		"/E/oms-branches/config.js",
+		"/E/oms-branches/route.js",
+		"/E/oms-branches/components/bootstrap3/example/Tab.html",
+		"/E/oms-branches/components/angular/angular.js",
+		"/E/oms-branches/app.js",
+		"/E/oms-branches/template/menu_v2.html",
+		"/E/oms-branches/template/layout_v2.html",
+		"/E/oms-branches/components/cfec-common/service.js",
+		"/E/oms-branches/controller/main.js",
+		"/E/oms-branches/service/constant.js",
+		"/E/oms-branches/controller/module.js",
+		"/E/oms-branches/controller/buyer/index.js",
+		"/E/oms-branches/service/permission.js",
+		"/E/oms-branches/service/commonService.js",
+		"/E/oms-branches/template/menu.html",
+		"/E/oms-branches/components/bootstrap3/less/bootstrap.less",
+		"/E/oms-branches/components/bootstrap3/less/type.less",
+		"/E/oms-branches/components/bootstrap3/less/variables.less",
+		"/E/oms-branches/components/bootstrap3/js/alert.js",
+		"/E/oms-branches/components/bootstrap3/js/transition.js",
+		"/E/oms-branches/components/bootstrap3/js/tab.js",
+		"/E/oms-branches/components/bootstrap3/js/affix.js",
+		"/E/oms-branches/components/bootstrap3/js/button.js",
+		"/E/oms-branches/components/bootstrap3/js/dropdown.js",
+		"/E/oms-branches/components/bootstrap3/js/popover.js",
+		"/E/oms-branches/components/bootstrap3/Gruntfile.js",
+		"/E/oms-branches/components/bootstrap3/example/Labels.html",
+		"/E/oms-branches/components/bootstrap3/example/Typography.html",
+		"/E/oms-branches/components/bootstrap3/less/buttons.less",
+		"/E/oms-branches/components/bootstrap3/less/mixins/buttons.less",
+		"/E/oms-branches/components/bootstrap3/less/mixins/alerts.less",
+		"/E/oms-branches/components/bootstrap3/example/Notice.html",
+		"/E/oms-branches/components/bootstrap3/less/normalize.less",
+		"/E/oms-branches/components/bootstrap3/less/jumbotron.less",
+		"/E/oms-branches/components/bootstrap3/less/theme.less",
+		"/E/oms-branches/components/bootstrap3/package.json",
+		"/E/oms-branches/components/bootstrap3/less/utilities-cfec.less",
+		"/E/oms-branches/controller/buyer/purchaseReq.js",
+		"/E/oms-branches/template/layout.html",
+		"/E/oms-branches/components/bootstrap3/example/Label.html",
+		"/E/oms-branches/components/bootstrap3/dist/css/cfec.css",
+		"/E/oms-branches/components/bootstrap3/less/badges.less",
+		"/E/oms-branches/components/bootstrap3/dist/css/bootstrap.css",
+		"/E/oms-branches/components/bootstrap3/dist/css/bootstrap.min.css",
+		"/E/oms-branches/components/bootstrap3/less/mixins/cfec-mixin.less",
+		"/E/oms-branches/components/bootstrap3/less/utilities.less",
+		"/E/oms-branches/components/bootstrap3/less/mixins/forms.less",
+		"/E/oms-branches/components/bootstrap3/less/mixins.less",
+		"/E/oms-branches/components/bootstrap3/less/responsive-embed.less",
+		"/E/oms-branches/components/bootstrap3/less/responsive-utilities.less",
+		"/E/oms-branches/components/bootstrap3/less/cfec-text.less",
+		"/E/oms-branches/components/jquery/dist/jquery.min.map",
+		"/E/oms-branches/components/jquery/dist/jquery-1.8.0.min.js",
+		"/E/oms-branches/components/jquery/dist/jquery.min.js",
+		"/E/assets/static/seller/js/product.js",
+		"/E/assets/static/seller/js/product_validate.js",
+		"/E/assets/static/seller/js/goodsGroup.js",
+		"/E/assets/static/cart&orders/js/AddressManager.js",
+		"/E/assets/static/buyer/js/messages_en.js",
+		"/E/assets/static/buyer/js/AddressManager.js",
+		"/E/oms_branches/components/bootstrap3/Gruntfile.js",
+		"/E/oms_branches/components/bootstrap3/less/bootstrap.less",
+		"/E/assets/Gruntfile.js",
+		"/E/assets/static/msg/js/inquire.js",
+		"/E/assets/static/msg/js/sendInquiryPage.js",
+		"/E/assets/static/seller/js/bank/cardBindForeign.js",
+		"/E/assets/static/cfec/components_module/jquery-validation/dist/additional-methods.js",
+		"/E/oms/components/bootstrap3/Gruntfile.js",
+		"/E/oms/components/bootstrap/less/bootstrap.less",
+		"/E/oms/components/bootstrap/less/mixins.less",
+		"/E/oms/components/bootstrap/Gruntfile.js",
+		"/E/oms/components/bootstrap/package.json",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/Gruntfile.js",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/bootstrap.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/buttons.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/variables.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/mixins.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/code.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/.csscomb.json",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/less/mixins/buttons.less",
+		"/C/Users/Administrator/Desktop/bootstrap-3.3.6-oms/bootstrap-3.3.6/js/.jscsrc",
+		"/E/assets/static/ec/css/register.css",
+		"/E/assets/static/ec/js/register/en/en_verificationEmail.js",
+		"/C/Users/Administrator/Desktop/bootstrap-OMS/js/bootstrap.js",
+		"/E/assets/static/ec/css/goodsDetails.css",
+		"/C/Users/Administrator/Desktop/html.html",
+		"/C/Users/Administrator/Desktop/merchandiseCommodities_detail.ftl",
+		"/C/Users/Administrator/Desktop/aaa.html",
+		"/C/Users/Administrator/Desktop/verification-email.ftl",
+		"/E/assets/static/filemd5.php",
+		"/E/assets/static/filemd5.text",
+		"/E/assets/static/home/js/categories-map.js",
+		"/E/assets/static/home/css/categories-map.css",
+		"/E/assets/static/seller/js/shopSearch.js",
+		"/E/assets/static/ec/css/register_zh.css",
+		"/E/assets/static/ec/js/register/zh/verificationEmail.js",
+		"/E/assets/html/zh_register/css/register.css",
+		"/E/assets/static/seller/js/sellerInfo.js",
+		"/E/assets/static/home/js/personalInformation.js",
+		"/E/assets/static/seller/css/penson.css",
+		"/E/assets/html/buyerCenter/js/model/personalInformation.js",
+		"/E/assets/static/ec/js/lib/des/des.js",
+		"/E/assets/static/ec/js/retrieve/zh/verificationEmail.js",
+		"/E/assets/static/seller/js/shopProducts.js",
+		"/E/assets/static/global/js/global.js",
+		"/E/assets/static/seller/css/shopLOGO.css",
+		"/E/assets/static/seller/temp/product.html",
+		"/E/assets/static/seller/css/product.css",
+		"/E/assets/static/cfec/components_module/avalon/avalon.shim.js",
+		"/E/assets/views/seller/product/add.html",
+		"/E/assets/docs/md/demonstrate.md"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+			"E:\\oms-branches",
+			"-E:\\oms-branches\\components",
+			"E:\\oms-branches\\directive",
+			"E:\\oms-branches\\controller",
+			"E:\\oms-branches",
+			"E:\\oms-branches\\controller",
+			"E:\\oms-branches\\components\\bootstrap3\\less",
+			"E:\\oms-branches\\components\\bootstrap3\\less\\mixins",
+			"E:\\assets\\static",
+			"E:\\assets",
+			"E:\\assets\\static",
+			"E:\\assets\\views",
+			"E:\\assets\\static",
+			"E:\\assets",
+			"E:\\assets\\views\\seller\\product",
+			"E:\\assets",
+			"E:\\assets\\static",
+			"E:\\utcmall2.0\\webapps\\utcmall\\WEB-INF",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\statics\\utcmall2\\js",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\statics\\utcmall2\\js",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\shop\\admin",
+			"E:\\utcmall2.0\\webapps\\utcmall\\shop\\admin\\spec",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\WEB-INF\\classes\\com",
+			"E:\\utcmall2.0\\webapps\\utcmall\\WEB-INF",
+			"E:\\utcmall2.0\\webapps\\utcmall\\statics\\utcmall2\\js",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\statics\\utcmall2\\sass\\lianrui",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\01work\\utcmall2",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\01work\\utcmall2",
+			"E:\\01work\\utcmall2\\WebContent",
+			"E:\\01work\\utcmall2",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\utcmall2.0\\webapps\\utcmall\\statics",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"E:\\01work\\utcmall2",
+			"E:\\01work\\utcmall2\\WebContent\\statics",
+			"E:\\01work\\utcmall2",
+			"E:\\01work\\utcmall2\\WebContent\\statics",
+			"E:\\01work\\utcmall2",
+			"E:\\utcmall2.0\\webapps\\utcmall",
+			"D:\\01_work\\20150805儿童学习机\\bunnybaby",
+			"D:\\01_work\\20150616第四期达人：育儿子凯",
+			"D:\\01_work\\20150709全国杯萌宝大赛定稿页面",
+			"D:\\01_work\\20150724婚姻保卫战页面(1)",
+			"D:\\01_work",
+			"D:\\01_work\\20150107注册有礼第七期",
+			"D:\\01_work\\20141212手机站",
+			"D:\\01_work",
+			"D:\\01_work\\20141212手机站\\mobile\\html"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"SetSearchTypeArray",
+			"mainCategoryId",
+			"api.getSellerList",
+			"tools.search",
+			"getAllCategorysOfLevel1",
+			"mainCategoryId",
+			"getSellerList",
+			".tab",
+			"ta-r",
+			"tools",
+			"hideButtonFlag",
+			"ShowButtonStyle",
+			"ng-if",
+			"@pagination-hover-bg",
+			"请输入主题",
+			".oms-search",
+			".input-cfec",
+			"laydate-icon",
+			".input-cfec-icon",
+			"ShowButtonStyle",
+			"failAudit",
+			"auditStatus",
+			"getSellerList",
+			".content",
+			".oms-search span",
+			".rightstyle",
+			"font-family",
+			"'微软雅黑'",
+			"family",
+			"width",
+			"cfec-common",
+			"commonTool",
+			"commonService",
+			"webapp",
+			"Ctrl",
+			"/index",
+			"buyer",
+			"index",
+			"closeed",
+			"autoClose",
+			".close",
+			"Alert",
+			".close",
+			"button.close",
+			"align",
+			"text-align",
+			"success",
+			"h1",
+			"vm",
+			"tools",
+			"label-cfec-red",
+			"less",
+			".nav-tabs",
+			".tab1",
+			"watch",
+			"less",
+			"watch",
+			"nav-tabs",
+			"red",
+			"j-",
+			".rules(",
+			"valid",
+			"rules",
+			"submit",
+			"define(",
+			"define",
+			"defined",
+			"selection",
+			"valid",
+			"carousel",
+			"build",
+			"pre",
+			"/pre",
+			"getCategories",
+			".tips-content p",
+			".gd-desc",
+			"searchFun",
+			"submit",
+			"-pick",
+			"productData.imgs",
+			"productData",
+			"photoSrcs",
+			"dataImgs",
+			"removeAt",
+			"splice",
+			"Array",
+			"recordId",
+			"getProductInfo",
+			"getUnit",
+			"imgs",
+			"mock",
+			"getAjaxDate",
+			"getProductInfo",
+			"getAjaxDate",
+			"dataImgs",
+			"thumb-img thumb-photo",
+			"fnUpload",
+			"dataImgs",
+			"img",
+			"src",
+			"height",
+			"layui-layer-content",
+			"NoPassResonText",
+			"validator",
+			"validation",
+			"form-NoPassReson",
+			"NoPassResonText",
+			"md5",
+			"cachebuster",
+			"form-product",
+			"基本信息",
+			"pro-title j-floor",
+			"form-horizontal",
+			"novalidate",
+			"Statistics_middle_table_div_lefts_table_lei",
+			"lastCategory",
+			"paymethods",
+			"crumbs",
+			"lastCategory",
+			"focus",
+			"hh:mm:ss",
+			"NoPassResonText",
+			"area",
+			"open",
+			"width",
+			"goods_manage.css",
+			".layui-layer-btn a",
+			"填写审核不通过的原因"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'Microsoft YaHei';",
+			"label-cfec-gary",
+			"src=\"${staticserver}/utcmall2/images/",
+			"src=\"../../images/logoDesign/",
+			"/maylikegoods.jpg",
+			"\"",
+			"param",
+			"yiyuanzhuce_autoLogin",
+			"yiyuanzhuce_",
+			"已成功下单",
+			"/mflogo/mflogo_",
+			"http://192.168.29.125",
+			"",
+			"设计资料",
+			"127.0.0.1",
+			"<c:if test=\"${invoiceInfo.type == 0}\">class=\"type2\"</c:if>",
+			"<c:if test=\"${invoiceInfo.type == 1}\">class=\"type2\"</c:if>",
+			"/js/",
+			"/images/",
+			"src=\"/static/images/",
+			"",
+			"${staticserver}/utcmall2/images/",
+			"myChart",
+			"BMapExt",
+			"联瑞",
+			"{\"name\":\"",
+			"城市1",
+			"utcmall2/css/index.css?201601261343",
+			"utcmall2/css/common.css?201601261343",
+			"utcmall2/js/user.js?201601261343",
+			"utcmall2/js/referee.js?201601261343",
+			"utcmall2/js/orderCount.js?201601261343",
+			"utcmall2/js/myinfo.js?201601261343",
+			"utcmall2/js/information.js?201601261343",
+			"utcmall2/js/changepwd.js?201601261343",
+			"utcmall2/js/cart.js?201601261343",
+			"utcmall2/js/sale_main.js?201601261343",
+			"utcmall2/js/index.js?201601261343",
+			"utcmall2/js/selfservice.js?201601261343",
+			"utcmall2/js/common.js?201601261343",
+			"${staticserver}",
+			"",
+			"${staticserver}/utcmall2/images/pianyidazhan/",
+			"href=\"",
+			"",
+			"${domainUrl}/statics",
+			"联瑞网",
+			"联瑞",
+			"联瑞网",
+			"联瑞",
+			"联瑞网",
+			"联瑞",
+			"",
+			"\"color\"",
+			"\"normal\"",
+			"\"itemStyle\"",
+			"\"value\"",
+			"\"name\"",
+			"\"value\"",
+			"\"name\"",
+			"\"",
+			"\"name\"",
+			"\"value\"",
+			"\"",
+			"\"name\"",
+			"\"value\"",
+			",\"kk\":66},",
+			"\"kk\":66},",
+			"\"value\"",
+			"\"",
+			"\"name\"",
+			"",
+			"font/yunzhi/iconfont.css",
+			"css/yunzhi/index.css",
+			"css/yunzhi/user.css",
+			"../../images/",
+			"/utcmall2/css/yunzhi/index.css",
+			"css/yunzhi/index.css",
+			"css/common/common.css",
+			"font/iconfont.css",
+			"${staticserver}/utcmall2/images/",
+			"fybTab",
+			"fengyunbang",
+			"",
+			"checkPayMethod()",
+			"\"",
+			"[];",
+			"});",
+			"${staticserver}",
+			"",
+			"utcDate(",
+			"}).",
+			"});",
+			"[];",
+			"!=",
+			"==",
+			"});",
+			"[];",
+			"===",
+			"!==",
+			"});",
+			"[];",
+			"[]",
+			"!==",
+			"===",
+			"==",
+			"!== ",
+			"[]",
+			"",
+			"\"}",
+			"{\"",
+			"ajaxloaderFun(",
+			"onclick=\"radioEvent(this);loadType(this);\"",
+			"radioEvent(this);loadType(this);",
+			"<input type=\"radio\" name=\"assessmentFilter\" value=\"0\" class=\"inputRadio\">",
+			"radio clearfix fl",
+			"checkbox clearfix on",
+			"",
+			"bankcode",
+			"images/pay/pay_",
+			"scrollText",
+			"scrollItem",
+			"images/pay/",
+			"images/bank/",
+			"onclick=\"radioEvent(this);showDealTips(this);",
+			"<a class=\"isdefault fr\" onclick=\"setDefaultContact(this)\"><em>默认</em></a>",
+			"<i class=\"check\"></i></div>",
+			"<div class=\"nameBox fl\">"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/E/oms-branches/controller/seller/index.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 47449,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5490,
+								5490
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2543.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/E/oms-branches/controller/seller/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7579,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1326,
+								1326
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 462.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/E/oms-branches/controller/seller/detail.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24126,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8798,
+								8798
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 198.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "less/cfec.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7393,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3748,
+								3748
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "less/utilities-cfec.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1501,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 132.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "less/cfec-oms.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12283,
+								12283
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 11946.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/E/oms-branches/view/css/operation.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 42779,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4454,
+								4454
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6710.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "less/type.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5954,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								309,
+								309
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "example/FormGroup.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19528,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4283,
+								4283
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2198.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "less/pagination.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2085,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1329,
+								1289
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 726.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "less/variables.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 28258,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								16134,
+								16134
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/LESS/LESS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 10192.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 166.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/SASS Build/SASS - Compressed.sublime-build",
+	"project": "bootstrap3_project.sublime-project",
+	"replace":
+	{
+		"height": 72.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pagination.less",
+				"components\\bootstrap3\\less\\pagination.less"
+			],
+			[
+				"cfec.less",
+				"components\\bootstrap3\\less\\cfec.less"
+			],
+			[
+				"cfec-oms",
+				"components\\bootstrap3\\less\\cfec-oms.less"
+			],
+			[
+				"option.css",
+				"view\\css\\operation.css"
+			],
+			[
+				"type.less",
+				"components\\bootstrap3\\less\\type.less"
+			],
+			[
+				"oms",
+				"components\\bootstrap3\\less\\cfec-oms.less"
+			],
+			[
+				"alert.html",
+				"components\\bootstrap3\\example\\Alert.html"
+			],
+			[
+				"navs.less",
+				"components\\bootstrap3\\less\\navs.less"
+			],
+			[
+				"scaffolding",
+				"components\\bootstrap3\\less\\scaffolding.less"
+			],
+			[
+				"angular",
+				"components\\angular\\angular.js"
+			],
+			[
+				"operation.css",
+				"view\\css\\operation.css"
+			],
+			[
+				"alert.js",
+				"components\\bootstrap3\\js\\alert.js"
+			],
+			[
+				"alerts.less",
+				"components\\bootstrap3\\less\\mixins\\alerts.less"
+			],
+			[
+				"cfec-o",
+				"components\\bootstrap3\\less\\cfec-oms.less"
+			],
+			[
+				"cfec.css",
+				"components\\bootstrap3\\dist\\css\\cfec.css"
+			],
+			[
+				"nav.less",
+				"components\\bootstrap3\\less\\navs.less"
+			],
+			[
+				"product_v",
+				"static\\seller\\js\\product_validate.js"
+			],
+			[
+				"prod",
+				"static\\seller\\js\\product.js"
+			],
+			[
+				"inquire.js",
+				"static\\msg\\js\\inquire.js"
+			],
+			[
+				"sendinquirypage",
+				"static\\msg\\js\\sendInquiryPage.js"
+			],
+			[
+				"product.js",
+				"static\\seller\\js\\product.js"
+			],
+			[
+				"register.css",
+				"static\\ec\\css\\register.css"
+			],
+			[
+				"en_verificationemail",
+				"static\\ec\\js\\register\\en\\en_verificationEmail.js"
+			],
+			[
+				"goodde",
+				"static\\ec\\css\\goodsDetails.css"
+			],
+			[
+				"env",
+				"static\\ec\\js\\register\\en\\en_verificationEmail.js"
+			],
+			[
+				"-map.",
+				"static\\home\\js\\categories-map.js"
+			],
+			[
+				"-map.js",
+				"static\\home\\js\\categories-map.js"
+			],
+			[
+				"shopsearch",
+				"static\\seller\\js\\shopSearch.js"
+			],
+			[
+				"shopse",
+				"static\\seller\\js\\shopSearch.js"
+			],
+			[
+				"-map.css",
+				"static\\home\\css\\categories-map.css"
+			],
+			[
+				"register_z",
+				"static\\ec\\css\\register_zh.css"
+			],
+			[
+				"verificationemail.js",
+				"static\\ec\\js\\register\\zh\\verificationEmail.js"
+			],
+			[
+				"penson.css",
+				"static\\seller\\css\\penson.css"
+			],
+			[
+				"sellerinfo",
+				"static\\seller\\js\\sellerInfo.js"
+			],
+			[
+				"personalinformation",
+				"static\\home\\js\\personalInformation.js"
+			],
+			[
+				"goodsde",
+				"static\\ec\\css\\goodsDetails.css"
+			],
+			[
+				"verificationemail",
+				"static\\ec\\js\\register\\zh\\verificationEmail.js"
+			],
+			[
+				"godsde",
+				"static\\ec\\css\\goodsDetails.css"
+			],
+			[
+				"des.js",
+				"static\\ec\\js\\lib\\des\\des.js"
+			],
+			[
+				"golbal.js",
+				"static\\global\\js\\global.js"
+			],
+			[
+				"shoppr",
+				"static\\seller\\js\\shopProducts.js"
+			],
+			[
+				"shoplogo",
+				"static\\seller\\css\\shopLOGO.css"
+			],
+			[
+				"goods",
+				"static\\ec\\css\\goodsDetails.css"
+			],
+			[
+				"aval",
+				"static\\cfec\\components_module\\avalon\\avalon.shim.js"
+			],
+			[
+				"avalon",
+				"static\\cfec\\components_module\\avalon\\avalon.shim.js"
+			],
+			[
+				"product.css",
+				"static\\seller\\css\\product.css"
+			],
+			[
+				"produ",
+				"static\\seller\\js\\product.js"
+			],
+			[
+				"logo.js",
+				"static\\seller\\js\\set\\logo.js"
+			],
+			[
+				"pur_inde",
+				"static\\procurement\\js\\pur_index.js"
+			],
+			[
+				"layer.js",
+				"static\\cfec\\dev\\components\\layer\\src\\layer.js"
+			],
+			[
+				"product_validate",
+				"static\\seller\\js\\product_validate.js"
+			],
+			[
+				"good_audit",
+				"static\\seller\\js\\good_audit.js"
+			],
+			[
+				"home/css/main.css",
+				"static\\home\\css\\main.css"
+			],
+			[
+				"home",
+				"html\\buyer\\home.html"
+			],
+			[
+				"main.css",
+				"html\\buyer\\css\\main.css"
+			],
+			[
+				"shopmanagement",
+				"static\\seller\\js\\ShopManagement.js"
+			],
+			[
+				"tips",
+				"static\\cfec\\dev\\components\\tips\\tips.js"
+			],
+			[
+				"good_manage",
+				"static\\seller\\js\\good_manage.js"
+			],
+			[
+				"layer",
+				"node_modules\\express\\lib\\router\\layer.js"
+			],
+			[
+				"form.le",
+				"static\\cart&orders\\less\\form.less"
+			],
+			[
+				"layer.l",
+				"static\\cfec\\dev\\view\\less\\component\\layer.less"
+			],
+			[
+				"good_au",
+				"static\\seller\\js\\good_audit.js"
+			],
+			[
+				"goods_man",
+				"static\\seller\\css\\goods_manage.css"
+			],
+			[
+				"safety.js",
+				"static\\seller\\js\\safety.js"
+			],
+			[
+				"reqco",
+				"static\\cfec\\dev\\components\\require-config.js"
+			],
+			[
+				"widegt/selfservice/",
+				"webapps\\——utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\selfService\\SelfServiceWidget.html"
+			],
+			[
+				"checkout.html",
+				"webapps\\utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\cart\\checkout\\checkout.html"
+			],
+			[
+				"com/enation/javashop/widget/selfservice/",
+				"webapps\\——utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\selfService\\SelfServiceWidget.html"
+			],
+			[
+				"user.js",
+				"webapps\\——utcmall\\statics\\utcmall2\\js\\user.js"
+			],
+			[
+				"yiyuanzhuce.js",
+				"webapps\\utcmall\\statics\\utcmall2\\js\\yiyuanzhuce\\yiyuanzhuce.js"
+			],
+			[
+				"yiyuanzhuceo",
+				"webapps\\utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\yiyuanzhuce\\yiYuanZhuCeOrder.html"
+			],
+			[
+				"v.js",
+				"webapps\\——utcmall\\statics\\utcmall2\\js\\v.js"
+			],
+			[
+				"common.js",
+				"webapps\\——utcmall\\statics\\utcmall2\\js\\common.js"
+			],
+			[
+				"member_order",
+				"shop\\com\\enation\\javashop\\widget\\member\\member_order.html"
+			],
+			[
+				"paymentpattern.html",
+				"shop\\com\\enation\\javashop\\widget\\cart\\checkout\\paymentPattern.html"
+			],
+			[
+				"design.html",
+				"webapps\\utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\design\\design.html"
+			],
+			[
+				"design",
+				"webapps\\utcmall\\WEB-INF\\classes\\com\\enation\\javashop\\widget\\design\\design.html"
+			],
+			[
+				"selfservice.sc",
+				"webapps\\utcmall\\statics\\utcmall2\\sass\\lianrui\\selfService.scss"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"E:\\01work\\utcmall2\\WebContent\\statics\\utcmall2\\js\\subjectCodeingPRO.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 287.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

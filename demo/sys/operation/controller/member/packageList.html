@@ -1,0 +1,69 @@
+
+<!--<link rel="stylesheet" href="/view/css/member.css"> -->
+<style>
+    .ipt-w0{
+        width: 70px;
+    }
+    .def-val{
+        padding-right: 0;
+        width: 60px;
+    }
+</style>
+<!-- 列表头部导航[[ -->
+<div class="oms-crumbs"> <i>套餐类型设置</i>
+    <p>
+        <a href="">会员套餐管理</a> /
+        <span>套餐类型设置</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="container-list table-cfec table-cfec-theme2">
+        <div class="btn-group mb20">
+            <button ngc-permission="member_membersetting_add" class="btn btn-cfec-red" ng-click="tools.addPackageDlg()">新增会员套餐</button>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td width="10%">编号</td>
+                    <td width="20%">套餐名称</td>
+                    <td width="20%">套餐别称</td>
+                    <td width="15%">套餐状态</td>
+                    <td width="15%">套餐价格/元</td>
+                    <td width="20%">操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="it in vm.items track by $index">
+                    <td>{{$index +1}}</td>
+                    <td>{{it.packageName}}</td>
+                    <td>{{it.packageNickName}}</td>
+                    <td><span class="font-ccc" ng-if="it.status == 0"> 无效 </span>
+                        <span ng-if="it.status == 1"> 有效 </span></td>
+                    <td>{{it.price}}</td>
+                    <td>
+                        <a ngc-permission="member_membersetting_detail" class="pl-5" href="javascript:void(0);" ng-click="tools.detailPackage(it.packageId)">详情</a>
+                        <a ngc-permission="member_membersetting_disable" ng-if="it.status == 0" href="javascript:void(0);" ng-click="tools.chgStatus(it.packageId,it.status,it.packageName)">生效</a>
+                        <a ngc-permission="member_membersetting_disable" ng-if="it.status == 1" href="javascript:void(0);" ng-click="tools.chgStatus(it.packageId,it.status,it.packageName)">失效</a>
+                        <a ngc-permission="member_membersetting_update" href="javascript:void(0);" ng-click="tools.addPackageDlg(2,it.packageId)">修改</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="middivs">
+            <!-- 分页组件[[ -->
+            <div ng-include="paginationTemplate"></div>
+            <!-- 分页组件[[ -->
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="chgStatusDlg">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content">
+            <p class="ta-c"> <i class="iconfont icon-xunwenoms"></i> 确定对【<span class="font-deepred">{{vm.detailVoNew.packageName}}</span>】{{vm.detailVoNew.status ==1?"失效":"生效"}} ?</p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.savePackage(false)">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.closeDlg()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

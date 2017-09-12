@@ -1,0 +1,54 @@
+<table class="table table-hover">
+    <colgroup>
+        <col width="15%" />
+        <col width="35%" />
+        <col width="15%" />
+        <col width="35%" />
+    </colgroup>
+    <thead ng-if="vm.shopInfo.companypic.items==null">
+        <tr>
+            <th colspan="1">公司形象信息</th>
+            <th colspan="1">
+                状态 :
+                <span>未填写</span>
+            </th>
+            <th colspan="2" class="ta-r">
+            </th>
+        </tr>
+    </thead>
+    <thead ng-repeat="item in vm.shopInfo.companypic.items">
+        <tr>
+            <th colspan="1">公司形象信息</th>
+            <th colspan="1">
+                状态 :
+                <span class="{{item.auditStatus==1?'red':''}}">{{item.auditStatus | sellerInfoAuditStatus}}</span>
+            </th>
+            <th colspan="2" class="ta-r">
+                <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                    <button class="btn btn-cfec-white  mr20" ng-click="sellerShopTools.chxShopAudit(3,item.id,item.auditLogId,2)" ng-if="item.auditStatus==1||item.auditStatus==2">审核通过</button>
+                    <button class="btn btn-cfec-white " ng-click="sellerShopTools.chxShopAudit(2,item.id,item.auditLogId,2)" ng-if="item.auditStatus==1||item.auditStatus==3">审核不通过</button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="item in vm.shopInfo.companypic.items">
+        <tr>
+            <th>申请时间</th>
+            <td colspan="3">
+                {{item.submitDate | date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+        </tr>
+        <tr>
+            <th>形象照片</th>
+            <td colspan="3">
+                <div ng-click="tools.showMoreImg(item.detail);" ng-if="item.detail.length>0">
+                    <img width="60" height="60" ng-src="{{item.detail[0] | setImgSize:60:60}}" alt="">
+                    <label class="show-more-img">
+                        <i class="iconfont">&#xe613; </i>
+                        <p>全部</p>
+                    </label>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

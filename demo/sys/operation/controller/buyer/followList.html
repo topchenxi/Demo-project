@@ -1,0 +1,704 @@
+<div class="oms-crumbs"> <i>采购商跟进清单</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>采购商跟进清单</span>
+    </p>
+</div>
+<style>
+    .table-display {
+        display: table;
+        width: 100%;
+    }
+</style>
+<div class="oms-container">
+    <div class="oms-content" style="min-height: 2000px">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" ng-click="vm.buyerStatus = 1;tools.reset();tools.getFollowBuyerList();">
+                <uib-tab-heading>平台采购商</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="vm.buyerStatus = 2;tools.reset();tools.getFollowBuyerList();">
+                <uib-tab-heading>广交会采购商</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">排序规则</label>
+                <select class="select-oms" ng-model="paging.order">
+                    <option value="followTime">加入跟进清单时间升序</option>
+                    <option value="follwoLevel">跟进优先级降序（1优先）</option>
+                    <option value="companyName">公司国家英文首字母升序</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">公司国家</label>
+                <select ngc-select-search class="select-oms" ng-model="paging.countryId" ng-options="obj.countryId as obj.countryCnName for obj in tools.countries" name="country">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl" ng-if="vm.buyerStatus == 1">
+                <label for="">采购商</label>
+                <div class="oms-search">
+                    <select name="searchType" id="searchType" ng-model="paging.searchType">
+                        <option value="">搜索类型</option>
+                        <option value="1">采购商姓名</option>
+                        <option value="2">公司名称</option>
+                        <option value="3">邮箱</option>
+                        <option value="4">用户名</option>
+                        <option value="5">用户ID</option>
+                        <option value="6">广交会ID</option>
+                    </select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter name="searchTypeValue" id="searchTypeValue" ng-model="paging.searchTypeValue" />
+                </div>
+            </div>
+            <div class="form-group fl" ng-if="vm.buyerStatus == 2">
+                <label for="">采购商</label>
+                <div class="oms-search">
+                    <select name="" id="" ng-model="paging.searchType">
+                        <option value="">搜索类型</option>
+                        <option value="1">邮箱</option>
+                        <option value="2">采购商姓名</option>
+                        <option value="3">广交会ID</option>
+                        <option value="4">公司名称</option>
+                    </select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.searchTypeValue" />
+                </div>
+            </div>
+            <div class="form-group btns-group clear">
+                <button type="button" class="btn btn-cfec-red" ng-click="tools.search();">查&nbsp询</button>
+                <button type="button" class="btn btn-cfec-white" ng-click="tools.reset();">重&nbsp置</button>
+            </div>
+            <dl class="row-item">
+                <dt>快速筛选</dt>
+                <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isMobile==1]" ng-click="paging.isMobile=(paging.isMobile==1?null:1);tools.getFollowBuyerList()">
+                    有手机或固话的
+                    <span class="icon-checked"></span>
+                </dd>
+                <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isLocalTime==1]" ng-click="paging.isLocalTime=(paging.isLocalTime==1?null:1);tools.getFollowBuyerList()">
+                    当地时间为8:00-21:00的
+                    <span class="icon-checked"></span>
+                </dd>
+            </dl>
+        </div>
+        <div class="cfec-warp">
+            <div class="list-content table-cfec table-cfec-theme2 less-detail">
+                <table class="table table-hover mb0" ng-if="vm.buyerStatus == 1">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="23%">
+                        <col width="27%">
+                        <col width="45%">
+                    </colgroup>
+                    <thead>
+                        <tr ng-if="vm.showOperateFlag==false">
+                            <th>
+                                <input type="checkbox" ng-if="vm.items.length" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                            </th>
+                            <th>采购商</th>
+                            <th>公司国家</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr ng-if="vm.showOperateFlag==true">
+                            <th>
+                                <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                            </th>
+                            <th colspan="3">
+                                <div class="btn-toolbar">
+                                    <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.addToListByMuti(1)">批量添加跟进记录</button>
+                                    <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.removeFromListByMuti(1)">批量从清单移除</button>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table table-hover hiddenY" ng-if="vm.buyerStatus == 1" style="max-height:600px;">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="23%">
+                        <col width="27%">
+                        <col width="45%">
+                    </colgroup>
+                    <tbody ng-if="vm.items&&vm.items.length">
+                        <tr ng-repeat="item in vm.items">
+                            <td>
+                                <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                            </td>
+                            <td> <i ng-if="item.isFollowed==0" class="iconfont">&#xe62b;</i>
+                                <p>
+                                    <a href="javascript:void(0)" ng-click="tools.getPaltBuyerInfo(item.buyerId);">{{item.userId}}</a>
+                                </p>
+                                <p>
+                                    <a href="javascript:void(0)" ng-click="tools.getPaltBuyerInfo(item.buyerId);">{{item.firstName}}</a>
+                                </p>
+                                <div class="show-info">
+                                    <i class="iconfont">&#xe62c;</i>
+                                    <div class="child-warp">
+                                        <ul>
+                                            <li ng-if="item.userId">
+                                                <span>用户ID：</span> {{item.userId}}
+                                            </li>
+                                            <li ng-if="item.firstName">
+                                                <span>姓名：</span> {{item.firstName}}
+                                            </li>
+                                            <li ng-if="item.email">
+                                                <span>邮箱：</span> {{item.email}} ({{item.emailValidationSecond |emailValidationFilter}})
+                                            </li>
+                                            <li ng-if="item.mobile&&item.mobile!='null'">
+                                                <span>手机：</span> {{item.mobile}}
+                                            </li>
+                                            <li ng-if="item.telephone&&item.telephone!='null'">
+                                                <span>固话：</span> {{item.telephone}}
+                                            </li>
+                                        </ul>
+                                        <span class="icon-arrow-up"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{item.countryName}}
+                                <div class="show-info" ng-if="item.countryName!=null&&item.countryLocalTime!=null">
+                                    <i class="iconfont">&#xe62e;</i>
+                                    <div class="child-warp">
+                                        <ul>
+                                            <li>
+                                                <span>当地时间：</span> {{item.countryLocalTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                            </li>
+                                        </ul>
+                                        <span class="icon-arrow-up"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p0">
+                                <p>
+                                    <a ngc-permission="buyer_buyerlist_add" href="javascript:void(0);" ng-click="tools.addFollowRecord(1,item.buyerId);">添加跟进记录</a>
+                                </p>
+                                <p>
+                                    <a ngc-permission="buyer_buyerlist_addProcurement" href="javascript:void(0);" ng-click="tools.addPlatPurchase(item.userId,item.buyerId);">代发采购需求</a>
+                                </p>
+                                <p>
+                                    <a href="javascript:void(0);" ng-click="tools.removeFromList(1,item.buyerCompanyId);">从清单移除</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="!vm.items||!vm.items.length">
+                        <tr>
+                            <td>
+                                <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-hover mb0" ng-if="vm.buyerStatus == 2">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="23%">
+                        <col width="27%">
+                        <col width="45%">
+                    </colgroup>
+                    <thead>
+                        <tr ng-if="vm.showOperateFlag==false">
+                            <th>
+                                <input type="checkbox" ng-if="vm.items.length" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                            </th>
+                            <th>采购商</th>
+                            <th>公司国家</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr ng-if="vm.showOperateFlag==true">
+                            <th>
+                                <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                            </th>
+                            <th colspan="3">
+                                <div class="btn-toolbar">
+                                    <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.addToListByMuti(2)">批量添加跟进记录</button>
+                                    <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.removeFromListByMuti(2)">批量从清单移除</button>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table table-hover hiddenY" ng-if="vm.buyerStatus == 2" style="max-height:600px;">
+                    <tbody ng-if="vm.items&&vm.items.length">
+                        <tr ng-repeat="item in vm.items">
+                            <td width="5%">
+                                <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                            </td>
+                            <td width="23%">
+                                <i ng-if="item.isFollowed==0" class="iconfont">&#xe62b;</i>
+                                <a href="javascript:void(0)" ng-click="tools.getCfecBuyerInfo(item.operbuyerId);">{{item.firstName}}</a>
+                                <div class="show-info">
+                                    <i class="iconfont">&#xe62c;</i>
+                                    <div class="child-warp">
+                                        <ul>
+                                            <li ng-if="item.firstName">
+                                                <span>姓名：</span> {{item.firstName}}
+                                            </li>
+                                            <li ng-if="item.email">
+                                                <span>邮箱：</span> {{item.email}} ({{item.emailValidation | emailValidationFilter}})
+                                            </li>
+                                            <li ng-if="item.mobile">
+                                                <span>手机：</span> {{item.mobile}}
+                                            </li>
+                                            <li ng-if="item.telephone">
+                                                <span>固话：</span> {{item.telephone}}
+                                            </li>
+                                        </ul>
+                                        <span class="icon-arrow-up"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td width="27%">
+                                {{item.countryName}}
+                                <div class="show-info" ng-if="item.countryName!=null&&item.countryLocalTime!=null">
+                                    <i class="iconfont">&#xe62e;</i>
+                                    <div class="child-warp">
+                                        <ul>
+                                            <li>
+                                                <span>当地时间：</span> {{item.countryLocalTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                            </li>
+                                        </ul>
+                                        <span class="icon-arrow-up"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p0" width="45%">
+                                <p ngc-permission="buyer_buyerfollowList_addCfecFollowRecord">
+                                    <a href="javascript:void(0);" ng-click="tools.addFollowRecord(2,item.operbuyerId);">添加跟进记录</a>
+                                </p>
+                                <p ngc-permission="buyer_buyerfollowList_addCfecPurchase">
+                                    <a href="javascript:void(0);" ng-click="tools.addCfecPurchase(item.operbuyerId);">代发采购需求</a>
+                                </p>
+                                <p>
+                                    <a href="javascript:void(0);" ng-click="tools.removeFromList(2,item.buyerCompanyId);">从清单移除</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="!vm.items||!vm.items.length">
+                        <tr>
+                            <td>
+                                <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+            </div>
+            <div class="more-detail" ng-if="vm.buyerStatus==1&&vm.buyerOfPlatInfo!=null">
+                <form id="buyerPlatForm">
+                    <div class="table-cfec table-cfec-theme3 ">
+                        <table class="table">
+                            <colgroup>
+                                <col width="15%">
+                                <col width="35%">
+                                <col width="15%">
+                                <col width="35%">
+                            </colgroup>
+                            <thead>
+                                <th colspan="3">
+                                    采购商基本信息
+                                    <a href="/#/buyer/detail?buyerId={{vm.buyerOfPlatInfo.personal.buyerId}}" target="_blank">详细 >></a>
+                                </th>
+                                <th class="ta-r">
+                                    <button ngc-permission="buyer_buyerlist_update" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="!vm.isNotifying;" ng-click="vm.isNotifying=true;tools.initValidateOfPlat();">修改</button>
+                                    <button ngc-permission="buyer_buyerlist_update" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="vm.isNotifying" ng-click="tools.saveFlatBuyerInfo();">保存</button>
+                                    <button ngc-permission="buyer_buyerlist_update" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="vm.isNotifying" ng-click="vm.isNotifying=false;tools.getPaltBuyerInfo(vm.buyerOfPlatInfo.personal.buyerId);">取消</button>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>姓名</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.personal.firstName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="firstName" id="firstName" ng-model="vm.buyerOfPlatInfo.personal.firstName">
+                                        </p>
+                                    </td>
+                                    <th>用户ID</th>
+                                    <td>
+                                        {{vm.buyerOfPlatInfo.loginUser.userId}}({{vm.buyerOfPlatInfo.loginUser.valid==1?'已激活':'未激活' }})
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>邮箱</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfPlatInfo.loginUser.userEmail}} ({{vm.buyerOfPlatInfo.loginUser.emailValidationSecond |emailValidationFilter}})
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="userEmail" id="userEmail" ng-model="vm.buyerOfPlatInfo.loginUser.userEmail">
+                                        </p>
+                                    </td>
+                                    <th>手机</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfPlatInfo.personal.mobileContry}}-{{vm.buyerOfPlatInfo.personal.mobile}}
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec w50" name="buyerCountryCode" ng-model="vm.buyerOfPlatInfo.personal.mobileContry" />
+                                            <span>-</span>
+                                            <input type="text" class="input-cfec w100" name="buyerMobile" ng-model="vm.buyerOfPlatInfo.personal.mobile" />
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Skype</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.personal.skype}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="skype" id="skype" ng-model="vm.buyerOfPlatInfo.personal.skype">
+                                        </p>
+                                    </td>
+                                    <th>公司名称</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.company.companyName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="skype" id="skype" ng-model="vm.buyerOfPlatInfo.company.companyName">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>固话</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfPlatInfo.personal.region}}
+                                            <span ng-if="vm.buyerOfPlatInfo.personal.region">-</span> {{vm.buyerOfPlatInfo.personal.area}}
+                                            <span ng-if="vm.buyerOfPlatInfo.personal.area">-</span> {{vm.buyerOfPlatInfo.personal.telephone}}
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec mr10 mb10" name="buyerRegion" placeholder="国家代码" ng-model="vm.buyerOfPlatInfo.personal.region" />
+                                            <input type="text" class="input-cfec mr10 mb10" name="buyerArea" placeholder="地区号" ng-model="vm.buyerOfPlatInfo.personal.area" />
+                                            <input type="text" class="input-cfec" name="buyerTelephone" placeholder="固话号" id="buyerTelephone" ng-model="vm.buyerOfPlatInfo.personal.telephone">
+                                        </p>
+                                    </td>
+                                    <th>whatsapp</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.personal.whatsapp}}</p>
+                                        <p ng-show="vm.isNotifying" style="padding-top:45px;">
+                                            <input type="text" class="input-cfec" name="whatsapp" id="whatsapp" ng-model="vm.buyerOfPlatInfo.personal.whatsapp">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>公司国家</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.company.countryName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <select ngc-select-search id="countryId" class="select-oms" name="countryId" ng-model="vm.buyerOfPlatInfo.company.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </p>
+                                    </td>
+                                    <th>采购产品分类</th>
+                                    <td>{{vm.buyerOfPlatInfo.categoryStr}}</td>
+                                </tr>
+                                <tr>
+                                    <th>参展信息</th>
+                                    <td>
+                                        <p ng-if="vm.buyerOfPlatInfo.exhibitionTimes&&vm.buyerOfPlatInfo.currentExhibition"> 共{{vm.buyerOfPlatInfo.exhibitionTimes}}次(最近{{vm.buyerOfPlatInfo.currentExhibition}}届)
+                                        </p>
+                                    </td>
+                                    <th>最近跟进记录</th>
+                                    <td>
+                                        <p ng-if="vm.buyerOfPlatInfo.followRecordLsit.length">
+                                            {{vm.buyerOfPlatInfo.followRecordLsit[0].flagStr}},{{vm.buyerOfPlatInfo.followRecordLsit[0].followContent}},({{vm.buyerOfPlatInfo.followRecordLsit[0].followerName}},{{vm.buyerOfPlatInfo.followRecordLsit[0].createTime | date:'yyyy-MM-dd HH:mm:ss'}})
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>wechat</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfPlatInfo.personal.wechat}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="wechat" id="wechat" ng-model="vm.buyerOfPlatInfo.personal.wechat">
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="table-cfec table-cfec-theme3 " ng-if="vm.buyerOfPlatInfo.buyerPurchaseLsit.length">
+                    <div class="clearfix title-warp">
+                        <span class="fl">采购需求</span>
+                        <a class="fr" href="javascript:void(0)" ng-click="tools.loadMoreData(1);">加载更多</a>
+                    </div>
+                    <table class="table mb0">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="40%">
+                            <col width="25%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                            <th>发布时间</th>
+                            <th>主题</th>
+                            <th>来源</th>
+                            <th>状态</th>
+                        </thead>
+                    </table>
+                    <table class="table hiddenY">
+                        <tbody class="table-display">
+                            <tr ng-repeat="item in vm.buyerOfPlatInfo.buyerPurchaseLsit">
+                                <td width="20%">
+                                    <p>{{item.startTime|date:'yyyy-MM-dd'}}</p>
+                                    <p>{{item.startTime|date:'HH:mm:ss'}}</p>
+                                </td>
+                                <td width="40%">
+                                    <a class="link-cfec" target="_blank" ng-href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}">{{item.productName}}</a>
+                                </td>
+                                <td width="25%">
+                                    {{item.sourceValue}}
+                                    <span ng-if="item.createByRealName!=null&&item.createByRealName!=''">({{item.createByRealName}})</span>
+                                </td>
+                                <td width="15%">{{item.procurementState|purchaseState}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-cfec table-cfec-theme3 " ng-if="vm.buyerOfPlatInfo.enquiryList.length">
+                    <div class="clearfix title-warp">
+                        <span class="fl">询盘</span>
+                        <a class="fr" href="javascript:void(0)" ng-click="tools.loadMoreData(2);">加载更多</a>
+                    </div>
+                    <table class="table mb0">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="30%">
+                            <col width="25%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                            <th>发布时间</th>
+                            <th>询盘类型</th>
+                            <th>供应商公司名（接收方）</th>
+                            <th>主题</th>
+                            <th>审核状态</th>
+                        </thead>
+                    </table>
+                    <table class="table hiddenY">
+                        <tbody class="table-display">
+                            <tr ng-repeat="item in vm.buyerOfPlatInfo.enquiryList">
+                                <td width="20%">
+                                    <p>{{item.createTime | date:'yyyy-MM-dd' }}</p>
+                                    <p>{{item.createTime | date:'HH:mm:ss' }}</p>
+                                </td>
+                                <td width="10%">{{item.messageTypeId | checkEnquiryMessageType}}</td>
+                                <td width="30%">
+                                    <a class="link-cfec-inherit" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}">
+                                        <p>{{item.sellerCompanyName}}</p>
+                                        <p>{{item.sellerCompanyEnName}}</p>
+                                    </a>
+                                </td>
+                                <td width="25%">
+                                    <a class="link-cfec-inherit" target="_blank" ng-href="/#/inquiryMgr/detail?messageId={{item.messageId}}">{{item.subject}}</a>
+                                </td>
+                                <td width="15%">{{item.messageState | messageState}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-cfec table-cfec-theme3 " ng-if="vm.buyerOfPlatInfo.followRecordLsit.length">
+                    <div class="clearfix title-warp">
+                        <span class="fl"> 跟进记录（跟进优先级：{{vm.buyerOfPlatInfo.recordInfo.followBuyerLevel}}；采购商跟进状态：{{vm.buyerOfPlatInfo.recordInfo .followStatus}}；加入跟进清单：{{vm.buyerOfPlatInfo.recordInfo.hasAddFollowing}}）</span>
+                        <a class="fr" href="javascript:void(0)" ng-click="tools.loadMoreData(3);">加载更多</a>
+                    </div>
+                    <table class="table mb0">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="45%">
+                        </colgroup>
+                        <thead>
+                            <th>跟进时间</th>
+                            <th>跟进顾问</th>
+                            <th>跟进标识</th>
+                            <th>跟进内容</th>
+                        </thead>
+                    </table>
+                    <table class="table hiddenY">
+                        <tbody class="table-display">
+                            <tr ng-repeat="item in vm.buyerOfPlatInfo.followRecordLsit">
+                                <td width="20%">
+                                    <p>{{item.createTime | date:'yyyy-MM-dd '}}</p>
+                                    <p>{{item.createTime | date:'HH:mm:ss'}}</p>
+                                </td>
+                                <td width="15%">{{item.followerName}}</td>
+                                <td width="20%">{{item.flagStr}}</td>
+                                <td width="45%">{{item.followContent}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="more-detail" ng-if="vm.buyerStatus==2&&vm.buyerOfCfecInfo!=null">
+                <form id="buyerCfecForm">
+                    <div class="table-cfec table-cfec-theme3 ">
+                        <table class="table">
+                            <colgroup>
+                                <col width="15%">
+                                <col width="35%">
+                                <col width="15%">
+                                <col width="35%">
+                            </colgroup>
+                            <thead>
+                                <th colspan="3">
+                                    采购商基本信息
+                                    <a href="/#/buyer/cfecDetail?buyerId={{vm.buyerOfCfecInfo.personal.buyerId}}" target="_blank">详细 >></a>
+                                </th>
+                                <th class="ta-r">
+                                    <button ngc-permission="buyer_buyerfollowList_notifyCfecDetail" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="!vm.isNotifying;" ng-click="vm.isNotifying=true;tools.initValidateOfCfec();">修改</button>
+                                    <button ngc-permission="buyer_buyerfollowList_notifyCfecDetail" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="vm.isNotifying" ng-click="tools.saveCfecBuyerInfo();">保存</button>
+                                    <button ngc-permission="buyer_buyerfollowList_notifyCfecDetail" type="button" class="btn btn-cfec-white btn-cfec-sm" ng-if="vm.isNotifying" ng-click="vm.isNotifying=false;tools.getCfecBuyerInfo(vm.buyerOfCfecInfo.personal.buyerId)">取消</button>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>姓名</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.personal.firstName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="firstName" id="firstName" ng-model="vm.buyerOfCfecInfo.personal.firstName">
+                                        </p>
+                                    </td>
+                                    <th>广交会ID</th>
+                                    <td>{{vm.buyerOfCfecInfo.personal.cantonfairId}}</td>
+                                </tr>
+                                <tr>
+                                    <th>邮箱</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfCfecInfo.personal.email}} ({{vm.buyerOfCfecInfo.personal.emailValidation | emailValidationFilter}})
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="userEmail" id="userEmail" ng-model="vm.buyerOfCfecInfo.personal.email">
+                                        </p>
+                                    </td>
+                                    <th>手机</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfCfecInfo.personal.mobileContry}}-{{vm.buyerOfCfecInfo.personal.mobile}}
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec w50" name="buyerCountryCode" ng-model="vm.buyerOfCfecInfo.personal.mobileContry" />
+                                            <span>-</span>
+                                            <input type="text" class="input-cfec w100" name="buyerMobile" ng-model="vm.buyerOfCfecInfo.personal.mobile" />
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Skype</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.personal.skype}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="skype" id="skype" ng-model="vm.buyerOfCfecInfo.personal.skype">
+                                        </p>
+                                    </td>
+                                    <th>公司名称</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.company.companyName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="skype" id="skype" ng-model="vm.buyerOfCfecInfo.company.companyName">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>固话</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">
+                                            {{vm.buyerOfCfecInfo.personal.region}}
+                                            <span ng-if="vm.buyerOfCfecInfo.personal.region">-</span> {{vm.buyerOfCfecInfo.personal.area}}
+                                            <span ng-if="vm.buyerOfCfecInfo.personal.area">-</span> {{vm.buyerOfCfecInfo.personal.telephone}}
+                                        </p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec mr10 mb10" name="buyerRegion" placeholder="国家代码" ng-model="vm.buyerOfCfecInfo.personal.region" />
+                                            <input type="text" class="input-cfec mr10 mb10" name="buyerArea" placeholder="地区号" ng-model="vm.buyerOfCfecInfo.personal.area" />
+                                            <input type="text" class="input-cfec" name="buyerTelephone" placeholder="固话号" id="buyerTelephone" ng-model="vm.buyerOfCfecInfo.personal.telephone">
+                                        </p>
+                                    </td>
+                                    <th>whatsapp</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.personal.whatsapp}}</p>
+                                        <p ng-show="vm.isNotifying" style="padding-top:45px;">
+                                            <input type="text" class="input-cfec" name="whatsapp" id="whatsapp" ng-model="vm.buyerOfCfecInfo.personal.whatsapp">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>公司国家</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.company.countryName}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <select ngc-select-search id="countryId" class="select-oms" name="countryId" ng-model="vm.buyerOfCfecInfo.company.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </p>
+                                    </td>
+                                    <th>采购产品分类</th>
+                                    <td>{{vm.buyerOfCfecInfo.categoryStr}}</td>
+                                </tr>
+                                <tr>
+                                    <th>参展信息</th>
+                                    <td>{{vm.buyerOfCfecInfo.partDes | showCfecTimes}}</td>
+                                    <th>最近跟进记录</th>
+                                    <td>
+                                        <p ng-if="vm.buyerOfCfecInfo.followRecordLsit.length">
+                                            {{vm.buyerOfCfecInfo.followRecordLsit[0].flagStr}},{{vm.buyerOfCfecInfo.followRecordLsit[0].followContent}},({{vm.buyerOfCfecInfo.followRecordLsit[0].followerName}},{{vm.buyerOfCfecInfo.followRecordLsit[0].createTime | date:'yyyy-MM-dd HH:mm:ss'}})
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <th>wechat</th>
+                                    <td>
+                                        <p ng-show="!vm.isNotifying">{{vm.buyerOfCfecInfo.personal.wechat}}</p>
+                                        <p ng-show="vm.isNotifying">
+                                            <input type="text" class="input-cfec" name="wechat" id="wechat" ng-model="vm.buyerOfCfecInfo.personal.wechat">
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="table-cfec table-cfec-theme3 " ng-if="vm.buyerOfCfecInfo.followRecordLsit.length">
+                    <div class="clearfix title-warp">
+                        <span class="fl"> 跟进记录（跟进优先级：{{vm.buyerOfCfecInfo.recordInfo.followBuyerLevel}}；采购商跟进状态：{{vm.buyerOfCfecInfo.recordInfo.followStatus}}；加入跟进清单：{{vm.buyerOfCfecInfo.recordInfo.hasAddFollowing}}）</span>
+                        <a class="fr" href="javascript:void(0)" ng-click="tools.loadMoreData(4);">加载更多</a>
+                    </div>
+                    <table class="table mb0">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="45%">
+                        </colgroup>
+                        <thead>
+                            <th>跟进时间</th>
+                            <th>跟进顾问</th>
+                            <th>跟进标识</th>
+                            <th>跟进内容</th>
+                        </thead>
+                    </table>
+                    <table class="table hiddenY">
+                        <tbody class="table-display">
+                            <tr ng-repeat="item in vm.buyerOfCfecInfo.followRecordLsit">
+                                <td width="20%">{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td width="15%">{{item.followerName}}</td>
+                                <td width="20%">{{item.flagStr}}</td>
+                                <td width="45%">{{item.followContent}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

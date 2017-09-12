@@ -1,0 +1,213 @@
+<div class="table-cfec table-cfec-theme3">
+    <table class="table mt20">
+        <colgroup>
+            <col width="30%">
+            <col width="30%">
+            <col width="40%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="2">营业情况</th>
+                <th class="ta-r">
+                    <div ngc-permission="seller_sellerlist_audit">
+                        <button ng-if="!marketTools.isBusinessNotify&&marketInfo.businessInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toNotifyBusiness()">修改</button>
+                        <button ng-if="marketTools.isBusinessNotify&&marketInfo.businessInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toEnsureBusiness()">确认</button>
+                        <button ng-if="marketTools.isBusinessNotify&&marketInfo.businessInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toCancelBusiness()">取消</button>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-if="marketInfo.businessInfo!=null">
+            <tr>
+                <td>会计年度</td>
+                <td class="ta-r">当年营业额</td>
+                <td class="ta-r">出口比例</td>
+            </tr>
+            <tr ng-repeat="item in marketInfo.businessInfo" ng-if="!marketTools.isBusinessNotify">
+                <td>{{item.accountingYear}}</td>
+                <td class="ta-r">{{item.annualSales}} USD</td>
+                <td class="ta-r">{{item.exportRatio}}%</td>
+            </tr>
+            <tr ng-repeat="item in marketInfo.businessInfo" ng-if="marketTools.isBusinessNotify">
+                <td>
+                    <select name="" id="" class="select-oms" ng-model="item.accountingYear" ng-options="obj.value as obj.key for obj in marketTools.yearArray "></select>
+                </td>
+                <td class="ta-r">
+                    <input type="number" class="input-cfec ta-r mr5 w150" ng-model="item.annualSales">USD</td>
+                <td class="ta-r">
+                    <input type="number" class="input-cfec ta-r mr5 w100" ng-model="item.exportRatio" ng-change="marketTools.chxExportRatio(item)">%</td>
+            </tr>
+        </tbody>
+        <tbody ng-if="marketInfo.businessInfo==null" class="ng-scope">
+            <tr>
+                <td colspan="3">
+                    <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的数据
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-cfec table-cfec-theme3">
+    <table class="table mt20">
+        <colgroup>
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="3">出口信息</th>
+                <th class="ta-r">
+                    <div ngc-permission="seller_sellerlist_audit">
+                        <button ng-if="!marketTools.isExportNotify&&marketInfo.exportInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toNotifyExport()">修改</button>
+                        <button ng-if="marketTools.isExportNotify&&marketInfo.exportInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toEnsureExport()">确认</button>
+                        <button ng-if="marketTools.isExportNotify&&marketInfo.exportInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toCancelExport()">取消</button>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-if="marketInfo.exportInfo!=null">
+            <tr>
+                <td>贸易区</td>
+                <td class="ta-r">当年营业额</td>
+                <td class="ta-r">出口比例</td>
+                <td class="ta-r">主要客户</td>
+            </tr>
+            <tr ng-repeat="item in marketInfo.exportInfo.states" ng-if="!marketTools.isExportNotify">
+                <td>{{item.tradeAreaName}}</td>
+                <td class="ta-r">{{item.annualSales}} USD</td>
+                <td class="ta-r">{{item.exportRatio}}%</td>
+                <td class="ta-r">{{item.mainCustomer}}</td>
+            </tr>
+            <tr ng-if="!marketTools.isExportNotify">
+                <td colspan="2"></td>
+                <td class="ta-r">会计年度：{{marketInfo.exportInfo.accountingYear}}</td>
+                <td class="ta-r">
+                    年出口销售额：
+                    <span class="red bold">{{marketInfo.exportInfo.annualExportSales}}</span> USD
+                </td>
+            </tr>
+            <tr ng-repeat="item in marketInfo.exportInfo.states" ng-if="marketTools.isExportNotify">
+                <td>
+                    <select name="" id="" class="select-oms" ng-model="item.tradeArea" ng-options="obj.code as obj.cnName for obj in marketInfo.exportInfo.datas "></select>
+                </td>
+                <td class="ta-r">
+                    <input type="number" class="input-cfec" ng-model="item.annualSales" ng-change="marketTools.checkAnnualSales(item)">USD</td>
+                <td class="ta-r">{{item.exportRatio}}%</td>
+                <td class="ta-r">{{item.mainCustomer}}</td>
+            </tr>
+            <tr ng-if="marketTools.isExportNotify">
+                <td colspan="2"></td>
+                <td class="ta-r">
+                    会计年度：
+                    <select name="" id="" class="select-oms" ng-model="marketInfo.exportInfo.accountingYear" ng-options="obj.value as obj.key for obj in marketTools.yearArray "></select>
+                </td>
+                <td class="ta-r">
+                    年出口销售额：
+                    <input type="number" class="input-cfec" ng-model="marketInfo.exportInfo.annualExportSales" ng-change="marketTools.checkTotalSales(marketInfo.exportInfo.annualExportSales)">USD</td>
+            </tr>
+        </tbody>
+        <tbody ng-if="marketInfo.exportInfo==null" class="ng-scope">
+            <tr>
+                <td colspan="4">
+                    <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的数据
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-cfec table-cfec-theme3">
+    <table class="table mt20">
+        <colgroup>
+            <col width="25%">
+            <col width="75%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>贸易条款</th>
+                <th class="ta-r">
+                    <div ngc-permission="seller_sellerlist_audit">
+                        <button ng-if="!marketTools.isTradeNotify&&marketInfo.tradeInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toNotifyTrade()">修改</button>
+                        <button ng-if="marketTools.isTradeNotify&&marketInfo.tradeInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toEnsureTrade()">确认</button>
+                        <button ng-if="marketTools.isTradeNotify&&marketInfo.tradeInfo!=null" class="btn btn-cfec-white" ng-click="marketTools.toCancelTrade()">取消</button>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody ng-if="!marketTools.isTradeNotify&&marketInfo.tradeInfo!=null">
+            <tr>
+                <td>主要出口市场</td>
+                <td>
+                    <span class="label-cfec-gary mr5" ng-repeat="area in marketInfo.tradeInfo.exportAreaList">{{area}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>接受交付条款</td>
+                <td>{{marketInfo.tradeInfo.acceptPayTermsDatas | chxTradeItem}}</td>
+            </tr>
+            <tr>
+                <td>接受交付货币</td>
+                <td>
+                    {{marketInfo.tradeInfo.acceptPayCurrenyDatas | chxTradeItem}}
+                </td>
+            </tr>
+            <tr>
+                <td>付款方式</td>
+                <td>{{marketInfo.tradeInfo.payTypeDatas | chxTradeItem}}</td>
+            </tr>
+            <tr>
+                <td>离岸港口</td>
+                <td>{{marketInfo.tradeInfo.offshorePort}}</td>
+            </tr>
+        </tbody>
+        <tbody ng-if="marketTools.isTradeNotify&&marketInfo.tradeInfo!=null">
+            <tr>
+                <td>主要出口市场</td>
+                <td>
+                    <span class="label-cfec-gary mr5" ng-repeat="area in marketInfo.tradeInfo.exportAreaList">{{area}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>接受交付条款</td>
+                <td>
+                    <label class="checkbox fl w200 pl20" ng-repeat="item in marketInfo.tradeInfo.acceptPayTermsDatas">
+                        <input type="checkbox" name="{{item.cnName}}" ng-model="item.isMark" /> {{item.cnName}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>接受交付货币</td>
+                <td>
+                    <label class="checkbox fl w200 pl20" ng-repeat="item in marketInfo.tradeInfo.acceptPayCurrenyDatas">
+                        <input type="checkbox" name="{{item.cnName}}" ng-model="item.isMark" /> {{item.cnName}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>付款方式</td>
+                <td>
+                    <label class="checkbox fl w200 pl20" ng-repeat="item in marketInfo.tradeInfo.payTypeDatas">
+                        <input type="checkbox" name="{{item.cnName}}" ng-model="item.isMark" /> {{item.cnName}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>离岸港口</td>
+                <td>
+                    <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" ng-model="marketInfo.tradeInfo.offshorePort">
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-if="marketInfo.tradeInfo==null" class="ng-scope">
+            <tr>
+                <td colspan="2">
+                    <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的数据
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

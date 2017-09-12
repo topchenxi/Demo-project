@@ -1,0 +1,135 @@
+﻿<div class="oms-crumbs"> <i>展会通消息审核列表</i>
+    <p>
+        <a href="/#/seller/exhibitionMsgList">展会通消息审核</a>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="1" justified="false">
+            <uib-tab index="0" ng-click="tools.reset();paging.status=null;paging.page=1;tools.getExhibitionMsgList();">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="tools.reset();paging.status=10;paging.page=1;tools.getExhibitionMsgList();">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="tools.reset();paging.status=20;paging.page=1;tools.getExhibitionMsgList();">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="tools.reset();paging.status=30;paging.page=1;tools.getExhibitionMsgList();">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+
+        <div class="search-content form-group-main clearfix">
+            <form>
+                <!-- 搜索类型 -->
+                <div class="form-group fl">
+                    <label for="">搜索类型</label>
+                    <div class="oms-search">
+                        <select name="" id="" ng-model="paging.companyType" ng-options="obj.value as obj.key for obj in vm.searchTypeArray">
+                            <option value="">搜索类型</option>
+                        </select> <em></em>
+                        <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.companyName" />
+                    </div>
+                </div>
+                <!-- 申请时间 -->
+                <div class="form-group cfec-select-picker fl">
+                    <label>申请时间</label>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.createTimeBegin" id="startTime" max-date="{{paging.createTimeEnd}}" ng-required placeholder="起始日期" />
+                    <span class="text-inline">至</span>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.createTimeEnd" id="endTime" min-date="{{paging.createTimeBegin}}" placeholder="截止日期" ng-required/>
+                </div>
+                
+                <div class="form-group btns-group clear">
+                    <button class="btn btn-cfec-red fl mr20" ng-click="tools.getExhibitionMsgList(true);">查&nbsp;询</button>
+                    <button class="btn btn-cfec-white fl mr20" ng-click="tools.reset();">重 置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-content table-cfec">
+            <!-- 全部 -->
+            <table class="table table-hover mb0">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="10%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th class="ta-c">推送标题</th>
+                        <th class="ta-c">公司名称</th>
+                        <th class="ta-c">申请时间</th>
+                        <th class="ta-c">类型</th>
+                        <th class="ta-c">状态</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- ID -->
+                        <td>
+                            {{item.planId}}
+                        </td>
+                        <!-- 推送标题 -->
+                        <td class="ta-c">
+                            {{item.planName}}
+                        </td>
+                        <!-- 公司名称 -->
+                        <td class="ta-c">
+                            <p>{{item.companyCName}}</p>
+                            <p>{{item.companyEName}}</p>
+                        </td>
+                        <!-- 申请时间 -->
+                        <td class="ta-c">
+                            {{item.createTime | date:'yyyy-MM-dd'}}
+                        </td>
+                        <!-- 类型 -->
+                        <td class="ta-c">
+                            {{item.sendType | exhibitionSendTypeFilter}}
+                        </td>
+                        <!-- 状态 -->
+                        <td class="ta-c">
+                            {{item.status | exhibitionStatusFilter}}
+                        </td>
+                        <!-- 操作 -->
+                        <td class="ta-c">
+                            <p><a class="link" href="/#/seller/exhibitionMsgDetail?planId={{item.planId}}" target="_blank">查看</a></p>
+                            <p ng-if="paging.status==20"> <a class="link" href="javascript:void(0)" ngclipboard data-clipboard-text="{{item.link}}" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);">复制推广链接</a></p>
+                            <p><a class="link" href="javascript:void(0)" ng-click="tools.delExhibition(item.planId)">删除</a></p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==null || vm.items.length < 1">
+                    <tr>
+                        <td colspan="7">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="delExhibitionDlgId">
+  <div class="delExhibitionDlg">
+      <div class="dlg-title">提示</div>
+      <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i>
+            <span>确认删除这条记录吗？</span>
+        </p>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>

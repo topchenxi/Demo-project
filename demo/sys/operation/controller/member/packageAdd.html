@@ -1,0 +1,214 @@
+<div class="dlg-title"></div>
+<div class="dlg-content form">
+    <form name="forms.chgForm" role="form" novalidate="novalidate" ng-submit="tools.savePackage(true)">
+        <div class="table-cfec table-cfec-theme3">
+            <table class="table table-bordered">
+                <col align="right" width="25%">
+                <col align="left" width="75%">
+                <tr>
+                    <td class="text-right"><span class="notnull">*</span>套餐名称</td>
+                    <td>
+                        <input class="input-cfec" name="packageName" type="text" ng-model="vm.detailVoNew.packageName" ng-maxlength="20" ng-required="true">
+                        <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.packageName.$invalid">请输入长度小于20的套餐名称</span></td>
+                </tr>
+                <tr>
+                    <td class="text-right"><span class="notnull">*</span>英文名称</td>
+                    <td>
+                        <input class="input-cfec" name="packageEnName" type="text" ng-model="vm.detailVoNew.packageEnName" ng-maxlength="50" ng-required="true" ng-pattern="/^[\w\s`~!@#$%^&*()_+\-=[\]{}\\|;':/,.?]*$/">
+                        <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.packageEnName.$invalid">请输入长度小于50的英文字符</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">套餐别称</td>
+                    <td>
+                        <input class="input-cfec" name="packageNickName" type="text" ng-model="vm.detailVoNew.packageNickName" ng-maxlength="20">
+                        <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.packageNickName.$invalid">请输入长度小于20的套餐别称</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right"><span class="notnull">*</span>套餐价格</td>
+                    <td>
+                        <input class="input-cfec" name="price" type="number" ng-model="vm.detailVoNew.price" ng-pattten="/^\d{1,6}$/" ng-required="true">元
+                        <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted)  && forms.chgForm.price.$invalid">请输入合理的套餐价格</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right"><span class="notnull">*</span>套餐等级</td>
+                    <td class="pl-20 relative">
+                        <select class="input-cfec" name="packageTypeId" ng-required="true" ng-model="vm.detailVoNew.packageTypeId" ng-options="ob.packageTypeId as ob.typeName for ob in vm.packageLevels">
+                            <option value="">-请选择-</option>
+                        </select>
+                        <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.packageTypeId.$invalid">请选择套餐等级</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">橱窗数量</td>
+                    <td>
+                        <label class="ipt-w0" for="kwindow1">
+                            <input id="kwindow1" type="radio" value="5" ng-model="vm.detailVoNew.windownNum">5个</label>
+                        <label class="ipt-w0" for="kwindow2">
+                            <input id="kwindow2" type="radio" value="15" ng-model="vm.detailVoNew.windownNum">15个</label>
+                        <label class="ipt-w0" for="kwindow3">
+                            <input id="kwindow3" type="radio" value="30" ng-model="vm.detailVoNew.windownNum">30个</label>
+                        <input id="kwindow3" type="radio" value="-1" ng-model="vm.detailVoNew.windownNum">
+                        <label for="kwindow0">自定义</label>
+                        <span class="pl-10" ng-show='vm.detailVoNew.windownNum == -1'><input class="input-cfec def-val" name="kwindowDef" type="number" ng-model="vm.detailVoNew.windownNumDef" ng-required="vm.detailVoNew.windownNum == -1" ngc-min="5" ngc-max="100">
+                        个 <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.kwindowDef.$invalid">请输入5-100的整数</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">子账号数量</td>
+                    <td>
+                        <label class="ipt-w0" for="childCount1">
+                            <input id="childCount1" type="radio" value="3" ng-model="vm.detailVoNew.childAccountNum">3个</label>
+                        <label class="ipt-w0" for="childCount2">
+                            <input id="childCount2" type="radio" value="5" ng-model="vm.detailVoNew.childAccountNum">5个</label>
+                        <label class="ipt-w0" for="childCount3">
+                            <input id="childCount3" type="radio" value="8" ng-model="vm.detailVoNew.childAccountNum">8个</label>
+                        <input id="childCount0" type="radio" value="-1" ng-model="vm.detailVoNew.childAccountNum">
+                        <label for="childCount0">自定义</label>
+                        <span class="pl-10" ng-show='vm.detailVoNew.childAccountNum == -1'><input class="input-cfec def-val" name="childCountDef" type="number" ng-model="vm.detailVoNew.childAccountNumDef" ng-required="vm.detailVoNew.childAccountNum == -1" ngc-min="3" ngc-max="100">个 <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.childCountDef.$invalid">请输入3-100的整数</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">专属域名</td>
+                    <td>
+                        <label class="ipt-w0" for="hasDomain0">
+                            <input id="hasDomain0" type="radio" value="0" ng-model="vm.detailVoNew.secondDomain">无</label>
+                        <label class="ipt-w0" for="hasDomain1">
+                            <input id="hasDomain1" type="radio" value="1" ng-model="vm.detailVoNew.secondDomain">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">公司视频</td>
+                    <td>
+                        <label class="ipt-w0" for="hasVideo0">
+                            <input id="hasVideo0" type="radio" value="0" ng-model="vm.detailVoNew.companyVideo">无</label>
+                        <label class="ipt-w0" for="hasVideo1">
+                            <input id="hasVideo1" type="radio" value="1" ng-model="vm.detailVoNew.companyVideo">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">回复询盘</td>
+                    <td>
+                        <label class="ipt-w0" for="hasRespInquiry0">
+                            <input id="hasRespInquiry0" type="radio" value="0" ng-model="vm.detailVoNew.replyInquiry">无</label>
+                        <label class="ipt-w0" for="hasRespInquiry1">
+                            <input id="hasRespInquiry1" type="radio" value="1" ng-model="vm.detailVoNew.replyInquiry">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">匹配采购需求</td>
+                    <td>
+                        <label class="ipt-w0" for="hasRespExpress0">
+                            <input id="hasRespExpress0" type="radio" value="0" ng-model="vm.detailVoNew.matchProcurementRequire">无</label>
+                        <label class="ipt-w0" for="hasRespExpress1">
+                            <input id="hasRespExpress1" type="radio" value="1" ng-model="vm.detailVoNew.matchProcurementRequire">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">每天自由报价次数限制</td>
+                    <td>
+                        <label class="ipt-w0" for="dailyFreeQuoteNum0">
+                            <input id="dailyFreeQuoteNum0" type="radio" value="10" ng-model="vm.detailVoNew.dailyFreeQuoteNum">10</label>
+                        <label class="ipt-w0" for="dailyFreeQuoteNum1">
+                            <input id="dailyFreeQuoteNum1" type="radio" value="15" ng-model="vm.detailVoNew.dailyFreeQuoteNum">15</label>
+                        <label class="ipt-w0" for="dailyFreeQuoteNum2">
+                            <input id="dailyFreeQuoteNum2" type="radio" value="20" ng-model="vm.detailVoNew.dailyFreeQuoteNum">20</label>
+                        <input id="dailyFreeQuoteNum5" type="radio" value="-1" ng-model="vm.detailVoNew.dailyFreeQuoteNum">
+                        <label for="dailyFreeQuoteNum5">自定义</label>
+                        <span class="pl-10" ng-show='vm.detailVoNew.dailyFreeQuoteNum == -1'><input class="input-cfec def-val" name="dailyFreeQuoteNumDef" type="number" ng-model="vm.detailVoNew.dailyFreeQuoteNumDef" ng-required="vm.detailVoNew.dailyFreeQuoteNum == -1" ng-pattern="/^\d{1,2}$/">个 
+                <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.dailyFreeQuoteNumDef.$invalid">请输入小于100的整数</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">行业频道二级类目展示位</td>
+                    <td>
+                        <label class="ipt-w0" for="industryShow1">
+                            <input id="industryShow1" type="radio" value="0" ng-model="vm.detailVoNew.channelTwoLevelPage">无</label>
+                        <label class="ipt-w0" for="industryShow1">
+                            <input id="industryShow1" type="radio" value="1" ng-model="vm.detailVoNew.channelTwoLevelPage">1个月</label>
+                        <label class="ipt-w0" for="industryShow2">
+                            <input id="industryShow2" type="radio" value="2" ng-model="vm.detailVoNew.channelTwoLevelPage">2个月</label>
+                        <input id="industryShow0" type="radio" value="-1" ng-model="vm.detailVoNew.channelTwoLevelPage">
+                        <label for="industryShow0">自定义</label>
+                        <span class="pl-10" ng-show='vm.detailVoNew.channelTwoLevelPage == -1'><input class="input-cfec def-val" name="channelTwoLevelPageDef" type="number" ng-model="vm.detailVoNew.channelTwoLevelPageDef" ng-required="vm.detailVoNew.channelTwoLevelPage == -1" ng-pattern="/^\d{1,2}$/">个 
+                <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.channelTwoLevelPageDef.$invalid">请输入小于100的整数</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">金牌供应商推荐频道展示位</td>
+                    <td>
+                        <label class="ipt-w0" for="goldSuppShow1">
+                            <input id="goldSuppShow1" type="radio" value="0" ng-model="vm.detailVoNew.recommendChannelDisplay">无</label>
+                        <label class="ipt-w0" for="goldSuppShow1">
+                            <input id="goldSuppShow1" type="radio" value="1" ng-model="vm.detailVoNew.recommendChannelDisplay">1个月</label>
+                        <label class="ipt-w0" for="goldSuppShow2">
+                            <input id="goldSuppShow2" type="radio" value="2" ng-model="vm.detailVoNew.recommendChannelDisplay">2个月</label>
+                        <input id="goldSuppShow0" type="radio" value="-1" ng-model="vm.detailVoNew.recommendChannelDisplay">
+                        <label for="goldSuppShow0"> 自定义</label>
+                        <span class="pl-10" ng-show='vm.detailVoNew.recommendChannelDisplay == -1'><input class="input-cfec def-val" name="recommendChannelDisplayDef" type="number" ng-model="vm.detailVoNew.recommendChannelDisplayDef"  ng-required="vm.detailVoNew.recommendChannelDisplay == -1" ng-pattern="/^\d{1,2}$/">个 
+                <span class="error-valid" ng-show="(forms.chgForm.$dirty||forms.chgForm.$submitted) && forms.chgForm.recommendChannelDisplayDef.$invalid">请输入小于100的整数</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">广交会电商期刊推荐</td>
+                    <td>
+                        <label class="ipt-w0" for="hasPeriodical2">
+                            <input id="hasPeriodical2" type="radio" value="0" ng-model="vm.detailVoNew.journalRecommend">无</label>
+                        <label class="ipt-w0" for="hasPeriodical1">
+                            <input id="hasPeriodical1" type="radio" value="1" ng-model="vm.detailVoNew.journalRecommend">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">金牌供应商标志</td>
+                    <td>
+                        <label class="ipt-w0" for="hasGoldSymbol0">
+                            <input id="hasGoldSymbol0" type="radio" value="0" ng-model="vm.detailVoNew.logoIdentify">无</label>
+                        <label class="ipt-w0" for="hasGoldSymbol1">
+                            <input id="hasGoldSymbol1" type="radio" value="1" ng-model="vm.detailVoNew.logoIdentify">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">认证证书展示</td>
+                    <td>
+                        <label class="ipt-w0" for="hasCertify0">
+                            <input id="hasCertify0" type="radio" value="0" ng-model="vm.detailVoNew.certificateDisplay">无</label>
+                        <label class="ipt-w0" for="hasCertify1">
+                            <input id="hasCertify1" type="radio" value="1" ng-model="vm.detailVoNew.certificateDisplay">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">代运营服务</td>
+                    <td>
+                        <label class="ipt-w0" for="hasPeriodical2">
+                            <input id="hasPeriodical2" type="radio" value="0" ng-model="vm.detailVoNew.generationService">无</label>
+                        <label class="ipt-w0" for="hasPeriodical1">
+                            <input id="hasPeriodical1" type="radio" value="1" ng-model="vm.detailVoNew.generationService">有</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">专项客服</td>
+                    <td>
+                        <label class="ipt-w0" for="hasSpecailServ0">
+                            <input id="hasSpecailServ0" type="radio" value="0" ng-model="vm.detailVoNew.exclusiveService">无</label>
+                        <label class="ipt-w0" for="hasSpecailServ1">
+                            <input id="hasSpecailServ1" type="radio" value="1" ng-model="vm.detailVoNew.exclusiveService">有</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="btn-toolbar clearfix m0">
+            <button class="btn btn-cfec-red" type="submit" ng-click="vm.detailVoNew.status =1;">保存并生效</button>
+            <button class="btn btn-cfec-red" type="submit" ng-click="vm.detailVoNew.status =0;">仅保存</button>
+            <button ng-show="vm.chgFormDetailFlag != true" class="btn btn-cfec-white" type="button" ng-click="tools.closeDlg()">否</button>
+            <!-- 从详情页过来时取消时需要回到详情页去 -->
+            <button ng-show="vm.chgFormDetailFlag" class="btn ipt-xs" type="button" ng-click="tools.closeDlg();tools.detailPackage(vm.detailVoNew.packageId)">否</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,157 @@
+<div class="oms-buyer-detail">
+    <div class="mb20">
+        <button class="btn btn-cfec-white" ngc-permission="seller_sellerlist_followseller" ng-click="recordTools.followSeller(tools.sellerId)">添加跟进记录</button>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="15%" />
+                <col width="35%" />
+                <col width="15%" />
+                <col width="35%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="4">供应商跟进状态</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.recordInfo.length > 0">
+                <tr>
+                    <th>供应商跟进状态：</th>
+                    <td colspan="3">{{vm.recordInfo[0].followStatus==null?'可跟进':vm.recordInfo[0].followStatus==0?'可跟进':'免跟进'}} <span ng-if="vm.recordInfo[0].followStatus!=0">（至{{vm.recordInfo[0].freeFollowTime | date:'yyyy-MM-dd'}}）</span></td>
+                </tr>
+                <tr>
+                    <th>跟进内容：</th>
+                    <td colspan="3"><span>{{vm.recordInfo[0].followContent}}</span><span ng-if="vm.recordInfo[0].remark!=''&&vm.recordInfo[0].remark!=null&&vm.recordInfo[0].remark!=undefined">（备注：{{vm.recordInfo[0].remark}}）</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.recordInfo.length < 1">
+                <tr>
+                    <td colspan="4">
+                        <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="30%" />
+                <col width="30%" />
+                <col width="40%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="5">跟进明细</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.recordInfo.length > 0">
+                <tr class="single-bottom">
+                    <th>跟进时间</th>
+                    <th>跟进人</th>
+                    <th>跟进内容</th>
+                </tr>
+                <tr ng-repeat="item in vm.recordInfo">
+                    <th>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                    <th>{{item.followerName}}</th>
+                    <th>
+                        <span>{{item.followStatus==0?'可跟进':'免跟进'}}</span>
+                        <span ng-if="item.followStatus!=0">（至{{item.freeFollowTime | date:'yyyy-MM-dd'}}）</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>{{item.followStatus==0?'跟进内容：':'免跟进原因：'}}</span>
+                        <span>{{item.followContent}}</span>
+                        <span ng-if="item.remark!=''&&item.remark!=null&&item.remark!=undefined">（备注：{{item.remark}}）</span>
+                    </th>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.recordInfo.length < 1">
+                <tr>
+                    <td colspan="3">
+                        <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row-page clearfix">
+        <select class="item" ng-model="recordInfo.pageSize" ng-options="obj.pageSize as obj.pagename for obj in recordTools.pages" ng-change="recordTools.getnewpage(0)"></select>
+        <uib-pagination boundary-links="true" total-items="recordTools.total" ng-model="recordInfo.page" items-per-page="recordInfo.pageSize" class="page-list-style item" ng-change="recordTools.getnewpage()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;"
+            first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        <label class="item">
+        共
+        <big>{{recordTools.total}}</big> 条
+    </label>
+        <label class="item">转到第</label>
+        <input class="ngc-jumppage" type="number" class="item" ng-model="recordTools.newpagesize">
+        <label class="item">页</label>
+        <button class="j-jump item" ng-click="recordTools.getnewpage(1);">GO</button>
+    </div>
+
+</div>
+
+
+<!-- 跟进供应商 -->
+<script type="text/ng-template" id="followSellerDlgId">
+    <div class="followSellerDlg">
+        <div class="dlg-title">添加供应商跟进记录</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb0">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                供应商跟进状态：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio">
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="0" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">可跟进</label>
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="1" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">免跟进</label>
+                    <p class="clear f12 lh20 pt0 gary" ng-if="vm.sellerDlg.followStatus==0">可跟进的供应商会纳入“供应商互动行为跟踪”统计中</p>
+                    <p class="clear f12 lh20 pt0 gary" ng-if="vm.sellerDlg.followStatus==1">免跟进周期内，此供应商不会纳入“供应商互动行为跟踪”统计中</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20" ng-if="vm.sellerDlg.followStatus==1">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                免跟进周期：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio pt0">
+                    <select class="select-oms" ng-model="vm.sellerDlg.freeFollowPeriod" ng-options="obj.key as obj.title for obj in recordTools.freeFollowPeriod">
+                    
+                </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <div ng-if="vm.sellerDlg.followStatus==0"><span>*</span>跟进内容：</div>
+                <div ng-if="vm.sellerDlg.followStatus==1"><span>*</span>免跟进原因：</div>
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="checkbox fl w160 mb0" ng-repeat="rs in vm.followContent[0] track by $index" ng-if="vm.sellerDlg.followStatus==0">
+                        <label class="mr20">
+                        <input id="{{'followContent'+$index}}" type="checkbox" ng-change="recordTools.checkChange(0)" ng-model="rs.$checked" /> {{rs.text}}
+                    </label>
+                    </div>
+                    <div class="checkbox fl w160 mb0" ng-repeat="rs in vm.followContent[1] track by $index" ng-if="vm.sellerDlg.followStatus==1">
+                        <label class="mr20">
+                        <input id="{{'followContent'+$index}}" type="checkbox" ng-change="recordTools.checkChange(1)" ng-model="rs.$checked" /> {{rs.text}}
+                    </label>
+                    </div>
+                    <textarea name="" class="form-control reasonInput" rows="2" ng-model="vm.sellerDlg.followContent" ng-disabled="vm.needNode" placeholder="其他内容"></textarea>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                备注：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea name="" class="form-control reasonInput" rows="2" ng-model="vm.sellerDlg.remarkContent" placeholder="备注"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="recordTools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

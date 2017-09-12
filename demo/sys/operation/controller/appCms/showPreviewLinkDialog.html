@@ -1,0 +1,11 @@
+<div class="activeDlg">
+    <div class="dlg-title">APP首页预览链接</div>
+    <div class="dlg-content form">
+        <p class="ta-c mb20">预览链接：<input ng-model="vm.previewLink" type="text" class="input-cfec ml20 w400" readonly></p>
+        <p class="gary f12 pl30"><span class="red">*</span>为避免预览与实际情况产生差异，请复制预览链接到移动端设备进行预览</p>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ngclipboard data-clipboard-text="{{vm.previewLink}}" ngclipboard-success="tools.previewLinkCopySuccess(e);" ngclipboard-error="tools.previewLinkCopyError(e);">复制</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</div>

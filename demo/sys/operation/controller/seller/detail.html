@@ -1,0 +1,64 @@
+<div class="oms-crumbs"> <i>{{vm.company.companyName}}详情</i>
+    <p>
+        <a href="/#/seller/">供应商管理</a> /
+        <a href="/#/seller/list">供应商列表</a> /
+        <span>供应商列表</span>
+    </p>
+</div>
+<div class="main-container">
+    <div class="wrap">
+        <uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+            <uib-tab index="0">
+                <uib-tab-heading>基本信息 <span class="red" ng-if="vm.sellerAuditStatus.baseInfoCompleted!=1">●</span></uib-tab-heading>
+                <div class="container-list content" ng-include="baseInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="1" ng-if="vm.item!=null" select="sellerShopTools.toSellerShop();">
+                <uib-tab-heading>店铺信息 <span class="red" ng-if="vm.sellerAuditStatus.shopInfoCompleted!=1">●</span></uib-tab-heading>
+                <div class="container-list content" ng-include="shopInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="2" ng-if="vm.item!=null" select="productTools.toProductInfo()">
+                <uib-tab-heading>商品信息 <span class="red" ng-if="vm.sellerAuditStatus.productInfoCompleted!=1">●</span> </uib-tab-heading>
+                <div class="container-list content" ng-include="productInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="3" ng-if="vm.item!=null" select="promotionEmailTools.getPromotionEmailList()">
+                <uib-tab-heading>邮件推广 <span class="red" ng-if="vm.baseInfo.promotionMailPending">●</span> </uib-tab-heading>
+                <div class="container-list content" ng-include="promotionEmailTemplate"></div>
+            </uib-tab>
+            <uib-tab index="4" ng-if="vm.item!=null" select="tools.initTrade();tools.initBusiness();tools.initExport();marketTools.toMarketInfo();">
+                <uib-tab-heading>市场信息</uib-tab-heading>
+                <div class="container-list content" ng-include="marketInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="5" ng-if="vm.item!=null" select="adKeyowrdTools.toAdKeyword();memberPackageTools.toMemberPackage();">
+                <uib-tab-heading>增值信息</uib-tab-heading>
+                <div class="container-list content" ng-include="appreciationInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="6" ng-if="vm.item!=null" select="purchaseTools.toPurchase();">
+                <uib-tab-heading>采购需求</uib-tab-heading>
+                <div class="container-list content" ng-include="purchaseInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="7" ng-if="vm.item!=null" ng-if="vm.loginUser!=null" select="enquiryTools.toInquiry();">
+                <uib-tab-heading>询盘</uib-tab-heading>
+                <div class="container-list content" ng-include="inquiryInfoTemplate"></div>
+            </uib-tab>
+            <uib-tab index="8" ng-if="vm.item!=null" select="recordTools.toFollowRecord();">
+                <uib-tab-heading>跟进记录</uib-tab-heading>
+                <div class="container-list content" ng-include="recordInfoTemplate"></div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="sellerDetailDlgId">
+    <div class="sellerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i>确定审核{{vm.status != -1?"":"不"}}通过吗？</p>
+            <div class="form-group pt20 mb0" ng-if="vm.status==-1">
+                <textarea ng-model="vm.reason" name="" class="form-control reasonInput" rows="4"></textarea>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

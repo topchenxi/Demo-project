@@ -1,0 +1,60 @@
+<div class="oms-crumbs"> <i>商品标签管理</i>
+    <p>
+        <a href="">商品管理</a> /
+        <span>商品标签管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" >
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <button type="button" class="btn btn-default btn-cfec-white fr m10 mr20" ng-click="vm.addProductTag();">添加商品标签</button>
+        </uib-tabset>
+        <div class="list-content table-cfec mt20">
+            <table class="table table-hover ">
+                <!-- 全部 -->
+                <colgroup>
+                   <col width="10%">
+                   <col width="20%">
+                   <col width="10%">
+                   <col width="30%">
+                   <col width="20%">
+                   <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标签名称</th>
+                        <th>商品数量</th>
+                        <th>标签说明</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.list.length">
+                    <tr ng-repeat='item in vm.list'>
+                        <td>{{item.tagId}}</td>
+                        <td>{{item.tagName}}</td>
+                        <td>{{item.productNum}}</td>
+                        <td>{{item.tagDesc}}</td>
+                        <td>{{item.createTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td>
+                        	<a target="_blank" ng-href="/#/goods/saveOrUpdateTag?tagId={{item.tagId}}">修改</a>
+                        	<a href="javascript:void(0)" ng-click="vm.delProductTag(item.tagId)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="!vm.list||!vm.list.length" class="ng-scope">
+                    <tr>
+                        <td colspan="8">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemp"></div>
+    </div>
+</div>

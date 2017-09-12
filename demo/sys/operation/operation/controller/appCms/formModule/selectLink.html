@@ -1,0 +1,177 @@
+<div class="selectLinkContent">
+    <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+        <uib-tab index="0" ng-click="tools.changeTab()">
+            <uib-tab-heading>商品</uib-tab-heading>
+            <div class="pt20">
+                <!-- 搜索类型 -->
+                <div class="form-group clearfix">
+                    <div class="oms-search fl">
+                        <select name="" id="" ng-model="productPaging.selectType" ng-options="obj.value as obj.label for obj in productPaging.select">
+                            <option value="">搜索类型</option>
+                        </select> <em></em>
+                        <input ngc-auto-input type="text" name="" id="" ng-model="productPaging.selectValue" />
+                    </div>
+                    <button type="button" class="btn btn-cfec-red" ng-click="tools.getProducts()">搜索</button>
+                </div>
+            </div>
+            <div class="list-content table-cfec table-cfec-theme2">
+                <table class="table table-hover ">
+                    <colgroup>
+                        <col width="80%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>商品</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="vm.items.length>0">
+                        <tr ng-repeat='item in vm.items'>
+                            <td>
+                                <a href="http://www.e-cantonfair.com/products/oms-{{item.productId}}.html" target="_blank" title="{{item.name}}" class="mr20">
+                                    <img ng-src="{{item.imgs | setImgSize:60:60}}" class="img-thumbnail">
+                                </a>
+                                <a href="http://www.e-cantonfair.com/products/oms-{{item.productId}}.html" target="_blank" title="{{item.name}}" class="link">
+                                    {{item.name}}
+                                </a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-cfec-red" ng-click="tools.select(1,item)">选取</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                        <tr>
+                            <td colspan="2">
+                                <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+        </uib-tab>
+        <uib-tab index="1" ng-click="tools.changeTab()">
+            <uib-tab-heading>店铺</uib-tab-heading>
+            <div class="pt20">
+                <!-- 搜索类型 -->
+                <div class="form-group clearfix">
+                    <div class="oms-search fl">
+                        <select name="" id="" ng-model="sellerPaging.selectType" ng-options="obj.value as obj.label for obj in sellerPaging.select">
+                            <option value="">搜索类型</option>
+                        </select> <em></em>
+                        <input ngc-auto-input type="text" name="" id="" ng-model="sellerPaging.selectValue" />
+                    </div>
+                    <button type="button" class="btn btn-cfec-red" ng-click="tools.getSellerList()">搜索</button>
+                </div>
+            </div>
+            <div class="list-content table-cfec table-cfec-theme2">
+                <table class="table table-hover ">
+                    <colgroup>
+                        <col width="80%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>供应商</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="vm.items.length>0">
+                        <tr ng-repeat='item in vm.items'>
+                            <td>
+                                <a href="http://www.e-cantonfair.com/china-supplier/{{item.companyId}}.html" target="_blank" title="{{item.companyName}}（{{item.companyEnName}}）" class="link">{{item.companyName}}（{{item.companyEnName}}）</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-cfec-red" ng-click="tools.select(2,item)">选取</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                        <tr>
+                            <td colspan="2">
+                                <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+        </uib-tab>
+        <uib-tab index="2" ng-click="tools.changeTab();tools.selectCate();">
+            <uib-tab-heading>商品分类</uib-tab-heading>
+            <div class="out-panel-container">
+                <div class="panel-container pb0">
+                    <div class="input-cfec-icon mr0 w400">
+                        <input type="text" placeholder="Please enter the category name " class="w300" ng-model="vm.cateKeyword" ng-change="tools.checCatekKeyUp();" ng-keyup="tools.checkCateKeyUp($event);" />
+                        <button ng-click="tools.searchCate();"><i class="iconfont icon-search"></i> </button>
+                    </div>
+                    <div class="search-categories" ng-if="vm.searchCategoresList.length>0">
+                        <ul>
+                            <li id="search{{item.categoryId}}" flex="dir:left" ng-repeat="item in vm.searchCategoresList" class="clearfix" ng-click="tools.chxSelectCate(item);">
+                                <span title="{{item.categoryName}}">{{item.categoryName}} : </span>
+                                <p title="{{item.categoryTree.join('>>')}}">{{item.categoryTree.join('>>')}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-container" ng-if="vm.searchCategoresList.length<=0">
+                    <div class="level pur-cate">
+                        <ul>
+                            <li ng-repeat="item in vm.firstLevelCate" id="categoryId{{item.categoryId}}" ng-click="tools.getChildcate(item.categoryId);tools.chooseCate(item)">{{item.categoryEname}}<span>&gt; </span></li>
+                        </ul>
+                    </div>
+                    <div class="level pur-cate" ng-repeat="childCateArray in vm.categoryArray">
+                        <ul>
+                            <li ng-repeat="item in childCateArray" id="categoryId{{item.categoryId}}" ng-click="tools.chooseCate(item,$parent.$index)">{{item.categoryEname}}<span ng-if="item.isBottom==0">&gt; </span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-result"> <strong>Select:</strong>
+                <ul ng-if="$root.hasSelectCate!=null" class="clearfix">
+                    <li>{{$root.hasSelectCate.categoryEname}}<i class="iconfont" ng-click="tools.delCategory(item)">&#xe60b;</i></li>
+                </ul>
+            </div>
+            <div class="btn-toolbar clearfix p20">
+                <button class="btn btn-cfec-red" ng-click="tools.select(3)">确定</button>
+            </div>
+        </uib-tab>
+        <uib-tab index="3" ng-click="tools.changeTab()">
+            <uib-tab-heading>关键词搜索</uib-tab-heading>
+            <div class="pt20">
+                <!-- 搜索类型 -->
+                <div class="form-group formgroup-cfec-inline row">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-r">搜索类型：</label>
+                    <div class="col-sm-10 radio m0">
+                        <label class="w100">
+                        <input type="radio" name="searchType" value="1" ng-model="keywordPaging.searchType" ng-change="tools.creatKeyWordViewLink()">商品</label>
+                        <label class="w100">
+                        <input type="radio" name="searchType" value="2" ng-model="keywordPaging.searchType" ng-change="tools.creatKeyWordViewLink()">店铺</label>
+                    </div>
+                </div>
+                <!-- 搜索关键字 -->
+                <div class="form-group clearfix pb50">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-r"><span class="red">*</span>搜索关键词：</label>
+                    <div class="col-sm-10 clearfix">
+                        <input type="text" class="input-cfec w350 mr20 fl" ng-keyup="tools.creatKeyWordViewLink()" ng-model="keywordPaging.keyword" />
+                        <div class="fl" ng-if="keywordPaging.keyword.length>0">
+                            <a href="{{keywordPaging.viewLink | linkFilter}}" target="_blank" class="link">预览搜索结果</a>
+                            <span class="tips gray f12">（移动端与PC端相同）</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-r"></label>
+                    <div class="col-sm-10">
+                        <button type="button" class="btn btn-cfec-red" ng-click="tools.select(4)">确定</button>
+                    </div>
+                </div>
+
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

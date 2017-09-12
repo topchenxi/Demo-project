@@ -1,0 +1,84 @@
+<!-- 列表头部导航[[ -->
+<div class="oms-crumbs"> <i>操作日志</i>
+  <p>
+    <a href="/#/system">系统管理</a>
+    /
+    <span>操作日志</span>
+  </p>
+</div>
+<!-- 列表头部导航]] -->
+
+<div class="main-container">
+  <div class="wrap">
+    <!-- 筛选条件 -->
+    <div class="form-group-main clearfix">
+      <div class="form-group fl">
+        <label for="">操作日期</label>
+        <input type="text" ngc-lay-date ng-model="paging.startTime" readonly="readonly" class="laydate-icon" id="startTime" ng-click="tools.startDate_init('startTime')" />
+        <span class="text-inline">至</span>
+        <input type="text" ngc-lay-date ng-model="paging.endTime" readonly="readonly" class="laydate-icon" id="endTime" ng-click="tools.endDate_init('endTime')" />
+      </div>
+      <div class="form-group fl">
+        <label for="">搜索</label>
+        <div class="oms-search">
+          <select name="" id="" ng-model="paging.key" ng-options="obj.key as obj.title for obj in tools.searchtype" ng-change="tools.onchange();">
+            <option value="">搜索类型</option>
+          </select> <em></em>
+          <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.value"  />
+        </div>
+      </div>
+      <div class="form-group clear clearfix">
+        <button class="btn btn-cfec-red fl mr20" ng-click="tools.search();">查 询</button>
+        <button class="btn btn-cfec-white fl" ng-click="tools.reSetLogList()">重 置</button>
+      </div>
+    </div>
+    <div class="container-list contents">
+      <!-- 操作列表 -->
+    	<div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+          <colgroup>
+            <col width="12%" />
+            <col width="12%" />
+            <col width="14%" />
+            <col width="14%" />
+            <col width="14%" />
+            <col width="20%" />
+            <col width="14%" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="ta-l">操作用户名</th>
+              <th class="ta-l">角色</th>
+              <th class="ta-l">登录IP</th>
+              <th class="ta-l">操作模块</th>
+              <th class="ta-l">操作类型</th>
+              <th class="ta-l">操作明细</th>
+              <th class="ta-l">操作时间</th>
+            </tr>
+          </thead>
+          <tbody ng-if="vm.items.length==0">
+            <tr>
+              <td colspan="7">
+                <p class="noResult-Text pt100 pb100"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+              </td>
+            </tr>
+          </tbody>
+          <tbody ng-if="vm.items.length!=0">
+            <tr ng-repeat="item in vm.items">
+              <td class="ta-l">{{item.opearUsername}}</td>
+              <td class="ta-l">{{item.opearRole}}</td>
+              <td class="ta-l">{{item.ipAddress}}</td>
+              <td class="ta-l">{{item.moduleName}}</td>
+              <td class="ta-l">{{item.opearationType}}</td>
+              <td class="ta-l">{{item.detailContent}}</td>
+              <td class="ta-l">{{item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 分页[[ -->
+      <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+      <!-- 分页]] -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,524 @@
+<div class="oms-crumbs"> <i>询盘详情</i>
+    <p>
+        <a href="/#/inquiryMgr/list">询盘管理</a> /
+        <a href="/#/inquiryMgr/list">询盘列表</a> /
+        <span>询盘详情</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+            <uib-tab index="0">
+                <uib-tab-heading>基本信息</uib-tab-heading>
+                <div class="oms-detail">
+                    <div class="btns-group">
+                        <button ngc-permission="inquiryMgr_inquiryMgrlist_audit" ng-if="vm.item.messageState == 1" class="btn btn-cfec-white" ng-click="tools.chgAuditStatus(2)">审核通过</button>
+                        <button ngc-permission="inquiryMgr_inquiryMgrlist_audit" ng-if="vm.item.messageState == 1" class="btn btn-cfec-white" ng-click="tools.chgAuditStatus(-1)">审核不通过</button>
+                        <span>标签：</span>
+                        <label ng-if="vm.item.error==1" class="label-cfec-gary label-cfec-hover small">
+                            问题 &nbsp;
+                            <a ngc-permission="inquiryMgr_inquiryMgrlist_audit" ng-if="vm.item.messageState == 1" class="link-cfec-inherit" href="javasript:" ng-click="tools.delTag(1)">X</a>
+                        </label>
+                        <label ng-if="vm.item.repeat==1" class="label-cfec-gary label-cfec-hover small">
+                            重复 &nbsp;
+                            <a ngc-permission="inquiryMgr_inquiryMgrlist_audit" ng-if="vm.item.messageState == 1" class="link-cfec-inherit" href="javasript:" ng-click="tools.delTag(2)">X</a>
+                        </label>
+                        <label ng-if="vm.item.repeat!=1 && vm.item.error!=1" class="small">无</label>
+                        <a class="pl10 link-cfec fr" target="_blank" href="/#/purchase/purchaseReqList?userId={{vm.item.buyerUserId}}">此采购商相关采购需求</a>
+                        <a class="link-cfec fr" target="_blank" href="/#/inquiryMgr/list?userId={{vm.item.buyerUserId}}">此采购商相关询盘</a>
+                    </div>
+                    <div class="table-cfec table-cfec-theme3">
+                        <table class="table mt20">
+                            <colgroup>
+                                <col width="13%">
+                                <col width="87%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">系统记录的问题</th>
+                                </tr>
+                            </thead>
+                            <tbody class="block">
+                                <tr>
+                                    <th>敏感词</th>
+                                    <td>{{vm.error.sensitiveWord}}</td>
+                                </tr>
+                                <tr>
+                                    <th>外部链接</th>
+                                    <td>{{vm.error.notUsUrl}}</td>
+                                </tr>
+                                <tr>
+                                    <th>中文</th>
+                                    <td>{{vm.error.chineseWord}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table mt20">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="30%">
+                                <col width="20%">
+                                <col width="30%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="4">基本信息</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>询盘ID</th>
+                                    <td>{{vm.item.messageId}}</td>
+                                    <th>发布时间</th>
+                                    <td>{{vm.item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>来源IP</th>
+                                    <td>{{vm.item.sourceIp}}</td>
+                                    <th>审核状态</th>
+                                    <td>{{vm.item.messageState|messageState}}</td>
+                                </tr>
+                                <tr>
+                                    <th>最后审核人</th>
+                                    <td>{{vm.item.lastAuditorName}}</td>
+                                    <th>最后审核时间</th>
+                                    <td>{{vm.item.lastAuditorTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>读取状态</th>
+                                    <td>{{vm.item.isRead==0?"未读":"已读"}}</td>
+                                    <th>来源</th>
+                                    <td>{{vm.item.sourceValue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table mt20">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="80%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">询盘详情</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>采购商姓名(发送方)</th>
+                                    <td>
+                                        <img width="40" height="40" ng-src="{{vm.item.buyerImg|setImgSize:40:40}}" alt="采购商头像">
+                                        <a class="link-cfec-inherit" target="_blank" ng-href="/#/buyer/detail?buyerId={{vm.item.buyerId}}">{{vm.item.buyerName}}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>供应商公司名(接收方)</th>
+                                    <td>
+                                        <img width="40" height="40" ng-src="{{vm.item.sellerCompanyImg|setImgSize:40:40}}" alt="供应商头像">
+                                        <a class="link-cfec-inherit" target="_blank" ng-href="/#/seller/detail?sellerId={{vm.item.sellerId}}">
+                                            <p> {{vm.item.sellerCompanyName}} &nbsp;({{vm.item.sellerCompanyEnName}})</p>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>询盘类型</th>
+                                    <td>{{vm.item.messageTypeId|messageType}}</td>
+                                </tr>
+                                <tr ng-if="vm.item.messageTypeId == 1">
+                                    <th>商品</th>
+                                    <td>
+                                        <img ng-src="{{vm.item.productImgs[0]|setImgSize:40:40}}" alt="商品图片">
+                                        <a class="link-cfec-inherit" target="_blank" ng-href="/#/goods/barginDetail?productId={{vm.item.productId}}&sellerId={{vm.item.sellerId}}">{{vm.item.productName}}</a>
+                                    </td>
+                                </tr>
+                                <tr ng-if="vm.item.messageTypeId == 1">
+                                    <th>商品行业类目</th>
+                                    <td>{{vm.item.fullCategoryName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>主题</th>
+                                    <td>{{vm.item.subject}}</td>
+                                </tr>
+                                <tr>
+                                    <th>内容</th>
+                                    <td ng-bind-html="vm.item.content" class="pre-content"></td>
+                                </tr>
+                                <tr ng-if="vm.item.messageTypeId == 1">
+                                    <th>采购数量</th>
+                                    <td>{{vm.item.totalNum}}&nbsp;&nbsp;{{vm.item.unit}}</td>
+                                </tr>
+                                <tr>
+                                    <th>附件</th>
+                                    <td>
+                                        <a style="display:block;" ng-href="{{vm.imgUrl+at.filePath}}" target="_blank" ng-repeat="at in vm.item.fileList">{{at.fileName}}</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table mt20">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="40%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="4">审核信息</th>
+                                </tr>
+                                <tr>
+                                    <th>审核时间</th>
+                                    <th>审核人</th>
+                                    <th>审核结果</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ad in vm.auditList track by $index">
+                                    <td>{{ad.auditTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td>{{ad.auditorName}}</td>
+                                    <td>{{ad.messageState|messageState}}</td>
+                                    <td>{{ad.reasonName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </uib-tab>
+            <!-- 对话内容 -->
+            <uib-tab index="1">
+                <uib-tab-heading>对话内容</uib-tab-heading>
+                <div class="oms-detail">
+                    <div class="ml20 mr20" ng-repeat="(index, ct) in vm.contactList">
+                        <img width="40" height="40" ng-class="{'1':'fl','2':'fr'}[ct.userType]" ng-src="{{ct.senderImg|setImgSize:40:40}}">
+                        <div class="message-block"> <i ng-class="{'1':'triggle-left','2':'triggle-right'}[ct.userType]"><s></s></i>
+                            <p>
+                                <span ng-if="ct.userType == 2" ng-bind-html="ct.senderCompanyName"></span>
+                                <span ng-bind-html="ct.senderCompanyEnName"></span> ({{ct.senderName}})
+                                <span class="read-mark mr20 {{ct.emailState=='open'?'readed':'no-read'}}">{{ct.emailState | emailStateFilter}}</span>
+                                <!-- 询盘-对话刷新 -->
+                                <a href="javascript:void(0)" ng-if="ct.emailState!=null&&ct.emailState!='open'" class="link mr20" ng-click="tools.refreshMessageEmailState(ct,ct.messageId,ct.isReply)">刷新</a>
+                                <a ngc-permission="other_othersendEmail_resendEmail" ng-click="tools.reSendEmail(index)" ng-if="vm.item.messageState===2" href="javascript:void(0)" class="link">重发邮件给接收方</a>
+                            </p>
+                            <p class="message-content" ng-bind-html="ct.content"></p>
+                            <div ng-if="ct.fileList.length" class="message-content">附件：
+                                <div class="inline-table ">
+                                    <a ng-repeat="fl in ct.fileList" target="_blank" ng-href="{{vm.imgUrl+fl.filePath}}">
+                                        <p>{{fl.fileName}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <span class="date">{{ct.createTime|date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <!-- 采购商跟进 -->
+            <uib-tab index="2" select="tools.toBuyerDetail();">
+                <uib-tab-heading>采购商跟进</uib-tab-heading>
+                <div class="oms-content oms-detail">
+                    <div class="tabTable table-cfec table-cfec-theme2">
+                        <table class="table table-hover">
+                            <colgroup>
+                                <col width="25%" />
+                                <col width="25%" />
+                                <col width="25%" />
+                                <col width="25%" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="5">
+                                        采购商商机跟进明细（采购商商机跟进状态：{{vm.businessInfo[0].followStatus==null?'可跟进':vm.businessInfo[0].followStatus==1?'可跟进':'免跟进'}}）
+                                        <button ng-if="vm.isMyFollow==1" ngc-permission="buyer_buyerlist_followbuyerB" class="btn btn-cfec-red btn-cfec-sm fr" ng-click="tools.buyer_followBusiness(tools.messageId,tools.messageTypeId)">跟进商机</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-if="vm.businessInfo.length">
+                                <tr class="single-bottom">
+                                    <th>跟进时间</th>
+                                    <th>跟进人</th>
+                                    <th>跟进标识</th>
+                                    <th>跟进内容</th>
+                                </tr>
+                                <tr ng-repeat="item in vm.businessInfo">
+                                    <th>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                                    <th>{{item.followerName}}</th>
+                                    <th>{{item.businessTraceFlag.desc}}</th>
+                                    <th>{{item.content}}</th>
+                                </tr>
+                            </tbody>
+                            <tbody ng-if="vm.businessInfo==undefined||vm.businessInfo.length==0" class="ng-scope">
+                                <tr>
+                                    <td colspan="3">
+                                        <p class="noResult-Text pt100 pb100 ta-c">
+                                            <i class="iconfont icon-jingshioms"></i> 没有符合条件的记录
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="middivs clearfix" ng-include="paginationTemplate"></div> -->
+                </div>
+            </uib-tab>
+            <!-- 供应商跟进 完成 -->
+            <uib-tab index="3" select="tools.toSellerDetail();">
+                <uib-tab-heading>供应商跟进</uib-tab-heading>
+                <div class="oms-content oms-detail">
+                    <div class="table-cfec table-cfec-theme3 mb20">
+                        <table class="table">
+                            <colgroup>
+                                <col width="12%">
+                                <col width="38%">
+                                <col width="12%">
+                                <col width="38%">
+                            </colgroup>
+                            <thead>
+                                <th colspan="4">供应商信息</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>公司名称</th>
+                                    <td>
+                                        <!-- 供应商为新供应商 -->
+                                        <i class="iconfont blue" ng-if="item.newSeller==1" title="此供应商首次开通套餐，开通时间为{{item.packageEffectiveTime | date:'yyyy-MM-dd'}}">&#xe624;</i>
+                                        <!-- 供应商为旧供应商 -->
+                                        <i class="iconfont blue" ng-if="item.oldSeller==1" title="此供应商套餐过期时间为{{item.packageExpireTime | date:'yyyy-MM-dd'}}">&#xe623;</i>
+                                        <a href="/#/seller/detail?sellerId={{paging.sellerId}}" target="_blank" title="{{vm.sellerInfo.companyInfo.companyName}}">{{vm.sellerInfo.companyInfo.companyName}}</a>
+                                    </td>
+                                    <th>会员类型</th>
+                                    <td>{{vm.sellerInfo.baseInfo.packageName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>主营行业</th>
+                                    <td>{{vm.sellerInfo.companyInfo.mainCategoryName}}</td>
+                                    <th>最后登录时间</th>
+                                    <td>{{vm.sellerInfo.baseInfo.lastLoginDate | date:"yyyy-MM-dd"}}</td>
+                                </tr>
+                                <tr>
+                                    <th>近30天商机回复率</th>
+                                    <td class="va-m">{{vm.sellerInfo.monthReversionRate | halfYearTwoRateFilter}}</td>
+                                    <th>供应商跟进状态</th>
+                                    <td>
+                                        <!-- 0:可跟进,1:免跟进 -->
+                                        <p class="mb10">
+                                            <span class="gary">跟进状态：</span> {{vm.followInfo.followStatus==0?'可跟进':'免跟进'}}
+                                            <span ng-if="vm.followInfo.followStatus==1">（至{{vm.followInfo.updateTime | date:'yyyy-MM-dd'}}）</span>
+                                            <button class="btn btn-cfec-red btn-cfec-sm ml20" ngc-permission="seller_sellerlist_followseller" ng-click="tools.followSeller(paging.sellerId)">跟进供应商</button>
+                                        </p>
+                                        <p>
+                                            <span class="gary">{{vm.followInfo.followStatus==0?'跟进内容':'免跟进原因'}}：</span>
+                                            <span ng-bind-html="vm.followInfo.followContent"></span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabTable table-cfec table-cfec-theme2">
+                        <table class="table table-hover">
+                            <colgroup>
+                                <col width="30%" />
+                                <col width="30%" />
+                                <col width="40%" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="5">
+                                        供应商商机跟进明细（供应商商机跟进状态：{{vm.businessInfo[0].followStatus==null?'可跟进':vm.businessInfo[0].followStatus==1?'可跟进':'免跟进'}}）
+                                        <button class="btn btn-cfec-red btn-cfec-sm fr" ngc-permission="seller_sellerlist_followsellerBIZ" ng-click="tools.seller_followBusiness(tools.messageId)">跟进商机</button>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-if="vm.businessInfo.length">
+                                <tr class="single-bottom">
+                                    <th>跟进时间</th>
+                                    <th>跟进人</th>
+                                    <th>跟进内容</th>
+                                </tr>
+                                <tr ng-repeat="item in vm.businessInfo">
+                                    <th>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                                    <th>{{item.followerName}}</th>
+                                    <th>
+                                        <span>{{item.followStatus==1?'可跟进':'免跟进'}}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>{{item.followStatus==1?'跟进内容：':'免跟进原因：'}}</span>
+                                        <span>{{item.content}}</span>
+                                    </th>
+                                </tr>
+                            </tbody>
+                            <tbody ng-if="vm.businessInfo==undefined||vm.businessInfo.length==0" class="ng-scope">
+                                <tr>
+                                    <td colspan="3">
+                                        <p class="noResult-Text pt100 pb100 ta-c">
+                                            <i class="iconfont icon-jingshioms"></i> 没有符合条件的记录
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<!-- 弹出1 审核通过 -->
+<script type="text/ng-template" id="auditPassConfirm.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content container-fluid form-group-main">
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i> 确定审核通过吗？</p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-disabled="vmdlg.isdisabled" ng-click="save()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="auditNopassConfirm.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content form-group-main">
+            <div class="form-group formgroup-cfec-inline row">
+                <label for="" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-r"><span>*</span>原因</label>
+                <div class="col-md-9 form-group-content">
+                    <div class="checkbox fl w130" ng-repeat="rs in vm.chkReasons track by $index">
+                        <label>
+                            <input id="{{rs.auditUnpassReasonId}}" type="checkbox" ng-change="checkChange()" ng-model="rs.$checked" /> {{rs.reasonName}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label for="" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-r"><span ng-show="vm.needNode">*</span>备注</label>
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 form-group-content">
+                    <textarea name="reason" class="form-control w250" rows="3" ng-model="vm.note" placeholder="请输入英文，最多250个字符" maxlength="250"></textarea>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="confVm.isSendEmail" /> 发送系统邮件和短信提醒
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-disabled="vmdlg.isdisabled" ng-click="save()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 弹出3 删除标签 -->
+<script type="text/ng-template" id="delLabelConfirm.html">
+    <div class="activeDlg">
+        <div class="dlg-title"></div>
+        <div class="dlg-content container-fluid form-group-main">
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i> 是否确认删除该标签？</p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="confirm();" ng-disabled="vmdlg.isdisabled">
+                    <span ng-if="!vmdlg.isdisabled">确定</span>
+                    <span ng-if="vmdlg.isdisabled">提交中...</span>
+                </button>
+                <button class="btn btn-cfec-white" ng-click="closeThisDialog()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 供应商 跟进商机 -->
+<script type="text/ng-template" id="seller_followBusinessDlgId">
+    <div class="followBusinessDlg">
+        <div class="dlg-title">跟进商机</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> 商机跟进状态：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio">
+                    <label class="w100">
+                        <input type="radio" name="followStatus" value="1" ng-model="vm.seller_businessDlg.followStatus" ng-checked="true">可跟进</label>
+                    <label class="w100">
+                        <input type="radio" name="followStatus" value="0" ng-model="vm.seller_businessDlg.followStatus">免跟进</label>
+                    <p class="clear f12 lh20 pt10 gary" ng-if="vm.seller_businessDlg.followStatus==1">可跟进的商机会纳入“采购商互动行为跟踪”统计中</p>
+                    <p class="clear f12 lh20 pt10 gary" ng-if="vm.seller_businessDlg.followStatus==0">免跟进的商机不会纳入“采购商互动行为跟踪”统计中</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> 跟进内容：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.seller_businessDlg.content"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 供应商 跟进记录 -->
+<script type="text/ng-template" id="followSellerDlgId">
+    <div class="followSellerDlg">
+        <div class="dlg-title">添加供应商跟进记录</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> 供应商跟进状态：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio">
+                    <label class="w100">
+                        <input type="radio" name="followStatus" value="0" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">可跟进</label>
+                    <label class="w100">
+                        <input type="radio" name="followStatus" value="1" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">免跟进</label>
+                    <p class="clear f12 lh20 pt10 gary" ng-if="vm.sellerDlg.followStatus==0">可跟进的供应商会纳入“供应商互动行为跟踪”统计中</p>
+                    <p class="clear f12 lh20 pt10 gary" ng-if="vm.sellerDlg.followStatus==1">免跟进周期内，此供应商不会纳入“供应商互动行为跟踪”统计中</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20" ng-if="vm.sellerDlg.followStatus==1">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> 免跟进周期：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio pt0">
+                    <select class="select-oms" ng-model="vm.sellerDlg.freeFollowPeriod" ng-options="obj.key as obj.title for obj in tools.freeFollowPeriod"></select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> {{vm.sellerDlg.followStatus==0?'跟进内容':'免跟进原因'}}：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="checkbox fl w160" ng-repeat="rs in vm.followContent[0] track by $index" ng-if="vm.sellerDlg.followStatus==0">
+                        <label class="mr20">
+                            <input id="{{'followContent'+$index}}" type="checkbox" ng-change="tools.checkChange(0)" ng-model="rs.$checked" /> {{rs.text}}
+                        </label>
+                    </div>
+                    <div class="checkbox fl w160" ng-repeat="rs in vm.followContent[1] track by $index" ng-if="vm.sellerDlg.followStatus==1">
+                        <label class="mr20">
+                            <input id="{{'followContent'+$index}}" type="checkbox" ng-change="tools.checkChange(1)" ng-model="rs.$checked" /> {{rs.text}}
+                        </label>
+                    </div>
+                    <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.sellerDlg.followContent" ng-disabled="vm.needNode" placeholder="其他内容"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 采购商 跟进记录 -->
+<!--重发邮件确认对话框-->
+<script type="text/ng-template" id="reSendConfirm">
+    <div class="sellerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i>确定重发邮件吗？</p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.checkUserType()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.reSendEmailCancel()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!--重发邮件确认对话框-->

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>修改标签</title>
+	<link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="/pubpage/operation/view/css/category.css">
+</head>
+<body>
+	
+<div class="container">
+    <h2>新增标签</h2>
+    <hr class="hr-orange"/>
+	
+    <form class="form-horizontal" novalidate>
+
+        <div class="form-group">
+           
+            <label class="col-xs-3" for="categoryName">标签名称：</label>
+
+            <div class="col-xs-6">
+                <input type="text" name="categoryName" /></div>
+        </div>
+        <div class="form-group not-null">
+            <label class="col-xs-3">所属标签组：</label>
+
+            <div class="col-xs-6"><select name="" id="">
+            	<option value="">标签组1</option>
+            	<option value="">标签组2</option>
+            	<option value="">标签组3</option>
+            </select>
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-xs-3">
+                <label > </label>
+            </div>
+
+            <div class="col-xs-6">
+                <input class="btn btn-info" type="submit" value="保存">
+                <button type="button" class="btn btn-info">保存并新增</button>
+                <button type="button" class="btn btn-info" onclick="setIframe('lableList')">取消</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+	
+	<script src="../category.js"></script>
+</body>
+</html>

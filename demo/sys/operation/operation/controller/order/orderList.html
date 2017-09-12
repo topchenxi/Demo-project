@@ -1,0 +1,116 @@
+<div class="top-help clearfix ">
+        <p class="p-help-style">
+            订单管理 &gt; 订单列表
+        </p>
+</div>
+<style>
+    table td{
+        table-layout: fixed;
+        word-break :break-all;
+    }
+</style>
+<div class="searchTop clearfix">
+<form>
+    <div class="row pt-10">
+        <div class="col-xs-4">
+            <lable>订单编号</lable>
+            <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt" placeholder="订单编号" ng-model="paging.orderId">
+        </div>
+        <div class="col-xs-4">
+            <lable>商家中文名</lable>
+            <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt" placeholder="商家中文名"  ng-model="paging.companyName">
+        </div>
+        <div class="col-xs-4">
+            <lable>商家英文</lable>
+            <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt" placeholder="商家英文" ng-model="paging.companyEnName">
+        </div>
+    </div>
+    <div class="row pt-10">
+        <div class="col-xs-6">
+            <lable>订单状态</lable>
+            <select class="ipt ipt-m" ng-options="obj.code as obj.buyerStatusDesc for obj in vm.orderStatusList" ng-model="paging.orderStatus">
+                <option value="">请选择订单状态</option>
+            </select>
+        </div>
+        <div class="col-xs-5 the-time">
+            <label class="fl">成交时间</label>
+            <input readonly ng-click="open1($event)" class="ipt ipt-xs fl ml10" type="text"  placeholder="起始日期" uib-datepicker-popup="yyyy/MM/dd" is-open="opened1"
+                   min-date="'1997-06-22'"  close-text="Close" max-date="paging.endDate" datepicker-options="dateOptions"
+                   ng-model="paging.startDate">
+            <label class="fl pl10 pr10">至</label>
+            <input readonly ng-click="open2($event)" class="ipt ipt-xs fl" type="text" uib-datepicker-popup="yyyy/MM/dd" placeholder="结束日期" is-open="opened2"
+                   min-date="paging.startDate"  close-text="Close" datepicker-options="dateOptions" ng-model="paging.endDate">
+            
+        </div>
+    </div>
+    <div class="row but pt-10">
+        <div class="col-xs-11  text-right">
+            <input type="hidden" ng-model="paging.categoryId">
+            <input ng-click="tools.getOrderList()" type="submit" value="查询"/>
+            <input class="btn-reset" type="reset" ng-click="tools.initCondition(false)" value="重置"/>
+        </div>
+    </div>
+    </form>
+</div>
+<div class="content">
+    <div class="tabTable">
+         <div>
+            <table style="width: 1200px">
+                <thead>
+                <tr>
+                    <td width="5%">序号</td>
+                    <td width="17%">订单编号</td>
+                    <td width="25%">商家名称</td>
+                    <td width="10%">下单时间</td>
+                    <td width="10%">订单总额</td>
+                    <td width="16%">订单状态</td>
+                    <td width="17%">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- [[ 主订单和子订单的-->
+               <tr ng-repeat-start="item in vm.items track by $index">
+                    <td>{{$index+1}}</td>
+                    <!-- 订单流水号 -->
+                    <td>{{item.orderId}}
+                    <span ng-if="!item.isShowChildren" ng-click="tools.downUp($index)" class="glyphicon glyphicon-menu-down"></span>
+                    <span ng-if="item.isShowChildren" ng-click="tools.downUp($index)" class="glyphicon glyphicon-menu-up"></span>
+                    </td>
+                    <!-- 商家名称 -->
+                    <td>{{item.sellerCompanyName}}<br/>{{item.sellerCompanyEnName}}</td>
+                    <td>{{item.addTime| date:'yyyy-MM-dd HH:mm::ss'}}</td>
+                    <!-- 订单金额 -->
+                    <td>{{item.currency|currencyIcon}}{{item.orderAmount|number:2}}</td>
+                    <!-- 订单状态 -->
+                    <td>{{item.orderStatusName}}</td>
+                    <td><a href="javascript:;" ng-click="tools.showDetail(item.orderId,null,item.orderType,item.detailType)">查看详情</a>
+                        <a ng-if="item.orderStatus!=10" ng-click="tools.closeOrder(item.orderId)" href="javascript:;">关闭订单</a>
+                        <a ng-if="item.orderStatus==7" ng-click="tools.solveOrder()" href="javascript:;">结束纠纷</a>
+                    </td>
+                </tr>
+                <tr ng-if="item.isShowChildren" ng-repeat-end ng-repeat="sub in item.orderSubItemList track by $index" class="bg-light border">
+                    <td></td>
+                    <td colspan="3" class="text-left">子订单{{sub.itemNum}}:{{sub.orderId}}-{{sub.itemNum}}</td>
+                    <td>{{sub.payItemFee}}</td>
+                    <td>{{sub.orderStatus|subOrderStatus}}</td>
+                    <td><a  ng-if="item.detailType==0" ng-click="tools.showDetail(sub.orderId,sub.itemNum,item.orderType,item.detailType)">查看详情</a>
+                        <a ng-if="sub.orderStatus==7" ng-click="tools.closeOrder(sub.orderId,sub.itemNum)">关闭订单</a>
+                    </td>
+                </tr>
+                <!-- ]] -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class=" middivs clearfix">
+        <div class="divright clearfix">
+            <select ng-model="paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages"
+                    ng-change="tools.getOrderList()"></select>
+            <button  class="btn btn-default lastbuttons" ng-click="tools.getnewpage();">GO</button>
+            <input type="text" class="inputs" ng-model="tools.newpagesize">
+            <label class="page-list-style label-style">转到页</label>
+            <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class="page-list-style" ng-change="tools.getOrderList()" max-size="5"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+
+<div class="navList">卖家账号管理 > 人民币账号审核详情</div>
+<div class="content">
+    <div class="head">
+        <div class="tit">人民币账号审核详情</div>
+    </div>
+    <div class="message clearfix">
+        <div class="accountMsg m">
+           <table>
+                <tr>
+                    <td colspan="2" class="pink">账户信息</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">开户人姓名</td>
+                    <td>{{ vm.bankCardHCA.name }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">公司名称</td>
+                    <td>{{ vm.bankCardHCA.companyName }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">账户所属银行</td>
+                    <td>{{ vm.bankCardHCA.bankName }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">开户行名称</td>
+                    <td>{{ vm.bankCardHCA.depositBankName }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">银行账户</td>
+                    <td>{{ vm.bankCardHCA.accountNo }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="sellerMsg">
+            <table>
+                <tr>
+                    <td colspan="2" class="pink">卖家信息</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">卖家姓名</td>
+                    <td>{{ vm.user.name }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">账号</td>
+                    <td>{{ vm.user.account }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">公司名称</td>
+                    <td>{{ vm.user.companyName }}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">注册时间</td>
+                    <td>{{ vm.user.registDate }}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if=" vm.bcAudit.imagePath.length>0" class="reviewMsg">
+            <table>
+                <tr>
+                    <td colspan="2" class="pink">申请修改原因/证明</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">修改原因</td>
+                    <td>{{ vm.bcAudit.userDescription}}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">修改证明</td>
+                    <td>
+                        <img ng-src="{{ vm.bcAudit.imagePath | setImgSize:80:80}}" alt="" ng-click="enLarge(vm.bcAudit.imagePath);"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="reviewMsg">
+            <table>
+                <tr>
+                    <td colspan="2" class="pink">审核信息</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">审核状态</td>
+                    <td>{{ vm.bcAudit.status}}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">审核人</td>
+                    <td>{{ vm.bcAudit.auditor}}</td>
+                </tr>
+                <tr>
+                    <td class="pink w160">审核不通过原因</td>
+                    <td>{{ vm.bcAudit.remark}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="oper">
+            <button class="btn btnSize btnSucc j-btn" ng-click="pass()">审核通过</button>
+            <button class="btn btnSize btnFail j-btn" ng-click="reasonAdds()">审核不通过</button>
+            <button class="btn btnSize btnFail" ng-click="tools.back()">返回</button>
+        </div>
+    </div>
+</div>
+
+<!-- 图片放大[[ -->
+<script type="text/ng-template" id="enlarge.html">
+    <div class="EnlargeDiv">
+        <img ng-src="{{ en_img |setImgSize:600:600 }}">
+    </div>
+</script>
+<!-- 图片放大]] -->

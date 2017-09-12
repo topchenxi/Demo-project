@@ -1,0 +1,276 @@
+﻿<div class="oms-crumbs"> <i>采购需求未一次回复列表</i>
+    <p>
+        <a href="/#/sellerTracking">供应商互动行为跟踪</a> /
+        <span>采购需求未一次回复列表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <div class="table-cfec table-cfec-theme3 mb20">
+            <table class="table">
+                <colgroup>
+                    <col width="12%">
+                    <col width="38%">
+                    <col width="12%">
+                    <col width="38%">
+                </colgroup>
+                <thead>
+                    <th colspan="4">供应商信息</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>公司名称</th>
+                        <td>
+                            <!-- 供应商为新供应商 -->
+                            <i class="iconfont blue" ng-if="vm.sellerInfo.newSeller==1" title="此供应商首次开通套餐，开通时间为{{vm.sellerInfo.packageEffectiveTime | date:'yyyy-MM-dd'}}">&#xe624;</i>
+                            <!-- 供应商为旧供应商 -->
+                            <i class="iconfont blue" ng-if="vm.sellerInfo.oldSeller==1" title="此供应商套餐过期时间为{{vm.sellerInfo.packageExpireTime | date:'yyyy-MM-dd' }}">&#xe623;</i>
+                            <a href="/#/seller/detail?sellerId={{paging.sellerId}}" target="_blank" title="{{vm.sellerInfo.companyInfo.companyName}}">{{vm.sellerInfo.companyInfo.companyName}}</a>
+                        </td>
+                        <th>会员类型</th>
+                        <td>{{vm.sellerInfo.baseInfo.packageName}}</td>
+                    </tr>
+                    <tr>
+                        <th>主营行业</th>
+                        <td>{{vm.sellerInfo.companyInfo.mainCategoryName}}</td>
+                        <th>最后登录时间</th>
+                        <td>{{vm.sellerInfo.baseInfo.lastLoginDate | date:"yyyy-MM-dd"}}</td>
+                    </tr>
+                    <tr>
+						<th>近30天商机回复率</th>
+                        <td class="va-m">{{vm.sellerInfo.monthReversionRate | halfYearTwoRateFilter}}</td>
+                        <th>供应商跟进状态</th>
+                        <td>
+                            <!-- 0:可跟进,1:免跟进 -->
+                            <p class="mb10">
+                                <span class="mr20" ng-if="vm.followInfo!=null">
+                                    <span class="gary">跟进状态：</span>{{vm.followInfo.followStatus==null?'可跟进':vm.followInfo.followStatus==0?'可跟进':'免跟进'}} <span ng-if="vm.followInfo.followStatus!=0">（至{{vm.followInfo.updateTime | date:'yyyy-MM-dd'}}）</span>
+                                </span>
+                                <button ngc-permission="seller_sellerlist_followseller" class="btn btn-cfec-red btn-cfec-sm" ng-click="tools.followSeller(paging.sellerId)">跟进供应商</button>
+                            </p>
+                            <p>
+                                <span ng-if="vm.followInfo!=null">
+                                    <span class="gary">{{vm.followInfo.followStatus==0?'跟进内容':'免跟进原因'}}：</span> <span ng-bind-html="vm.followInfo.followContent"></span><span ng-if="vm.followInfo.remark!=''&&vm.followInfo.remark!=null&&vm.followInfo.remark!=undefined">（备注：{{vm.followInfo.remark}}）</span>
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tabTable table-cfec table-cfec-theme2">
+            <table class="table table-hover">
+                <colgroup>
+                    <col width="100%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th colspan="1" class="ta-l">供应商未一次回复采购需求</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p0">
+                            <div class="list-content table-cfec p0">
+                                <!-- 全部 -->
+                                <table class="table table-hover bdn">
+                                    <colgroup>
+                                        <col width="5%">
+                                        <col width="15%">
+                                        <col width="15%">
+                                        <col width="10%">
+                                        <col width="10%">
+                                        <col width="10%">
+                                        <col width="10%">
+                                        <col width="10%">
+                                        <col width="15%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr ng-if="vm.showOperateFlag==false">
+                                            <th>
+                                                <input type="checkbox" ng-if="vm.items.length" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                            </th>
+                                            <th class="ta-c">采购需求主题</th>
+                                            <th class="ta-c">干预完成时间</th>
+                                            <th class="ta-c">质量</th>
+                                            <th class="ta-c">匹配供应商数</th>
+                                            <th class="ta-c">报价供应商数</th>
+                                            <th class="ta-c">采购商有无回复</th>
+                                            <th class="ta-c">采购商近30天二次回复率</th>
+                                            <th class="ta-c">操作</th>
+                                        </tr>
+                                        <tr ng-if="vm.showOperateFlag==true">
+                                            <th>
+                                                <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                            </th>
+                                            <th colspan="8">
+                                                <div class="btn-toolbar" ngc-permission="seller_sellerlist_followsellerBIZ">
+                                                    <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.followBusiness()">批量跟进选中商机</button>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-if="vm.items.length>0">
+                                        <tr ng-repeat='item in vm.items'>
+                                            <td>
+                                                <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                                            </td>
+                                            <!-- 采购需求主题 -->
+                                            <td class="ta-c">
+                                                <a class="link" href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}" title="{{item.productName}}" target="_blank">
+                                                    {{item.productName}}
+                                                </a>
+                                            </td>
+                                            <!-- 干预完成时间 -->
+                                            <td class="ta-c">
+                                                {{item.interventionTime | date:"yyyy-MM-dd hh:mm:ss"}}
+                                            </td>
+                                            <!-- 质量 -->
+                                            <td class="ta-c">
+                                                {{item.quality | qualityFilter}}
+                                            </td>
+                                            <!-- 匹配供应商数 -->
+                                            <td class="ta-c">
+                                                <a class="link" href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}&type=0" target="_blank">
+                                                    {{item.matchQty}}
+                                                </a>
+                                            </td>
+                                            <!-- 报价供应商数 -->
+                                            <td class="ta-c">
+                                                <a class="link" href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}&type=0&isQuote=1&quoteAuditState=2" target="_blank">
+                                                    {{item.quoteQty}}
+                                                </a>
+                                            </td>
+                                            <!-- 采购商有无回复 -->
+                                            <td class="ta-c">
+                                                <a class="link" href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}&type=0&isQuote=1&quoteAuditState=2&hasSendMsgBuyer=1" target="_blank">
+                                                    <!--  0:无回复 1:有回复 -->
+                                                    {{item.reply==0?'无':'有'}}
+                                                </a>
+                                            </td>
+                                            <!-- 采购商近30天二次回复率 -->
+                                            <td class="ta-c">
+                                                {{item.reversionRate | halfYearTwoRateFilter}}
+                                            </td>
+                                            <!-- 操作 -->
+                                            <td class="ta-c">
+                                                <a ngc-permission="seller_sellerlist_followsellerBIZ" class="link" href="javascript:void(0)" ng-click="tools.followBusiness(item.procurementId)">跟进商机</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                                        <tr>
+                                            <td colspan="9">
+                                                <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的记录</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+        </div>
+    </div>
+</div>
+<!-- 跟进商机 -->
+<script type="text/ng-template" id="followBusinessDlgId">
+    <div class="followBusinessDlg">
+        <div class="dlg-title">跟进商机</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb0">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                商机跟进状态：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio">
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="1" ng-model="vm.businessDlg.followStatus" ng-selected="true">可跟进</label>
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="0" ng-model="vm.businessDlg.followStatus">免跟进</label>
+                    <p class="clear f12 lh20 gary" ng-if="vm.businessDlg.followStatus==1">可跟进的商机会纳入“采购商互动行为跟踪”统计中</p>
+                    <p class="clear f12 lh20 gary" ng-if="vm.businessDlg.followStatus==0">免跟进的商机不会纳入“采购商互动行为跟踪”统计中</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb0">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                跟进内容：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea name="" class="form-control reasonInput" rows="2" ng-model="vm.businessDlg.content"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 跟进供应商 -->
+<script type="text/ng-template" id="followSellerDlgId">
+    <div class="followSellerDlg">
+        <div class="dlg-title">添加供应商跟进记录</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb0">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                供应商跟进状态：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio">
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="0" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">可跟进</label>
+                    <label class="w100">
+                    <input type="radio" name="followStatus" value="1" ng-model="vm.sellerDlg.followStatus" ng-change="tools.resetCheckbox()">免跟进</label>
+                    <p class="clear f12 lh20 gary" ng-if="vm.sellerDlg.followStatus==0">可跟进的供应商会纳入“供应商互动行为跟踪”统计中</p>
+                    <p class="clear f12 lh20 gary" ng-if="vm.sellerDlg.followStatus==1">免跟进周期内，此供应商不会纳入“供应商互动行为跟踪”统计中</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb0" ng-if="vm.sellerDlg.followStatus==1">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                免跟进周期：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio pt0">
+                    <select class="select-oms" ng-model="vm.sellerDlg.freeFollowPeriod" ng-options="obj.key as obj.title for obj in tools.freeFollowPeriod">
+                    
+                </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                <span>*</span>
+                {{vm.sellerDlg.followStatus==0?'跟进内容':'免跟进原因'}}：
+            </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="checkbox fl w160 mb0" ng-repeat="rs in vm.followContent[0] track by $index" ng-if="vm.sellerDlg.followStatus==0">
+                        <label class="mr20">
+                        <input id="{{'followContent'+$index}}" type="checkbox" ng-change="tools.checkChange(0)" ng-model="rs.$checked" /> {{rs.text}}
+                    </label>
+                    </div>
+                    <div class="checkbox fl w160 mb0" ng-repeat="rs in vm.followContent[1] track by $index" ng-if="vm.sellerDlg.followStatus==1">
+                        <label class="mr20">
+                        <input id="{{'followContent'+$index}}" type="checkbox" ng-change="tools.checkChange(1)" ng-model="rs.$checked" /> {{rs.text}}
+                    </label>
+                    </div>
+                    <textarea name="" class="form-control reasonInput" rows="2" ng-model="vm.sellerDlg.followContent" ng-disabled="vm.needNode" placeholder="其他内容"></textarea>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                备注：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea name="" class="form-control reasonInput" rows="2" ng-model="vm.sellerDlg.remarkContent" placeholder="备注"></textarea>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

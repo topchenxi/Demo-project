@@ -1,0 +1,213 @@
+<div class="child-detail content bg-white">
+    <div class="Detail-div clearfix">
+        <h3>线下订单详情</h3>
+        <a href="javascript:;" ng-click="tools.back();">
+            <h4>返回上一层</h4>
+        </a>
+    </div>
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="bg-slight text-center"><td colspan="2">订单信息</td></tr>
+        </thead>
+        <tbody>
+        <tr> <td class="bg-slight col-xs-2">订单编号</td><td>{{vm.order.orderId}}</td></tr>
+        <tr> <td class="bg-slight col-xs-2">下单时间</td><td>{{vm.order.addTime|date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>
+        <tr> <td class="bg-slight col-xs-2">发货时间</td><td>{{vm.logistics.dateDeliver|date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>
+        <tr> <td class="bg-slight col-xs-2">确认收货时间</td><td>{{vm.logistics.dateReceive|date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>
+        </tbody>
+    </table>
+
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="bg-deepred font-white">
+            <td width="50%">商品</td>
+            <td width="20%">价格</td>
+            <td width="15%">数量</td>
+            <td width="15%">状态</td></tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.orderProducts track by $index">
+            <td><img class="f-left" ng-src="{{item.propValueImgs|setImgSize:75:80}}" alt="">
+                <div class="prod">
+                    <p class="name">{{item.productName}}</p>
+                    <p class="pt-10 font-slightgrep">{{item.propValueNames}}</p>
+                </div>
+                <div class="clear font-slightgrep">买家留言:{{item.postscript}}</div>
+            </td>
+            <td>${{item.productPrice}}</td>
+            <td>{{item.productNumber}}</td>
+            <td>{{vm.order.orderStatusName}}</td>
+        </tr>
+        <tr><td class="text-right" colspan="6">
+            <!-- 非分期付款-->
+            <p ng-if="vm.orderInstalmentDTOs.length==1">付款金额:<span class="font-lightred font-weight">${{vm.order.orderAmount}}</span></p>
+            <!-- 分期付款 循环-->
+            <p ng-if="vm.orderInstalmentDTOs.length>1" ng-repeat="instalItem in vm.orderInstalmentDTOs track by $index">第{{$index+1}}期付款金额:<span class="ml-15 font-lightred font-weight">${{instalItem.payFee}}</span></p>
+        </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="panel pt-10">
+        <div  class="header-default border">合同信息</div>
+        <div ng-show="vm.contractInfo != null" class="border pd-l-1">
+            <div class="row">
+                <span class="col-xs-5 text-left font-slightgrep ml-15">{{vm.contractInfo.name}}</span>
+                <div class="col-xs-6 text-right mr-15"><span class="font-slightgrep">{{vm.contractInfo.time|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                <a class="ml-15" href="javascript:" ng-click="tools.preview(vm.contractInfo.path)">预览</a> | <a href="javascript:" ng-click="tools.downLoad(vm.contractInfo.path)">下载</a></div>
+            </div>
+            <div class="block" ng-repeat="it in vm.audits track by $index">
+                <div>
+                    <h5 ng-if="it.contractType==2" class="font-weight">卖家异议记录:</h5>
+                    <h5 ng-if="it.contractType==1" class="font-weight">买家异议记录:</h5>
+                    <hr class="hr-orange">
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 text-right">操作时间:</div>
+                    <div class="col-xs-4">{{it.addTime|date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 text-right">异议内容:</div>
+                    <div class="col-xs-10">{{it.remark}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 支付信息 -->
+    <div class="panel pt-10">
+        <div  class="header-default border">支付信息</div>
+        <div class="border pd-l-1">
+            <div class="block" ng-repeat="item in vm.orderInstalmentDTOs track by $index">
+                <div>
+                    <h5 class="font-weight">支付凭证-第{{$index+1}}期:</h5>
+                    <hr class="hr-orange">
+                </div>
+                <div class="row">
+                    <div class="col-xs-5 text-right">
+                        <div class="row">
+                            <div class="col-xs-4 text-right">付款方式:</div>
+                            <div class="col-xs-7 text-left">{{vm._payType}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-right">支付金额:</div>
+                            <div class="col-xs-7 text-left">${{item.payFee}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-right">支付状态:</div>
+                            <div class="col-xs-7 text-left">{{item.auditStatus|payStatus}}</div>
+                        </div>
+                        <!-- [[ 已支付才有-->
+                        <div class="row" ng-if="item.vouchers!=null && item.vouchers.length>0">
+                            <div class="col-xs-4 text-right">支付方式:</div>
+                            <div class="col-xs-7 text-left">{{item.vouchers[0].payMethod}}</div>
+                        </div>
+                        <div class="row" ng-if="item.vouchers!=null && item.vouchers.length>0">
+                            <div class="col-xs-4 text-right">支付时间:</div>
+                            <div class="col-xs-7 text-left">{{item.vouchers[0].payTime|date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-7" ng-if="item.vouchers!=null && item.vouchers.length>0">
+                        <lable class="col-xs-3 text-right" >支付凭证:</lable>
+
+                        <div class="col-xs-4 text-left" ng-if="item.auditStatus!=0" ng-click="tools.enLarge(item.vouchers[0].imgPath)">
+                            <img ng-src="{{item.vouchers[0].imgPath|setImgSize:150:90}}" alt=""/>
+                            <div class="text-center font-slightgrep">点击查看大图</div>
+                        </div>
+                        <div class="col-xs-4 text-left" ng-if="item.auditStatus==0" ng-click="tools.enLarge(item.vouchers[0].imgPath)">
+                            <div class="relative withMask">
+                                <img ng-src="{{item.vouchers[0].imgPath|setImgSize:150:90}}" alt=""/>
+                                <div class="mask mask-opacity" style="width: 150px;height: 90px"></div>
+                                <div class="mask font-lightred">
+                                    <span class="icon glyphicon glyphicon-exclamation-sign"></span>
+                                    <div class="text-center">凭证审核未通过</div>
+                                </div>
+                            </div>
+                            <div class="font-slightgrep text-center">点击查看大图</div>
+                        </div>
+                        <lable class="col-xs-5" ng-if="item.auditStatus==0">原因:{{item.auditRemark}}</lable>
+                    </div>
+                    <!-- ]] 已支付才有-->
+                </div>
+                <!-- 历史上的审核信息 -->
+                <div class="block" ng-if="item.vouchers!=null && item.vouchers.length>1">
+                    <a ng-click="item._isCollapsed= !item._isCollapsed" href="">支付凭证记录 <span ng-class="{true:'glyphicon glyphicon-menu-down',false:'glyphicon glyphicon-menu-up'}[item._isCollapsed]"></span></a>
+                    <ul ng-show="item._isCollapsed==false" style="background-color: #eee;padding-left: 20px;">
+                        <li class="font-14 pt-10" ng-repeat="vs in item.vouchers track by $index">
+                            <div class="row">
+                                <lable class="col-xs-2 text-right">处理时间:</lable>
+                                <div class="col-xs-8 text-left">{{vs.auditTime|date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                            </div>
+                            <div class="row">
+                                <lable class="col-xs-2 text-right">处理状态:</lable>
+                                <div class="col-xs-8 text-left"> {{vs.auditStatus|payStatus}}
+                                    <span ng-if="vs.auditStatus==0">原因:{{vs.auditRemark}}</span></div>
+                            </div>
+                            <div class="row">
+                                <lable class="col-xs-2 text-right">处理内容:</lable>
+                                <div class="col-xs-8 text-left " ng-click="tools.enLarge(vs.imgPath)"><img ng-src="{{vs.imgPath|setImgSize:150:90}}" alt=""/>
+                                    <div class="font-slightgrep">点击查看大图</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel pt-10">
+        <div  class="header-default border">物流信息</div>
+        <div class="border pd-l-1">
+            <div class="row">
+                <lable class="col-xs-2 text-right">发货方式:</lable>
+                <div class="col-xs-9">{{vm.logistics.shippingCorp == "Y2T" ?"海运":"快递"}}</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">运单号码:</lable>
+                <div class="col-xs-9">{{vm.logistics.shippingCn}}</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">物流公司:</lable>
+                <div class="col-xs-9">{{vm.logistics.shippingCorp}}</div>
+            </div>
+            <div class="row">
+            <lable class="col-xs-2 text-right">送货地址:</lable>
+            <div class="col-xs-9">{{vm.order.ordersUser.countryId+vm.order.ordersUser.address}}</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">物流跟踪:</lable>
+                <div class="col-xs-9"><ul>
+                    <li  class="font-14" ng-repeat="it in vm.logistics.shippingDetail ">
+                        {{it.shippingTimestamp|date:'yyyy-MM-dd HH:mm:ss'}}<span class="ml-15">{{it.shippingDesc}}</span>
+                    </li>
+
+                </ul></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel pt-10">
+        <div  class="header-default border">卖家信息</div>
+        <div class="border pd-l-1">
+            <div class="row">
+                <lable class="col-xs-2 text-right">联系人:</lable>
+                <div class="col-xs-9">{{vm.seller.firstName}}</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">联系电话:</lable>
+                <div class="col-xs-9">{{vm.seller.mobile}}</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">联系地址:</lable>
+                <div class="col-xs-9">{{vm.seller.sellerCompany.address}}</div>
+            </div>
+        </div>
+    </div>
+
+<!-- 图片放大[[ -->
+<script type="text/ng-template" id="enlarge.html">
+    <div class="EnlargeDiv">
+        <img ng-src="{{ en_img |setImgSize:600:600 }}">
+        <button ng-click="turnBack();">返回</button>
+    </div>
+</script>
+<!-- 图片放大]] -->

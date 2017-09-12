@@ -1,0 +1,80 @@
+<div class="activeDlg">
+        <div class="dlg-title">会员套餐详情</div>
+        <div class="dlg-content">
+           <div class="table-cfec table-cfec-theme3">
+     		<table class="table table-bordered">
+           <col class="bg-slight" width="20%">
+           <col width="30%">
+           <col class="bg-slight" width="20%">
+           <col width="30%">
+           
+           	<tr>
+	           	<td>套餐名称</td>
+	           	<td>{{vm.detailVo.packageName}}</td>
+	           	<td>英文名称</td>
+	           	<td>{{vm.detailVo.packageEnName}}</td>
+           	</tr>
+           	<tr>
+	           	<td>套餐别称</td>
+	           	<td>{{vm.detailVo.packageNickName}}</td>
+	           	<td>套餐等级</td>
+	           	<td>{{vm.detailVo.typeName}}</td>
+	           	
+           	</tr>
+           	<tr>
+           		<td>套餐金额</td>
+	           	<td> <span class="font-deepred"> {{vm.detailVo.price}}</span> &nbsp;元</td>
+	           	<td>橱窗数量</td>
+	           	<td>{{vm.detailVo.windownNum}} &nbsp;个</td>
+           	</tr>
+			<tr>
+	           	<td>子账号数量</td>
+	           	<td>{{vm.detailVo.childAccountNum}} &nbsp;个</td>
+	           	<td>专属域名</td>
+	           	<td>{{vm.detailVo.secondDomain==0?"无":"有"}}</td>
+           	</tr>
+           	<tr>
+	           	<td>公司视频</td>
+	           	<td>{{vm.detailVo.companyVideo==0?"无":"有"}}</td>
+	           	<td>回复询盘</td>
+	           	<td>{{vm.detailVo.replyInquiry==0?"无":"有"}}</td>
+           	</tr>
+           	<tr>
+	           	<td>行业频道页展示</td>
+	           	<td>{{vm.detailVo.channelTwoLevelPage}} &nbsp;个月</td>
+	           	<td>推荐频道页展示</td>
+	           	<td>{{vm.detailVo.recommendChannelDisplay}} &nbsp;个月</td>
+           	</tr>
+           	<tr>
+	           	<td>广交会电商期刊推荐</td>
+	           	<td>{{vm.detailVo.journalRecommend ==0?"无":"有"}}</td>
+	           	<td>匹配采购需求</td>
+	           	<td>{{vm.detailVo.matchProcurementRequire ==0?"无":"有"}}</td>
+           	</tr>
+           	<tr>
+	           	<td>认证证书展示</td>
+	           	<td>{{vm.detailVo.journalRecommend ==0?"无":"有"}}</td>
+	           	<td>金牌供应商标志</td>
+	           	<td>{{vm.detailVo.logoIdentify ==0?"无":"有"}}</td>
+           	</tr>
+           	<tr>
+	           	<td>代运营服务</td>
+	           	<td>{{vm.detailVo.generationService ==0?"无":"有"}}</td>
+	           	<td>专属客服</td>
+	           	<td>{{vm.detailVo.exclusiveService ==0?"无":"有"}}</td>
+           	</tr>
+           	<tr>
+	           	<td>每天自由报价次数限制</td>
+	           	<td>{{vm.detailVo.dailyFreeQuoteNum}} 次</td>
+	           	<td></td>
+	           	<td></td>
+           	</tr>	
+           	
+           </table>
+       </div>
+            <div class="btn-toolbar clearfix m0">
+                <button ngc-permission="member_membersetting_update"  ng-hide="vm.detailVo.noChg" class="btn btn-cfec-red" ng-click="tools.closeDlg();tools.addPackageDlg(1)">设置</button>
+                <button class="btn btn-cfec-white" ng-click="tools.closeDlg()">取消</button>
+            </div>
+        </div>
+    </div>

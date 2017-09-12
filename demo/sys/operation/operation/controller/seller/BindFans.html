@@ -1,0 +1,121 @@
+<div class="oms-crumbs"> <i>绑定互粉通</i>
+    <p>
+        <a href="/#/seller/fans">绑定互粉通</a> /
+        <span>绑定</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <form class="form-group-main" novalidate="novalidate">
+            <div class="form-group formgroup-cfec-inline row line" ng-if="!vm.isNotify">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 供应商
+                </label>
+                <div class="col-sm-10">
+                    <p class="ad-product-link mr5" ng-if="paging.sellerId!=null">{{paging.sellerId}}&nbsp;&nbsp;&nbsp;&nbsp;{{paging.companyName}}&nbsp;&nbsp;&nbsp;&nbsp;{{paging.companyEnName}}</p>
+                    <input type="hidden" class="input-cfec" placeholder="" ng-model="paging.sellerId" name="sellerId" disabled>
+                    <button class="btn btn-cfec-white mr10 mb10" style="width: 195px" type="button" ng-click="vm.selectSeller();">请选择供应商</button>
+                    <p ng-repeat="item in $root.hasSelectList">
+                        {{item.companyName}}
+                        <a href="javascript:void(0)" ng-click="vm.delSelectSeller($index)">删除</a>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 级别
+                </label>
+                <div class="col-sm-10">
+                    <select class="select-oms mr5 fl" name="sitType" ng-model="vm.info.level" ng-options="obj.value as obj.key for obj in vm.levelList" ng-change="vm.chxLevel();">
+                    </select>
+                    <span class="lh30 fl mr10">
+                    每日扫描上限数 </span>
+                    <input type="number" class="input-cfec" ng-model="vm.info.sendTotal">
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 广交会届数
+                </label>
+                <div class="col-sm-10">
+                    <select class="select-oms mr5 fl" name="sitType" ng-model="vm.info.fairNo" ng-options="obj.sesId as obj.sesName for obj in vm.cfecTimesArray">
+                        <option value="">请选择</option>
+                    </select>
+                    <span class="lh30 fl">届</span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                </label>
+                <div class="col-sm-10">
+                    <button type="button" ng-if="!vm.isNotify" class="btn btn-cfec-red mr20" ng-click="vm.addInfo()">保存</button>
+                    <button type="button" ng-if="vm.isNotify" class="btn btn-cfec-red mr20" ng-click="vm.updateInfo()">修改</button>
+                    <button type="button" class="btn btn-cfec-white mr20" ng-click="vm.back()">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/ng-template" id="addSeller.html">
+    <div class="dlg-title">添加供应商</div>
+    <div class="panel-container">
+        <div class="form-group clearfix">
+            <div class="oms-search fl">
+                <select name="" id="" ng-model="vm.paging.qKey" ng-options="obj.value as obj.key for obj in vm.searchTypeArray">
+                    <option value="">搜索类型</option>
+                </select> <em></em>
+                <input type="text" name="" id="" ng-model="vm.paging.qValue" />
+            </div>
+            <button class="btn btn-cfec-red fl" ng-click="vm.search();">查&nbsp;询</button>
+            <button class="btn btn-cfec-white fl" ng-click="vm.reset();">重&nbsp;置</button>
+        </div>
+        <div class="list-content table-cfec oms-seller">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="80%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>公司名称</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.total > 0">
+                    <tr ng-repeat="item in vm.list">
+                        <td>
+                            <p>公司中文名：{{item.companyName}}</p>
+                            <p>公司英文名：{{item.companyEnName}}</p>
+                        </td>
+                        <td class="ta-c">
+                            <button class="btn btn-cfec-red w150" ng-if="!item.isSelected" ng-click="vm.selected(item)">选择</button>
+                            <button class="btn btn-cfec-white w150" ng-if="item.isSelected" ng-click="vm.selected(item)">已选择</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody class="ng-scope" ng-if="!vm.list||!vm.list.length">
+                    <tr>
+                        <td colspan="2">
+                            <p class="noResult-Text pt20 pb20 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 分页组件[[ -->
+        <div class="row-page clearfix">
+            <select class="item" ng-model="vm.paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="vm.getnewpage(0)"></select>
+            <uib-pagination boundary-links="true" total-items="vm.total" ng-model="vm.paging.page" items-per-page="vm.paging.pageSize" class="page-list-style item" ng-change="vm.getnewpage()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+            <label class="item">共<big>{{vm.total}}</big>条</label>
+            <label class="item">转到第</label>
+            <input class="ngc-jumppage" type="number" class="item" ng-model="vm.newpagesize">
+            <label class="item">页</label>
+            <button class="j-jump item" ng-click="vm.getnewpage(1);">GO</button>
+        </div>
+        <!-- 分页组件[[ -->
+        <div class="mt40">
+            <button type="button" class="btn btn-cfec-red mr20" ng-click="vm.save()">保存</button>
+            <button type="button" class="btn btn-cfec-white" ng-click="vm.cancel()">返回</button>
+        </div>
+    </div>
+</script>

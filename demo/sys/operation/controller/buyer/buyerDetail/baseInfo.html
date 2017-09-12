@@ -1,0 +1,610 @@
+<div class="btns-group mt20">
+    <button ngc-permission="buyer_buyerlist_audit" class="btn btn-cfec-white" ng-click="tools.chgAuditStatus(vm.item.personal.buyerId,3)" ng-if="vm.item.personal.auditStatus!=0&&vm.item.personal.auditStatus!=3">审核通过</button>
+    <button ngc-permission="buyer_buyerlist_audit" class="btn btn-cfec-white" ng-click="tools.chgAuditStatus(vm.item.personal.buyerId,-1)" ng-if="vm.item.personal.auditStatus!=0&&vm.item.personal.auditStatus!=-1">审核不通过</button>
+    <button ngc-permission="buyer_buyerlist_buyerforbidden" class="btn btn-cfec-white" ng-click="tools.forbiddenConfirm(vm.item.personal.buyerId,1)" ng-if="vm.item.loginUser.valid==0">启用</button>
+    <button ngc-permission="buyer_buyerlist_buyerforbidden" class="btn btn-cfec-white" ng-click="tools.forbiddenConfirm(vm.item.personal.buyerId,0)" ng-if="vm.item.loginUser.valid==1">禁用</button>
+    <button ngc-permission="buyer_buyerlist_testbuyer" class="btn btn-cfec-white" ng-click="tools.setTestAccount(1)" ng-if="vm.item.loginUser.isTestAccount != 1">设为测试帐号</button>
+    <button ngc-permission="buyer_buyerlist_testbuyer" class="btn btn-cfec-white" ng-click="tools.setTestAccount(0)" ng-if="vm.item.loginUser.isTestAccount == 1">设为非测试帐号</button>
+</div>
+<div class="table-cfec mt20 table-cfec-theme3">
+    <table class="table">
+        <colgroup>
+            <col width="12%">
+            <col width="38%">
+            <col width="12%">
+            <col width="38%">
+        </colgroup>
+        <thead>
+            <th colspan="4">基本信息</th>
+        </thead>
+        <tbody>
+            <tr>
+                <th>用户名</th>
+                <td>
+                    {{vm.item.loginUser.username}}
+                    <span ng-if="vm.item.loginUser.isTestAccount == 1">(此为测试帐号)</span>
+                </td>
+                <th>邮箱</th>
+                <td>{{vm.item.loginUser.userEmail}}</td>
+            </tr>
+            <tr>
+                <th>用户ID</th>
+                <td>{{vm.item.loginUser.userId}}</td>
+                <th>广交会ID</th>
+                <td>{{vm.item.loginUser.cantonfairId}}</td>
+            </tr>
+            <tr>
+                <th>参展信息</th>
+                <td>
+                    <p>
+                        共{{vm.item.exhibitionTimes}}次(最近{{vm.item.currentExhibition}}届)
+                        <sapn ng-if="vm.item.exhibitionRecord">（{{vm.item.exhibitionRecord}}）</sapn>
+                    </p>
+                </td>
+                <th>创建时间</th>
+                <td>
+                    {{vm.item.loginUser.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+            </tr>
+            <tr>
+                <th>更新时间</th>
+                <td>
+                    {{vm.item.loginUser.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <th>总登录次数</th>
+                <td>{{vm.item.loginUser.loginNum}}</td>
+            </tr>
+            <tr>
+                <th>最后登录时间</th>
+                <td>
+                    {{vm.item.loginUser.lastLoginTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <th>邮箱验证状态</th>
+                <td>
+                    <span>{{vm.item.loginUser.emailValidation | validationFilter}}</span>
+                    <span>{{vm.item.loginUser.emailValidationSecond | emailStatusFilter}}</span>
+                    <a ngc-permission="buyer_buyerlist_update" ng-show="vm.item.isFollower=='true'" href="javascript:void(0)" class="ml10" ng-if="vm.item.loginUser.emailValidation==0" ng-click="tools.manualValidation('email')">人工验证</a>
+                </td>
+            </tr>
+            <tr>
+                <th>手机号码验证状态</th>
+                <td>
+                    <span>{{vm.item.loginUser.mobileValidation | validationFilter}}</span>
+                    <a ngc-permission="buyer_buyerlist_update" ng-show="vm.item.isFollower=='true'" href="javascript:void(0)" class="ml10" ng-if="vm.item.loginUser.mobileValidation==0&&vm.item.personal.mobile" ng-click="tools.manualValidation('mobile')">人工验证</a>
+                </td>
+                <th>用户状态</th>
+                <td>{{vm.item.loginUser.valid==1?'已激活':'未激活' }}</td>
+            </tr>
+            <tr>
+                <th>审核状态</th>
+                <td>{{vm.item.personal.auditStatus| checkFollowBuyerStatus}}</td>
+                <th>来源</th>
+                <td>{{vm.item.sourceValueExt}}</td>
+            </tr>
+            <tr>
+                <th>跟进人</th>
+                <td>{{vm.item.follower}}</td>
+                <th>近30天二次回复率</th>
+                <td>{{vm.item.reversionRate | halfYearTwoRateFilter}}</td>
+            </tr>
+            <tr>
+                <th>拜访工厂</th>
+                <td>
+                    <div ng-if="vm.visitList.length>0">
+                        <p ng-repeat="ritem in vm.visitList">
+                            <span>{{ritem.dealTime | date:'yyyy-MM-dd'}}</span>
+                            <span> 拜访 </span>
+                            <span>【{{ritem.visitFactoryName}}】 </span>
+                            <span ng-if="ritem.createBy!=''||ritem.createBy!=null">操作人：{{ritem.createName}}</span>
+                            <a href="javascript:void(0)" ng-click="tools.delMarkInfo(ritem.visitRecordId);">删除</a>
+                        </p>
+                    </div>
+                    <p><a href="javascript:void(0)" ng-click="tools.addRecordLayer('factory')">增加拜访记录</a></p>
+                </td>
+                <th>成交记录</th>
+                <td>
+                    <div ng-if="vm.dealList.length>0">
+                        <p ng-repeat="ritem in vm.dealList">
+                            <span>{{ritem.dealTime | date:'yyyy-MM-dd'}}</span>
+                            <span> 金额：</span>
+                            <span>US ${{ritem.dealAmount | number:2}}</span>
+                            <span>【{{ritem.sellerName}}】 </span>
+                            <span ng-if="ritem.createBy!=''||ritem.createBy!=null">操作人：{{ritem.createName}}</span>
+                            <a href="javascript:void(0)" ng-click="tools.delMarkInfo(ritem.visitRecordId);">删除</a>
+                        </p>
+                    </div>
+                    <p><a href="javascript:void(0)" ng-click="tools.addRecordLayer('deal')">增加成交记录</a></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<form action="" id="addbuyerform" class="form-group-main  notify-buyer">
+    <h4 class="buyer-title top-title">
+        帐号信息
+        <div ngc-permission="buyer_buyerlist_update" ng-show="vm.item.isFollower=='true'">
+            <button class="btn btn-cfec-white btn-cfec-sm" type="button" ng-click="tools.chxNotifyStatus(true);" ng-if="!vm.isNotify">修改</button>
+            <button class="btn btn-cfec-white btn-cfec-sm" type="button" ng-click="tools.saveInfo()" ng-if="vm.isNotify">保存</button>
+            <button class="btn btn-cfec-white btn-cfec-sm" type="button" ng-click="tools.chxNotifyStatus(false);" ng-if="vm.isNotify">取消</button>
+
+        </div>
+
+    </h4>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span>*</span> 邮箱
+        </label>
+        <div class="col-sm-10">
+            <input type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" ng-readonly="!vm.isNotify" name="userEmail" placeholder="请输入邮箱" ng-model="buyerInfo.userEmail" />
+        </div>
+    </div>
+    <h4 class="buyer-title">个人信息</h4>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span>*</span> 姓名
+        </label>
+        <div class="col-sm-10">
+            <input type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="firstName" placeholder="请输入姓名" ng-model="buyerInfo.firstName" ng-readonly="!vm.isNotify" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 性别
+        </label>
+        <div class="col-sm-10 radio">
+            <label class="w100">
+                <input ng-disabled="!vm.isNotify" type="radio" name="gender" value="1" ng-model="buyerInfo.gender">男</label>
+            <label class="w100">
+                <input ng-disabled="!vm.isNotify" type="radio" name="gender" value="2" ng-model="buyerInfo.gender">女</label>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 头像
+        </label>
+        <div class="col-sm-10">
+            <img class="mr5" src="" alt="" width="60" height="60" ng-src="{{ buyerInfo.buyerPhoto | ngcSetImgSize:60:60:3:1 }}">
+            <button class="btn btn-cfec-white" type="button" class="btn btn-cfec-white" value="上传" ngf-select ngf-change="tools.uploadImg($files,'buyerPhoto')" accept="'image/*'" ng-disabled="!vm.isNotify">上传</button>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span>*</span> 国籍
+        </label>
+        <div class="col-sm-10">
+            <select ngc-select-search ng-if="vm.isNotify" id="" class="select-oms" name="countryId" ng-model="buyerInfo.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('countryId');">
+                <option value="">请选择</option>
+            </select>
+            <select ng-disabled="true" ng-if="!vm.isNotify" id="" class="select-oms" name="countryId" ng-model="buyerInfo.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('countryId');">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 地址
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="address" placeholder="" ng-model="buyerInfo.address" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 邮编
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="zipCode" placeholder="" ng-model="buyerInfo.zipCode" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 手机
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec mr10 w95 {{vm.isNotify?'':'readonly'}}" name="buyerCountryCode" placeholder="国家代码" ng-model="buyerInfo.mobileContry" />
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec mr10 {{vm.isNotify?'':'readonly'}}" name="buyerMobile" placeholder="手机号" ng-model="buyerInfo.mobile" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> whatsapp
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec  {{vm.isNotify?'':'readonly'}}" name="buyerwhatsapp" placeholder="" ng-model="buyerInfo.whatsapp" />          
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 固话
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec mr10 w95 {{vm.isNotify?'':'readonly'}}" name="buyerRegion" placeholder="国家代码" ng-model="buyerInfo.region" />
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec mr10 w90 {{vm.isNotify?'':'readonly'}}" name="buyerArea" placeholder="地区号" ng-model="buyerInfo.area" />
+            <input type="text" class="input-cfec mr10 {{vm.isNotify?'':'readonly'}}" name="buyerTelephone" placeholder="固话号" ng-readonly="!vm.isNotify" ng-model="buyerInfo.telephone" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> wechat
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec  {{vm.isNotify?'':'readonly'}}" name="buyerwechat" placeholder="" ng-model="buyerInfo.wechat" />            
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row ">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> Skype
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="skype" placeholder="" ng-model="buyerInfo.skype" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row line">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> Other Contact
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="otherContact" placeholder="其他邮箱/手机/即时通讯等" ng-model="buyerInfo.otherContact" />
+        </div>
+    </div>
+    <h4 class="buyer-title">公司信息</h4>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span>*</span> 公司名称
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec mr5 {{vm.isNotify?'':'readonly'}}" name="companyName" ng-model="buyerInfo.companyName" />
+            <label for="businessCooper">
+                <input ng-disabled="!vm.isNotify" type="checkbox" class="mr5" name="businessCooper" id="businessCooper" ng-model="buyerInfo.businessCooper" style="margin-top: 9px;">商务合作采购商</label>
+            <label for="otherExhibition">
+                <input ng-disabled="!vm.isNotify" type="checkbox" class="mr5" name="otherExhibition" id="otherExhibition" ng-model="buyerInfo.otherExhibition" style="margin-top: 9px;">其他展会采购商</label>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 公司logo
+        </label>
+        <div class="col-sm-10">
+            <img class="mr5" src="" alt="" width="60" height="60" ng-src="{{ buyerInfo.companyLogo | ngcSetImgSize:60:60:3:2 }}">
+            <button ng-disabled="!vm.isNotify" class="btn btn-cfec-white" type="button" class="btn btn-cfec-white" value="上传" ngf-select ngf-change="tools.uploadImg($files,'companyLogo')" accept="'image/*'">上传</button>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span>*</span> 公司国家
+        </label>
+        <div class="col-sm-10">
+            <select ngc-select-search ng-if="vm.isNotify" id="" class="select-oms" name="companyCountryId" ng-model="buyerInfo.companyCountryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('companyCountryId');">
+                <option value="">请选择</option>
+            </select>
+            <select ng-disabled="true" ng-if="!vm.isNotify" id="" class="select-oms" name="companyCountryId" ng-model="buyerInfo.companyCountryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryArray" ng-change="tools.selectChange('companyCountryId');">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 公司地址
+        </label>
+        <div class="col-sm-10">
+            <input ng-readonly="!vm.isNotify" type="text" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="companyAddress" ng-model="buyerInfo.companyAddress" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 邮编
+        </label>
+        <div class="col-sm-10">
+            <input type="text" ng-readonly="!vm.isNotify" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="companyZipCode" ng-model="buyerInfo.companyZipCode" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 公司简介
+        </label>
+        <div class="col-sm-10">
+            <textarea ng-readonly="!vm.isNotify" name="companyDesc" id="companyDesc" maxlength="1000" class="textarea-cfec {{vm.isNotify?'':'readonly'}}" ng-model="buyerInfo.companyDesc"></textarea>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 公司网址
+        </label>
+        <div class="col-sm-10">
+            <input type="text" ng-readonly="!vm.isNotify" class="input-cfec {{vm.isNotify?'':'readonly'}}" name="companyWebsite" ng-model="buyerInfo.companyWebsite" />
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 成立年份
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="companyFoundYear" ng-model="buyerInfo.companyFoundYear" ng-options="obj.value as obj.key for obj in vm.companyFoundYearArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 采购商性质
+        </label>
+        <div class="col-sm-10 checkbox-content">
+            <label class="" ng-repeat="item in vm.companyNatureArray">
+                <input ng-disabled="!vm.isNotify" type="checkbox" ng-model="item.flag" name="companyNatureVal" value="{{item.value}}">{{item.key}}</label>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 采购商类型
+        </label>
+        <div class="col-sm-10 checkbox-content">
+            <label class="" ng-repeat="item in vm.companyTypeArray">
+                <input ng-disabled="!vm.isNotify" type="checkbox" ng-model="item.flag" name="companyTypeVal" value="{{item.value}}">{{item.key}}</label>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row line">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 年采购量
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="yearBuyingAmt" ng-model="buyerInfo.yearBuyingAmt" ng-options="obj.value as obj.key for obj in vm.yearBuyingAmtArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <h4 class="buyer-title">采购偏好</h4>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 采购产品分类
+        </label>
+        <div class="col-sm-10">
+            <input readonly ng-disabled="!vm.isNotify" type="text" disabled class="input-cfec mr10 w400" name="productType" value="{{$root.categoryArray | getBuyerCategoryName}}">
+            <button ng-disabled="!vm.isNotify" class="btn btn-cfec-white" type="button" ng-click="tools.showPanel();">选择分类</button>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 期望供应商的人员规模
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="staffSize" ng-model="buyerInfo.staffSize" ng-options="obj.value as obj.key for obj in vm.staffSizeArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 期望供应商的注册资金
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="registeredCapital" ng-model="buyerInfo.registeredCapital" ng-options="obj.value as obj.key for obj in vm.registeredCapitalArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 期望供应商的年营业额
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="annualTurnover" ng-model="buyerInfo.annualTurnover" ng-options="obj.value as obj.key for obj in vm.annualTurnoverArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group formgroup-cfec-inline row line">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 期望供应商的公司类型
+        </label>
+        <div class="col-sm-10">
+            <select ng-disabled="!vm.isNotify" id="" class="select-oms" name="businessType" ng-model="buyerInfo.businessType" ng-options="obj.value as obj.key for obj in vm.businessTypeArray">
+                <option value="">请选择</option>
+            </select>
+        </div>
+    </div>
+    <h4 class="buyer-title">其他信息</h4>
+    <div class="form-group formgroup-cfec-inline row">
+        <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            <span></span> 备注(只有oms后台可见)
+        </label>
+        <div class="col-sm-10">
+            <textarea ng-readonly="!vm.isNotify" id="remark" class="textarea-cfec {{vm.isNotify?'':'readonly'}}" name="remark" ng-model="buyerInfo.remark"></textarea>
+        </div>
+    </div>
+    <div ngc-permission="buyer_buyerlist_update" class="ta-r" ng-show="vm.item.isFollower=='true'">
+        <button class="btn btn-cfec-white" type="button" ng-click="tools.chxNotifyStatus(true);" ng-if="!vm.isNotify">修改</button>
+        <button class="btn btn-cfec-white" type="button" ng-click="tools.saveInfo()" ng-if="vm.isNotify">保存</button>
+        <button class="btn btn-cfec-white" type="button" ng-click="tools.chxNotifyStatus(false);" ng-if="vm.isNotify">取消</button>
+    </div>
+    <h4 class="buyer-title mt20">审核/禁启用信息</h4>
+    <div class="table-cfec table-cfec-theme3 mt20">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="34%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>操作时间</th>
+                    <th>操作人</th>
+                    <th>审核/禁启用结果</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.item.logList.items!=null&&vm.item.logList.items.length>
+        0">
+                <tr ng-repeat='item in vm.item.logList.items'>
+                    <td>{{item.createTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.opearUsername}}</td>
+                    <td>{{item.detailContent}}</td>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.item.logList.items==undefined||vm.item.logList.items.length==0" class="ng-scope">
+                <tr>
+                    <td colspan="3">
+                        <p class="noResult-Text pt50 pb50 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h4 class="buyer-title mt20">更新记录</h4>
+    <div class="table-cfec mt20">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="34%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>更新时间</th>
+                    <th>修改人</th>
+                    <th>原信息记录</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.item.updateLog!=undefined&&vm.item.updateLog.length>
+    0">
+                <tr ng-repeat="item in vm.item.updateLog">
+                    <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.updateName}}</td>
+                    <td>
+                        <a href="javascript:void(0);" class="cfec-link" ng-click="tools.showUpdateRecord(item.buyerUpdateDto)">查看修改前的信息</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.item.updateLog==undefined||vm.item.updateLog.length==0" class="ng-scope">
+                <tr>
+                    <td colspan="3">
+                        <p class="noResult-Text pt50 pb50 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<script type="text/ng-template" id="updateRecord.html">
+    <div class="dlg-title">查看更新</div>
+    <div class="table-cfec table-cfec-theme3 p20">
+        <table class="table">
+            <colgroup>
+                <col width="30%">
+                <col width="70%">
+            </colgroup>
+            <tbody>
+                <tr ng-repeat="(key,value) in updateRecordItem" ng-if="value!=null">
+                    <th>{{key | chxKey}}</th>
+                    <td ng-if="key=='buyerPhoto'||key=='companyLogo'"><img ng-src="{{value | setImgSize:60:60}}" alt=""></td>
+                    <td ng-if="key!='buyerPhoto'&&key!='companyLogo'">{{value}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+<script type="text/ng-template" id="showPanelBuyer.html">
+    <div class="dlg-title">选择类目</div>
+    <div class="panel-container">
+        <div class="level">
+            <ul>
+                <li ng-repeat="item in vm.firstLevelCate" ng-click="tools.getChildcate(item.categoryId)">{{item.categoryName}}<span>&gt; </span></li>
+            </ul>
+        </div>
+        <div class="level">
+            <ul>
+                <li ng-repeat="item in vm.Childcate" ng-click="tools.chooseCate(item)">{{item.categoryName}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-result"> <strong>已选择:</strong>
+        <ul>
+            <li ng-repeat="item in $root.categoryArray">{{item.categoryName}}<i class="iconfont" ng-click="tools.delCategory(item)">&#xe60b;</i></li>
+        </ul>
+    </div>
+    <div class="btn-toolbar clearfix p20">
+        <button type="button" class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+        <button type="button" class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="buyerListDlgId">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c">
+                <i class="iconfont icon-xunwenoms"></i>
+                <span>确定{{vm.forbiddenStatus==0?'禁用':'启用'}}该用户吗？</span>
+            </p>
+            <div class="form-group pt20 mb0" ng-if="vm.forbiddenStatus==0" style="position:relative;">
+                <span class="red" style="position:absolute;left:-12px;top:18px;">*</span>
+                <textarea name="" class="form-control reasonInput" rows="4" placeholder="请输入禁用原因"></textarea>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="confirmTest.html">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c">
+                <i class="iconfont icon-xunwenoms"></i>
+                <span>确定设为{{vm.status==1?'测试':'非测试'}}帐号吗？</span>
+            </p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="manualValidation.html">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" ng-model="mvDlg.check" ng-true-value="2"> {{mvDlg.text}}
+                    </label>
+                </div>
+            </p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="addRecord.html">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form add-label-record-warp">
+            <div class="col-sm-10 visitList mb20" ng-if="arDlg.type=='factory'">
+                <div class="recordItem clearfix" ng-repeat="item in arDlg.visitRecord">
+                    <input ngc-lay-date readonly type="text" class="laydate-icon fl mr10" ng-model="item.dealTime" id="visitTime{{$index}}" ng-required placeholder="访厂日期" />
+                    <input type="text" name="" class="input-cfec fl w350 mr10" ng-model="item.visitFactoryName" placeholder="拜访的工厂名称">
+                    <a href="javascript:void(0)" class="delBtn fl" ng-click="tools.delRecord('visitRecord',$index)" ng-if="arDlg.visitRecord.length>1"><i class="iconfont">&#xe65f;</i></a>
+                </div>
+                <a href="javascript:void(0)" title="添加访厂记录" class="addBtn" ng-click="tools.addRecord('visitRecord')"><i class="iconfont">&#xe667;</i></a>
+            </div>
+            <div class="col-sm-10 dealList mb20" ng-if="arDlg.type=='deal'">
+                <div class="recordItem clearfix mb15" ng-repeat="item in arDlg.dealRecord">
+                    <input ngc-lay-date readonly type="text" class="laydate-icon fl mr10" ng-model="item.dealTime" id="dealTime{{$index}}" ng-required placeholder="成交日期" />
+                    <span class="fl lh30 mr10">US $</span>
+                    <input type="number" name="" class="input-cfec fl w100 mr10" ng-model="item.dealAmount" placeholder="金额">
+                    <input type="text" name="" class="input-cfec fl w350 mr10" ng-model="item.sellerName" placeholder="供应商公司名称">
+                    <a href="javascript:void(0)" class="delBtn fl" ng-click="tools.delRecord('dealRecord',$index)" ng-if="arDlg.dealRecord.length>1"><i class="iconfont">&#xe65f;</i></a>
+                </div>
+                <a href="javascript:void(0)" title="添加成交记录" class="addBtn" ng-click="tools.addRecord('dealRecord')"><i class="iconfont">&#xe667;</i></a>
+            </div>
+            <div class="btn-toolbar clear clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,12 @@
+<div class="dlg-title">提示</div>
+<div class="dlg-content form">
+    <p class="ta-c"> {{vm.messages}}
+    </p>
+    <div class="form-group pt20 mb0" ng-if="vm.hasReson">
+        <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+    </div>
+    <div class="btn-toolbar clearfix">
+        <button class="btn btn-cfec-red" ng-click="vm.submit()">{{vm.submitMsg?vm.submitMsg:'确定'}}</button>
+        <button class="btn btn-cfec-white" ng-click="vm.close()">{{vm.cancelMsg?vm.cancelMsg:'取消'}}</button>
+    </div>
+</div>

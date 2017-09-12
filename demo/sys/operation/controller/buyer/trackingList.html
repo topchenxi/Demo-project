@@ -1,0 +1,200 @@
+﻿<div class="oms-crumbs"> <i>采购商互动行为跟踪</i>
+    <p>
+        <a href="">采购商互动行为跟踪</a> /
+        <span>采购商互动行为跟踪</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <!-- 商机发布时间 -->
+            <div class="form-group fl">
+                <label for="">商机发布时间</label>
+                <select class="select-oms" ng-model="paging.timeIntervalBizSend" ng-options="obj.key as obj.title for obj in tools.timeIntervalBizSend"></select>
+            </div>
+            <!-- 采购商未二次回复时长 -->
+            <div class="form-group fl">
+                <label for="">采购商未二次回复时长</label>
+                <select class="select-oms" ng-model="paging.timeIntervalTwoUnReply" ng-options="obj.key as obj.title for obj in tools.timeIntervalTwoUnReply"></select>
+            </div>
+            <!-- 采购商 -->
+            <div class="form-group fl">
+                <label for="">采购商</label>
+                <div class="oms-search">
+                    <select name="" id="" ng-model="paging.buyerType" ng-options="obj.key as obj.title for obj in tools.buyerType"></select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter action="tools.getbuyerTrackingList" name="" id="" ng-model="paging.buyerValue" />
+                </div>
+            </div>
+            <!-- 采购商跟进人 -->
+            <div class="form-group fl" ngc-permission="buyer_buyertrackingList_viewfollower">
+                <label for="">采购商跟进人</label>
+                <select ngc-select-search class="select-oms" name="followerId" ng-model="paging.followerId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <!-- 排序规则 -->
+            <div class="form-group fl">
+                <label for="">排序规则</label>
+                <select class="select-oms" ng-model="paging.sorter" ng-options="obj.key as obj.title for obj in tools.sorter"></select>
+            </div>
+            <div class="form-group fl">
+                <label for="">公司国家</label>
+                <select ngc-select-search class="select-oms" ng-model="paging.countryId" ng-options="obj.countryId as obj.countryCnName for obj in tools.countries" name="country">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group btns-group clear">
+                <button type="button" class="btn btn-cfec-red mr20" ng-click="tools.getbuyerTrackingList(true);">查&nbsp;询</button>
+                <button type="button" class="btn btn-cfec-white" ng-click="tools.reset();">重 置</button>
+                <button ngc-permission="buyer_buyertrackingList_exportBuyerData" type="button" class="btn btn-cfec-white fr" ng-click="tools.report();">导出采需数据</button>
+            </div>
+            <dl class="row-item mt10">
+                <dt>快速筛选</dt>
+                <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isLocalTimer==1]" ng-click="paging.isLocalTimer =(paging.isLocalTimer ==1?0:1);tools.getbuyerTrackingList()">
+                    当地时间为8:00-21:00的
+                    <span class="icon-checked"></span>
+                </dd>
+            </dl>
+        </div>
+        <div class="list-content table-cfec">
+            <!-- 全部 -->
+            <table class="table table-hover mb0">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="5%">
+                    <col width="20%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                </colgroup>
+                <thead>
+                    <tr ng-if="vm.showOperateFlag==false">
+                        <th>
+                            <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                        </th>
+                        <th>采购商</th>
+                        <th class="ta-c">近30天二次回复率</th>
+                        <th class="ta-c">未二次回复采购需求数</th>
+                        <th class="ta-c">未二次回复询盘数</th>
+                        <th class="ta-c">最近商机跟进记录</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                    <tr ng-if="vm.showOperateFlag==true">
+                        <th>
+                            <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                        </th>
+                        <th colspan="6">
+                            <div class="btn-toolbar">
+                                <button ngc-permission="buyer_buyerfollow_update" type="button" ng-click="tools.chxFollowBuyerByAll();" class="btn btn-default btn-cfec-white btn-cfec-sm">批量分配跟进人</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length">
+                    <tr ng-repeat='item in vm.items'>
+                        <td>
+                            <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                        </td>
+                        <!-- 采购商 -->
+                        <td>
+                            <a class="link" href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank" title="用户ID">{{item.userId}}</a>
+                            <br>
+                            <a class="link" href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank" title="采购商姓名">{{item.firstName}}</a>
+                            <div class="show-info">
+                                <i class="iconfont">&#xe62c;</i>
+                                <div class="child-warp">
+                                    <ul>
+                                        <li ng-if="item.userId">
+                                            <span>用户ID：</span> {{item.userId}}
+                                        </li>
+                                        <li ng-if="item.firstName">
+                                            <span>姓名：</span> {{item.firstName}}
+                                        </li>
+                                        <li ng-if="item.email">
+                                            <span>邮箱：</span> {{item.email}}
+                                        </li>
+                                        <li ng-if="item.mobile">
+                                            <span>手机：</span> {{item.mobile}}
+                                        </li>
+                                        <li ng-if="item.telephone">
+                                            <span>固话：</span> {{item.telephone}}
+                                        </li>
+                                    </ul>
+                                    <span class="icon-arrow-up"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- 近30天二次回复率 -->
+                        <td class="ta-c">{{item.reversionRate | halfYearTwoRateFilter}}</td>
+                        <!-- 未二次回复采购需求数 -->
+                        <td class="ta-c">
+                            <a class="link" href="/#/buyer/purchaseReply?buyerId={{item.buyerId}}&timeIntervalBizSend={{paging.timeIntervalBizSend}}&timeIntervalTwoUnReply={{paging.timeIntervalTwoUnReply}}&buyerType={{paging.buyerType}}&buyerValue={{paging.buyerValue}}&followId={{paging.followId}}&&isMyFollow={{item.isMyFollow}}"
+                                target="_blank">{{item.qtyUnPmct}}</a>
+                        </td>
+                        <!-- 未二次回复询盘数 -->
+                        <td class="ta-c">
+                            <a class="link" href="/#/buyer/inquiryReply?buyerId={{item.buyerId}}&timeIntervalBizSend={{paging.timeIntervalBizSend}}&timeIntervalTwoUnReply={{paging.timeIntervalTwoUnReply}}&buyerType={{paging.buyerType}}&buyerValue={{paging.buyerValue}}&followId={{paging.followId}}&&isMyFollow={{item.isMyFollow}}"
+                                target="_blank">{{item.qtyUnInquiry}}</a>
+                        </td>
+                        <!-- 采购商跟进人 -->
+                        <td class="ta-c">
+                            <p title="最近商机跟进人">{{item.latestBusinessTrace.followerName}}</p>
+                            <p title="最近商机跟进时间">{{item.latestBusinessTrace.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                            <p title="最近商机跟进标识">{{item.latestBusinessTrace.businessTraceFlag.desc}}</p>
+                            <p title="最近商机跟进内容">{{item.latestBusinessTrace.content}}</p>
+                        </td>
+                        <!-- 操作 -->
+                        <td class="ta-c">
+                            <p>
+                                <a ngc-permission="buyer_buyerlist_followbuyerB" ng-if="item.isMyFollow==1" class="link" href="javascript:void(0)" ng-click="tools.followBusiness(item.buyerId)">批量跟进商机</a>
+                            </p>
+                            <p>
+                                <a ngc-permission="buyer_buyerfollow_update" class="link" href="javascript:void(0)" ng-click="tools.chxFollowBuyer(item.companyId,item.followerId)">分配跟进人</a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="7">
+                            <p class="noResult-Text pt100 pb100 ta-c">
+                                <i class="iconfont icon-jingshioms"></i> 没有符合条件的记录
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tips-text ml20">
+            <ul>
+                <li class="gary f12">备注：1. 此列表不统计审核不通过/被禁用/测试的采购商</li>
+                <li class="gary f12">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 此列表只统计有效期内&符合筛选条件的采购需求，以及符合筛选条件的询盘。
+                </li>
+                <li class="gary f12">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 所有的统计数据与实际数据有大概24小时的延迟。
+                </li>
+            </ul>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+    </div>
+</div>
+<script type="text/ng-template" id="chxStatusByNotify.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <div class="clearfix">
+            <label for="chxType2" class="fl mr20" style="height: 30px;line-height: 30px;">修改跟进人:</label>
+            <div class="fl">
+                <select ngc-select-search class="select-oms" name="followPeople" id="followPeople" ng-model="vm.follower" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>

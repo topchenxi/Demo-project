@@ -1,0 +1,95 @@
+<style type="text/css">
+    .form-group-main .form-group .checkbox label{
+        margin-bottom: 5px;
+    }
+</style>
+<div class="oms-crumbs"> <i>添加用户</i>
+  <p>
+    <a href="">添加用户</a>
+    /
+    <span>用户管理</span>
+    /
+    <span>系统管理</span>
+  </p>
+</div>
+
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+    <form class="form-group-main" name="addForm" role="form" novalidate="novalidate" ng-submit="tools.saveUser()">
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="userName" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"><span>*</span>帐户</label>
+            <div class="col-sm-5">
+                <input ngc-auto-input type="text" class="input-cfec" id="userName" name="userName" placeholder="请输入账户" ng-model="vm.item.userName" required maxlength="50" ngc-remote="{url:'/oms/user/checkusername.cf',original:'{{vm.originalUserName}}'}">
+                <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && (addForm.userName.$invalid.required || addForm.roleName.$invalid.maxlength)">请输入50字以内的帐户名</span>
+                <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && addForm.userName.$error.ngcRemote">
+                    帐户名不可重复
+                </span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="userEmail" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"><span>*</span>E-mail</label>
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                <input ngc-auto-input type="text" class="input-cfec" id="userEmail" name="userEmail" placeholder="请输入E-mail" 
+                ng-model="vm.item.userEmail" required maxlength="50" ng-pattern="/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/" ngc-remote="{url:'/oms/user/checkemail.cf',original:'{{vm.originalUserEmail}}'}"/>
+                <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && (addForm.userEmail.$invalid.required || addForm.userEmail.$invalid.maxlength || addForm.userEmail.$invalid.pattern)">请输入合法邮箱</span>
+                 <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && addForm.userEmail.$error.ngcRemote">
+                    该email已经存在
+                </span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="realName" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">姓名</label>
+            <div class="col-sm-5">
+                <input ngc-auto-input type="text" class="input-cfec" id="realName" name="realName" ng-model="vm.item.realName" maxlength="50" / >
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="mobile" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">手机</label>
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                <input ngc-auto-input type="text" class="input-cfec" id="mobile" name="mobile" ng-model="vm.item.mobile" maxlength="50" ng-pattern="/^\d*$/"/>
+                <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && addForm.mobile.$invalid">
+                    手机号只能由数字组成
+                </span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="telephone" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">电话</label>
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                <input ngc-auto-input type="text" class="input-cfec" id="telephone" name="telephone" ng-model="vm.item.telephone" maxlength="20" ng-pattern="/^[\d-]*$/">
+                <span class="error-valid" ng-show="(addForm.$dirty||addForm.$submitted) && addForm.telephone.$invalid">
+                    电话只能由数字和字符“-”组成
+                </span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="groupId" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">所属分组</label>
+            <div class="col-sm-5">
+                <select class="select-oms mr-10" id="group" ng-model="vm.item.groupId" ng-options="obj.groupId as obj.groupName for obj in vm.grpList">
+                <option value="">--请选择分组--</option>
+            </select>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label for="role" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">角色 </label>
+            <div class="col-xs-10  col-sm-10 col-md-9 col-lg-8 checkbox"> <!-- roles -->
+                <div>
+                <label title="{{rs.roleName}}" class="w150 text-overflow" ng-repeat="rs in vm.roleList track by $index"><input id="role_{{$index}}" type="checkbox" ng-true-value="{{rs.roleId+''}}" ng-false-value="false" ng-model="vm.checkRoles[rs.roleId]"> {{rs.roleName}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">状态</label>
+            <div class="col-sm-5 radio"> <!-- status-->
+                <label class="w100"><input type="radio" name="status"  value="1" ng-model="vm.item.valid">正常</label>
+                <label class="w100"><input type="radio"  name="status" value="0" ng-model="vm.item.valid"/>禁用</label>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="submit" class="btn btn-cfec-red" ng-disabled="addForm.$invalid">保存</button>
+                <button type="button" class="btn btn-cfec-white" ng-click="tools.back()">返回</button>
+            </div>
+        </div>
+    </form>
+</div>
+    </div>

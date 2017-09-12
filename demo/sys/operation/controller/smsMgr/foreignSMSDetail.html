@@ -1,0 +1,54 @@
+<div class="oms-crumbs"> <i>群发国际短信管理</i>
+    <p>
+        <a href="">群发国际短信详情</a> /
+        <span>群发国际短信管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content p20">
+        <div class="tabTable table-cfec table-cfec-theme2 mt20">
+            <table class="table table-hover">
+                <colgroup>
+                    <col width="25%" />
+                    <col width="75%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th colspan="2">群发国际短信</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>收信人</th>
+                        <td>
+                            <a ng-href="{{vm.imgUrl+vm.item.filePath}}" target="_blank">{{vm.item.fileName}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>名称</th>
+                        <td>{{vm.item.taskName}}</td>
+                    </tr>
+                    <tr>
+                        <th>展会通计划ID</th>
+                        <td>{{vm.item.smsTpl.var_id}}</td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td>{{vm.item.smsTpl.tpl_content}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>发送量</th>
+                        <td>{{vm.item.qtySucess + vm.item.qtyFail}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>到达率</th>
+                        <td>{{vm.item.arrivalRate*100}}%
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

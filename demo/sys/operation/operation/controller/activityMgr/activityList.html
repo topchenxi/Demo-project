@@ -1,0 +1,112 @@
+<div class="oms-crumbs"> <i>活动列表</i>
+    <p>
+        <a href="">活动管理</a> /
+        <span>活动列表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" ng-click="tools.initTab()">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="tools.initTab(2)">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="tools.initTab(3)">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="tools.initTab(-1)">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+            <button type="button" class="btn btn-default btn-cfec-white fr m10 mr20" ng-click="tools.addActivity();">添加活动</button>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">活动类型</label>
+                <select name="" id="" class="select-oms" ng-model="paging.eventType">
+                    <option value="">-活动类型-</option>
+                    <option value="1">线上</option>
+                    <option value="2">线下</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">活动名称:</label>
+                <input type="text" ngc-monitor-enter class="input-cfec" ng-model="paging.eventTitle" placeholder="活动名称">
+            </div>
+            <div class="form-group fl">
+                <label for="">报名日期</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.applyTimeStart" id="applyTimeStart" max-date="{{paging.applyTimeEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.applyTimeEnd" id="applyTimeEnd" min-date="{{paging.applyTimeStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group fl">
+                <label for="">活动日期</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.eventTimeStart" id="eventTimeStart" max-date="{{paging.eventTimeEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.eventTimeEnd" id="eventTimeEnd" min-date="{{paging.eventTimeStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.search();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.reset();">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>活动名称</th>
+                        <th>报名时间</th>
+                        <th>活动时间</th>
+                        <th>活动类型</th>
+                        <th>费用</th>
+                        <th>创建时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length">
+                    <tr ng-repeat='item in vm.items'>
+                        <td>
+                            <p>{{item.eventTabloidsId}}</p>
+                            {{item.eventTitle}}</td>
+                        <td>
+                            <p> {{item.applyTime | date:'yyyy-MM-dd HH:mm'}} <span ng-if="item.applyTimeEndDb">到</span> {{item.applyTimeEndDb | date:'yyyy-MM-dd HH:mm'}}</p>
+                        </td>
+                        <td>
+                            <p> {{item.eventTime | date:'yyyy-MM-dd HH:mm'}} <span ng-if="item.eventTimeEndDb">到</span> {{item.eventTimeEndDb | date:'yyyy-MM-dd HH:mm'}}</p>
+                        </td>
+                        <td>{{item.eventType | eventTypeFilter}}</td>
+                        <td>{{item.eventExpense | eventExpenseFilter}}</td>
+                        <td>
+                            <p> {{item.createTime | date:'yyyy-MM-dd'}}</p>
+                            <p> {{item.createTime | date:'HH:mm:ss'}}</p>
+                        </td>
+                        <td>{{item.status | activityStatus}}</td>
+                        <td>
+                            <p><a target="_blank" href="/#/activityMgr/activityDetail?eventTabloidsId={{item.eventTabloidsId}}">查看</a></p>
+                            <p><a ng-if="item.status!=3" target="_blank" href="/#/activityMgr/editActivityInfo?eventTabloidsId={{item.eventTabloidsId}}">修改</a></p>
+                            <p ng-if="paging.status==3">
+                                <a href="javascript:void(0)" ngclipboard data-clipboard-text="{{item.eventTabloidsId | activityUrlFilter}}" ngclipboard-success="tools.clipboardSuccess(e);" ngclipboard-error="tools.clipboardError(e);">复制静态页面链接</a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="!vm.items||!vm.items.length" class="ng-scope">
+                    <tr>
+                        <td colspan="8">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+    </div>
+</div>

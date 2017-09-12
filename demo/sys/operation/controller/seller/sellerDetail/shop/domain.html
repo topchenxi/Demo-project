@@ -1,0 +1,42 @@
+<table class="table table-hover">
+    <colgroup>
+        <col width="15%" />
+        <col width="35%" />
+        <col width="15%" />
+        <col width="35%" />
+    </colgroup>
+    <thead ng-if="vm.shopInfo.domain.items==null">
+        <tr>
+            <th colspan="1">专属域名信息</th>
+            <th colspan="1">
+                状态 :
+                <span>未填写</span>
+            </th>
+            <th colspan="2" class="ta-r">
+            </th>
+        </tr>
+    </thead>
+    <thead ng-repeat="item in vm.shopInfo.domain.items">
+        <tr>
+            <th colspan="1">专属域名信息</th>
+            <th colspan="1">
+                状态 :
+                <span class="{{item.auditStatus==1?'red':''}}">{{item.auditStatus | sellerInfoAuditStatus}}</span>
+            </th>
+            <th colspan="2" class="ta-r">
+                <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                    <button class="btn btn-cfec-white  mr20" ng-click="sellerShopTools.chxShopAudit(3,item.id,item.auditLogId,1)" ng-if="item.auditStatus==1||item.auditStatus==2">审核通过</button>
+                    <button class="btn btn-cfec-white " ng-click="sellerShopTools.chxShopAudit(2,item.id,item.auditLogId,1)" ng-if="item.auditStatus==1||item.auditStatus==3">审核不通过</button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="item in vm.shopInfo.domain.items">
+        <tr>
+            <th>域名</th>
+            <td>{{item.detail[0]}}</td>
+            <th>申请时间</th>
+            <td>{{item.submitDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+    </tbody>
+</table>

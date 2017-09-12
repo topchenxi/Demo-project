@@ -1,0 +1,45 @@
+<div class="dlg-title">添加供应商</div>
+<div class="panel-container">
+    <div class="form-group clearfix">
+        <div class="oms-search fl">
+            <select name="qKey" id="qKey" ng-model="paging.qKey">
+                <option value="" class="" selected="selected">搜索类型</option>
+                <option label="公司中文名称" value="companyName">公司中文名称</option>
+                <option label="公司英文名称" value="companyEnName">公司英文名称</option>
+                <option label="供应商ID" value="sellerId">供应商ID</option>
+            </select>
+
+            <em></em>
+            <input type="text" name="qValue" id="" ng-model="paging.qValue" />
+        </div>
+        <button class="btn btn-cfec-red fl" ng-click="tools.search();">查&nbsp;询</button>
+    </div>
+    <div class="list-content table-cfec">
+        <table class="table table-hover ">
+            <colgroup>
+                <col width="80%">
+                <col width="20%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>公司名称</th>
+                    <th class="ta-c">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in vm.items">
+                    <td>
+                        <p>公司中文名：{{item.companyName}}</p>
+                        <p>公司英文名：{{item.companyEnName}}</p>
+                    </td>
+                    <td class="ta-c">
+                        <button class="btn btn-cfec-red" ng-click="tools.selected(item)">选择</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 分页组件[[ -->
+    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+    <!-- 分页组件[[ -->
+</div>

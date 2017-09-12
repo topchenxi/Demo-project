@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>标签组列表</title>
+	<link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="http://192.168.200.234:3333/dev/components/dialog/dialog.css" />
+    <link rel="stylesheet" href="../../../view/css/util/base.css" />
+	<link rel="stylesheet" href="/pubpage/operation/view/css/category.css">
+	<link rel="stylesheet" href="/pubpage/operation/view/css/operation.css">
+</head>
+<body>
+	<!--<div class="search clearfix">-->
+		<!--<form action="" >-->
+			<!--<p class="search-text search-sellerList-text">-->
+				<!--<select name="" >-->
+					<!--<option value="">选择类目</option>-->
+				<!--</select>-->
+				<!--<input type="text" name="search" ng-model="paging.qValue"></p>-->
+			<!--<button type="button" value="搜索" class="search-but btn" ng-click="tools.search()">搜索</button>-->
+		<!--</form>-->
+	<!--</div>-->
+
+	<div class="navtop">
+		<div class="navlist">
+			<ul>
+				<li class="navlist line40">类目属性管理&nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">标签管理 &nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">选择父级属性规格&nbsp;&nbsp;<span class="grey"> >&nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">
+					<select>
+						<option>选择类目</option>
+					</select>
+					&nbsp;&nbsp;<span class="grey"> >&nbsp;&nbsp;</span>
+				</li>
+			</ul>
+		</div>
+		<div class="navsearch">
+			<input type="text" placeholder="请输入中/英文名称进行搜索"/>
+		</div>
+		<div class="reset">
+			<button class="btn btn-default reset">重置</button>
+		</div>
+	</div>
+
+	<div class="container-list">
+		<div class=" att-middiv-style clearfix">
+			<div class="divleft">
+				<label class=" label-style"><strong>选择父级属性规格</strong></label>
+			</div>
+		</div>
+		<form>
+			<div class=" att-mid-mar clearfix">
+				<div class="divleft divleft-height">
+					<button class="btn btn-default buttons att-button-select" >属性</button>
+					<button class="btn btn-default buttons att-button-select" >规格</button>
+				</div>
+				<div class="divright clearfix">
+					<submit class="btn btn-default  att-button-save" >保存</submit>
+					<button class="btn btn-default  att-button-cancel" >取消</button>
+				</div>
+			</div>
+
+		<!--{"propertyId":123,a=1，b=1,"propertyValues":[{"propertyValueId":12},{"propertyValueId":123}]}-->
+
+			<table class="table table-bordered table-hover tablestyle">
+				<thead class="color-grey">
+					<tr>
+						<td class="tdstyle">中文名称</td>
+						<td class="tdstyle">英文名称</td>
+						<td class="tdstyle">所属类目</td>
+						<td class="tdstyle">是否必填</td>
+						<td class="tdstyle">是否多选</td>
+						<td class="tdstyle">属性值</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="10">
+						<td class="tdstyle" >手机</td>
+						<td class="tdstyle" >Brand</td>
+						<td class="tdstyle" >一级类目</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" value="">是</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" value="">是</td>
+						<td class="tdstyle" >
+							<div class="par-att-div">
+								<ul id="attrlist_16">
+									<li class="par-att-li font-opr">
+										<button class="add-icon" name="showDialog">+</button>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+					<tr id="11">
+						<input type="hidden" name="aa" value="" />
+						<td class="tdstyle" >手机</td>
+						<td class="tdstyle" >Brand</td>
+						<td class="tdstyle" >一级类目</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" name="isRequire" value="">是</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" name="isMoreCheck" value="">是</td>
+						<td class="tdstyle par-att-td">
+							<div class="par-att-div" data-prop="{prop:'耐克(nike)', val:'nike', prop:'阿迪(adidas)', val:'adidas'}">
+								<ul>
+									<li class="par-att-li" id="111">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="112">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="113">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="114">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="115">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="116">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="117" style="display:none;">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="118" style="display:none;">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="119" style="display:none;">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="120" style="display:none;">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="121" style="display:none;">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="122" style="display:none;">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="123" style="display:none;">
+										<label for="">耐克(nike)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li" id="124" style="display:none;">
+										<label for="">阿迪(adidas)</label><span class="del-icon2 sh-edit">X</span>
+									</li>
+									<li class="par-att-li font-opr">
+										<a id="more">更多↓</a>
+										<a id="less" style="display:none;">收起↑</a>
+										<button class="add-icon font-opr" name="showDialog">+</button>
+									</li>
+									
+								</ul>
+							</div>
+						</td>
+					</tr>
+					<tr id="12">
+						<td clbuttonss="tdstyle" >手机</td>
+						<td class="tdstyle" >Brand</td>
+						<td class="tdstyle" >
+							一级类目
+							<div>
+								<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+							</div>
+							二级类目
+						</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" name="check" value="">是</td>
+						<td class="tdstyle" >
+							<input class="par-att-check" type="checkbox" name="check" value="">是</td>
+						<td class="tdstyle par-att-td" >
+							<div class="par-att-div">
+								<ul>
+									<li class="par-att-li">
+										<label name="" for="">红色(red)</label>
+										<span class="icon-remove">X</span>
+									</li>
+									<li class="par-att-li">
+										<label name="" for="">红色(red)</label>
+										<span class="<ico></ico>n-remove">X</span>
+									</li>
+									<li class="par-att-li">
+										<label name="" for="">红色(red)</label>
+										<span class="icon-remove">X</span>
+									</li>
+									<li class="par-att-li font-opr">
+										<button >更多</button>
+										<button class="add-icon" name="showDialog">+</button>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- 弹出窗-->
+			 <div class="dialog" style="display:none;">
+				<div class="dialog-content">
+					<ul class="clearfix">
+						<li class="att-li-style">
+							<input class="att-checkbox-style" name="chkAttr" type="checkbox" value="1"/>
+							<label for=""> 红色(red)</label>
+
+						</li>
+						 <li class="att-li-style">
+							<input class="att-checkbox-style" name="chkAttr" type="checkbox" value="12"/>
+							<label for=""> 绿色(red)</label>
+
+						</li>
+						 <li class="att-li-style">
+							<input class="att-checkbox-style" name="chkAttr" type="checkbox" value="4"/>
+							<label for=""> 白色(red)</label>
+
+						</li>
+						 <li class="att-li-style">
+							<input class="att-checkbox-style" name="chkAttr" type="checkbox" value="5"/>
+							<label for=""> 粉色(red)</label>
+
+						</li>
+
+					</ul>
+					<div class="clearfix text-center">
+					<button class="btn btn-default  savaBut" id="_saveAttr">确定</button>
+					<button class="btn btn-default  cancleBut" id="_cancelAttr">取消</button>
+					</div>
+				</div>
+			</div>
+			<div id="dialog"></div>
+		</form>
+
+		<!--<div class=" middivs clearfix">-->
+
+			<!--<div class="divright clearfix">-->
+				<!--<button  class="btn btn-default lastbuttons" ng-click="tools.getnewpage();">GO</button>-->
+				<!--<input type="text" class="inputs" ng-model="tools.newpagesize">-->
+				<!--<label class="page-list-style label-style">转到页</label>-->
+				<!--<ul class="page-list-style pagination ng-isolate-scope ng-valid" boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" ng-change="tools.getBuyers()" previous-text="‹" next-text="›" first-text="«" last-text="»">-->
+					<!--&lt;!&ndash; ngIf: boundaryLinks &ndash;&gt;-->
+					<!--<li ng-if="boundaryLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">-->
+						<!--<a href="" ng-click="selectPage(1, $event)" class="ng-binding">«</a>-->
+					<!--</li>-->
+					<!--&lt;!&ndash; end ngIf: boundaryLinks &ndash;&gt;-->
+					<!--&lt;!&ndash; ngIf: directionLinks &ndash;&gt;-->
+					<!--<li ng-if="directionLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">-->
+						<!--<a href="" ng-click="selectPage(page - 1, $event)" class="ng-binding">‹</a>-->
+					<!--</li>-->
+					<!--&lt;!&ndash; end ngIf: directionLinks &ndash;&gt;-->
+					<!--&lt;!&ndash; ngRepeat: page in pages track by $index &ndash;&gt;-->
+					<!--<li ng-repeat="page in pages track by $index" ng-class="{active: page.active}" class="ng-scope active">-->
+						<!--<a href="" ng-click="selectPage(page.number, $event)" class="ng-binding">1</a>-->
+					<!--</li>-->
+					<!--&lt;!&ndash; end ngRepeat: page in pages track by $index &ndash;&gt;-->
+					<!--&lt;!&ndash; ngIf: directionLinks &ndash;&gt;-->
+					<!--<li ng-if="directionLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">-->
+						<!--<a href="" ng-click="selectPage(page + 1, $event)" class="ng-binding">›</a>-->
+					<!--</li>-->
+					<!--&lt;!&ndash; end ngIf: directionLinks &ndash;&gt;-->
+					<!--&lt;!&ndash; ngIf: boundaryLinks &ndash;&gt;-->
+					<!--<li ng-if="boundaryLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">-->
+						<!--<a href="" ng-click="selectPage(totalPages, $event)" class="ng-binding">»</a>-->
+					<!--</li>-->
+					<!--&lt;!&ndash; end ngIf: boundaryLinks &ndash;&gt;-->
+				<!--</ul>-->
+			<!--</div>-->
+
+		<!--</div>-->
+
+
+
+	</div>
+
+    <script src="http://192.168.200.234:3333/components_module/requirejs/require.js"></script>
+	<script src="http://crab.e-cantonfair.com:3333/dev/components/require-config.js"></script>
+	<script src="../category.js"></script>
+    <script type="text/javascript" src="../../../view/js/attrtype.js"></script>
+</body>
+</html>

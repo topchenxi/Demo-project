@@ -1,0 +1,70 @@
+<!-- 多个商品拆分子订单 -->
+<!-- 订单详情 -->
+<div class="child-detail content bg-white">
+    <div class="row">
+        <h4 class="col-xs-2">订单详情</h4>
+        <div class="col-xs-10 text-right">
+            <button class="btn btn-save-lg" type="button" ng-click="tools.back()">返回</button>
+        </div>
+    </div>
+    <hr>
+
+
+    <table class="table table-bordered">
+         
+        <tr class="bg-slight text-center"><td colspan="2">订单信息</td></tr>
+         
+        <tr> <td class="bg-slight col-xs-2">子订单编号</td><td>0000000000855555111</td></tr>
+        <tr> <td class="bg-slight col-xs-2">下单时间</td><td>0000000000855555111</td></tr>
+        <tr> <td class="bg-slight col-xs-2">发货时间</td><td>0000000000855555111</td></tr>
+        <tr> <td class="bg-slight col-xs-2">确认收货时间</td><td>0000000000855555111</td></tr>
+       
+    </table>
+
+    <div>
+        <div class="font-lightred">子订单编号:2222222222222111-A</div>
+            <table class="table table-bordered">
+                <thead>
+                <tr class="bg-deepred"><td>商品</td>
+                    <td>价格</td>
+                    <td>数量</td>
+                    <td>运费</td>
+                    <td>小计</td>
+                    <td>状态</td></tr>
+                </thead>
+                <tbody>
+                <tr><td>商品</td>
+                    <td>价格</td>
+                    <td>数量</td>
+                    <td>运费</td>
+                    <td class="font-lightred font-weight">$333.00</td>
+                    <td>状态</td></tr>
+                <tr><td class="text-right" colspan="6">实付款(含运费):<span class="font-lightred font-weight">$999925.22</span></td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div>
+        <div class="font-lightred">子订单编号:2222222222222111-A</div>
+        <table class="table table-bordered">
+            <thead>
+            <tr class="bg-deepred"><td>商品</td>
+                <td>价格</td>
+                <td>数量</td>
+                <td>运费</td>
+                <td>小计</td>
+                <td>状态</td></tr>
+            </thead>
+            <tbody>
+            <tr><td>商品</td>
+                <td>价格</td>
+                <td>数量</td>
+                <td>运费</td>
+                <td class="font-lightred font-weight">$333.00</td>
+                <td>状态</td></tr>
+            <tr><td class="text-right" colspan="6">实付款(含运费):<span class="font-lightred font-weight">$999925.22</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

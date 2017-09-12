@@ -1,0 +1,528 @@
+<div class="oms-buyer-detail">
+    <div class="mb20">
+        <button ngc-permission="seller_sellerlist_audit" class="btn btn-cfec-white" ng-click="tools.batchaudit()">批量审核通过</button>
+        <button ngc-permission="seller_sellerlist_testseller" class="btn btn-cfec-white" ng-click="tools.setTestAccount(1)" ng-if="vm.item.baseInfo.isTestAccount!=1">设为测试帐号</button>
+        <button ngc-permission="seller_sellerlist_testseller" class="btn btn-cfec-white" ng-click="tools.setTestAccount(0)" ng-if="vm.item.baseInfo.isTestAccount==1">设为非测试帐号</button>
+        <button ngc-permission="seller_sellerlist_quoteWhiteList" class="btn btn-cfec-white" ng-click="tools.setQuoteWhiteList(1)" ng-if="vm.item.personInfo.freeAuditQuote!=1">设为报价免审</button>
+        <button ngc-permission="seller_sellerlist_quoteWhiteList" class="btn btn-cfec-white" ng-click="tools.setQuoteWhiteList(0)" ng-if="vm.item.personInfo.freeAuditQuote==1">取消报价免审</button>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="15%" />
+                <col width="35%" />
+                <col width="15%" />
+                <col width="35%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="1">资料</th>
+                    <th colspan="1">
+                        状态 :
+                        <span class="{{vm.item.personInfo.auditStatus==2?'red':''}}">{{vm.item.personInfo.auditStatus | auditchaseState}}</span>
+                    </th>
+                    <th colspan="2" class="ta-r">
+                        <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                            <button class="btn btn-cfec-white  mr20" ng-click="tools.auditDialog(3)" ng-if="vm.item.personInfo.auditStatus!=3">审核通过</button>
+                            <button class="btn btn-cfec-white " ng-click="tools.auditDialog(-1)" ng-if="vm.item.personInfo.auditStatus!=-1">审核不通过</button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="single-bottom">账户信息</td>
+                </tr>
+                <tr>
+                    <th>账号</th>
+                    <td>
+                        {{vm.item.baseInfo.userName}}
+                        <span ng-if="vm.item.baseInfo.isTestAccount==1">(此为测试帐号)</span>
+                        <span ng-if="vm.item.personInfo.freeAuditQuote==1">(此为报价免审供应商)</span>
+                    </td>
+                    <th>邮箱</th>
+                    <td><span>{{vm.item.baseInfo.email}}</span> <a ngc-permission="seller_sellerlist_audit" class="blue" href="javascript:void(0);" ng-click="tools.modifyData('email',vm.item.baseInfo.email)">修改</a></td>
+                </tr>
+                <tr>
+                    <th>绑定微信帐号</th>
+                    <td colspan="3">{{vm.item.baseInfo.wechatAccount}}<span ng-if="vm.item.baseInfo.wechatAccountChildren.length>0">|{{vm.item.baseInfo.wechatAccountChildren | seller_array2string}}</span></td>
+                </tr>
+                <tr>
+                    <th>注册时间</th>
+                    <td>{{vm.item.baseInfo.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <th>更新时间</th>
+                    <td>{{vm.item.baseInfo.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                    <th>会员类型</th>
+                    <td>
+                        <span ng-if="vm.item.baseInfo.packageName!=null">{{vm.item.baseInfo.packageName}}</span>
+                        <span ng-if="vm.item.baseInfo.packageName==null">免费会员</span>
+                        <a class="blue" ng-if="vm.item.baseInfo.packageName!=null" href="javascript:void(0);" ng-click="tools.chxSellerDetailTabs(5)">查看详情</a>
+                    </td>
+                    <th>最后登录时间</th>
+                    <td>
+                        <span ng-if="vm.item.baseInfo.lastLoginDate>vm.item.baseInfo.wechatlastLoginDate">{{vm.item.baseInfo.lastLoginDate | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                        <span ng-if="vm.item.baseInfo.wechatlastLoginDate>vm.item.baseInfo.lastLoginDate">{{vm.item.baseInfo.wechatlastLoginDate | date:"yyyy-MM-dd HH:mm:ss"}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>店铺开通时间</th>
+                    <td>
+                        {{vm.item.baseInfo.shopCreateDate | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </td>
+                    <th>上线产品数</th>
+                    <td>
+                        <a class="blue" ng-if="vm.item.baseInfo.onlineProductCount!=null&&vm.item.baseInfo.onlineProductCount!=0" href="javascript:void(0);" ng-click="tools.chxSellerDetailTabs(2)">{{vm.item.baseInfo.onlineProductCount}}</a>
+                        <span ng-if="vm.item.baseInfo.onlineProductCount==null||vm.item.baseInfo.onlineProductCount==0">0</span> (其中橱窗产品
+                        <span class="red">{{vm.item.baseInfo.hadwinprodNum}}</span>,可设置橱窗产品{{vm.item.baseInfo.winprodNum }}个)
+                    </td>
+                </tr>
+                <tr>
+                    <th>最近30天PC登陆次数</th>
+                    <td>{{vm.item.baseInfo.recent1MonthloginCount}}</td>
+                    <th>PC最近登录时间</th>
+                    <td>{{vm.item.baseInfo.lastLoginDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                </tr>
+                <tr>
+                    <th>最近30天微信登陆次数</th>
+                    <td>{{vm.item.baseInfo.recentWechat1MonthLoginCount}}</td>
+                    <th>微信最近登录时间</th>
+                    <td>{{vm.item.baseInfo.wechatlastLoginDate | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                </tr>
+                <tr>
+                    <th>来源</th>
+                    <td>{{vm.item.baseInfo.source}}</td>
+                    <th>套餐开通时间</th>
+                    <td>
+                        {{vm.item.baseInfo.packageCreateDate | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>近30天商机回复率</th>
+                    <td>{{vm.item.monthReversionRate | halfYearTwoRateFilter}}</td>
+                    <th>近30天采购商二次回复率</th>
+                    <td>{{vm.item.buyerReversionRate30 | buyerReversionRateFilter}}</td>
+                </tr>
+                <tr>
+                    <th>近90天采购商二次回复率</th>
+                    <td>{{vm.item.buyerReversionRate90 | buyerReversionRateFilter}}</td>
+                    <th>近180天采购商二次回复率</th>
+                    <td>{{vm.item.buyerReversionRate180 | buyerReversionRateFilter}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="single-bottom">个人信息</td>
+                </tr>
+                <tr>
+                    <th>姓名</th>
+                    <td>
+                        {{vm.item.personInfo.lastName}} {{vm.item.personInfo.firstName}}
+                    </td>
+                    <th>性别</th>
+                    <td>
+                        <span ng-if="vm.item.personInfo.gender!=null">{{vm.item.personInfo.gender == 1?'男':'女'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>手机号码</th>
+                    <td>
+                        <span>{{vm.item.personInfo.mobile}}</span>
+                        <a ngc-permission="seller_sellerlist_audit" class="blue" href="javascript:void(0);" ng-click="tools.modifyData('mobile',vm.item.personInfo.mobile)">
+                        修改
+                        </a>
+                    </td>
+                    <th>固定电话</th>
+                    <td>{{vm.item.personInfo.telephone}}</td>
+                </tr>
+                <tr>
+                    <th>传真</th>
+                    <td>{{vm.item.personInfo.fax}}</td>
+                    <th>邮政编码</th>
+                    <td>{{vm.item.personInfo.zipCode}}</td>
+                </tr>
+                <tr>
+                    <th>skype</th>
+                    <td>{{vm.item.personInfo.skype}}</td>
+                    <th>QQ</th>
+                    <td>{{vm.item.personInfo.qq}}</td>
+                </tr>
+                <tr class="single-bottom">
+                    <th>所属地区</th>
+                    <td>
+                        {{vm.item.personInfo.countryName}} {{vm.item.personInfo.provinceCode}} {{vm.item.personInfo.cityCode}} {{vm.item.personInfo.regionCode}}
+                    </td>
+                    <th>详细地址</th>
+                    <td>{{vm.item.personInfo.officeEnAddress}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="single-bottom">公司信息</td>
+                </tr>
+                <tr>
+                    <th>公司名称(中文)</th>
+                    <td>
+                        <span>{{vm.item.companyInfo.companyName}}</span>
+                        <a ng-if="vm.item.companyInfo.companyId" ngc-permission="seller_sellerlist_audit" class="blue" href="javascript:void(0);" ng-click="tools.modifyData('companyName',vm.item.companyInfo.companyName)">修改</a>
+                    </td>
+                    <th>公司名称(英文)</th>
+                    <td>
+                        <span>{{vm.item.companyInfo.companyEnName}}</span>
+                        <a ng-if="vm.item.companyInfo.companyId" ngc-permission="seller_sellerlist_audit" class="blue" href="javascript:void(0);" ng-click="tools.modifyData('companyEnName',vm.item.companyInfo.companyEnName)">修改</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>公司类型</th>
+                    <td>{{vm.item.companyInfo.companyType}}</td>
+                    <th>公司性质</th>
+                    <td>{{vm.item.companyInfo.companyNature}}</td>
+                </tr>
+                <tr>
+                    <th>成立时间</th>
+                    <td>
+                        {{vm.item.companyInfo.establishYear}}
+                        <span ng-if="vm.item.companyInfo.establishYear!=null">年</span>
+                    </td>
+                    <th>注册资本</th>
+                    <td>
+                        {{vm.item.companyInfo.registeredCapitalSum}}
+                        <span ng-if="vm.item.companyInfo.registeredCapitalSum!=null">万</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>所属地区</th>
+                    <td>
+                        {{vm.item.companyInfo.countryName}} {{vm.item.companyInfo.provinceCode}} {{vm.item.companyInfo.cityCode}} {{vm.item.companyInfo.regionCode}}
+                    </td>
+                    <th>邮政编码</th>
+                    <td>{{vm.item.companyInfo.zipCode}}</td>
+                </tr>
+                <tr>
+                    <th>主营行业</th>
+                    <td>
+                        <span>{{vm.item.companyInfo.mainCategoryName}}</span>
+                        <a ng-if="vm.item.companyInfo.companyId" ngc-permission="seller_sellerlist_audit" class="blue" href="javascript:void(0);" ng-click="tools.modifyData('mainCategoryId',vm.item.companyInfo.mainCategoryId)">修改</a>
+                    </td>
+                    <th>主要商品关键字</th>
+                    <td>{{vm.item.companyInfo.mainProducts}}</td>
+                </tr>
+                <tr class="single-bottom">
+                    <th>企业人数</th>
+                    <td>{{vm.item.companyInfo.companyEmpNum}}</td>
+                    <th>公司网站</th>
+                    <td>{{vm.item.companyInfo.webSite}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="single-bottom">工厂信息</td>
+                </tr>
+                <tr>
+                    <th>厂房面积</th>
+                    <td>
+                        {{vm.item.companyFatoryInfo.factorySize}}
+                        <span ng-if="vm.item.companyFatoryInfo.factorySize!=null">平方米</span>
+                    </td>
+                    <th>ODM经验</th>
+                    <td ng-if="vm.item.companyFatoryInfo.hasOdm==1">有 经验描述：{{vm.item.companyFatoryInfo.odmDescription}}</td>
+                    <td ng-if="vm.item.companyFatoryInfo.hasOdm!=1">无</td>
+                </tr>
+                <tr>
+                    <th>OEM经验</th>
+                    <td ng-if="vm.item.companyFatoryInfo.hasOem==1">有 经验描述： {{vm.item.companyFatoryInfo.oemDescription}}</td>
+                    <td ng-if="vm.item.companyFatoryInfo.hasOem!=1">无</td>
+                    <th>工程师数</th>
+                    <td>
+                        {{vm.item.companyFatoryInfo.staffEngineerNumber | chxFatoryStaff:vm.factoryArray.factory_staff_number}}
+                        <span ng-if="vm.item.companyFatoryInfo.staffEngineerNumber!=null">人</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>研发人数</th>
+                    <td>
+                        {{vm.item.companyFatoryInfo.staffDevelopNumber | chxFatoryStaff:vm.factoryArray.factory_staff_number}}
+                        <span ng-if="vm.item.companyFatoryInfo.staffDevelopNumber!=null">人</span>
+                    </td>
+                    <th>质检人数</th>
+                    <td>
+                        {{vm.item.companyFatoryInfo.staffQcNumber | chxFatoryStaff:vm.factoryArray.factory_staff_number}}
+                        <span ng-if="vm.item.companyFatoryInfo.staffQcNumber!=null">人</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>证明</th>
+                    <td colspan="3">
+                        {{vm.item.companyFatoryInfo.certification | chxFatoryCertification:vm.factoryArray.factory_certification}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="15%" />
+                <col width="35%" />
+                <col width="15%" />
+                <col width="35%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="1">资质信息</th>
+                    <th colspan="1">
+                        状态 :
+                        <span class="{{vm.item.authInfo.status==2?'red':''}}">{{vm.item.authInfo.status | auditchaseState }}</span>
+                    </th>
+                    <th colspan="2" class="ta-r">
+                        <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                            <button class="btn btn-cfec-white  mr20" ng-click="tools.chxSellerAudit(3)" ng-if="vm.item.authInfo.status==2||vm.item.authInfo.status==-1">审核通过</button>
+                            <button class="btn btn-cfec-white " ng-click="tools.chxSellerAudit(-1)" ng-if="vm.item.authInfo.status==2||vm.item.authInfo.status==3">审核不通过</button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>法人姓名</th>
+                    <td>{{vm.item.authInfo.bizEntity }}</td>
+                    <th>公司证件类型</th>
+                    <td>
+                        <span ng-if="vm.item.authInfo.threeInOne!=null">{{vm.item.authInfo.threeInOne==1 ?"三证合一":"三证" }}</span>
+                    </td>
+                </tr>
+                <!--   <tr>
+                    <th>法人身份证号码</th>
+                    <td>{{vm.item.authInfo.contactIdcard }}</td>
+                    <th>法人身份证相片</th>
+                    <td>
+                        <img ng-if="vm.item.authInfo.bizEntityIdcardFrontImg!=null" ng-click="tools.enLarge(vm.item.authInfo.bizEntityIdcardFrontImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.bizEntityIdcardFrontImg |setImgSize:60:60 }}">
+                        <img ng-if="vm.item.authInfo.bizEntityIdcardBackImg!=null" ng-click="tools.enLarge(vm.item.authInfo.bizEntityIdcardBackImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.bizEntityIdcardBackImg |setImgSize:60:60 }}"></td>
+                </tr> -->
+                <tr>
+                    <th>{{ vm.item.authInfo.threeInOne==1 ?"社会信用代码的执照":"营业执照号" }}</th>
+                    <td>{{vm.item.authInfo.bizLicence }}</td>
+                    <th>{{ vm.item.authInfo.threeInOne==1 ?"社会信用代码的执照":"营业执照照片" }}</th>
+                    <td>
+                        <img ng-if="vm.item.authInfo.commInstrumentImg!=null" ng-click="tools.enLarge(vm.item.authInfo.commInstrumentImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.commInstrumentImg |setImgSize:60:60 }}"></td>
+                </tr>
+                <tr ng-if="vm.item.authInfo.threeInOne!=1">
+                    <th>组织机构代码号</th>
+                    <td>{{vm.item.authInfo.orgCode }}</td>
+                    <th>组织机构代码照片</th>
+                    <td>
+                        <img ng-if="vm.item.authInfo.bizCodeImg!=null" ng-click="tools.enLarge(vm.item.authInfo.bizCodeImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.bizCodeImg |setImgSize:60:60 }}"></td>
+                </tr>
+                <tr ng-if="vm.item.authInfo.threeInOne!=1">
+                    <th>税务登记号</th>
+                    <td>{{vm.item.authInfo.taxRegCode }}</td>
+                    <th>税务登记证照片</th>
+                    <td>
+                        <img ng-if="vm.item.authInfo.taxRegImg!=null" ng-click="tools.enLarge(vm.item.authInfo.taxRegImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.taxRegImg |setImgSize:60:60 }}"></td>
+                </tr>
+                <!-- <tr>
+                    <th>公司门头照片</th>
+                    <td colspan="3">
+                        <img ng-if="vm.item.authInfo.corpImg!=null" ng-click="tools.enLarge(vm.item.authInfo.corpImg)" class="border" width="60" height="60" ng-src="{{ vm.item.authInfo.corpImg |setImgSize:60:60 }}" alt=""></td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2" ng-if="vm.item.certInfo!=null">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="15%" />
+                <col width="35%" />
+                <col width="15%" />
+                <col width="35%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="1">认证证书</th>
+                    <th colspan="1">
+                        状态 :
+                        <span class="{{vm.item.certInfo.auditStatus==1?'red':''}}">{{vm.item.certInfo.auditStatus | sellerInfoAuditStatus }}</span>
+                    </th>
+                    <th colspan="2" class="ta-r">
+                        <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                            <button class="btn btn-cfec-white  mr20" ng-click="tools.chxCertStatus(3,vm.item.certInfo.id,vm.item.certInfo.auditLogId)" ng-if="vm.item.certInfo.auditStatus==1 || vm.item.certInfo.auditStatus==2">审核通过</button>
+                            <button class="btn btn-cfec-white " ng-click="tools.chxCertStatus(2,vm.item.certInfo.id,vm.item.certInfo.auditLogId)" ng-if="vm.item.certInfo.auditStatus==1 || vm.item.certInfo.auditStatus==3">审核不通过</button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>申请时间</th>
+                    <td>
+                        {{vm.item.certInfo.submitDate | date:'yyyy-MM-dd HH:mm:ss' }}
+                    </td>
+                    <th>认证证书照片</th>
+                    <td>
+                        <label ng-if="vm.item.certInfo.detail.length>
+                0">
+                            <img width="60" height="60" ng-src="{{vm.item.certInfo.detail[0] | setImgSize:60:60}}" alt=""></label>
+                        <label ng-if="vm.item.certInfo.detail.length>
+                0" class="show-more-img" ng-click="tools.showMoreImg(vm.item.certInfo.detail);"> <i class="iconfont">&#xe613;</i>
+                            <p>全部</p>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>审核人</th>
+                    <td>{{vm.item.certInfo.auditor }}</td>
+                    <th>审核时间</th>
+                    <td>{{vm.item.certInfo.auditDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tabTable table-cfec table-cfec-theme2">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th colspan="5">审核信息</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="single-bottom">
+                    <th>审核内容</th>
+                    <th>审核时间</th>
+                    <th>审核人</th>
+                    <th>审核结果</th>
+                    <th>审核原因</th>
+                </tr>
+                <tr ng-if="vm.item.personInfo.auditStatus!=0&&vm.item.personInfo.auditStatus!=2  ">
+                    <th>基本信息</th>
+                    <th>
+                        {{vm.item.personInfo.auditTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </th>
+                    <th>{{vm.item.personInfo.auditorName }}</th>
+                    <th>{{vm.item.personInfo.auditStatus | auditchaseState}}</th>
+                    <th>{{vm.item.personInfo.exceptionReason }}</th>
+                </tr>
+                <tr ng-if="vm.item.authInfo!=null&&vm.item.authInfo.status!=2 ">
+                    <th>资质信息</th>
+                    <th>{{vm.item.authInfo.auditTime | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                    <th>{{vm.item.authInfo.auditorName }}</th>
+                    <th>{{vm.item.authInfo.status | auditchaseState }}</th>
+                    <th>{{vm.item.authInfo.remark }}</th>
+                </tr>
+                <tr ng-if="vm.item.certInfo.auditDate!=null ">
+                    <th>认证证书</th>
+                    <th>{{vm.item.certInfo.auditDate | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                    <th>{{vm.item.certInfo.auditor }}</th>
+                    <th>{{vm.item.certInfo.auditStatus | sellerInfoAuditStatus }}</th>
+                    <th>{{vm.item.certInfo.unPassReason }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/ng-template" id="sellerAuditConfirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c"> <i class="iconfont icon-xunwenoms"></i> 确定审核{{vm.status==-1?"不":""}}通过吗？ </p>
+        <div class="form-group pt20 mb0" ng-if="vm.status ==-1">
+            <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>
+<!-- 审核通过确定对话框[[ -->
+<script type="text/ng-template" id="certConfirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c"> <i class="iconfont icon-xunwenoms"></i> 确定审核{{vm.status==2?"不":""}}通过吗？
+        </p>
+        <div class="form-group pt20 mb0" ng-if="vm.status ==2">
+            <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>
+<!-- 审核通过确定对话框]] -->
+<!-- 审核通过确定对话框[[ -->
+<script type="text/ng-template" id="batchauditConfirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i> 确定审核通过吗？
+        </p>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>
+<!-- 审核通过确定对话框]] -->
+<script type="text/ng-template" id="confirmTest.html">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c">
+                <i class="iconfont icon-xunwenoms"></i>
+                <span>确定设为{{vm.status==1?'测试':'非测试'}}帐号吗？</span>
+            </p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 审核通过确定对话框]] -->
+<script type="text/ng-template" id="confirmWhiteList.html">
+    <div class="buyerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c">
+                <i class="iconfont icon-xunwenoms"></i>
+                <span>确定{{vm.status==1?'设为':'取消'}}报价免审帐号吗？</span>
+            </p>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 修改资料 -->
+<script type="text/ng-template" id="modifyDataDlgId">
+    <div class="modifyDataDlg">
+        <div class="dlg-title">修改资料</div>
+        <div class="dlg-content form form-group-main">
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    <span>*</span> {{vm.modifyData.typeName}}：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 radio pt0">
+                    <!-- 邮箱 -->
+                    <input type="text" name="" id="" ng-if="vm.modifyData.type=='email'" ng-model="vm.modifyData.email" />
+                    <!-- 手机号码 -->
+                    <input type="text" name="" id="" ng-if="vm.modifyData.type=='mobile'" ng-model="vm.modifyData.mobile" />
+                    <!-- 公司中文名 -->
+                    <input type="text" name="" id="" ng-if="vm.modifyData.type=='companyName'" ng-model="vm.modifyData.companyName" />
+                    <!-- 公司英文名 -->
+                    <input type="text" name="" id="" ng-if="vm.modifyData.type=='companyEnName'" ng-model="vm.modifyData.companyEnName" />
+                    <!-- 主营行业 -->
+                    <select ngc-select-search name="indusId" id="" class="select-oms" ng-model="vm.modifyData.mainCategoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys1List" ng-if="vm.modifyData.type=='mainCategoryId'">
+                        <option value="">主营行业</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="submit()">确认</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>

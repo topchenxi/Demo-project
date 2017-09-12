@@ -604,6 +604,11 @@ define(['angular'], function(angular, UM) {
                         if (typeof searchFoo == 'function') {
                             searchFoo.call($scope.tools);
                         }
+                    } else if ($scope.vm && $scope.vm.search) {
+                        var searchFoo = $scope.vm.search;
+                        if (typeof searchFoo == 'function') {
+                            searchFoo.call($scope.vm);
+                        }
                     }
                 }
                 $element.keyup(function(event) {

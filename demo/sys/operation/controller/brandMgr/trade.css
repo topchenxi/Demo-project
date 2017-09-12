@@ -1,0 +1,15 @@
+
+.grd-white {background-color: #fff;}
+.pannel {clear: both;background-color: #fff;font-family: '微软雅黑';font-size: 14px;}
+.line:before,.line:after {display: table;content: "";}
+.line:after { clear: both;}
+.line{padding: 10px 20px;}
+
+.line div{float: left;padding-right: 20px;}
+.pn-title { padding-top: 5px;background-color:#fefbfb;border-bottom: 1px solid #f0eeee}
+
+.pd-com {padding: 10px 20px;}
+.form-sm {width: 100px;height: 30px;}
+.form-md {width: 145px;height: 30px;}
+.btn-search{background-color:#dd5e42;}
+.but-base {background-color:#fafafa;}

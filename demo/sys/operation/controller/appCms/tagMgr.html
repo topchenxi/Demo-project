@@ -1,0 +1,119 @@
+<div class="oms-crumbs"> <i>标签库</i>
+    <p>
+        <a href="">App编辑</a> /
+        <span>标签库</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <button type="button" class="btn btn-default btn-cfec-white fr m10 mr20" ng-click="vm.addTag(2);">新建运营标签</button>
+            <button type="button" class="btn btn-default btn-cfec-white fr m10 mr20" ng-click="vm.addTag(1);">新建系统配置标签</button>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">标签名称:</label>
+                <input type="text" class="input-cfec" ng-model="vm.paging.tagName" placeholder="">
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="vm.search();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="vm.reset();">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="10%">
+                    <col width="25%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标签名称</th>
+                        <th>标签类型</th>
+                        <th>建立时间</th>
+                        <th>配置时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.list.length">
+                    <tr ng-repeat='item in vm.list'>
+                        <td>{{item.tagId}}</td>
+                        <td>{{item.tagName}}</td>
+                        <td>{{item.tagType | tagTypeFilter}}</td>
+                        <td>
+                            <p>{{item.createTime | date:'yyyy-MM-dd'}}</p>
+                            <p>{{item.createTime | date:'HH:mm:ss'}}</p>
+                        </td>
+                        <td>
+                            {{item.beginTime | date:'yyyy-MM-dd'}}
+                            <span ng-if="item.beginTime&&item.endTime"> - </span> {{item.endTime | date:'yyyy-MM-dd'}}</td>
+                        <td><a ng-if="item.tagType==2" href="javascript:void(0);" ng-click="vm.delTag(item.tagId);">删除</a></td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="!vm.list||!vm.list.length" class="ng-scope">
+                    <tr>
+                        <td colspan="6">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemp"></div>
+    </div>
+</div>
+</div>
+<script type="text/ng-template" id="addTagDlg">
+    <div class="resetPswDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <form id="addTagForm" class="form-group-main">
+                <div class="form-group formgroup-cfec-inline row">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                        <span>*</span> 标签名称：
+                    </label>
+                    <div class="col-sm-10">
+                        <input type="text" class="input-cfec mr5" ng-model="tagInfo.tagName" name="tagName" id="tagName" />
+                    </div>
+                </div>
+                <div class="form-group formgroup-cfec-inline row" ng-if="tagInfo.tagType==1">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                        <span>*</span>系统打标的时间:
+                    </label>
+                    <div class="col-sm-10">
+                        <input ngc-lay-date type="text" class="laydate-icon" ng-model="tagInfo.beginTime" id="beginTime" name="beginTime" max-date="{{tagInfo.endTime}}" ng-required placeholder="开始日期" />
+                        <span class="text-inline">至</span>
+                        <input ngc-lay-date type="text" class="laydate-icon mr5" ng-model="tagInfo.endTime" id="endTime" name="endTime" min-date="{{tagInfo.beginTime}}" placeholder="结束日期" ng-required/>
+                    </div>
+                </div>
+                <div class="form-group formgroup-cfec-inline row">
+                    <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"></label>
+                    <div class="col-sm-10">
+                        <button type="button" class="btn btn-cfec-red" ng-disabled="vm.btnFlag" ng-click="tools.saveInfo();">保存</button>
+                        <button type="button" class="btn btn-cfec-white" ng-disabled="vm.btnFlag" ng-click="tools.close();">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="delTagDlg">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c"> 确定删除该个用户标签?
+        </p>
+        <p class="ta-c" style="color:#666;font-size:14px;">（删除这个标签后相关联的用户不再有这个标签）</p>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="vm.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="vm.close()">取消</button>
+        </div>
+    </div>
+</script>

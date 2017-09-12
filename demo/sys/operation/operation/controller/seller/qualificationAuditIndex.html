@@ -1,0 +1,125 @@
+﻿<div class="oms-crumbs"> <i>卖家管理</i>
+    <p>
+        <a href="">卖家资质审核列表</a> /
+        <span>卖家管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" ng-click="paging.auditStatus=2; paging.page =1; tools.getSellerIdentity();">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="paging.auditStatus=3; paging.page =1; tools.getSellerIdentity();">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="paging.auditStatus=-1; paging.page =1; tools.getSellerIdentity();">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">申请时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.startDate" id="startTime" max-date="{{paging.endDate}}" ng-required />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.endDate" id="endTime" min-date="{{paging.startDate}}" ng-required />
+            </div>
+            <div class="form-group fl">
+                <label for="">主营行业</label>
+                <select ngc-select-search name="mainCategoryId" class="select-oms" ng-model="paging.mainCategoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys1List">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">公司名称</label>
+                <input ngc-auto-input ngc-monitor-enter class="input-cfec" type="text" placeholder="公司名称" ng-model="paging.companyName"> </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.search();">查&nbsp询</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="3%">
+                    <col width="14%">
+                    <col width="13%">
+                    <col width="18%">
+                    <col width="13%">
+                    <col width="15%">
+                    <col width="14%">
+                </colgroup>
+                <thead>
+                    <tr ng-if="vm.showOperateFlag==false">
+                        <th><input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)"> </th>
+                        <th>公司名称</th>
+                        <th>主营行业</th>
+                        <th>营业执照</th>
+                        <th>企业法人</th>
+                        <th>申请时间</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                    <tr ng-if="vm.showOperateFlag==true">
+                        <th>
+                            <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                        </th>
+                        <th colspan="7">
+                            <div ngc-permission="seller_sellerqualificationAuditIndex_audit" class="btn-toolbar">
+                                <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.chxAuditByAll(3)" ng-show="paging.auditStatus!=3">审核通过</button>
+                                <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.chxAuditByAll(-1)" ng-show="paging.auditStatus!=-1">审核不通过</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <td>
+                            <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()"> </td>
+                        <!-- 公司名称   -->
+                        <td>{{ item.companyName }}</td>
+                        <!-- 主营行业   -->
+                        <td>{{ item.mainCategoryName }}</td>
+                        <!-- 营业执照 -->
+                        <td>{{item.bizLicence}}</td>
+                        <!-- 企业法人 -->
+                        <td>{{item.bizEntity}}</td>
+                        <!-- 申请时间 -->
+                        <td>
+                            <p>{{item.createTime | date:'yyyy-MM-dd '}}</p>
+                            <p>{{item.createTime | date:'HH:mm:ss '}}</p>
+                        </td>
+                        <td class="ta-c">
+                            <!-- 待审核:2 审核通过:3 审核不通过：-1 -->
+                            <a ngc-permission="seller_sellerqualificationAuditIndex_audit" class="link" href="javascript:void(0)" ng-click="tools.chxAuditByOne(item.sellerId,3)" ng-show="paging.auditStatus!=3">通过</a>
+                            <a ngc-permission="seller_sellerqualificationAuditIndex_audit" class="link" href="javascript:void(0)" ng-click="tools.chxAuditByOne(item.sellerId,-1)" ng-show="paging.auditStatus!=-1">不通过</a>
+                            <a ngc-permission="seller_sellerqualificationAuditIndex_detail" class="link" ng-href="/#/seller/qualificationAuditDetail?sellerId={{item.sellerId}}"  target="_blank" >详情</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0">
+                    <tr>
+                        <td colspan="7">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="middivs clearfix" ng-include="paginationTemplate">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="confirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i> 确定审核{{vm.status==-1?"不":""}}通过吗？
+        </p>
+        <div class="form-group pt20 mb0" ng-if="vm.status ==-1">
+            <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>

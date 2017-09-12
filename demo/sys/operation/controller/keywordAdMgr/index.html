@@ -1,0 +1,210 @@
+﻿<div class="oms-crumbs"> <i>关键词广告管理列表</i>
+    <p>
+        <a href="">广告管理</a> /
+        <span>关键词广告管理列表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+            <uib-tab index="0" ng-click="tools.reset();paging.status=tools.status=null;paging.page=1;tools.getAdList();tools.setLocation();">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="tools.reset();paging.status=tools.status=2;paging.page=1;tools.getAdList();tools.setLocation(2);">
+                <uib-tab-heading>待审核({{vm.pendingTotal}})</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="tools.reset();paging.status=tools.status=3;paging.page=1;tools.getAdList();tools.setLocation(3);">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="tools.reset();paging.status=tools.status=-1;paging.page=1;tools.getAdList();tools.setLocation(-1);">
+                <uib-tab-heading>审核不通过({{vm.notpassTotal}})</uib-tab-heading>
+            </uib-tab>
+
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_add" type="button" class="btn btn-default btn-cfec-white fr mt10 mr20" ng-click="tools.toAddAd()">新增关键词广告</button>
+
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <form>
+                <!-- 推荐位置 -->
+                <div class="form-group fl">
+                    <label for="">推荐位置</label>
+                    <select class="select-oms" ng-model="paging.sitType" ng-options="obj.key as obj.title for obj in tools.sitType">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 关键词 -->
+                <div class="form-group fl">
+                    <label for="">关键词</label>
+                    <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" placeholder="多个关键词用英文逗号隔开" ng-model="paging.adKeyword" >
+                </div>
+                <!-- 产品ID -->
+                <div class="form-group fl">
+                    <label for="">产品ID</label>
+                    <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" placeholder="多个产品ID用英文逗号隔开" ng-model="paging.productList">
+                </div>
+                <!-- 状态 -->
+                <div class="form-group fl" ng-if="paging.status!=2&&paging.status!=-1">
+                    <label for="">状态</label>
+                    <select class="select-oms" ng-model="paging.timeStatus" ng-options="obj.key as obj.title for obj in tools.timeStatus">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 行业 -->
+                <div class="form-group fl">
+                    <label for="">行业</label>
+                    <select ngc-select-search name="indusId" class="select-oms" ng-model="paging.indusId" ng-options="obj.categoryId as obj.categoryName for obj in vm.industryList">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 公司名称 -->
+                <div class="form-group fl">
+                    <label for="">公司名称</label>
+                    <input ngc-auto-input type="text" ngc-monitor-enter  class="input-cfec" placeholder="" ng-model="paging.companyName">
+                </div>
+                <!-- 时间类型 -->
+                <div class="form-group cfec-select-picker fl">
+                    <label>时间类型</label>
+                    <select class="select-oms" style="width: 195px; margin-right: 40px;"ng-model="paging.timeType" ng-options="obj.key as obj.title for obj in tools.timeType">
+                    </select>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.beginDateStr" id="startTime" max-date="{{paging.endDateStr}}" ng-required placeholder="起始日期" />
+                    <span class="text-inline">至</span>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.endDateStr" id="endTime" min-date="{{paging.beginDateStr}}" placeholder="截止日期" ng-required/>
+                </div>
+                <div class="form-group btns-group clear">
+                    <button class="btn btn-cfec-red fl mr20" ng-click="tools.search();">查&nbsp;询</button>
+                    <button class="btn btn-cfec-white fl" ng-click="tools.reset();">重 置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="5%" ng-if="tools.status!=null">
+                    <col width="9%" ng-if="tools.status!=null">
+                    <col width="8%" ng-if="tools.status==null">
+                    <col width="11%">
+                    <col width="10%">
+                    <col width="6%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="6%">
+                    <col width="6%">
+                    <col width="6%">
+                    <col width="15%">
+                </colgroup>
+                <thead>
+                    <tr ng-if="vm.showOperateFlag==false">
+                        <th ng-if="tools.status!=null">
+                            <input type="checkbox" ng-if="vm.items.length" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                        </th>
+                        <th>行业</th>
+                        <th>公司名称</th>
+                        <th>关键词</th>
+                        <th>产品ID</th>
+                        <th class="ta-c">推荐位置</th>
+                        <th>生效时间</th>
+                        <th>失效时间</th>
+                        <th class="ta-c">排序</th>
+                        <th class="ta-c">金额</th>
+                        <th>状态</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                    <tr ng-if="vm.showOperateFlag==true">
+                        <th ng-if="tools.status != null">
+                            <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                        </th>
+                        <th colspan="7">
+                            <div class="btn-toolbar">
+                                <button ngc-permission="keywordAdMgr_keywordAdMgrlist_pass" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.changestatus('',3)" ng-show="paging.status!=3">审核通过</button>
+                                <button ngc-permission="keywordAdMgr_keywordAdMgrlist_notpass" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="tools.changestatus('',-1)" ng-show="paging.status!=-1">审核不通过</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items' class="{{item.timeStatus=='7'?'enabledTr':''}}">
+                        <td ng-if="tools.status!=null">
+                            <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()"> </td>
+                        <!-- 行业 -->
+                        <td>{{ item.indusName }}</td>
+                        <!-- 公司名称 -->
+                        <td>{{ item.companyName }}<i class="iconfont blue" ng-if="item.businessCooper==1">&#xe629;</i></td>
+                        <!-- 关键字 -->
+                        <td>{{ item.adKeyword }}</td>
+                        <!-- 产品ID -->
+                        <td><a href="{{ item.secondLevelDomain  }}" target="_blank" class="link-cfec-inherit">{{ item.productId }}</a></td>
+                        <!-- 推荐位置 -->
+                        <td class="ta-c">{{ item.sitType | sitTypeFilter}}</td>
+                        <!-- 生效时间 -->
+                        <td>
+                            <p>{{ item.beginDate | date:'yyyy-MM-dd'}}</p>
+                            <p>{{ item.beginDate | date:'HH:mm:ss'}}</p>
+                        </td>
+                        <!-- 失效时间 -->
+                        <td>
+                            <p>{{ item.endDate | date:'yyyy-MM-dd'}}</p>
+                            <p>{{ item.endDate | date:'HH:mm:ss'}}</p>
+                        </td>
+                        <!-- 排序 -->
+                        <td class="ta-c">
+                            {{ item.sort }}
+                        </td>
+                        <!-- 金额 -->
+                        <td class="ta-c" ng-if="item.price!=null">
+                            {{ item.price | number:2 }}
+                        </td>
+                        <td class="ta-c" ng-if="item.price==null">
+                            0.00
+                        </td>
+                        <!-- 状态 -->
+                        <td>
+                            {{ item.status | adState:item.timeStatus }}
+                        </td>
+                        <td class="ta-c">
+                            <!-- 待审核:2 审核通过:3 审核不通过：-1 -->
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_pass" class="link mr10" href="javascript:void(0)" ng-click="tools.changestatus(item.adId,3)" ng-if="item.status==-1||item.status==2">通过</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_notpass" class="link mr10" href="javascript:void(0)" ng-click="tools.changestatus(item.adId,-1)" ng-if="item.status==2">不通过</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_stop" class="link mr10" href="javascript:void(0)" ng-if="item.timeStatus==6||(item.status==3&&item.timeStatus==5)" ng-click="tools.changestatus(item.adId,4)">暂停</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_start" class="link mr10" href="javascript:void(0)" ng-if="item.status==4" ng-click="tools.changestatus(item.adId,3)">开启</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_update" class="link mr10" href="/#/keywordAdMgr/addAd?adId={{item.adId}}&status={{tools.status}}" ng-if="item.status==-1||item.timeStatus==7">修改</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_delete" class="link mr10" href="javascript:void(0)" ng-if="item.status==-1||item.timeStatus==7" ng-click="tools.changestatus(item.adId,-3)">删除</a>
+                            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_detail" class="link mr10" ng-href="/#/keywordAdMgr/detail?adId={{item.adId}}&status={{tools.status}}" target="_blank" >查看</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="{{tools.status==null?11:12}}">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="adListDlgId">
+  <div class="sellerListDlg">
+      <div class="dlg-title">提示</div>
+      <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i>
+            <span ng-if="vm.changestatus == 3">确定审核通过/开启该广告吗？</span>
+            <span ng-if="vm.changestatus == -1">确定审核不通过吗？</span>
+            <span ng-if="vm.changestatus == 4">确定暂停选中广告吗？</span>
+            <span ng-if="vm.changestatus == -3">确定删除选中广告吗？</span>
+        </p>
+        <div class="form-group pt20 mb0" ng-if="vm.changestatus==-1">
+          <textarea name="" class="form-control reasonInput" rows="4"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../../view/css/category.css">
+    <!--
+    <link rel="stylesheet" href="../../view/css/util/grid.css">
+    <link rel="stylesheet" href="../../view/css/util/btn.css">
+    <link rel="stylesheet" href="../../view/css/util/fix.css">
+    <link rel="stylesheet" href="../../view/css/util/reset.css">
+    <link rel="stylesheet" href="../../view/css/category.css">
+    -->
+</head>
+<body>
+
+<div class="container">
+    <h2>新增行业</h2>
+    <hr class="hr-orange"/>
+	<div row>
+    <form class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="col-xs-3" for="industName">行业名称：</label>
+
+            <div class="col-xs-6">
+                <input type="text" name="industName" /></div>
+        </div>
+        <div class="form-group not-null">
+            <label class="col-xs-3">英文名称：</label>
+
+            <div class="col-xs-6">
+                <input type="text" ></div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3" for="isInportant">是否重点行业：</label>
+
+            <div class="col-xs-6">
+                <input type="checkbox" name="isInportant" id="" />是
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 " for="sortNo">排序：</label>
+
+            <div class="col-xs-6">
+                <input type="text" name="sortNo"/></div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-3">
+                <label for=""> &nbsp;</label>
+            </div>
+
+            <div class="col-xs-6">
+                <input class="btn btn-info" type="submit" value="确定">
+                <button type="button" class="btn btn-info" onclick="setIframe('industList')">返回</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<script src="category.js"></script>
+</body>
+</html>

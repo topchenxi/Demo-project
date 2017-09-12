@@ -1,0 +1,216 @@
+<div class="oms-crumbs"> <i>报价管理</i>
+    <p>
+        <a href="">采购商管理</a>
+        /
+        <span>报价管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content quote-list">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" ng-click="vm.currentState=null;tools.reset();paging.quotePriceState=null;tools.getQuoteList();">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="vm.currentState=1;tools.reset();paging.quotePriceState=1;tools.getQuoteList();">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="vm.currentState=2;tools.reset();paging.quotePriceState=2;tools.getQuoteList();">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="vm.currentState=-1;tools.reset();paging.quotePriceState=-1;tools.getQuoteList();">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <!-- 搜索行业 -->
+            <div class="form-group fl">
+                <label for="">行业</label>
+                <select ngc-select-search name="indusId" class="select-oms" ng-model="paging.productCategoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.categories">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <!-- 搜索审核状态 -->
+            <div class="form-group fl" ng-if="vm.currentState==null">
+                <label for="">状态</label>
+                <select class="select-oms" ng-model="paging.quotePriceState" ng-options="obj.key as obj.value for obj in vm.auditStatusArray">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <!-- 搜索主题 -->
+            <div class="form-group fl">
+                <label for="">主题</label>
+                <input ngc-auto-input ng-keyup="tools.keyup($event);" type="text" class="input-cfec" placeholder="主题" ng-model="paging.productName"></div>
+            <!-- 搜索是否有附件 -->
+            <div class="form-group fl">
+                <label for="">附件</label>
+                <select class="select-oms" ng-model="paging.isAttachment" ng-options="obj.key as obj.value for obj in vm.attachmentArray">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <!-- 搜索框 -->
+            <div class="form-group fl">
+                <label for="">供应商</label>
+                <div class="oms-search">
+                    <select ng-model="paging.dropDwonType">
+                        <option value="1" title="供应商ID">供应商ID</option>
+                        <option value="2" title="帐号">帐号</option>
+                        <option value="3" title="公司英文名">公司英文名</option>
+                    </select> <em></em>
+                    <input ngc-auto-input type="text" ng-keyup="tools.keyup($event);" name="" id="" placeholder="" ng-model="paging.dropDwonValue" />
+                </div>
+            </div>
+            <!-- 搜索发布时间 -->
+            <div class="form-group fl">
+                <label for="">报价时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.startTime" id="startTime" max-date="{{paging.endTime}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.endTime" id="endTime" min-date="{{paging.startTime}}" placeholder="结束日期" ng-required/>
+            </div>
+
+            <!-- 审核时间 -->
+            <div class="form-group fl" ng-if="vm.currentState==-1||vm.currentState==2">
+                <label for="">审核时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.startAuditTime" id="startAuditTime" max-date="{{paging.endAuditTime}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.endAuditTime" id="endAuditTime" min-date="{{paging.startAuditTime}}" placeholder="结束日期" ng-required/>
+            </div>
+            <!-- 最后审核人 -->
+            <div class="form-group fl" ng-if="vm.currentState==-1||vm.currentState==2">
+                <label for="">最后审核人</label>
+                <select name="auditor" class="select-oms" ng-model="paging.auditor"
+                ng-options="obj.userId as obj.realName for obj in vm.sellerArray" >
+                    <option value="">请选择</option>
+                </select>
+            </div>
+
+            <!-- 报价类型 -->
+            <div class="form-group fl">
+                <label for="">报价类型</label>
+                <select class="select-oms" ng-model="paging.quoteType">
+                    <option value="">请选择</option>
+                    <option value="1">匹配报价</option>
+                    <option value="0">自由报价</option>
+                </select>
+            </div>
+
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.search()">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.reset();">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <colgroup>
+                <col width="3%" ng-if="vm.currentState!=null" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="15%" />
+                <col width="10%" />
+
+            </colgroup>
+            <thead>
+                <tr ng-if="vm.showOperateFlag==false">
+                    <th class="checkboxRow" ng-if="vm.currentState!=null">
+                        <input type="checkbox" value="" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)" />
+                    </th>
+                    <th>行业</th>
+                    <th>主题</th>
+                    <th>供应商</th>
+                    <th>报价时间</th>
+                    <th>报价类型</th>
+                    <th class="ta-c" ng-if="vm.currentState==null">状态</th>
+                    <th class="ta-c" ng-if="vm.currentState==-1||vm.currentState==2">审核时间</th>
+                    <th class="ta-c" ng-if="vm.currentState==-1||vm.currentState==2">最后审核人</th>
+                    <th class="ta-c">附件</th>
+                    <th class="ta-c">操作</th>
+                    <!-- 操作列 --> </tr>
+                <tr ng-if="vm.showOperateFlag==true">
+                    <th class="checkboxRow" ng-if="vm.currentState!=null">
+                        <input type="checkbox" value="" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)" />
+                    </th>
+                    <th colspan="7">
+                        <div ngc-permission="purchase_purchasepurchaseQuoteList_audit" class="btn-toolbar">
+                            <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-if="vm.currentState!=2" ng-click="tools.chxQuoteStatus(2)">审核通过</button>
+                            <button type="button" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-if="vm.currentState!=-1" ng-click="tools.chxQuoteStatus(-1)">审核不通过</button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.items.length>
+                0">
+                <tr ng-repeat="item in vm.items">
+                    <td ng-if="vm.currentState!=null">
+                        <input type="checkbox" value="" ng-model="item.$checked" ng-change="tools.selection()" />
+                    </td>
+                    <td>{{item.productCategoryName}}</td>
+                    <td>
+                        <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                        {{item.productName}}
+                    </td>
+                    <td>
+                        <a class="link-cfec-inherit" ng-if="item.sellerId!=null" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" title="供应商ID">{{item.sellerId}}</a>
+                        <br ng-if="item.sellerId!=null">
+                        <a class="link-cfec-inherit" ng-if="item.sellerName!=null" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" title="帐号">{{item.sellerName}}</a>
+                        <br ng-if="item.sellerName!=null">
+                        <a class="link-cfec-inherit" ng-if="item.sellerCompanyName!=null" target="_blank" ng-href="/#/seller/detail?sellerId={{item.sellerId}}" title="公司英文名">{{item.sellerCompanyName}}</a>
+                    </td>
+                    <td>
+                        {{item.sendTime | date:'yyyy-MM-dd'}}
+                        <br/>
+                        {{item.sendTime | date:'HH:mm:ss'}}
+                    </td>
+                    <td>
+                        <span ng-if="item.reQuotePrice==true" class="font-icon" title="再次审核报价">再</span>
+                        {{item.quoteType|quoteType}}
+                    </td>
+                    <td class="ta-c" ng-if="vm.currentState==null">{{item.quotePriceState | checkState}}</td>
+                    <td class="ta-c" ng-if="vm.currentState==-1||vm.currentState==2">
+                        <p>{{item.auditTime | date:'yyyy-MM-dd'}}</p>
+                        <p>{{item.auditTime | date:'HH:mm:ss'}}</p>
+                    </td>
+                    <td class="ta-c" ng-if="vm.currentState==-1||vm.currentState==2">{{item.auditorName}}</td>
+                    <td class="ta-c">{{item.hasAttachment | hasAttach }}</td>
+                    <td class="ta-c">
+                        <a ngc-permission="purchase_purchasepurchaseQuoteList_detail" class="link" target="_blank" ng-href="/#/purchase/purchaseQuoteDetail?inqueryUUID={{item.inqueryUUID}}">详情</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                <tr>
+                    <td colspan="8">
+                        <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i>
+                            没有符合条件的操作记录
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+</div>
+</div>
+<!-- 审核通过确定对话框[[ -->
+<script type="text/ng-template" id="quoteConfirm">
+    <div class="sellerListDlg">
+        <div class="dlg-title">提示</div>
+        <div class="dlg-content form">
+            <p class="ta-c"><i class="iconfont icon-xunwenoms"></i>确定审核{{vm.changestatus != -1?"":"不"}}通过吗？</p>
+            <div class="form-group pt20 mb0" ng-if="vm.changestatus==-1">
+                <div class="unpass-reason clearfix">
+                    <div class="reason-item" ng-repeat="item in vm.unPassReasonList">
+                        <label for="{{item.reasonCode}}">
+                            <input type="checkbox" ng-model="item.flag" id="{{item.reasonCode}}">
+                            <span ng-if="item.auditUnpassReasonId != 16">{{item.reasonName}}</span>
+                            <span ng-if="item.auditUnpassReasonId == 16">其他原因<input type="text" class="input-cfec" placeholder="请输入审核不通过的原因" ng-disabled="!item.flag" ng-model="item.reasonNameBias"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" ng-click="tools.comfirm()" ng-disabled="tools.btnFlag">确定</button>
+                <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 审核通过确定对话框]] -->

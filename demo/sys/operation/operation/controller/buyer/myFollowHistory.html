@@ -1,0 +1,410 @@
+<div class="oms-crumbs"> <i>我的跟进历史</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>我的跟进历史</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" ng-click="vm.platStatus=1;tools.reset();tools.getPlatBuyerHistory();">
+                <uib-tab-heading>平台采购商</uib-tab-heading>
+                <ul class="tab-list-cfec p20 pb0">
+                    <li ng-click="vm.platStatus=1;tools.reset();tools.getPlatBuyerHistory();" ng-class="{true: 'active', false: ''}[vm.platStatus==1]">采购商</li>
+                    <li ng-click="vm.platStatus=2;tools.reset();tools.getPlatBuyerHistory();" ng-class="{true: 'active', false: ''}[vm.platStatus==2]">采购需求</li>
+                    <li ng-click="vm.platStatus=3;tools.reset();tools.getPlatBuyerHistory();" ng-class="{true: 'active', false: ''}[vm.platStatus==3]">询盘</li>
+                </ul>
+                <div class="search-content form-group-main clearfix">
+                    <!-- 最近跟进标识 -->
+                    <div class="form-group fl" ng-if="vm.platStatus==1">
+                        <label for="">最近跟进标识</label>
+                        <select class="select-oms" ng-model="paging.flag" ng-options="obj.value as obj.key for obj in vm.followSignArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <!-- 最近跟进标识 -->
+                    <div class="form-group fl" ng-if="vm.platStatus!=1">
+                        <label for="">最近跟进标识</label>
+                        <select class="select-oms" ng-model="paging.flagId" ng-options="obj.flagId as obj.desc for obj in vm.businessTraceArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 1">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select name="searchType" id="searchType" ng-model="paging.searchType">
+                                <option value="">搜索类型</option>
+                                <option value="1">采购商姓名</option>
+                                <option value="2">公司名称</option>
+                                <option value="3">邮箱</option>
+                                <!-- <option value="4">用户名</option> -->
+                                <option value="5">用户ID</option>
+                                <option value="6">广交会ID</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="searchTypeValue" id="searchTypeValue" ng-model="paging.searchTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 2">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select name="searchType" id="searchType" ng-model="paging.searchType">
+                                <option value="">搜索类型</option>
+                                <option value="1">用户ID</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="searchTypeValue" id="searchTypeValue" ng-model="paging.searchTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 3">
+                        <label for="">采购商</label>
+                        <div class="oms-search">
+                            <select name="searchType" id="searchType" ng-model="paging.searchType">
+                                <option value="">搜索类型</option>
+                                <option value="1">用户ID</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="searchTypeValue" id="searchTypeValue" ng-model="paging.searchTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 2">
+                        <label for="">采购需求主题</label>
+                        <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" ng-model="paging.productName">
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 3">
+                        <label for="">询盘主题</label>
+                        <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" ng-model="paging.subject">
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button type="button" class="btn btn-cfec-red mr20" ng-click="tools.search();">查&nbsp;询</button>
+                        <button type="button" class="btn btn-cfec-white " ng-click="tools.reset();">重&nbsp;置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <dd ng-if="vm.platStatus==1" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isfollowed==1]" ng-click="paging.isfollowed =(paging.isfollowed==1?null:1);tools.getPlatBuyerHistory()">
+                            剔除免跟进采购商
+                            <span class="icon-checked"></span>
+                        </dd>
+                        <dd ng-if="vm.platStatus!=1" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isTrace==1]" ng-click="paging.isTrace =(paging.isTrace ==1?null:1);tools.getPlatBuyerHistory()">
+                            剔除免跟进商机
+                            <span class="icon-checked"></span>
+                        </dd>
+                        <dd ng-if="vm.platStatus!=1" ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isReply==0]" ng-click="paging.isReply =(paging.isReply ==0?null:0);tools.getPlatBuyerHistory()">
+                            只查看未回复商机
+                            <span class="icon-checked"></span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="list-content table-cfec table-cfec-theme2">
+                    <table class="table table-hover" ng-if="vm.platStatus==1">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>最近跟进时间</th>
+                                <th>最近跟进标识</th>
+                                <th>最近跟进内容</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.items">
+                                <td>
+                                    <i ng-if="item.isFollowed==0" class="iconfont">&#xe62b;</i>
+                                    <p>
+                                        <a target="_blank" href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.userId}}</a>
+                                    </p>
+                                    <p>
+                                        <a target="_blank" href="/#/buyer/detail?buyerId={{item.buyerId}}">{{item.firstName}}</a>
+                                    </p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li>
+                                                    <span>用户ID：</span> {{item.userId}}
+                                                </li>
+                                                <li>
+                                                    <span>姓名：</span> {{item.firstName}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.countryName}}</td>
+                                <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{item.flagStr}}</td>
+                                <td>{{item.followContent}}</td>
+                                <td>
+                                    <p> <a ngc-permission="buyer_buyerlist_add" href="javascript:void(0);" ng-click="tools.addFollowRecordCfec(1,item.buyerId);">添加跟进记录</a></p>
+                                    <p><a href="javascript:void(0);" ng-if="item.followingId==null" ng-click="tools.addToList(1,item.companyId);">加入跟进清单</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover" ng-if="vm.platStatus==2">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>采购需求主题</th>
+                                <th>采购商</th>
+                                <th>最近跟进时间</th>
+                                <th>最近跟进标识</th>
+                                <th>最近跟进内容</th>
+                                <th>采购商是否回复</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.items">
+                                <td> <i class="iconfont" ng-if="item.isTrace==0">&#xe62b;</i>
+                                    <a target="_blank" ng-href="/#/purchase/purchaseReqDetail?purchaseId={{item.procurementId}}">{{item.productName}}</a>
+                                </td>
+                                <td>
+                                    <p>
+                                        <a href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank">{{item.userId}}</a>
+                                    </p>
+                                    <p>
+                                        <a href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank">{{item.firstName}}</a>
+                                    </p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li>
+                                                    <span>用户ID：</span> {{item.userId}}
+                                                </li>
+                                                <li>
+                                                    <span>姓名：</span> {{item.firstName}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.latestFollowTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{item.latestFollowFlag}}</td>
+                                <td>{{item.latestFollowContent}}</td>
+                                <td>{{item.isReply==1?'已回复':'未回复'}}</td>
+                                <td>
+                                    <a ngc-permission="buyer_buyerlist_followbuyerB" href="javascript:void(0);" ng-click="tools.keepFollowPro(item.procurementId,item.buyerId);">跟进商机</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover" ng-if="vm.platStatus==3">
+                        <colgroup>
+                            <col width="12%">
+                            <col width="12%">
+                            <col width="12%">
+                            <col width="12%">
+                            <col width="12%">
+                            <col width="12%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>类型</th>
+                                <th>询盘主题</th>
+                                <th>采购商</th>
+                                <th>最近跟进时间</th>
+                                <th>最近跟进标识</th>
+                                <th>最近跟进内容</th>
+                                <th>采购商是否回复</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.items">
+                                <td>{{item.messageTypeId | messageType}}</td>
+                                <td>
+                                    <i class="iconfont" ng-if="item.isTrace==0">&#xe62b;</i>
+                                    <a target="_blank" ng-href="/#/inquiryMgr/detail?messageId={{item.messageId}}">{{item.subject}}</a>
+                                </td>
+                                <td>
+                                    <p>
+                                        <a href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank">{{item.userId}}</a>
+                                    </p>
+                                    <p>
+                                        <a href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank">{{item.firstName}}</a>
+                                    </p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li>
+                                                    <span>用户ID：</span> {{item.userId}}
+                                                </li>
+                                                <li>
+                                                    <span>姓名：</span> {{item.firstName}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.latestFollowTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{item.latestFollowFlag}}</td>
+                                <td>{{item.latestFollowContent}}</td>
+                                <td>{{item.isReply==1?'已回复':'未回复'}}</td>
+                                <td>
+                                    <a ngc-permission="buyer_buyerlist_followbuyerB" href="javascript:void(0);" ng-click="tools.keepFollowInq(item.messageId,item.buyerId,item.messageTypeId);">跟进商机</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="tips-text ml20">
+                        <ul>
+                            <li class="gary f12">备注：1. 此列表只展示当前跟进人是本帐号的采购商数据。</li>
+                            <li class="gary f12" ng-if="vm.platStatus==1">
+                                2. 此列表不展示审核不通过/被禁用/测试采购商的数据。
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 分页组件[[ -->
+                    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+            <uib-tab index="1" ng-click="vm.platStatus=4;tools.reset();tools.getPlatBuyerHistory();">
+                <uib-tab-heading>广交会采购商</uib-tab-heading>
+                <div class="search-content form-group-main clearfix">
+                    <!-- 最近跟进标识 -->
+                    <div class="form-group fl">
+                        <label for="">最近跟进标识</label>
+                        <select class="select-oms" ng-model="paging.flag" ng-options="obj.value as obj.key for obj in vm.followSignArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.platStatus == 4">
+                        <label for="">搜索</label>
+                        <div class="oms-search">
+                            <select name="" id="" ng-model="paging.searchType">
+                                <option value="">搜索类型</option>
+                                <option value="1">邮箱</option>
+                                <option value="2">采购商姓名</option>
+                                <option value="3">广交会ID</option>
+                                <option value="4">公司名称</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.searchTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group btns-group clear">
+                        <button type="button" class="btn btn-cfec-red mr20" ng-click="tools.search();">查&nbsp;询</button>
+                        <button type="button" class="btn btn-cfec-white " ng-click="tools.reset();">重&nbsp;置</button>
+                    </div>
+                    <dl class="row-item">
+                        <dt>快速筛选</dt>
+                        <dd ng-class="{true: 'ele-checked', false: 'ele-nochecked'}[paging.isfollowed==1]" ng-click="paging.isfollowed =(paging.isfollowed==1?null:1);tools.getPlatBuyerHistory()">
+                            剔除免跟进采购商
+                            <span class="icon-checked"></span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="list-content table-cfec table-cfec-theme2">
+                    <table class="table table-hover" ng-if="vm.platStatus==4">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>采购商</th>
+                                <th>公司国家</th>
+                                <th>最近跟进时间</th>
+                                <th>最近跟进标识</th>
+                                <th>最近跟进内容</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vm.items">
+                                <td>
+                                    <i ng-if="item.isFollowed==0" class="iconfont">&#xe62b;</i>
+                                    <p>
+                                        <a target="_blank" href="/#/buyer/cfecDetail?buyerId={{item.buyerId}}">{{item.firstName}}</a>
+                                    </p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li>
+                                                    <span>姓名：</span> {{item.firstName}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.countryName}}</td>
+                                <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td>{{item.flagStr}}</td>
+                                <td>{{item.followContent}}</td>
+                                <td>
+                                    <p> <a ngc-permission="buyer_buyerfollowList_addCfecFollowRecord" href="javascript:void(0);" ng-click="tools.addFollowRecordCfec(2,item.buyerId);" ng-if="item.dataTransferFlag!=1">添加跟进记录</a></p>
+                                    <p><a ng-if="item.dataTransferFlag==1" href="javascript:void(0);">已转平台采购商</a></p>
+                                    <p><a href="javascript:void(0);" ng-if="item.followingId==null" ng-click="tools.addToList(2,item.companyId);">加入跟进清单</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页组件[[ -->
+                    <div class="middivs clearfix" ng-include="paginationTemplate"></div>
+                    <!-- 分页组件[[ -->
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
