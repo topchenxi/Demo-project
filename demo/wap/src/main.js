@@ -27,6 +27,8 @@ import { Picker } from "mint-ui";
 import { Switch } from "mint-ui";
 import { Field } from 'mint-ui';
 import { Button } from 'mint-ui';
+import { Navbar, TabItem } from 'mint-ui';
+import { Cell } from 'mint-ui';
 
 // 滚动插件
 import VueAwesomeSwiper from 'vue-awesome-swiper';
@@ -50,6 +52,9 @@ Vue.component(Button.name, Button);
 Vue.use(InfiniteScroll);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Navbar.name, Navbar);
+Vue.component(TabItem.name, TabItem);
+Vue.component(Cell.name, Cell);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);

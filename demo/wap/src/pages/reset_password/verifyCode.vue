@@ -24,6 +24,10 @@
 </template>
 
 <script>
+
+import {CFEC} from "common/js/util.js";
+
+
 export default {
   data() {
     return {

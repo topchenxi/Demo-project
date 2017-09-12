@@ -1,36 +1,33 @@
 <template>
   <div>
     <div class="footer-wrap">
-    <footer class="border-1px">
-     <router-link to="/home" tag="div"  @touchend.native="toHome" :class="{'active': isActive,'foot-home': !isActive}">    
-        Home     
-     </router-link>
-       <div @touchend="changeMessage" class="message">
-        Inquiries
-     </div>
-
-     <router-link to="/me" tag="div" @touchend.native="changeTab" :class="{'me-active': isMe, 'me':!isMe}">
-       Me
-     </router-link>
-   </footer>
+      <footer class="border-1px">
+        <router-link to="/home" tag="div" @touchend.native="toHome" :class="{'active': isActive,'foot-home': !isActive}">
+          Home
+        </router-link>
+        <div @touchend="changeMessage" class="message">
+          Inquiries
+        </div>
+        <router-link to="/me" tag="div" @touchend.native="changeTab" :class="{'me-active': isMe, 'me':!isMe}">
+          Me
+        </router-link>
+      </footer>
     </div>
-   
     <keep-alive>
-  
       <router-view></router-view>
-      
     </keep-alive>
-    
   </div>
 </template>
 
 <script>
-import { localStorage } from "common/js/util.js";
+  import {
+    localStorage
+  } from "common/js/util.js";
   export default {
     name: "footer",
     data() {
       return {
-        isActive: true,
+        isActive: false,
         isMe: false,
         isMessage: false
       };
@@ -54,10 +51,32 @@ import { localStorage } from "common/js/util.js";
           this.$store.commit("CHANGE_INQUIRY_HOME");
           this.$router.push("/login/2");
         }
+      },
+      fetchData() {
+        const currentPathName = this.$router.history.current.name.toLowerCase();
+        switch (currentPathName) {
+          case 'me':
+            this.isMe = true;
+            break;
+          case 'home':
+            this.isActive = true;
+            break;
+          case 'manageinquirylist':
+            this.isMessage = true;
+            break;
+          default:
+           this.isActive = true;
+            break;
+        }
       }
+    },
+    watch: {
+      '$route': 'fetchData'
+    },
+    mounted() {
+      this.fetchData();
     }
   };
-
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../common/stylus/mixin.styl";

@@ -1,189 +1,159 @@
 <template>
     <div class="product-container">
         <v-header title="Detail">
-          
-            <img slot="right" @click="backHome" 
-            class="c-header-right-icon f-vermiddle" 
-            src="./images/icon_tab_home_nor.png" alt="">
-        
+            <img slot="right" @click="backHome" class="c-header-right-icon f-vermiddle" src="./images/icon_tab_home_nor.png" alt="">
         </v-header>
-        
         <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="(item, index) of slide"
-                           :key="index">
-                <img :src="IMG_URL + imgUrlFilter(item,200,200,3)"
-                     alt="">
+            <mt-swipe-item v-for="(item, index) of slide" :key="index">
+                <img :src="IMG_URL + imgUrlFilter(item,200,200,3)" alt="">
             </mt-swipe-item>
         </mt-swipe>
-
         <section class="product-info">
-            <p class="proname f-ellipsis-2"
-                 v-if="products.name">{{products.name}}</p>
-            <p class="shopname f-ellipsis-2"
-                 v-if="shopInfo.companyEnName">{{shopInfo.companyEnName}}</p>
-            <div class="fobprice"
-                 v-if="products.fobPriceFrom"><span>FOB:US $ {{products.fobPriceFrom}} - {{products.fobPriceTo}} / {{products.fobPriceUnitEnName}}</span></div>
-            <div class="moq"
-                 v-if="products.minOrder"><span>MOQ:{{products.minOrder}} {{products.minOrderUnitEnName}}</span></div>
+            <p class="proname f-ellipsis-2" v-if="products.name">{{products.name}}</p>
+            <p class="shopname f-ellipsis-2" v-if="shopInfo.companyEnName">{{shopInfo.companyEnName}}</p>
+            <div class="fobprice" v-if="products.fobPriceFrom"><span>FOB:US $ {{products.fobPriceFrom}} - {{products.fobPriceTo}} / {{products.fobPriceUnitEnName}}</span></div>
+            <div class="moq" v-if="products.minOrder"><span>MOQ:{{products.minOrder}} {{products.minOrderUnitEnName}}</span></div>
             <div>
-                <img class="logo"
-                     :src="LOGO_URL + item"
-                     alt=""
-                     v-for="(item, index) of shopInfo.logo"
-                     :key="index">
-                <img v-if="shopInfo.fairNo==='121'"
-                     src="./images/121.png"
-                     alt=""
-                     class="logo-121">                     
+                <img class="logo" :src="LOGO_URL + item" alt="" v-for="(item, index) of shopInfo.logo" :key="index">
+                <img v-if="shopInfo.fairNo==='121'" src="./images/121.png" alt="" class="logo-121">
             </div>
         </section>
-
         <section class="c-booth-wrap" v-if="productBooth.length">
-            <div class="border-1px c-booth"
-                 v-for="(item, index) of productBooth"
-                 :key="index">
+            <div class="border-1px c-booth" v-for="(item, index) of productBooth" :key="index">
                 <span>{{item}}</span>
                 <a :href="'http://app.e-cantonfair.com/app_center1/map/map.html#type=1&vol='+item.substr(5,1)+'&end='+item.substr(item.indexOf(';')+1)+'&url=http://'+productUrl.substr(7)">Go</a>
             </div>
         </section>
-     
-        <router-link class="visit-store border-1px"
-                     :to="'/shop/' + products.sellerId">
+        <router-link class="visit-store border-1px" :to="'/shop/' + products.sellerId">
             Visit Store
             <span class="arrow-r f-vermiddle"></span>
         </router-link>
-        
-        <router-link :to="'/inquiry/' + this.$route.params.productId"
-                     class="c-inquiry-footer-btn"
-                     tag="section">
+        <router-link :to="'/inquiry/' + this.$route.params.productId" class="c-inquiry-footer-btn" tag="section">
             <span>Inquiry</span>
         </router-link>
-        <v-productDetail :products-detail="detail"
-                         class="detail"
-                         ></v-productDetail>
-
+        <v-productDetail :products-detail="detail" class="detail"></v-productDetail>
         <c-downLayer :bottom="3"></c-downLayer>
     </div>
 </template>
 
 <script>
-
-import { IMG_URL, LOGO_URL } from "common/js/common";
-import productDetail from "@/pages/product/children/productDetail";
-import header from "components/header";
-import downLayer from "components/down_layer";
-import { Indicator, Toast } from "mint-ui";
-import {CFEC} from "common/js/util.js";
-
-export default {
-    data() {
-        return {
-            slide: [],           // 轮播路径
-            productId: this.$route.params.productId,     // 商品ID
-            detail: "",       //  传给子组件的详情数据
-            products: {       //  保存商品信息
-            },
-            shopInfo: {       //  保存店铺信息
-            },
-            IMG_URL,
-            LOGO_URL,
-            productBooth: [],    //  展位信息
-            productUrl: window.location.href  //  传个地图导航的链接
-        };
-    },
-    components: {
-        "v-productDetail": productDetail,  //  详情组价  有点多余
-        "v-header": header,           //  头部组件
-        "c-downLayer": downLayer     //  下载弹框组件
-    },
-    created() {
-        
-        //  拉取商品详情数据
-        this.fetchProductDetial(this.$route.params.productId);
-        
-    },
-    mounted() {
-        
-    },
-    activated() {
-        // 获取商品Id
-        this.productId = this.$route.params.productId;
-        
-    },
-    watch: {
-        //  监测Id变化
-        productId(newId) {
-            this.fetchProductDetial(newId);
-        }
-    },
-
-    methods: {
-
-        //  顶部的直接返回HOME页面
-        backHome() {
-            this.$router.replace("/home");
+    import {
+        IMG_URL,
+        LOGO_URL
+    } from "common/js/common";
+    import productDetail from "@/pages/product/children/productDetail";
+    import header from "components/header";
+    import downLayer from "components/down_layer";
+    import {
+        Indicator,
+        Toast
+    } from "mint-ui";
+    import {
+        CFEC
+    } from "common/js/util.js";
+    export default {
+        data() {
+            return {
+                slide: [], // 轮播路径
+                productId: this.$route.params.productId, // 商品ID
+                detail: "", //  传给子组件的详情数据
+                products: { //  保存商品信息
+                },
+                shopInfo: { //  保存店铺信息
+                },
+                IMG_URL,
+                LOGO_URL,
+                productBooth: [], //  展位信息
+                productUrl: window.location.href //  传个地图导航的链接
+            };
         },
-
-        //  拉取商品详情数据
-        fetchProductDetial(productId) {
-            Indicator.open("Loading...");
-            let params = {
-                productId:productId
+        components: {
+            "v-productDetail": productDetail, //  详情组价  有点多余
+            "v-header": header, //  头部组件
+            "c-downLayer": downLayer //  下载弹框组件
+        },
+        created() {
+            //  拉取商品详情数据
+            this.fetchProductDetial(this.$route.params.productId);
+        },
+        mounted() {
+        },
+        activated() {
+            // 获取商品Id
+            this.productId = this.$route.params.productId;
+        },
+        watch: {
+            //  监测Id变化
+            productId(newId) {
+                this.fetchProductDetial(newId);
             }
-            this.axios({
-                method:'get',
-                url:'/search/toProductDetail.cf',
-                params:CFEC.addConfig(params)
-            })
-            .then((res) => {
-                this.$nextTick(() => {
-                    this.detail = Object.assign({}, this.detail, res.data.data);
-                    let product = res.data.data.product;
-                    let shopInfo = res.data.data.shopInfo;
-
-                    this.$set(this.products, "name", product.name);
-                    this.$set(this.products, "fobPriceFrom", product.fobPriceFrom);
-                    this.$set(this.products, "fobPriceTo", product.fobPriceTo);
-                    this.$set(this.products, "fobPriceUnitEnName", product.fobPriceUnitEnName);
-                    this.$set(this.products, "minOrder", product.minOrder);
-                    this.$set(this.products, "minOrderUnitEnName", product.minOrderUnitEnName);
-                    this.$set(this.products, "sellerId", product.sellerId);
-
-                    this.$set(this.shopInfo, "companyEnName", shopInfo.companyEnName);
-                    this.$set(this.shopInfo, "fairNo", shopInfo.fairNo);
-
-                    try {
-                        this.slide = product.imgs.split(",");
-
-                        this.$set(this.shopInfo, "logo", shopInfo.logo.split(","));
-                    } catch (err) { }
-
-                    let params = {
-                        searchType:1,
-                        sellerId:product.sellerId,
-                        fairNo:121,
-                        productId:productId
-                    }
-                    this.axios({
-                        method:'get',
-                        url:'/shop/getBoothInfo.cf',
-                        params:CFEC.addConfig(params)
-                    })
-                        .then((res) => {
-                            Indicator.close();
-                            this.productBooth = res.data.data;
-                        });
-                });
-
-            })
-            .catch(() => { Indicator.close(); Toast("Network Timeout"); });
         },
-        imgUrlFilter(src,w,h,type){
-            return CFEC.imgUrlFilter(src,w,h,type);
+        methods: {
+            //  顶部的直接返回HOME页面
+            backHome() {
+                this.$router.replace("/home");
+            },
+            //  拉取商品详情数据
+            fetchProductDetial(productId) {
+                Indicator.open("Loading...");
+                let params = {
+                    productId: productId
+                }
+                this.axios({
+                        method: 'get',
+                        url: '/search/toProductDetail.cf',
+                        params: CFEC.addConfig(params)
+                    })
+                    .then((res) => {
+                        if (res.data.status === "error") {
+                            Indicator.close();
+                            alert('error');
+                            return
+                        }
+                        this.$nextTick(() => {
+                            this.detail = Object.assign({}, this.detail, res.data.data);
+                            let product = res.data.data.product;
+                            let shopInfo = res.data.data.shopInfo;
+                            this.$set(this.products, "name", product.name);
+                            this.$set(this.products, "fobPriceFrom", product.fobPriceFrom);
+                            this.$set(this.products, "fobPriceTo", product.fobPriceTo);
+                            this.$set(this.products, "fobPriceUnitEnName", product.fobPriceUnitEnName);
+                            this.$set(this.products, "minOrder", product.minOrder);
+                            this.$set(this.products, "minOrderUnitEnName", product.minOrderUnitEnName);
+                            this.$set(this.products, "sellerId", product.sellerId);
+                            this.$set(this.shopInfo, "companyEnName", shopInfo.companyEnName);
+                            this.$set(this.shopInfo, "fairNo", shopInfo.fairNo);
+                            try {
+                                this.slide = product.imgs.split(",");
+                                this.$set(this.shopInfo, "logo", shopInfo.logo.split(","));
+                            } catch (err) {}
+                            let params = {
+                                searchType: 1,
+                                sellerId: product.sellerId,
+                                fairNo: 121,
+                                productId: productId
+                            }
+                            this.axios({
+                                    method: 'get',
+                                    url: '/shop/getBoothInfo.cf',
+                                    params: CFEC.addConfig(params)
+                                })
+                                .then((res) => {
+                                    Indicator.close();
+                                    this.productBooth = res.data.data;
+                                });
+                        });
+                    })
+                    .catch(() => {
+                        Indicator.close();
+                        Toast("Network Timeout");
+                    });
+            },
+            imgUrlFilter(src, w, h, type) {
+                return CFEC.imgUrlFilter(src, w, h, type);
+            }
         }
-    }
-};
-
+    };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>

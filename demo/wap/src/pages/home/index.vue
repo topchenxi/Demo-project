@@ -306,70 +306,74 @@
       },
       //  拆分数据
       distribute(_res) {
-        let homeInfo = _res.data.data;
-        // 推荐商品
-        this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
-        // 轮播
-        for (let i = 0, len = homeInfo.homepageCarouselFigure.homepageDetails.length; i < len; i++) {
-          let item = homeInfo.homepageCarouselFigure.homepageDetails[i];
-          if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
-            homeInfo.homepageCarouselFigure.homepageDetails.splice(i, 1);
-            i--;
-            len--;
-          }
-        }
-        this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
-        // 文字滚动轮播
-        for (let i = 0, len = homeInfo.homepageWordFigure.homepageDetails.length; i < len; i++) {
-          let item = homeInfo.homepageWordFigure.homepageDetails[i];
-          if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
-            homeInfo.homepageWordFigure.homepageDetails.splice(i, 1);
-            i--;
-            len--;
-          }
-        }
-        this.homepageWordFigure = homeInfo.homepageWordFigure;
-        // 两栏广告
-        this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
-        // 橱窗 
-        this.homepageWindow = homeInfo.homepageWindow;
-        // 通栏广告
-        this.homepageAd1 = homeInfo.homepageAd1;
-        // 行业类目
-        this.homepageCategory = homeInfo.homepageCategory;
-        // 新商品推荐
-        this.homepageNewProduct = homeInfo.homepageNewProduct;
-        // 新广告页
-        this.homepageNewAdvertisement = homeInfo.homepageNewAdvertisement;
-        for (let i = 0; i < this.homepageNewAdvertisement.homepageDetails.length; i++) {
-          if (i > 0) {
-            this.homepageNewAdvertisementList.push(this.homepageNewAdvertisement.homepageDetails[i]);
-          }
-        }
-        // 推荐关键词1
-        this.homepageKeywordGroup1 = homeInfo.homepageKeywordGroup1;
-        // 推荐关键词2
-        this.homepageKeywordGroup2 = homeInfo.homepageKeywordGroup2;
-        // 推荐商品列表
-        let keywordGroupLen = 0;
-        if (this.homepageKeywordGroup1) {
-          keywordGroupLen += 1;
-        }
-        if (this.homepageKeywordGroup2) {
-          keywordGroupLen += 1;
-        }
-        if (keywordGroupLen > 0) {
-          let tempObj = [];
-          let arrLen = this.homepageRecommendProduct.homepageDetails.length / keywordGroupLen;
-          for (let i = 0; i < keywordGroupLen; i++) {
-            tempObj[i] = [];
-            tempObj[i].push(homeInfo['homepageKeywordGroup' + (i + 1)]);
-            tempObj[i] = tempObj[i].concat(this.homepageRecommendProduct.homepageDetails.splice(0, arrLen));
-            if (tempObj[i].length % 2 == 1) {
-              tempObj[i].pop();
+        if(_res.status == 'success'){
+          let homeInfo = _res.data.data;
+          // 推荐商品
+          this.homepageRecommendProduct = homeInfo.homepageRecommendProduct;
+          // 轮播
+          for (let i = 0, len = homeInfo.homepageCarouselFigure.homepageDetails.length; i < len; i++) {
+            let item = homeInfo.homepageCarouselFigure.homepageDetails[i];
+            if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
+              homeInfo.homepageCarouselFigure.homepageDetails.splice(i, 1);
+              i--;
+              len--;
             }
           }
-          this.homepageRecommendProductList = tempObj;
+          this.homepageCarouselFigure = homeInfo.homepageCarouselFigure;
+          // 文字滚动轮播
+          for (let i = 0, len = homeInfo.homepageWordFigure.homepageDetails.length; i < len; i++) {
+            let item = homeInfo.homepageWordFigure.homepageDetails[i];
+            if (item.contentType == 7 || item.contentType == 8 || item.contentType == 9) {
+              homeInfo.homepageWordFigure.homepageDetails.splice(i, 1);
+              i--;
+              len--;
+            }
+          }
+          this.homepageWordFigure = homeInfo.homepageWordFigure;
+          // 两栏广告
+          this.homepageAdvertisementVerticality = homeInfo.homepageAdvertisementVerticality;
+          // 橱窗 
+          this.homepageWindow = homeInfo.homepageWindow;
+          // 通栏广告
+          this.homepageAd1 = homeInfo.homepageAd1;
+          // 行业类目
+          this.homepageCategory = homeInfo.homepageCategory;
+          // 新商品推荐
+          this.homepageNewProduct = homeInfo.homepageNewProduct;
+          // 新广告页
+          this.homepageNewAdvertisement = homeInfo.homepageNewAdvertisement;
+          for (let i = 0; i < this.homepageNewAdvertisement.homepageDetails.length; i++) {
+            if (i > 0) {
+              this.homepageNewAdvertisementList.push(this.homepageNewAdvertisement.homepageDetails[i]);
+            }
+          }
+          // 推荐关键词1
+          this.homepageKeywordGroup1 = homeInfo.homepageKeywordGroup1;
+          // 推荐关键词2
+          this.homepageKeywordGroup2 = homeInfo.homepageKeywordGroup2;
+          // 推荐商品列表
+          let keywordGroupLen = 0;
+          if (this.homepageKeywordGroup1) {
+            keywordGroupLen += 1;
+          }
+          if (this.homepageKeywordGroup2) {
+            keywordGroupLen += 1;
+          }
+          if (keywordGroupLen > 0) {
+            let tempObj = [];
+            let arrLen = this.homepageRecommendProduct.homepageDetails.length / keywordGroupLen;
+            for (let i = 0; i < keywordGroupLen; i++) {
+              tempObj[i] = [];
+              tempObj[i].push(homeInfo['homepageKeywordGroup' + (i + 1)]);
+              tempObj[i] = tempObj[i].concat(this.homepageRecommendProduct.homepageDetails.splice(0, arrLen));
+              if (tempObj[i].length % 2 == 1) {
+                tempObj[i].pop();
+              }
+            }
+            this.homepageRecommendProductList = tempObj;
+          }
+        }else{
+          
         }
       },
       //  跳转到应用中心

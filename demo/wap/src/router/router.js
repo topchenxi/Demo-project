@@ -82,6 +82,10 @@ const topic = resolve => require(["@/pages/topic"], resolve);
 // 学生重置密码
 const studentRspwd = resolve => require(["@/pages/studentRspwd"], resolve);
 
+// 学生成绩查询
+const studentPerformance = resolve => require(["@/pages/studentRspwd/studentPerformance"], resolve);
+const studentPerformanceList = resolve => require(["@/pages/studentRspwd/studentPerformanceList"], resolve);
+
 export default [{
         path: "/",
         component: footer,
@@ -386,5 +390,16 @@ export default [{
         path: "/studentRspwd",
         name: "studentRspwd",
         component: studentRspwd
+    },
+    // 学生业绩
+    {
+        path: "/sp",
+        name: "studentPerformance",
+        component: studentPerformance
+    },
+    {
+        path: "/spList/:id",
+        name: "studentPerformanceList",
+        component: studentPerformanceList
     }
 ];
