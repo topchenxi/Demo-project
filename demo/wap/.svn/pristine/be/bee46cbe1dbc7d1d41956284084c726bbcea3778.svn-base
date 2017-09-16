@@ -1,8 +1,0 @@
-@import "./reset.styl"
-@import "./variables.styl"
-@import "./function.styl"
-@import "./common.styl"
-@import "./base.styl"
-
-
-

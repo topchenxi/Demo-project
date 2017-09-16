@@ -1,5 +1,0 @@
-@import "../variables.styl"
-@import "./border.styl"
-@import "./upload.styl"
-@import "./grid.styl"
-@import "./me.styl"
