@@ -1,0 +1,316 @@
+<div class="oms-crumbs"> <i>采购需求详情</i>
+	<p>
+		<a href="">采购商管理</a>
+		/
+		<span>采购需求匹配管理</span>
+	</p>
+</div>
+
+<div class="oms-container">
+	<div class="oms-content">
+		<uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+			<uib-tab index="0" select="tools.getPurchaseDetail();">
+				<uib-tab-heading>采购需求详情</uib-tab-heading>
+            <div class="oms-detail">
+                <p class="text-right"><a href="/#/purchase/purchaseReqList?userId={{vm.tabDetail.buyer.userId}}" target="_blank">此采购商相关采购需求</a></p>
+            <div class="table-cfec table-cfec-theme3">
+            <table class="table">
+              <colgroup>
+                <col width="20%">
+                <col width="30%">
+                <col width="20%">
+                <col width="30%"> 
+              </colgroup>
+              <thead>
+                <tr>
+                  <th colspan="4">
+                    基本信息
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>采购需求ID</th>
+                  <td >{{vm.tabDetail.item.procurementId}}</td>
+                  <th>来源</th>
+                  <td>{{vm.tabDetail.item.sourceValue}}<span ng-if="vm.item.createByUserName.length>0||vm.item.updateByUserName.length>0">( 代发人：{{vm.item.createByUserName}} &nbsp;&nbsp;修改人:{{vm.item.updateByUserName}} )</span></td>
+                </tr>
+                <tr>
+                  <th>发布时间</th>
+                  <td >{{vm.tabDetail.item.startTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <th>有效限期</th>
+                  <td>{{vm.tabDetail.item.endTime|date:'yyyy-MM-dd'}}</td>
+                </tr>
+                <tr>
+                  <th>来源IP</th>
+                  <td >{{vm.tabDetail.item.ip}}</td>
+                  <th>审核状态</th>
+                  <td>{{vm.tabDetail.item.procurementState|purchaseState}}</td>
+                </tr>
+                <!-- <tr>
+                  <th>上线状态</th>
+                  <td >?</td>
+                  <th>匹配状态</th>
+                  <td>?</td>
+                </tr> -->
+                <tr>
+                  <th>最后审核人</th>
+                  <td >{{vm.tabDetail.item.lastAuditor}}</td>
+                  <th>最后审核时间</th>
+                  <td>{{vm.tabDetail.item.lastAuditTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table mt20">
+              <colgroup>
+                <col width="20%">
+                <col width="30%">
+                <col width="20%">
+                <col width="30%"> 
+              </colgroup>
+              <thead>
+                <tr>
+                  <th colspan="3">
+                    采购需求详情
+                  </th>
+                  <th class="ta-r">
+                    
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr> <td colspan="4"> 采购商信息</td> </tr>
+                <tr>
+                  <th>姓名</th>
+                  <td >{{vm.tabDetail.buyer.firstName}}</td>
+                  <th>用户名</th> 
+                  <td><a class="link-cfec-inherit" target="_blank" href="/#/buyer/detail?buyerId={{vm.tabDetail.buyer.buyerId}}">{{vm.tabDetail.buyer.userName}}</a></td>
+                </tr>
+                <tr>
+                  <th>邮箱</th>
+                  <td >{{vm.tabDetail.buyer.email}}</td>
+                  <th>手机</th>
+                  <td>{{vm.tabDetail.buyer.mobile}}</td>
+                </tr>
+                <tr>
+                  <th>固话</th>
+                  <td >{{vm.tabDetail.buyer.telephone}}</td>
+                  <th>公司名称</th>
+                  <td>{{vm.tabDetail.company.companyName}}</td>
+                </tr>
+                <tr>
+                  <th>公司国家</th>
+                  <td >{{vm.tabDetail.buyer.countryName}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+                <tr> <td colspan="4"> 采购需求信息</td> </tr>
+                <tr>
+                  <th>标题</th>
+                  <td colspan="3"><span ng-show="vm.tabDetail.item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span> {{vm.tabDetail.item.productName}}</td>
+                </tr>
+                <tr>
+                  <th>详细描述</th>
+                  <td colspan="3" ng-bind-html="vm.tabDetail.item.productDes"> </td>
+                </tr>
+                <tr>
+                  <th>行业类目</th>
+                  <td>
+                    {{vm.tabDetail.item.productCategory}} &gt; {{vm.tabDetail.item.productLastCategory}}
+                  </td>
+                  <th>附件</th>
+                  <td colspan="3">
+                    <div ng-repeat="at in vm.tabDetail.item.attachmentUrl track by $index">
+                      <a href="javascript:void(0)" ng-click="tools.open(at,true)">{{vm.tabDetail.item.attachmentName.split(',')[$index]}}</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>采购数量</th>
+                  <td>{{vm.tabDetail.item.expectNum}} {{vm.tabDetail.item.expectUnit}}</td>
+                  <th>发布时间</th>
+                  <td>{{vm.tabDetail.item.startTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                  <th>有效期限</th>
+                  <td>{{vm.tabDetail.item.endTime|date:'yyyy-MM-dd'}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+                <tr> <td colspan="4"> 附加信息</td> </tr>
+                <tr>
+                  <th>成交方式</th>
+                  <td>{{vm.tabDetail.item.trading}}</td>
+                  <th>期望价格</th>
+                  <td>US ${{vm.tabDetail.item.expectPrice}}/{{vm.tabDetail.item.expectPriceUnit}}</td>
+                </tr>
+                <tr>
+                  <th>到达港</th>
+                  <td ng-bind-html="vm.tabDetail.item.portOfArrival"> </td>
+                  <th>付款方式</th>
+                  <td>{{vm.tabDetail.item.paymentMethod}}</td>
+                </tr>
+                <tr>
+                  <th>期望收到</th>
+                  <td ng-bind-html="vm.tabDetail.item.expect"> </td>
+                  <th>供应商要求</th>
+                  <td ng-bind-html="vm.tabDetail.item.supplierRequired.join(',')"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table mt20">
+              <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="40%"> </colgroup>
+              <thead>
+                <tr>
+                  <th colspan="4">审核信息</th>
+                 
+                </tr>
+                <tr>
+                  <th>审核时间</th>
+                  <th>审核人</th>
+                  <th>审核结果</th>
+                  <th>其他</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="ad in vm.tabDetail.auditList track by $index">
+                  <td>{{ad.auditTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{ad.auditor}}</td>
+                  <td>{{ad.auditState|purchaseState}}</td>
+                  <td>
+                    <span ng-show="ad.auditState == 2">质量标签：{{ad.quality|purchaseQuality}}</span>
+                    <span ng-show="ad.auditState == 3">不通过原因：{{ad.reason}}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+            </div>    
+            
+			</uib-tab>
+			<uib-tab index="1" select="tools.getPurchaseSysResult()">
+				<uib-tab-heading>系统匹配结果</uib-tab-heading>
+                <div class="oms-detail table-cfec table-cfec-theme2">
+                    <!-- 状态为审核通过时显示 -->
+                    <div class="mb-20" ng-if="vm.tabDetail.item.procurementState == 2">
+                       <button ngc-permission="purchase_purchasepurchaseMatchList_opear"  class="btn btn-cfec-red" ng-click="tools.toIntervenePage()"> 干预匹配</button>
+                    </div>
+                    <table class="table table-hover">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="13%">
+                            <col width="17%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="25%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>匹配时间</th>
+                                <th>供应商名</th>
+                                <th>会员资质</th>
+                                <th>主营行业</th>
+                                <th>主营关键字</th>
+                                <th>商业规则类型</th>
+                                <th>主要出口市场</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="it in vm.tabSysResult.items track by $index">
+                            <td>{{$index+1}}</td>
+                               <td>{{it.matchTime|date:'yyyy-MM-dd'}}<br/>{{it.matchTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <a title="中文名" class="link-cfec-inherit" target="_blank" ng-if="it.companyName && it.companyName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">{{it.companyName}}</a><br/>
+                                    <a title="英文名" class="link-cfec-inherit" target="_blank" ng-if="it.companyEnName && it.companyEnName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">{{it.companyEnName}}</a><br/>
+                                    <a class="link-cfec-inherit" target="_blank" ng-if="it.companyEnName && it.companyEnName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">【前台店铺】</a>
+                                </td>
+                                <td>
+                                  <p>{{it.packageTypeId|memPackageType}}</p>
+                                  <p>{{it.isYearExhibitor ==1? '当届参展商':'非当届参展商'}}</p>
+                                  <p>参会{{it.exhitionTimes}}次</p> 
+                                </td>
+                                <td>{{it.categoryName}}</td>
+                                <td>{{it.mainProducts}}</td>
+                                <td>{{it.bizRulePath}}</td>
+                                <td>{{it.exportArea}}</td>
+                            </tr>
+                            <tr ng-if="vm.tabSysResult.items.length<1" >
+                                <td colspan="8">
+                                    <p class="noResult-Text pt20 pb20 ta-c"><i class="iconfont icon-jingshioms"></i> 匹配结果为0!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+			</uib-tab>
+			<uib-tab index="2" select="tools.getPurchaseInterveneResult()">
+				<uib-tab-heading>干预匹配结果</uib-tab-heading>
+                <div class="oms-detail table-cfec table-cfec-theme2">
+                    <table class="table table-hover">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="10%">
+                            <col width="5%">
+                            <col width="13%">
+                            <col width="20%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="15%">
+                            <col width="12%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>来源</th>
+                                <th>干预人</th>
+                                <th>匹配时间</th>
+                                <th>供应商</th>
+                                <th>会员资质</th>
+                                <th>主营行业</th>
+                                <th>主营关键字</th>
+                                <th>主要出口市场</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr ng-repeat="it in vm.toInterveneResult.items track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td>{{it.matchType==0?'系统匹配':'人工添加'}}</td>
+                                <td>{{it.matchBy}}</td>
+                                <td>{{it.matchTime|date:'yyyy-MM-dd'}}<br/>{{it.matchTime|date:'HH:mm:ss'}}</td>
+                                <td>
+                                    <a title="中文名" class="link-cfec-inherit" target="_blank" ng-if="it.companyName && it.companyName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">{{it.companyName}}</a><br/>
+                                    <a title="英文名" class="link-cfec-inherit" target="_blank" ng-if="it.companyEnName && it.companyEnName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">{{it.companyEnName}}</a><br/>
+                                    <a class="link-cfec-inherit" target="_blank" ng-if="it.companyEnName && it.companyEnName.length>0" href="/#/seller/detail?sellerId={{it.sellerId}}">【前台店铺】</a>
+                                </td>
+                                <td>
+                                <p>{{it.packageTypeId|memPackageType}}</p>
+                                  <p>{{it.isYearExhibitor ==1? '当届参展商':'非当届参展商'}}</p>
+                                  <p>参会{{it.exhitionTimes}}次</p> </td>
+                                <td>{{it.categoryName}}</td>
+                                <td>{{it.mainProducts}}</td>
+                                <td>{{it.exportArea}}</td>
+                            </tr>
+                            <tr ng-if="vm.toInterveneResult.items.length<1">
+                                <td colspan="10">
+                                    <p class="noResult-Text pt20 pb20 ta-c"><i class="iconfont icon-jingshioms"></i> 匹配结果为0!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+			</uib-tab>
+		</uib-tabset>
+        
+    </div>
+</div>

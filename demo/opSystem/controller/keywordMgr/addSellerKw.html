@@ -1,0 +1,55 @@
+<div class="oms-crumbs"> <i>新增关键词广告</i>
+    <p>
+        <a href="">广告管理</a> /
+        <a href="">关键词广告管理列表</a> /
+        <span>新增关键词广告</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <form id="addAdform" name="forms.addAdform" class="form-group-main" role="form" novalidate="novalidate">
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 关键词
+                </label>
+                <div class="col-sm-10">
+                    <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" ng-model="vm.item.keyword">
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 链接
+                </label>
+                <div class="col-sm-10">
+                    <p>{{vm.item.url | getSellerKwUrl:vm.item.keyword:vm.item.indusId}}</p>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 类目
+                </label>
+                <div class="col-sm-10">
+                   <select name="" id="" class="select-oms" ng-model="vm.item.indusId" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorisList">
+                        <option value="">请选择</option>
+                   </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row line">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                    <span>*</span> 类目ID
+                </label>
+                <div class="col-sm-10">
+                     <div  class="target-categories ta-l">{{vm.item.indusId }}</div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                </label>
+                <div class="col-sm-10">
+                    <button type="button" class="btn btn-cfec-red mr20" ng-click="tools.saveInfo();">保存</button>
+                    <button type="button" class="btn btn-cfec-white mr20" ng-click="tools.getBack();">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

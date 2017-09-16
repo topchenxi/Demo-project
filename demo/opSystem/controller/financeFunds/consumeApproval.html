@@ -1,0 +1,250 @@
+<div class="top-help clearfix ">
+    <div class="help-form-class ng-pristine ng-valid">
+        <p class="p-help-style">
+            财务资金管理 &gt; 消费资金审核
+        </p>
+    </div>
+</div>
+<!-- 查询条件 -->
+<div class="searchTop clearfix">
+    <form>
+        <div class="row pt-10">
+            <div class="col-xs-3 col-pl-5">
+                <lable>订单编号</lable>
+                <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt"  ng-model="paging.orderId">
+            </div>
+            <!--
+            <div class="col-xs-3 col-pl-5">
+                <lable>子订单编号</lable>
+                <input class="ipt ipt-s"  type="text" class="searchTxt"  ng-model="paging.fundId">
+            </div>
+            -->
+            <div class="col-xs-3 col-pl-5">
+                <lable>买家账号</lable>
+                <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt" ng-model="paging.buyerName">
+            </div>
+            <div class="col-xs-3 col-pl-5">
+                <lable>卖家账号</lable>
+                <input ngc-auto-input class="ipt ipt-s"  type="text" class="searchTxt" ng-model="paging.sellerName">
+            </div>
+        </div>
+        <div class="row pt-10">
+            <div class="col-xs-6 col-pl-5 the-time">
+                <label class="fl">生成时间</label>
+                <input readonly ng-click="open1($event)" class="ipt ipt-xs fl ml10" type="text"  placeholder="起始日期" uib-datepicker-popup="yyyy/MM/dd" is-open="opened1"
+                       min-date="'1997-06-22'"  close-text="Close" max-date="paging.endTimes" datepicker-options="dateOptions"
+                       ng-model="paging.startTimes">
+                
+                <label class="fl pl10 pr10">至</label>
+                <input readonly ng-click="open2($event)" class="ipt ipt-xs fl" type="text" uib-datepicker-popup="yyyy/MM/dd" placeholder="结束日期" is-open="opened2"
+                       min-date="paging.startTimes"  close-text="Close" datepicker-options="dateOptions" ng-model="paging.endTimes">
+               
+            </div>
+            <div class="col-xs-6 col-pl-5 the-time">
+                <label class="fl">审核时间</label>
+                <input readonly ng-click="open3($event)" class="ipt ipt-xs fl ml10" type="text"  placeholder="起始日期" uib-datepicker-popup="yyyy/MM/dd" is-open="opened3"
+                       min-date="'1997-06-22'"  close-text="Close" max-date="paging.auditEnd" datepicker-options="dateOptions"
+                       ng-model="paging.auditStart">
+               
+                <label class="fl pl10 pr10">至</label>
+                <input readonly ng-click="open4($event)" class="ipt ipt-xs fl" type="text" uib-datepicker-popup="yyyy/MM/dd" placeholder="结束日期" is-open="opened4"
+                       min-date="paging.auditStart"  close-text="Close" datepicker-options="dateOptions" ng-model="paging.auditEnd">
+              
+            </div>
+        </div>
+        <div class="row  pt-10">
+            <div class="col-xs-8 col-pl-5">
+                <select class="ipt ipt-xs" ng-model="paging.currency">
+                    <option value="">币种</option>
+                    <option value="USD">美元</option>
+                    <option value="CNY">人民币</option>
+                </select>
+                <select class="ipt ipt-xs" ng-model="paging.fundStatus">
+                    <option value="">资金状态</option>
+                    <option value="2">待审核</option>
+                    <option value="0">审核不通过</option>
+                    <option value="1">审核通过</option>
+                    <option value="3">待再次审核</option>
+                    <option value="8">待交易完成</option>
+                    <option value="9">待核实</option>
+                </select>
+                <select class="ipt ipt-xs" ng-options="obj.userId as obj.userName for obj in vm.auditPerson" ng-model="paging.auditUserId">
+                    <option value="">审核人</option>
+
+                </select>
+                <select class="ipt ipt-xs" ng-options="obj.bankId as obj.bankName for obj in vm.payType" ng-model="paging.payType">
+                    <option value="">支付方式</option>
+                </select>
+                <!--
+                <select class="ipt ipt-xxs" ng-options="obj.value as obj.name for obj in vm.orderStatusList" ng-model="paging.payChannel">
+                    <option value="">支付渠道</option>
+                </select>
+                -->
+            </div>
+            <div class="col-xs-4 but-inline">
+            <input ng-click="tools.getList();" type="submit" value="查询"/>
+            <input class="btn-reset" type="reset" ng-click="tools.initCondition(false)" value="重置"/>
+        </div>
+        </div>
+        <div class="row ">
+
+        </div>
+    </form>
+</div>
+<!-- 查询列表 -->
+<div class="content">
+    <div class="tabTable">
+        <table class="table-hover" style="width: 1700px">
+            <thead>
+            <tr>
+                <!--
+                <td width="3%">序号</td>
+                -->
+                <td width="7%">虚拟资金流水号</td>
+                <td width="11%">订单编号</td>
+                <!--
+                <td width="4%">子订单编号</td>
+                -->
+                <td width="6%">分期期数</td>
+                <td width="7%">生成时间</td>
+                <td width="8%">买家账号</td>
+                <td width="8%">卖家账号</td>
+                <td width="4%">支付方式</td>
+                <td width="5%">支付渠道</td>
+                <td width="4%">交易币种</td>
+                <td width="6%">交易金额</td>
+                <td width="4%">手续费</td>
+                <td width="6%">实际金额</td>
+                <td width="5%">审核状态</td>
+                <td width="12%">操作信息</td>
+                <td width="7%">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.items track by $index">
+                <!--
+                <td>{{$index+1}}</td>
+                -->
+                <td>{{item.instalmentId}}</td>
+                <!-- 订单编号 -->
+                <td>{{item.orderId}}</td>
+                <!-- 子订单编号
+                <td>{{item.fundId}}</td>
+                -->
+                <!-- 分期期数 -->
+                <td>{{item.stageNumber}}</td>
+                <!-- 生成时间 -->
+                <td>{{item.createTime| date:'yyyy-MM-dd'}}</br>
+                    {{item.createTime| date:'HH:mm:ss'}}
+                </td>
+                <!-- 买家账号 -->
+                <td>{{item.buyerAccountNo}}</td>
+                <!-- 卖家账号 -->
+                <td>{{item.sellerAccountNo}}</td>
+                <!-- 支付方式 -->
+                <td>{{item.payMethod}}</td>
+                <!-- 支付渠道 先写死  {{item.payChannel}}-->
+                <td>中行</td>
+                <!-- 交易币种 -->
+                <td>{{item.currency}}</td>
+                <!-- 交易金额 {{item.tradeAmount|number:2}}-->
+                <td>{{item.realTradeAmount|number:2}}</td>
+                <!-- 手续费 先写死 {{item.fee|number:2}}-->
+                <td>0.00</td>
+                <!-- 实际金额 -->
+                <td>{{item.realTradeAmount|number:2}}</td>
+                <!-- 操作状态 -->
+                <td>{{item.fundStatus|financeAuditType}}</td>
+                <!-- 操作信息 -->
+                <td><p ng-show="item.fundStatus==0 || item.fundStatus==1">
+                    审核人:{{item.auditUserName}}</br>
+                   审核时间：{{item.auditTime|date:'yyyy-MM-dd'}}</br></p>
+                    <!-- 只有审核不通过时才有原因 -->
+                    <span ng-show="item.fundStatus==0">原因：{{item.reason}}</span>
+                </td>
+                <!-- 操作 -->
+                <td>
+                    <!-- 1:通过 0:不通过；2：待审核；3：再次审核 ;8:待交易完成 ;9:核实 ;-->
+                    <p ng-show="item.fundStatus==2 || item.fundStatus==3">
+                        <a ng-click="tools.financeAudit(item.orderId,item.fundId,item.instalmentId)" href="javascript:;">审核</a>
+                    </p><!-- 都当做线下订单 -->
+                    <p>
+                        <a ng-show="item.fundStatus==2 || item.fundStatus==3" href="javascript:;" ng-click="tools.beforeShowDetail(item.orderId,item.fundId)">查看订单详情</a>
+                    </p>
+                    <p ng-show="item.fundStatus==9">
+                        <a href="javascript:;" ng-click="tools.financeConfirm(item.orderId,item.fundId,item.instalmentId)">核实</a>
+                    </p>
+                    <p ng-show="item.fundStatus!=2">
+                        <a href="javascript:;" ng-click="tools.toHistory(item.instalmentId)">查看历史</a>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class=" middivs clearfix">
+        <div class="divright clearfix">
+            <select ng-model="paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages"
+                    ng-change="tools.getList()"></select>
+            <button  class="j-jump btn btn-default lastbuttons j-jump" ng-click="tools.getnewpage();">GO</button>
+            <input type="text" class="inputs ngc-jumppage" ng-model="tools.newpagesize">
+            <label class="page-list-style label-style">转到页</label>
+            <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class="page-list-style" ng-change="tools.getList()" max-size="5"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        </div>
+    </div>
+</div>
+
+<!-- 弹出 审核 -->
+<script type="text/ng-template" id="financeAudit.html">
+    <div class="modal-header">
+        <h4 class="modal-title">财务资金审核</h4>
+    </div>
+    <div class="modal-body font-14">
+        <form role="form" name="auditForm" class="form-horizontal" novalidate>
+            <div ng-if="vm.isFullPay == 1" class="font-deepred">
+                <p>
+                【提示】一次性付款订单：审核通过后系统不会马上打钱给到卖家虚拟账户，待订单完成后财务核实一遍【确认核实】没有问题，系统才会把钱打给卖家虚拟账户。
+                </p>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 text-right">
+                    <lable for="ok">通过</lable>
+                    <input id="ok" type="radio" ng-model="vm.item.status" name="status" value="1" />
+                </div>
+                <div class="col-sm-6 text-left">
+                    <lable for="no">不通过</lable>
+                    <input id="no" type="radio" ng-model="vm.item.status" name="status" value="0" />
+                </div>
+            </div>
+            <div class="form-group" ng-show="vm.item.status==0">
+                <label class="col-sm-2 control-label">原因</label>
+                <div class="col-sm-8">
+                    <textarea ng-model="vm.item.reason" rows="3" placeholder="最多100个字符" name="reason" class="form-control" required maxLength="100"></textarea>
+                    <span ng-show="auditForm.$dirty && auditForm.reason.$invalid" class="error-valid">请填写验证不通过原因,最多100个字符</span>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                    <button class="btn btn-warning" type="button"   ng-click="func.save(auditForm.$valid)">确认</button>
+                    <button class="btn btn-base" type="button" ng-click="func.cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!-- 弹出 核实 -->
+<script type="text/ng-template" id="financeConfirm.html">
+    <div class="modal-header">
+        <h4 class="modal-title">财务资金核实</h4>
+    </div>
+    <div class="modal-body font-14">
+            <div class="form-group font-deepred">
+                【提示】一次性付款订单：交易完成状态，请财务再一次核实该订单和支付凭证，无误则点击【确认】按钮，系统将给卖家虚拟账户打款。
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-warning" type="button"   ng-click="func.confirm()">确认</button>
+                <button class="btn btn-base" type="button" ng-click="func.cancel()">取消</button>
+            </div>
+    </div>
+</script>

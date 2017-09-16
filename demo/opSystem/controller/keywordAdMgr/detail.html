@@ -1,0 +1,126 @@
+<div class="oms-crumbs"> <i>关键词广告详情</i>
+    <p>
+        <a href="">广告管理</a> /
+        <a href="">关键词广告管理列表</a> /
+        <span>关键词广告详情</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <div ngc-permission="buyer_buyerlist_add" class="btns-group">
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_pass" class="btn btn-cfec-white" ng-click="tools.changestatus(vm.data.adId,3)" ng-if="vm.data.status==-1||vm.data.status==2">审核通过</button>
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_notpass" class="btn btn-cfec-white" ng-click="tools.changestatus(vm.data.adId,-1)" ng-if="vm.data.status==2">审核不通过</button>
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_stop" class="btn btn-cfec-white" ng-click="tools.changestatus(vm.data.adId,4)" ng-if=" vm.data.timeStatus==6||(vm.data.status==3&&vm.data.timeStatus==5)">暂停</button>
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_start" class="btn btn-cfec-white" ng-click="tools.changestatus(vm.data.adId,3)" ng-if="vm.data.status==4">开启</button>
+            <a ngc-permission="keywordAdMgr_keywordAdMgrlist_update" class="btn btn-cfec-white" href="/#/keywordAdMgr/addAd?adId={{vm.data.adId}}" ng-if="vm.data.status==-1||vm.data.timeStatus==7">修改</a>
+            <button ngc-permission="keywordAdMgr_keywordAdMgrlist_delete" class="btn btn-cfec-white" ng-click="tools.changestatus(vm.data.adId,-3)" ng-if="vm.data.status==-1||vm.data.timeStatus==7">删除</button>
+
+        </div>
+        <div class="table-cfec mt20 table-cfec-theme3 mb20">
+            <table class="table">
+                <colgroup>
+                    <col width="12%">
+                    <col width="88%"> </colgroup>
+                <thead>
+                    <th colspan="2">创建时间：{{vm.data.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>推荐位置</th>
+                        <td>{{vm.data.sitType | sitTypeFilter }}</td>
+                    </tr>
+                    <tr>
+                        <th>行业</th>
+                        <td>{{vm.data.indusName}}</td>
+                    </tr>
+                    <tr>
+                        <th>关键词</th>
+                        <td>{{vm.data.adKeyword}}</td>
+                    </tr>
+                    <tr>
+                        <th>产品ID</th>
+                        <td><a ng-href="{{vm.data.secondLevelDomain}}" target="_blank" class="link-cfec-inherit">{{vm.data.secondLevelDomain}}</a></td>
+                    </tr>
+                    <tr>
+                        <th>排序</th>
+                        <td>第 {{vm.data.sort}} 位</td>
+                    </tr>
+                    <tr>
+                        <th>起止时间</th>
+                        <td>
+                            {{vm.data.beginDate | date:'yyyy-MM-dd'}} 至 {{vm.data.endDate | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>金额</th>
+                        <td ng-if="vm.data.price!=null">
+                            {{vm.data.price | number:2}} 元
+                        </td>
+                        <td ng-if="vm.data.price==null">
+                            0.00 元
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td>
+                            {{vm.data.applyRemark | applyRemarkFilter}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-cfec mt20">
+        <table class="table table-hover">
+            <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="33%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>审核人</th>
+                    <th>审核时间</th>
+                    <th>内容</th>
+                </tr>
+            </thead>
+            <tbody ng-if="vm.updateLog!=undefined&&vm.updateLog.length>0">
+                <tr ng-repeat="item in vm.updateLog">
+                    <td>{{item.opearUsername}}</td>
+                    <td>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.detailContent}}</td>
+                </tr>
+            </tbody>
+            <tbody ng-if="vm.updateLog==undefined||vm.updateLog.length==0">
+                    <tr>
+                        <td colspan="3">
+                            <p class="noResult-Text pt50 pb50 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的审核记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+
+
+    </div>
+</div>
+<script type="text/ng-template" id="adListDlgId">
+  <div class="sellerListDlg">
+      <div class="dlg-title">提示</div>
+      <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i>
+            <span ng-if="vm.changestatus == 3">确定审核通过/开启该广告吗？</span>
+            <span ng-if="vm.changestatus == -1">确定审核不通过吗？</span>
+            <span ng-if="vm.changestatus == 4">确定暂停选中广告吗？</span>
+            <span ng-if="vm.changestatus == -3">确定删除选中广告吗？</span>
+        </p>
+        <div class="form-group pt20 mb0" ng-if="vm.changestatus==-1">
+          <textarea name="" class="form-control reasonInput" rows="4"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit(vm.changestatus)">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>

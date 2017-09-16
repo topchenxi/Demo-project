@@ -1,0 +1,26 @@
+{
+  "name": "cfec-oms",
+  "version": "1.0.0",
+  "title": "CFEC OMS",
+  "description": "Operation Manage System (oms) By cfec",
+  "homepage": "http://oms.e-cantonfair.com/",
+  "author": "cfec c.c.",
+  "license": "ISC",
+  "devDependencies": {
+    "gifsicle": "^3.0.4",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-help": "^1.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-less": "^3.3.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^2.1.2",
+    "imagemin-gifsicle": "^5.1.0",
+    "imagemin-pngquant": "^5.0.0",
+    "run-sequence": "^1.2.2"
+  }
+}

@@ -1,0 +1,66 @@
+<div class="top-help clearfix ">
+    <div class="help-form-class ng-pristine ng-valid">
+        <p>
+            财务资金管理 &gt; 银行入账流水-信用证 &gt;详情
+        </p>
+    </div>
+</div>
+<div class="container container-width">
+    <div class="Detail-div clearfix">
+        <h3>信用证流水详情</h3>
+        <a href="javascript:;" ng-click="tools.getback(vm.person.auditStatus);">
+            <h4>返回上一层</h4>
+        </a>
+    </div>
+
+    <table class="table table-bordered">
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">交易时间</td>
+            <td colspan="3">{{vm.item.advDt|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">开证日期</td>
+            <td colspan="3">{{vm.item.issueDt|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">信用证号码</td>
+            <td colspan="3">{{vm.item.lcNo}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">支付种类</td>
+            <td colspan="3">{{vm.item.lcForm}}</td>
+        </tr>
+        <!--
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">支付方式</td>
+            <td colspan="3">??</td>
+        </tr>
+        -->
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">支付渠道</td>
+            <td colspan="3">{{vm.item.issueBkNmAdd}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">交易币种</td>
+            <td colspan="3">{{vm.item.lcCcy}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">交易金额</td>
+            <td colspan="3">{{vm.item.lcAmt|number:2}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">银行叙办机构号</td>
+            <td colspan="3">{{vm.item.gtsBrId}}</td>
+        </tr>
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">集团编号</td>
+            <td colspan="3">{{vm.item.erpRefNo}}</td>
+        </tr>
+        <!--
+        <tr>
+            <td  class="bg-slight tdwith" colspan="1">备注</td>
+            <td colspan="3">??</td>
+        </tr>
+        -->
+    </table>
+</div>

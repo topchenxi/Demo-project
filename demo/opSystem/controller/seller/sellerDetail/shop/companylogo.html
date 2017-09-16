@@ -1,0 +1,48 @@
+<table class="table table-hover">
+    <colgroup>
+        <col width="15%" />
+        <col width="35%" />
+        <col width="15%" />
+        <col width="35%" />
+    </colgroup>
+    <thead ng-if="vm.shopInfo.companylogo.items==null">
+        <tr>
+            <th colspan="1">公司Logo</th>
+            <th colspan="1">
+                状态 :
+                <span>未填写</span>
+            </th>
+            <th colspan="2" class="ta-r">
+            </th>
+        </tr>
+    </thead>
+    <thead ng-repeat="item in vm.shopInfo.companylogo.items">
+        <tr>
+            <th colspan="1">公司Logo</th>
+            <th colspan="1">
+                状态 :
+                <span class="{{item.auditStatus==1?'red':''}}">{{item.auditStatus | sellerInfoAuditStatus}}</span>
+            </th>
+            <th colspan="2" class="ta-r">
+                <div class="form-group clearfix mb0" ngc-permission="seller_sellerlist_audit">
+                    <button class="btn btn-cfec-white  mr20" ng-click="sellerShopTools.chxShopAudit(3,item.id,item.auditLogId,5)" ng-if="item.auditStatus==1||item.auditStatus==2">审核通过</button>
+                    <button class="btn btn-cfec-white " ng-click="sellerShopTools.chxShopAudit(2,item.id,item.auditLogId,5)" ng-if="item.auditStatus==1||item.auditStatus==3">审核不通过</button>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="item in vm.shopInfo.companylogo.items">
+        <tr>
+            <th>申请时间</th>
+            <td colspan="3"> {{item.submitDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <th>公司Logo</th>
+            <td colspan="3">
+                <div ng-repeat="imgItem in item.detail">
+                    <img ng-click="tools.enLarge(imgItem)" width="60" height="60" ng-src="{{imgItem | setImgSize:60:60}}" alt="">
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

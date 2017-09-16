@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../../view/css/category.css">
+
+</head>
+<body>
+	<div class="navtop">
+		<div class="navlist">
+			<ul class="clearfix pad0">
+				<li class="navlist line40">行业名称&nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">一级类目 &nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">二级类目</li>
+			</ul>
+		</div>
+	</div>
+	<div class="main">
+		<div class="mt10 clearfix">
+			<div class="col-6">
+				<button class="opr-lg mt10" onclick="setIframe('industAdd')">添加行业</button>
+			</div>
+			<!--<div class="col-6">-->
+				<!--<form method="get clearfix">-->
+					<!--<input class="cond col-8" type="text" name="industName" id="" placeholder="请输入行业中文或英文名字" >-->
+					<!--<button type="submit" class="btn-search" >搜索</button>-->
+				<!--</form>-->
+			<!--</div>-->
+		</div>
+
+		<table class="table table-bordered table-hover mt10">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" name=""></th>
+					<th>行业名称</th>
+					<th>英文名称</th>
+					<th>排序</th>
+					<th>是否重点行业</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<input type="checkbox" name="" id=""></td>
+					<!-- 行业名称 -->
+					<td>
+						照明
+					</td>
+					<!-- 英文名称 -->
+					<td>zhaoming</td>
+					</td>
+					<!-- 排序 -->
+					<td>1</td>
+					<!-- 是否重点行业 -->
+					<td>是</td>
+					<!-- 操作 -->
+					<td>
+						<button class="btn btn-info" onclick="setIframe('industUpdate')">修改</button>
+						<button class="btn btn-info" onclick="delIndust('1')">删除</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="" id=""></td>
+					<!-- 行业名称 -->
+					<td>
+						照明
+					</td>
+					<!-- 英文名称 -->
+					<td>zhaoming</td>
+					</td>
+					<!-- 排序 -->
+					<td>1</td>
+					<!-- 是否重点行业 -->
+					<td>是</td>
+					<!-- 操作 -->
+					<td>
+						<button class="btn btn-info" id="modify">修改</button>
+						<button class="btn btn-info" onclick="delIndust('1')">删除</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="" id=""></td>
+					<!-- 行业名称 -->
+					<td>
+						照明
+					</td>
+					<!-- 英文名称 -->
+					<td>zhaoming</td>
+					</td>
+					<!-- 排序 -->
+					<td>1</td>
+					<!-- 是否重点行业 -->
+					<td>是</td>
+					<!-- 操作 -->
+					<td>
+						<button class="btn btn-info" onclick="setIframe('industUpdate')">修改</button>
+						<button class="btn btn-info" onclick="delIndust('1')">删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="row">
+			<!--<div class="col-2"><label>&nbsp;</label></div>-->
+			<!--<div class="col-8">-->
+				<!--<ul class="pagination">-->
+					<!--<li>&nbsp;<select class="" name="" id=""><option value="5">5tiao每页</option></select></li>-->
+					<!--<li>转到<input type="text">页<button>go</button></li>-->
+					<!--<li>-->
+				 		 <!--<a href="#" aria-label="Previous">-->
+							<!--<span aria-hidden="true">&laquo;</span>-->
+				 		 <!--</a>-->
+					<!--</li>-->
+					<!--<li><a href="#">1</a></li>-->
+					<!--<li><a href="#">2</a></li>-->
+					<!--<li><a href="#">3</a></li>-->
+					<!--<li><a href="#">4</a></li>-->
+					<!--<li><a href="#">5</a></li>-->
+					<!--<li>-->
+					  <!--<a href="#" aria-label="Next">-->
+						<!--<span aria-hidden="true">&raquo;</span>-->
+					  <!--</a>-->
+					<!--</li>-->
+				<!--</ul>-->
+			<!--</div>-->
+		</div>
+	</div>
+</body>
+<script src="category.js"></script>
+<script src="../../view/js/categoryAttribute.js"></script>
+<script src="http://crab.e-cantonfair.com:3333/components_module/requirejs/require.js"></script>
+<script src="http://crab.e-cantonfair.com:3333/dev/components/require-config.js"></script>
+</html>

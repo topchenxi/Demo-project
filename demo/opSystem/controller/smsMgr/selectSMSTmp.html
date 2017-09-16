@@ -1,0 +1,45 @@
+<div class="dlg-title">提示</div>
+<div class="dlg-content">
+    <div class="mb20">
+        <input type="text" class="input-cfec" ng-model="tplVm.paging.tplId" placeholder="消息模版ID">
+        <button class="btn btn-cfec-red" ng-click="tplVm.search();">查&nbsp询</button>
+    </div>
+    <div class="list-content table-cfec">
+        <table class="table table-hover ">
+            <colgroup>
+                <col width="20%">
+                <col width="60%">
+                <col width="20%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>模版ID</th>
+                    <th>模版内容</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody ng-if="tplVm.list.length">
+                <tr ng-repeat='item in tplVm.list'>
+                    <td>{{item.tpl_id}}</td>
+                    <td>{{item.tpl_content}}</td>
+                    <td>
+                        <button type="button" class="btn btn-cfec-red" ng-click="tplVm.sendSMS(item);">选择</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 分页组件[[ -->
+    <div class="row-page clearfix">
+        <select class="item" ng-model="tplVm.paging.pageSize" ng-options="obj.pageSize as obj.pageSizeName for obj in tplVm.pages" ng-change="tplVm.getnewpage(0)"></select>
+        <uib-pagination boundary-links="true" total-items="tplVm.paging.total" ng-model="tplVm.paging.page" items-per-page="tplVm.paging.pageSize" class="page-list-style item" ng-change="tplVm.getnewpage()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;"
+            first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        <label class="item">共<big>{{tplVm.total}}</big>条</label>
+        <label class="item">转到第</label>
+        <input class="ngc-jumppage" type="number" class="item" ng-model="tplVm.newPage">
+        <label class="item">页</label>
+        <button class="j-jump item" ng-click="tplVm.getnewpage(1);">GO</button>
+    </div>
+    <!-- 分页组件[[ -->
+
+</div>

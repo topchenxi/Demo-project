@@ -1,0 +1,344 @@
+﻿<div class="oms-crumbs"> <i>推广计划审核</i>
+    <p>
+        <a href="/#/edm">邮件推广</a> /
+        <span>推广计划审核</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+
+        <uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+            <uib-tab index="0" ng-click="tools.reset();paging.status=null;paging.page=1;tools.getedmList();">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="tools.reset();paging.status=2;paging.page=1;tools.getedmList();">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="tools.reset();paging.status=3;paging.page=1;tools.getedmList();">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="tools.reset();paging.status=4;paging.page=1;tools.getedmList();">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <form>
+                <!-- 公司套餐类型 -->
+                <div class="form-group fl">
+                    <label for="">公司套餐类型</label>
+                    <select ngc-select-search name="packageId" class="select-oms" ng-options="obj.packageId as obj.packageName for obj in vm.packageList" ng-model="paging.packageId">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 推广日期 -->
+                <div class="form-group cfec-select-picker fl">
+                    <label>推广日期</label>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.sendTimeStartStr" id="startTime" max-date="{{paging.sendTimeEndStr}}" ng-required placeholder="起始日期" />
+                    <span class="text-inline">至</span>
+                    <input ngc-lay-date readonly type="text" class="input-cfec laydate-icon" ng-model="paging.sendTimeEndStr" id="endTime" min-date="{{paging.sendTimeStartStr}}" placeholder="截止日期" ng-required/>
+                </div>
+                <!-- 邮件发送状态 -->
+                <div class="form-group fl" ng-if="paging.status==3">
+                    <label for="">邮件发送状态</label>
+                    <select class="select-oms" ng-model="paging.sendStatus" ng-options="obj.key as obj.title for obj in tools.sendStatus">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 报告状态 -->
+                <div class="form-group fl" ng-if="paging.status==3">
+                    <label for="">报告状态</label>
+                    <select class="select-oms" ng-model="paging.reportStatus" ng-options="obj.key as obj.title for obj in tools.reportStatus">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 搜索类型 -->
+                <div class="form-group fl">
+                    <label for="">搜索类型</label>
+                    <div class="oms-search">
+                        <select name="" id="" ng-model="paging.sKey" ng-options="obj.key as obj.title for obj in tools.sKey">
+                            <option value="">搜索类型</option>
+                        </select> <em></em>
+                        <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.sValue" />
+                    </div>
+                </div>
+                
+                <div class="form-group btns-group clear">
+                    <button class="btn btn-cfec-red fl mr20" ng-click="tools.getedmList(true);">查&nbsp;询</button>
+                    <button class="btn btn-cfec-white fl" ng-click="tools.reset();">重 置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-content table-cfec">
+            <!-- 全部 -->
+            <table class="table table-hover " ng-if="paging.status==null">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <!-- 推广标题 -->
+                        <th>推广标题</th>
+                        <th>公司名称</th>
+                        <th class="ta-c">套餐</th>
+                        <th class="ta-c">状态</th>
+                        <th class="ta-c">申请时间</th>
+                        <th class="ta-c">计划推广时间</th>
+                        <th class="ta-c">发送量</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- 推广标题 -->
+                        <td>{{item.title}}</td>
+                        <!-- 公司名称 -->
+                        <td>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.companyEnName}}</p>
+                        </td>
+                        <!-- 套餐 -->
+                        <td class="ta-c">{{item.packageName | packageNameFilter}}</td>
+                        <!-- 状态 -->
+                        <td class="ta-c">{{item.status | statusFilter}}</td>
+                        <!-- 申请时间 -->
+                        <td class="ta-c">{{item.submitAuditTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 计划推广时间 -->
+                        <td class="ta-c">{{item.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 发送量 -->
+                        <td class="ta-c">{{item.sendCount}}</td>
+                        
+                        <td class="ta-c">
+                            <a ngc-permission="edm_edmlist_detail" class="link mr10" ng-href="/#/edm/detail?promotionMailId={{item.promotionMailId}}" target="_blank" >查看</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="8">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 全部 -->
+
+            <!-- 待审核 -->
+            <table class="table table-hover " ng-if="paging.status==2">
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="12%">
+                    <col width="12%">
+                    <col width="12%">
+                    <col width="12%">
+                    <col width="12%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>推广标题</th>
+                        <th>公司名称</th>
+                        <th class="ta-c">套餐</th>
+                        <th class="ta-c">申请时间</th>
+                        <th class="ta-c">计划推广时间</th>
+                        <th class="ta-c">发送量</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- 推广标题 -->
+                        <td>{{item.title}}</td>
+                        <!-- 公司名称 -->
+                        <td>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.companyEnName}}</p>
+                        </td>
+                        <!-- 套餐 -->
+                        <td class="ta-c">{{item.packageName | packageNameFilter}}</td>
+                        <!-- 申请时间 -->
+                        <td class="ta-c">{{item.submitAuditTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 计划推广时间 -->
+                        <td class="ta-c">{{item.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 发送量 -->
+                        <td class="ta-c">{{item.sendCount}}</td>
+                        
+                        <td class="ta-c">
+                            <a ngc-permission="edm_edmlist_detail" class="link mr10" ng-href="/#/edm/detail?promotionMailId={{item.promotionMailId}}" target="_blank" >查看</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="7">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 待审核 -->
+
+            <!-- 审核通过 -->
+            <table class="table table-hover " ng-if="paging.status==3">
+                <colgroup>
+                    <col width="5%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>推广ID</th>
+                        <th>推广标题</th>
+                        <th>公司名称</th>
+                        <th class="ta-c">申请时间</th>
+                        <th class="ta-c">计划推广时间</th>
+                        <th class="ta-c">审核信息</th>
+                        <th class="ta-c">发送量</th>
+                        <th class="ta-c">邮件发送状态</th>
+                        <th class="ta-c">报告状态</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- 推广ID -->
+                        <td>{{item.promotionMailId}}</td>
+                        <!-- 推广标题 -->
+                        <td>{{item.title}}</td>
+                        <!-- 公司名称 -->
+                        <td>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.companyEnName}}</p>
+                        </td>
+                        <!-- 申请时间 -->
+                        <td class="ta-c">{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 计划推广时间 -->
+                        <td class="ta-c">{{item.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 审核信息 -->
+                        <td class="ta-c">
+                            <p>{{item.checkTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                            <p>审核人:{{item.checkUserName}}</p>
+                        </td>
+                        <!-- 发送量 -->
+                        <td class="ta-c">{{item.sendCount}}</td>
+                        <!-- 邮件发送状态 -->
+                        <td class="ta-c">{{item.sendStatus | sendStatusFilter}}</td>
+                        <!-- 报告状态 -->
+                        <td class="ta-c">{{item.reportStatus | reportStatusFilter}}</td>
+                        <td class="ta-c">
+                            <a ngc-permission="edm_edmlist_detail" class="link mr10" ng-href="/#/edm/detail?promotionMailId={{item.promotionMailId}}" target="_blank" >查看</a>
+                            <a ngc-permission="edm_edmlist_detail" class="link mr10" href="javascript:void(0)" ngclipboard data-clipboard-text="{{item.viewPromotionMailUrl}}" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);" ng-if="item.sendStatus==0">复制邮件链接</a>
+                            <a ngc-permission="edm_edmlist_promotionmailsend" class="link mr10" href="javascript:void(0)" ng-if="paging.status==3&&item.sendStatus==0" ng-click="tools.changestatus(item.promotionMailId,0)">标识已发送邮件</a>
+                            <a ngc-permission="edm_edmlist_promotionmailreport" class="link mr10" href="javascript:void(0)" ng-if="paging.status==3&&item.reportStatus==2" ng-click="tools.changestatus(item.promotionMailId,1)">标识已发送报告</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="10">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 审核通过 -->
+
+            <!-- 审核不通过 -->
+            <table class="table table-hover " ng-if="paging.status==4">
+                <colgroup>
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>推广标题</th>
+                        <th>公司名称</th>
+                        <th class="ta-c">套餐</th>
+                        <th class="ta-c">申请时间</th>
+                        <th class="ta-c">计划推广时间</th>
+                        <th class="ta-c">审核信息</th>
+                        <th class="ta-c">审核原因</th>
+                        <th class="ta-c">发送量</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- 推广标题 -->
+                        <td>{{item.title}}</td>
+                        <!-- 公司名称 -->
+                        <td>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.companyEnName}}</p>
+                        </td>
+                        <!-- 套餐 -->
+                        <td class="ta-c">{{item.packageName | packageNameFilter}}</td>
+                        <!-- 申请时间 -->
+                        <td class="ta-c">{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 计划推广时间 -->
+                        <td class="ta-c">{{item.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!-- 审核信息 -->
+                        <td class="ta-c">
+                            <p>{{item.checkTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                            <p>审核人:{{item.checkUserName}}</p>
+                        </td>
+                        <!-- 审核原因 -->
+                        <td class="ta-c">{{item.checkContent}}</td>
+                        <!-- 发送量 -->
+                        <td class="ta-c">{{item.sendCount}}</td>
+                        <td class="ta-c">
+                            <a ngc-permission="edm_edmlist_detail" class="link mr10" ng-href="/#/edm/detail?promotionMailId={{item.promotionMailId}}" target="_blank" >查看</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="9">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 审核不通过 -->
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="edmDlgId">
+  <div class="sellerListDlg">
+      <div class="dlg-title">提示</div>
+      <div class="dlg-content form">
+        <p class="ta-c">
+            <i class="iconfont icon-xunwenoms"></i>
+            <span>确认标识为{{vm.typeStr}}吗？</span>
+        </p>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>

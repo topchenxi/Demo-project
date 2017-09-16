@@ -1,0 +1,169 @@
+<div class="top-help clearfix {{$root.topclass}}">
+	<form class="help-form-class">
+		<p class="p-help-style">
+			帮助中心
+			<span>&ensp;&gt;&ensp;</span>
+			FAQ分类管理
+			<span>&ensp;&gt;&ensp;</span>
+			FAQ分类类别
+		</p>
+	</form>
+</div>
+
+<div class="container-list">
+	<div class=" middivs clearfix help-main-div">
+		<div class="divleft ">
+			<button class="help-button" ng-click="tools.addchildclassify();" >添加分类</button>
+			<button class="help-button" ng-click="tools.del('')" >删除</button>
+		</div>
+		<div class="clearfix help-div-right">
+			<button  class="search-button" ng-click="tools.back();">返回</button>
+			<button  class="search-button" ng-click="tools.search();">搜索</button>
+			<input ngc-auto-input type="text" ngc-monitor-enter class="input-help "  ng-model="paging.categoryName">
+			<label class="label-help">分类名称</label>
+		</div>
+	</div>
+
+	<table class="table table-bordered table-hover tablestyle">
+
+		<thead>
+			<tr class="help-thead">
+				<th>
+					<input type="checkbox" name="" ng-model="vm.allChecked" ng-change="vm.checkAll(vm.allChecked)"></th>
+				<th>FAQ子分类名称</th>
+				<th>序列号</th>
+				<th>创建人</th>
+				<th>创建时间</th>
+				<th>修改人</th>
+				<th>修改时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in vm.items" ng-click='tools.getindex(item);'>
+				<td class="tdstyle">
+					<input type="checkbox"  name="" id=""  ng-click='tools.getindex(item);' ng-model="item.$checked" ng-change="vm.selection()"></td>
+				<!-- FAQ分类名称 -->
+				<td class="tdstyle">
+					<a href="javascript:;" ng-click="tools.getContentpage(item.faqCategoryId)">{{item.categoryName}}</a>
+				</td>
+				<!-- 序列号 -->
+				<td class="tdstyle">{{item.serialNumber}}</td>
+				<!-- 创建人 -->
+				<td class="tdstyle">{{item.creatorName}}</td>
+				<!-- 创建时间-->
+				<td class="tdstyle">{{item.createTime| date:'yyyy-MM-dd'}}</td>
+				<!-- 修改人 -->
+				<td class="tdstyle">{{item.editorName}}</td>
+				<!-- 修改时间 -->
+				<td class="tdstyle">{{item.updateTime| date:'yyyy-MM-dd'}}</td>
+				<!-- 操作 -->
+				<td class="tdstyle">
+					<a href="javascript:;"
+					class="help-a-style"
+					ng-click="tools.notifyclassify(item)">修改</a>
+					<a href="javascript:;"
+					class="help-a-style"
+					ng-click="tools.delclassify(item.faqCategoryId)">删除</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class=" middivs clearfix">
+		<div class="divright clearfix">
+			<select type="button" class="buttons"
+			ng-model="paging.pageSize"
+			ng-options="obj.pageSize as obj.pagename for obj in tools.pages"
+			ng-change="tools.getChildClassifyList();"></select>
+
+			<button  class="lastbuttons"
+			ng-click="tools.getnewpage();">GO</button>
+
+			<input type="text" class="inputs"
+			ng-model="tools.newpagesize">
+
+			<label class="page-list-style label-style">转到页</label>
+
+			<uib-pagination class=" page-list-style"
+			boundary-links="true"
+			total-items="paging.total"
+			ng-model="paging.page"
+			items-per-page="paging.pageSize"
+			ng-change="tools.getChildClassifyList();"
+			previous-text="&lsaquo;"
+			next-text="&rsaquo;"
+			first-text="&laquo;"
+			last-text="&raquo;"></uib-pagination>
+		</div>
+	</div>
+</div>
+
+<div class="ope-footer">当前版本:x.x.xxxxxx 版权申明 © 2012 广交会电子商务公司保留所有权利 粤ICP备 12071919 号</div>
+
+<script type="text/ng-template" id="notifyclassify.html">
+<div  class="popmenu">
+	<div class="alert alert-info line">修改分类</div>
+	<form class="form-horizontal" novalidate ng-submit="submit()">
+
+
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style">*</span>父级分类名称</label>
+			<div class="col-md-6">
+				<select id="q" class="help-select-style" ng-model="paging.faqCategoryId" ng-options="obj.faqCategoryId as obj.categoryName for obj in tools.classifys"></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style help-input-right">*</span>分类名称</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" ng-model="additem.categoryName"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style">*</span>序列号</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" placeholder="序列号不能大于4294967295" ng-model="additem.serialNumber"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">备注</label>
+			<div class="col-md-6">
+				<textarea name="" class="help-text-mark"  ng-model="additem.remark" id="" cols="30" rows="10"></textarea></div>
+		</div>
+		<div class="form-group">
+				<input class="dialog-button-sure" type="submit" value="确定">
+				<button type="button" class="btn btn-warning col-md-offset-2 col-md-2 help-cancel-button" ng-click="close()">取消</button>
+			</div>
+	</form>
+</div>
+</script>
+
+<script type="text/ng-template" id="addchildclassify.html">
+<div  class="popmenu">
+	<div class="alert alert-info line">添加分类</div>
+	<form class="form-horizontal" novalidate ng-submit="submit()">
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style">*</span>父级分类名称</label>
+			<div class="col-md-6">
+				<select id="q" class="help-select-style" ng-model="paging.faqCategoryId" ng-options="obj.faqCategoryId as obj.categoryName for obj in tools.classifys"></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style">*</span>分类名称</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" ng-model="additem.categoryName"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left"><span class="help-span-style">*</span>序列号</label>
+			<div class="col-md-6">
+				<input type="text" class="form-control help-input-right" placeholder="序列号不能大于4294967295" ng-model="additem.serialNumber"></div>
+		</div>
+		<div class="form-group">
+			<label class="help-label-left">备注</label>
+			<div class="col-md-6">
+				<textarea name="" class="help-text-mark help-input-right"  ng-model="additem.remark" id="" cols="30" rows="10"></textarea></div>
+		</div>
+		<div class="form-group">
+				<input class="dialog-button-sure" type="submit" value="确定">
+				<button type="button" class="btn btn-warning col-md-offset-2 col-md-2 help-cancel-button" ng-click="close()">取消</button>
+			</div>
+	</form>
+</div>
+</script>

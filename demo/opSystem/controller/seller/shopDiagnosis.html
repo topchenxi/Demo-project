@@ -1,0 +1,191 @@
+﻿<div class="oms-crumbs"> <i>店铺诊断管理</i>
+    <p>
+        <span>店铺诊断管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <form>
+                <!-- 会员类型 -->
+                <div class="form-group fl">
+                    <label for="">会员类型</label>
+                    <select ngc-select-search class="select-oms" name="activeNote" id="activeNote" ng-options="ob.packageId as ob.packageName for ob in vm.packageList" ng-model="paging.packageId">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <!-- 报名公司中文名字 -->
+                <div class="form-group fl">
+                    <label for="">报名公司中文名字</label>
+                    <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" placeholder="报名公司中文名字" ng-model="paging.companyName">
+                </div>
+                <div class="form-group btns-group clear">
+                    <button class="btn btn-cfec-red fl mr20" ng-click="tools.getDiagnosisList(true);">查&nbsp;询</button>
+                    <button class="btn btn-cfec-white fl" ng-click="tools.reset();">重 置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-content table-cfec">
+            <!-- 全部 -->
+            <table class="table table-hover">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="10%">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="8%">
+                    <col width="14%">
+                    <col width="8%">
+                    <col width="9%">
+                    <col width="9%">
+                    <col width="9%">
+                    <col width="9%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="ta-c">公司名称</th>
+                        <th class="ta-c">会员类型</th>
+                        <th class="ta-c">店铺评分</th>
+                        <th class="ta-c">商品评分</th>
+                        <th class="ta-c">上架商品数</th>
+                        <th class="ta-c">违规扣分</th>
+                        <th class="ta-c">询盘回复率</th>
+                        <th class="ta-c">询盘超时回复率</th>
+                        <th class="ta-c">采购需求回复率</th>
+                        <th class="ta-c">采购需求超时回复率</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat='item in vm.items'>
+                        <!-- 公司名称 -->
+                        <td class="ta-c">
+                            {{item.companyName}}
+                        </td>
+                        <!-- 会员类型 -->
+                        <td class="ta-c">
+                            {{item.packageName}}
+                        </td>
+                        <!-- 店铺评分 -->
+                        <td class="ta-c">
+                            <span ng-if="item.shopScore==null" class="red">0</span>
+                            <span ng-if="item.shopScore!=null" class="{{item.shopScore<95?'red':''}}">{{item.shopScore}}</span>
+                        </td>
+                        <!-- 商品评分 -->
+                        <td class="ta-c">
+                            <span ng-if="item.productScore==null" class="red">0</span>
+                            <span ng-if="item.productScore!=null" class="{{item.productScore<90?'red':''}}">{{item.productScore}}</span>
+                        </td>
+                        <!-- 上架商品数 -->
+                        <td class="ta-c">
+                            <span class="{{item.productNum<15?'red':''}}">{{item.productNum}}</span>
+                        </td>
+                        <!-- 违规扣分 -->
+                        <td class="ta-c">
+                            <p ng-if="item.violationRemark==null||item.violationRemark==''">暂无违规</p>
+                            <div ng-if="item.violationRemark!=null&&item.violationRemark!=''">
+                                <p>原因：{{item.violationRemark}}</p>
+                                <p>扣除：{{item.remark}}元</p>
+                                <p>（操作人：{{item.updater}}）</p>
+                            </div>
+                        </td>
+                        <!-- 询盘回复率 未调整 -->
+                        <td class="ta-c">
+                            <span ng-if="item.inquiryRate==null">100%</span>
+                            <span ng-if="item.inquiryRate!=null" class="{{item.inquiryRate<0.9?'red':''}}">{{item.inquiryRate | percentFilter}}</span>
+                        </td>
+                        <!-- 询盘超时回复率 未调整 -->
+                        <td class="ta-c">
+                            <span ng-if="item.inquiryTimeRate==null">0%</span>
+                            <span ng-if="item.inquiryTimeRate!=null" class="{{item.inquiryTimeRate>0.05?'red':''}}">{{item.inquiryTimeRate | percentFilter}}</span>
+                        </td>
+                        <!-- 采购需求回复率 未调整 -->
+                        <td class="ta-c">
+                            <span ng-if="item.procurementRate==null">100%</span>
+                            <span ng-if="item.procurementRate!=null" class="{{item.procurementRate<0.7?'red':''}}">{{item.procurementRate | percentFilter}}</span>
+                        </td>
+                        <!-- 采购需求超时回复率 未调整 -->
+                        <td class="ta-c">
+                            <span ng-if="item.procurementTimeRate==null">0%</span>
+                            <span ng-if="item.procurementTimeRate!=null" class="{{item.procurementTimeRate>0.05?'red':''}}">{{item.procurementTimeRate | percentFilter}}</span>
+                        </td>
+                        <td class="ta-c">
+                            <a class="link mr10" href="javascript:void(0)" ng-click="tools.modifyLayer(item.sellerId);item.shopScore!=null?vm.shopScore=item.shopScore:vm.shopScore=0;item.productScore!=null?vm.productScore=item.productScore:vm.productScore=0;">修改评分</a>
+                            <a class="link mr10" href="javascript:void(0)" ng-click="tools.deductionLayer(item.sellerId)">扣分</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="11">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 全部 -->
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>
+<!-- 修改评分 -->
+<script type="text/ng-template" id="modifyDlgId">
+  <div class="diagnosisListDlg">
+      <div class="dlg-title">修改评分</div>
+      <div class="dlg-content form form-group-main">
+        <div class="form-group formgroup-cfec-inline row mb20">
+            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                店铺评分：
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <input type="number" class="input-cfec" ng-model="vm.shopScore">
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row mb20">
+            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                商品评分：
+            </label>
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <input type="number" class="input-cfec" ng-model="vm.productScore">
+            </div>
+        </div>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>
+
+<!-- 扣分 -->
+<script type="text/ng-template" id="deductionDlgId">
+  <div class="diagnosisListDlg">
+      <div class="dlg-title">扣分</div>
+      <div class="dlg-content form form-group-main">
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    扣除金额：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <input type="number" class="input-cfec" ng-model="vm.remark">
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row mb20">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ta-r">
+                    原因：
+                </label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.violationRemark" placeholder="请输入扣分原因"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="btn-toolbar clearfix">
+          <button class="btn btn-cfec-red" ng-click="submit()">确定</button>
+          <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+      </div>
+  </div>
+</script>

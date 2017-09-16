@@ -1,0 +1,187 @@
+<style type="text/css">
+input {
+    line-height: normal;
+}
+
+.relative {
+    position: relative;
+}
+
+.b-pur {
+    position: absolute;
+    right: -144px;
+    top: 0;
+}
+</style>
+<div class="activeDlg">
+    <div class="dlg-title"></div>
+    <div class="oms-content oms-detail">
+        <form class="form-group-main" name="chgForm" role="form" novalidate="novalidate" ng-submit="tools.savePurchase()">
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">
+                    <span>*</span> Product Name
+                </label>
+                <div class="col-sm-6 relative">
+                    <input style="width:100%" type="text" class="input-cfec" name="productName" placeholder="Please Enter Product Name" ng-model="vm.newPurchase.productName" ng-change="tools.productNameChange();" required maxlength="250" ngc-checknorepeat>
+                    <label for="boothProcurement" class="b-pur">
+                        <input type="checkbox" class="mr5" style="margin-top: 9px;" name="boothProcurement" id="boothProcurement" ng-model="vm.newPurchase.boothProcurement">展会现场采购需求</label>
+                </div>
+                
+            </div>
+            <div style="margin-left: 26%;" class="" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.productName.$invalid">
+                    <span class="error-valid small" ng-show="chgForm.productName.$error.required">Please enter the product name</span>
+                    <span class="error-valid small" ng-show="chgForm.productName.$error.maxlength">No more than 250 characters.</span>
+                    <span class="error-valid small" ng-show="chgForm.productName.$error.checknorepeat">Keywords stuffing may affect your search ranking.</span>
+                </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">
+                    <span>*</span> Category
+                </label>
+                <div class="col-xs-9">
+                    <div class="col-sm-6 pl0" ng-if="$root.selectedCategory.categoryOfSuggestAarry.length<1">
+                        <input style="width:100%" type="text" class="input-cfec " name="categoryName" placeholder="Please choose a category" readonly="readonly" ng-click="tools.dlgSelectCategory()" ng-model="vm.newPurchase.productCategoryName" required>
+                    </div>
+                    <div class="pl0 col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.categoryName.$invalid">
+                        <span class="error-valid small">This field is required.</span>
+                    </div>
+                    <div ng-if="$root.selectedCategory.categoryOfSuggestAarry.length>=1">
+                        <select class="select-oms w500 mr0" id="sugcategory" name="sugcategory" ng-model="$root.selectedCategory.categoryId" ng-options="obj.categoryId as obj.categoryCascade for obj in $root.selectedCategory.categoryOfSuggestAarry" ng-click="tools.categoryChange();"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row form-desc" style="z-index: 99999">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">
+                    <span>*</span> Description
+                </label>
+                <div class="col-sm-9">
+                    <textarea class="w400" rows="7" id="productDes" name="productDes" placeholder="Message should contain 20-8000 characters." ng-model="vm.newPurchase.productDes" minlength="20" maxlength="8000"></textarea>
+                    <div class="prop-tips" ng-if=" vm.propMatchArray.length>0">
+                <h5>Please enter your detail inquiry like:</h5>
+                <p ng-repeat="item in  vm.propMatchArray">- {{item.propertyEnName}}</p>
+            </div>
+                </div>
+                <div style="margin-left: 25%;" class=" col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <span class="error-valid small" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.productDes.$invalid">
+            Please enter the product description ( 20 – 8000 characters ).
+          </span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Attachments</label>
+                <div class="col-sm-6">
+                    <button class="btn btn-cfec-white btn-cfec-sm"  multiple="multiple" type="button" ngf-select ngf-change="tools.uploadFile($files)" accept="'image/*'" ng-disabled="vm.toolData.attachmentFiles.length>=8">Upload</button>
+                    <div>
+                        <ul class="file-list ml0" ng-hide="vm.toolData.attachmentFiles.length==0">
+                            <li ng-repeat="item in vm.toolData.attachmentFiles track by $index">
+                                <span class="{{item.filename | checkIcon }}"></span>
+                                <p>{{item.filename}}</p> <i class="iconfont" ng-click="tools.delFile($index)">&#xe60b;</i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">
+                    <span>*</span> Purchase quantity
+                </label>
+                <div class="col-sm-6">
+                    <div class="input-price clearfix mb10">
+                    <input ng-click="tools.checkPrice();" type="radio" class="mr5" value="1" name="priceType" ng-model="vm.priceType">
+                    <input style="margin-right:5px;" ng-disabled="vm.priceType==2" type="number" class="input-cfec" name="expectNum" ng-model="vm.newPurchase.expectNum" ngc-min="1" ngc-max="999999999">
+                    <select name="expectUnit" ng-disabled="vm.priceType==2" class="select-oms mr0" ng-model="vm.newPurchase.expectUnit" ng-options="ob.enName as ob.enName for ob in vm.toolData.packageUnits">
+                        <option value=""></option>
+                    </select>
+                    </div>
+                    <label class="input-moq" for="priceType">
+                <input ng-click="tools.checkPrice();" type="radio" class="mr5" value="2" id="priceType" name="priceType" ng-model="vm.priceType"> MOQ
+            </label>
+                </div>
+                <div class="pl0 col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-show="(chgForm.$dirty||chgForm.$submitted) && (chgForm.expectNum.$invalid||chgForm.expectUnit.$invalid)">
+                    <span class="error-valid small" ng-show="chgForm.expectNum.$error.required || chgForm.expectUnit.$error.required">This field is required.</span>
+                    <span class="error-valid small" ng-show="chgForm.expectNum.$error.ngcMin || chgForm.expectNum.$error.ngcMax">Please enter the amount of 0~999999999</span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">
+                    <span>*</span> Valid Time
+                </label>
+                <div class="col-sm-6">
+                    <input ngc-lay-date min-date={{vm.newPurchase.curentDay}} style="width:100%" type="text" class="input-cfec laydate-icon" name="endTime" id="endTime" ng-model="vm.newPurchase.endTime" required>
+                </div>
+                <div class="pl0 col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.endTime.$invalid">
+                    <span class="error-valid small">This field is required.</span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Preferred prices</label>
+                <div class="col-sm-6">
+                    <select style="width:25%" name="trading" class="select-oms mr10" ng-model="vm.newPurchase.trading" ng-options="ob.enName as ob.enName for ob in vm.toolData.tradeArray">
+                        <option value=""></option>
+                    </select>
+                    <label class="pr0">US $</label>
+                    <input style="width:30%;margin-right:5px;" type="number" name="expectPrice" class="input-cfec" ng-model="vm.newPurchase.expectPrice" ngc-min="0" ngc-max="999999999">
+                    <!-- ng-required="vm.newPurchase.expectPriceUnit.length>
+          0" -->
+                    <select style="width:33.2%" name="expectPriceUnit" class="select-oms mr0" ng-model="vm.newPurchase.expectPriceUnit" ng-options="ob.enName as ob.enName for ob in vm.toolData.packageUnits">
+                        <!-- ng-required="(vm.newPurchase.expectPrice+'').length>
+            0" -->
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="pl0 col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.expectPrice.$invalid">
+                    <span class="error-valid small" ng-show="chgForm.expectPrice.$error.ngcMin || chgForm.expectPrice.$error.ngcMax">Please enter the amount of 0~999999999.</span>
+                    <span class="error-valid small" ng-show="chgForm.expectPrice.$error.required || chgForm.expectPriceUnit.$error.required">This field is required.</span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Port of Destination</label>
+                <div class="col-sm-6">
+                    <input style="width:100%" type="text" class="input-cfec" name="portOfArrival" ng-model="vm.newPurchase.portOfArrival" minlength="2" maxlength="50">
+                </div>
+                <div class="pl0 col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-show="(chgForm.$dirty||chgForm.$submitted) && chgForm.portOfArrival.$invalid">
+                    <span class="error-valid small" ng-show="chgForm.portOfArrival.$error.minlength || chgForm.portOfArrival.$error.maxlength">Please enter at 2-50 characters</span>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Types of Payment</label>
+                <div class="col-sm-6">
+                    <select style="width:100%" name="paymentMethod" class="select-oms" ng-model="vm.newPurchase.paymentMethod" ng-options="ob.enName as ob.enName for ob in vm.toolData.paymentTerms">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline  row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Expectation</label>
+                <div class="col-sm-6 checkbox">
+                    <div class="row ml0" ng-repeat="ob in vm.toolData.expectations">
+                        <label for="dsc">
+                            <input type="checkbox" id="{{ob.id}}" ng-model="ob.checked">{{ob.name}}</label>
+                    </div>
+                    <div class="row ml0">
+                        <label for="other">
+                            <input type="checkbox" id="other" ng-model="vm.toolData.expectationsOther.checked">Others</label>
+                        <input type="text" class="input-cfec" name="expect" ng-model="vm.toolData.expectationsOther.value" ng-disabled="!vm.toolData.expectationsOther.checked" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-l">Supplier requirements</label>
+                <div class="col-sm-6 checkbox">
+                    <div ng-repeat="ob in vm.toolData.supplierRequires">
+                        <label for="goldSupplier">
+                            <input type="checkbox" id="{{ob.id}}" ng-model="ob.checked">{{ob.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <button type="submit" class="btn btn-cfec-red" ng-disabled="chgForm.$invalid">
+                        <span ng-show="vm.toolData.isDoing">提交中...</span>
+                        <span ng-hide="vm.toolData.isDoing">保存</span>
+                    </button>
+                    <button type="button" class="btn btn-cfec-white" ng-click="closeThisDialog();">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

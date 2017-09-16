@@ -1,0 +1,73 @@
+<div class="oms-crumbs"> <i>编辑商品标签</i>
+    <p> <a ui-sref="snsMgr.sellerList">商品管理</a> / <span>编辑商品标签</span> </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content p20">
+        <form id="editProductTagForm" class="form-group-main">
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"> <span>*</span> 标签名称 </label>
+                <div class="col-sm-10">
+                    <input type="text" class="input-cfec mr0" placeholder="请输入简短的英文" name="tagName" id="tagName" placeholder="" ng-model="tagInfo.params.tagName" maxlength="20" /> </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"> <span>*</span> 标签描述 </label>
+                <div class="col-sm-10">
+                    <textarea name="tagDesc" placeholder="请输入标签描述" id="tagDesc" class="textarea-cfec" ng-model="tagInfo.params.tagDesc" maxlength="256"></textarea>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"> <span>*</span> 商品ID </label>
+                <div class="col-sm-10">
+                    <textarea name="productIds" placeholder="请输入英文逗号分隔" id="productIds" class="textarea-cfec" ng-model="tagInfo.params.productIds"></textarea>
+                    <div class="mt20">
+                        <button class="btn btn-cfec-white" type="button" class="btn btn-cfec-white" value="Upload" ngf-select ngf-change="tagInfo.uploadFile($files)" accept="*">导入商品ID</button><span class="ml20">只支持txt格式(导入成功时会自动去重)</span>
+                        <p class="mt10" ng-if="tagInfo.attachFile">{{tagInfo.attachFile.fileName}} <a href="javascript:void(0);" title="" ng-click="tagInfo.delFile();">删除</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l"></label>
+                <div class="col-sm-10">
+                    <button type="button" class="btn btn-cfec-red" ng-click="tagInfo.save();" ng-disabled="tagInfo.btnFlag">提交</button>
+                    <button type="button" class="btn btn-cfec-white" ng-click="tagInfo.back();">返回</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="list-content table-cfec mt40" ng-if="tagInfo.params.tagId">
+            <table class="table table-hover ">
+                <!-- 全部 -->
+                <colgroup>
+                   <col width="30%">
+                   <col width="40%">
+                   <col width="30%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>商品ID</th>
+                        <th>商品名称</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.list.length">
+                    <tr ng-repeat='item in vm.list'>
+                        <td>{{item.productId}}</td>
+                        <td>{{item.productName}}</td>
+                        
+                        <td>
+                            <a href="javascript:void(0)" ng-click="vm.delProduct(item.productId)">移除</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="!vm.list||!vm.list.length" class="ng-scope">
+                    <tr>
+                        <td colspan="3">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemp" ng-if="tagInfo.params.tagId"></div>
+    </div>
+</div>

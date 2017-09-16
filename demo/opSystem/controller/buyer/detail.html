@@ -1,0 +1,44 @@
+<div class="oms-crumbs"> <i>{{vm.item.loginUser.username}}详情</i>
+    <p>
+        <a href="">买家详情</a> /
+        <span>买家管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <uib-tabset class="tab-cfec-bordertop" active="vm.activeTab" justified="false">
+        <uib-tab index="0">
+            <uib-tab-heading>详细信息</uib-tab-heading>
+            <div class="container-list content" ng-include="baseInfoTemplate">
+            </div>
+        </uib-tab>
+        <uib-tab index="1" ng-click="tools.toBuyerPurchaseList();" ng-if="vm.item!=null">
+            <uib-tab-heading>采购需求</uib-tab-heading>
+            <div class="container-list content" ng-include="purchaseInfoTemplate">
+            </div>
+        </uib-tab>
+        <uib-tab index="2" ng-if="vm.item!=null" select="enquiryTools.toInquiry();">
+            <uib-tab-heading>询盘</uib-tab-heading>
+            <div class="container-list content" ng-include="inquiryInfoTemplate">
+            </div>
+        </uib-tab>
+        <uib-tab index="3" ng-click="tools.toFollowRecord();" ng-if="vm.item!=null">
+            <uib-tab-heading>跟进记录</uib-tab-heading>
+            <div class="container-list content" ng-include="followRecordTemplate">
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<script type="text/ng-template" id="confirm.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="ta-c"> <i class="iconfont icon-xunwenoms"></i> 确定审核{{vm.status==-1?"不":""}}通过吗？
+        </p>
+        <div class="form-group pt20 mb0" ng-if="vm.status ==-1">
+            <textarea name="" class="form-control reasonInput" rows="4" ng-model="vm.reason"></textarea>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,147 @@
+<div class="container container-width">
+    <div class="Detail-div clearfix">
+        <h3>物流订单详情-海运</h3>
+        <a href="javascript:;" ng-click="tools.back();">
+            <h4>返回上一层</h4>
+        </a>
+    </div>
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="hide">
+            <td width="20%"></td>
+            <td width="30%"></td>
+            <td width="20%"></td>
+            <td width="30%"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr> <td class="bg-slight">订单编号</td><td colspan="3">{{vm.order.orderId}}</td></tr>
+        <tr> <td class="bg-slight">物流订单号</td><td colspan="3">{{vm.order.addTime|date:'yyyy-MM-dd hh:mm:ss'}}</td></tr>
+        <tr> <td class="bg-slight">预付金额</td><td colspan="3">发货时间目前没有</td></tr>
+        <tr> <td class="bg-slight">物流供应商</td><td colspan="3">确认收货时间目前没有</td></tr>
+        <tr> <td class="bg-slight">下单时间</td><td colspan="3">确认收货时间目前没有</td></tr>
+        <tr> <td class="bg-slight">货物信息</td>
+            <td colspan="3" style="padding: 0px!important">
+                <table  class="table-bordered">
+                    <thead style="background-color: #ddd">
+                    <tr>
+                        <td width="20%" >商品编号</td>
+                        <td width="50%">商品名称</td>
+                        <td width="10%">数量</td>
+                        <td width="10%">重量</td>
+                        <td width="10%">尺寸</td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td width="20%">02336698</td>
+                        <td width="50%">whwhwhwh wjwj wjwj wjjjj jfff fff </td>
+                        <td width="10%">12</td>
+                        <td width="10%">10kg</td>
+                        <td width="10%">5x10x4</td>
+                    </tr>
+                    <tr>
+                        <td>02336698</td>
+                        <td >whwhwhwh wjwj wjwj wjjjj jfff fff </td>
+                        <td>12</td>
+                        <td>10kg</td>
+                        <td>5x10x4</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="row"><span class="col-xs-10 text-right">装运重量:</span><span class="font-weight">540kg</span></div>
+                            <div class="row"><span class="col-xs-10 text-right">装运体积:</span><span class="font-weight">10x16x22</span></div>
+                        </td>
+                    </tr>
+                </table>
+            </td></tr>
+        <tr>
+            <td class="bg-slight">公司名称</td>
+            <td>111</td>
+            <td class="bg-slight">委托时间</td>
+            <td>222</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">发货省市</td>
+            <td>11111111111</td>
+            <td class="bg-slight">目的国家</td>
+            <td>2222222222</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">发货地</td>
+            <td>11111111</td>
+            <td class="bg-slight">要求时效</td>
+            <td>222222222</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">装运港</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">计划提货时间</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">卸货港</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">起动港</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">箱型</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">船公司</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">重量</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">件数</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">预配船名航次</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">方数</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">预计开船时间</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">运单号</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        <tr>
+            <td class="bg-slight">要求到厂时间</td>
+            <td>确认收货时间目前没有</td>
+            <td class="bg-slight">预计重柜还场时间</td>
+            <td>确认收货时间目前没有</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="panel pt-10">
+        <div  class="header-default border">物流跟踪信息</div>
+        <div class="border pd-l-1">
+            <div class="row">
+                <lable class="col-xs-2 text-right">运单号:</lable>
+                <div class="col-xs-9">222222222</div>
+            </div>
+
+            <div class="row">
+                <lable class="col-xs-2 text-right">详情:</lable>
+                <div class="col-xs-9"  class="font14"><ul>
+                    <li>
+                        2015-02-05 12:11:55<span class="ml-15">运单号</span>
+                    </li>
+                    <li>
+                        2015-02-05 18:11:55<span class="ml-15">发往【XXX】</span>
+                    </li>
+                    <li>
+                        2015-02-06 8:11:55<span class="ml-15">清关中</span>
+                    </li>
+                    <li>
+                        2015-02-06 8:11:55<span class="ml-15">已签收,签收人XXX</span>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

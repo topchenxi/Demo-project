@@ -1,0 +1,316 @@
+<div class="child-detail content bg-white">
+    <div class="row">
+    <h4 class="col-xs-2">订单详情</h4>
+    <div class="col-xs-10 text-right">
+        <button class="btn btn-save-lg" type="button" ng-click="tools.back()">返回</button>
+    </div>
+    </div>
+    <hr>
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="bg-slight text-center"><td colspan="2">订单信息</td></tr>
+        </thead>
+        <tbody>
+        <tr> <td class="bg-slight col-xs-2">订单编号</td><td>{{vm.order.orderId}}</td></tr>
+        <tr> <td class="bg-slight col-xs-2">下单时间</td><td>{{vm.order.addTime|date:'yyyy-MM-dd hh:mm::ss'}}</td></tr>
+        <tr> <td class="bg-slight col-xs-2">发货时间</td><td>发货时间目前没有</td></tr>
+        <tr> <td class="bg-slight col-xs-2">确认收货时间</td><td>确认收货时间目前没有</td></tr>
+        </tbody>
+    </table>
+
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="bg-deepred font-white">
+            <td width="50%">商品</td>
+            <td width="10%">价格</td>
+            <td width="10%">数量</td>
+            <td width="10%">运费</td>
+            <td width="10%">小计</td>
+            <td width="10%">状态</td></tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.orderProducts track by $(index)">
+            <td><img class="f-left" ng-src="{{item.propValueImgs|setImgSize:75:80}}" alt="">
+                <div class="prod">
+                    <p class="name">{{item.productName}}</p>
+                    <p class="pt-10">{{item.propValueNames}}</p>
+                </div>
+                <div class="clear">买家留言:{{item.toBuyer}}</div>
+            </td>
+            <td>{{item.productPrice}}</td>
+            <td>{{item.productNumber}}</td>
+            <td>物流费用没有哇</td>
+            <td class="font-lightred font-weight">{{item.productPrice*item.productNumber}}</td>
+            <td>{{vm.order.orderStatusCNDescription}}</td>
+        </tr>
+        <tr><td class="text-right" colspan="6">实付款(含运费):<span class="font-lightred font-weight">{{vm.order.orderAmount}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 支付信息 -->
+    <div class="header-default border">支付信息</div>
+    <table class="table-bordered mb-20">
+        <thead>
+        <tr class="border"><td>支付方式</td>
+            <td>支付时间</td>
+            <td>支付账号</td>
+            <td>支付总金额</td>
+            <td>商品金额</td>
+            <td>运费</td>
+            <td>手续费</td></tr>
+        </thead>
+        <tbody>
+            <tr class="border"><td>wordpay</td>
+            <td>2012-9-8 00:00:08</td>
+            <td>支付账号</td>
+            <td>支付总金额</td>
+            <td>商品金额</td>
+            <td>运费</td>
+            <td>手续费</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="panel pt-10">
+        <div  class="header-default border">物流信息</div>
+        <div class="border pd-l-1">
+            <div class="row">
+                <lable class="col-xs-2 text-right">发货方式:</lable>
+                <div class="col-xs-9">快递</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">运单号码:</lable>
+                <div class="col-xs-9">2233555888</div>
+            </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">物流公司:</lable>
+                <div class="col-xs-9">圆通快递</div>
+            </div> <div class="row">
+            <lable class="col-xs-2 text-right">送货地址:</lable>
+            <div class="col-xs-9">李娜,13522248899,广东省 广州市 海珠区 大河路128号,009988</div>
+        </div>
+            <div class="row">
+                <lable class="col-xs-2 text-right">物流跟踪:</lable>
+                <div class="col-xs-9"><ul>
+                    <li class="font14">
+                        2015-02-05 12:11:55<span>卖家已发货</span>
+                    </li>
+                    <li class="font14">
+                        2015-02-05 18:11:55<span>发往【XXX】</span>
+                    </li>
+                    <li class="font14">
+                        2015-02-06 8:11:55<span>清关中</span>
+                    </li>
+                    <li class="font14">
+                        2015-02-06 8:11:55<span>已签收,签收人XXX</span>
+                    </li>
+                </ul></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default pt-10">
+        <div class="header-default border">退款退货信息</div>
+        <div class="block">
+            <div>
+                <h5 class="font-weight">买家发起退货申请</h5>
+                <hr class="hr-orange">
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退货编号:</div>
+                <div class="col-xs-4">4001202222656655</div>
+                <div class="col-xs-2 text-right">申请时间:</div>
+                <div class="col-xs-4">2015-02-06 8:11:55</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款类型:</div>
+                <div class="col-xs-4">退款退货</div>
+                <div class="col-xs-2 text-right">退款状态:</div>
+                <div class="col-xs-4">退款申请等待供应商审核中</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款金额:</div>
+                <div class="col-xs-4">$333</div>
+                <div class="col-xs-2 text-right">退款原因:</div>
+                <div class="col-xs-4">产品质量问题</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款说明:</div>
+                <div class="col-xs-9">eassssssssssd  ddddddddddddf fffffffff</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款凭证:</div>
+                <div class="col-xs-9">图片</div>
+            </div>
+        </div>
+        <!-- 卖家处理 -->
+        <div class="block">
+            <div >
+                <h5 class="font-weight">卖家处理</h5>
+                <hr class="hr-orange">
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">处理时间:</div>
+                <div class="col-xs-4">2015-02-06 8:11:55</div>
+                <div class="col-xs-2 text-right">卖家态度:</div>
+                <div class="col-xs-4">同意/拒绝</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">原因:</div>
+                <div class="col-xs-9">哼,不退</div>
+            </div>
+        </div>
+        <!-- 买家修改退货申请 -->
+        <div class="block">
+            <div>
+                <h5 class="font-weight">买家修改退货申请</h5>
+                <hr class="hr-orange">
+            </div>
+
+            <div class="row">
+                <div class="col-xs-2 text-right">退款类型:</div>
+                <div class="col-xs-4">退款退货</div>
+                <div class="col-xs-2 text-right">修改时间:</div>
+                <div class="col-xs-4">2015-02-06 8:11:55</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款金额:</div>
+                <div class="col-xs-4">$333</div>
+                <div class="col-xs-2 text-right">退款状态:</div>
+                <div class="col-xs-4">退款申请等待供应商审核中</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款原因:</div>
+                <div class="col-xs-9">产品质量问题</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款说明:</div>
+                <div class="col-xs-9">eassssssssssd  ddddddddddddf fffffffff</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退款凭证:</div>
+                <div class="col-xs-9">图片</div>
+            </div>
+        </div>
+        <!-- 卖家处理过程 -->
+        <div class="block">
+            <div>
+                <h5 class="font-weight">卖家处理过程</h5>
+                <hr class="hr-orange">
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">处理时间:</div>
+                <div class="col-xs-4">2015-02-06 8:11:55</div>
+                <div class="col-xs-2 text-right">卖家态度:</div>
+                <div class="col-xs-4">同意/拒绝</div>
+            </div>
+        </div>
+
+        <!-- 买家退回货物-->
+        <div class="block">
+            <div>
+                <h5 class="font-weight">买家退回货物</h5>
+                <hr class="hr-orange">
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">退货状态:</div>
+                <div class="col-xs-9">买家已发出货物</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-9 bg-slight-grey">
+                    <div class="row">
+                        <lable class="col-xs-2 text-right">发货方式:</lable>
+                        <div class="col-xs-9">快递</div>
+                        </div>
+                        <div class="row">
+                            <lable class="col-xs-2 text-right">运单号码:</lable>
+                            <div class="col-xs-9">2233555888</div>
+                        </div>
+                        <div class="row">
+                            <lable class="col-xs-2 text-right">物流公司:</lable>
+                            <div class="col-xs-9">圆通快递</div>
+                        </div> <div class="row">
+                        <lable class="col-xs-2 text-right">送货地址:</lable>
+                        <div class="col-xs-9">李娜,13522248899,广东省 广州市 海珠区 大河路128号,009988</div>
+                    </div>
+                        <div class="row">
+                            <lable class="col-xs-2 text-right">物流跟踪:</lable>
+                            <div class="col-xs-9"><ul>
+                                <li class="font14">
+                                    2015-02-05 12:11:55<span>卖家已发货</span>
+                                </li>
+                                <li class="font14">
+                                    2015-02-05 18:11:55<span>发往【XXX】</span>
+                                </li>
+                                <li class="font14">
+                                    2015-02-06 8:11:55<span>清关中</span>
+                                </li>
+                                <li class="font14">
+                                    2015-02-06 8:11:55<span>已签收,签收人XXX</span>
+                                </li>
+                            </ul></div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!-- 卖家确认退款-->
+        <div class="block">
+            <div>
+                <h5 class="font-weight">卖家确认退款</h5>
+                <hr class="hr-orange">
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">确认时间:</div>
+                <div class="col-xs-9">2015-02-06 8:11:55</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 纠纷信息 -->
+    <div class="panel">
+        <div class="header-default border">纠纷信息</div>
+        <div class="row">
+            <div class="col-xs-2 text-right">提起纠纷对象:</div>
+            <div class="col-xs-4">买家/卖家</div>
+            <div class="col-xs-2 text-right">提起纠纷时间:</div>
+            <div class="col-xs-4">2015-02-06 8:11:55</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">纠纷内容:</div>
+            <div class="col-xs-9">退款,退款,,,施主发发慈悲吧</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">买家举证:</div>
+            <div class="col-xs-9">好多图片呢</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">卖家举证:</div>
+            <div class="col-xs-9">又好多图片</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">结束纠纷备注:</div>
+            <div class="col-xs-9">卖家全额退款</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">处理人:</div>
+            <div class="col-xs-9">客服NO1</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 text-right">处理时间:</div>
+            <div class="col-xs-9">2015-02-06 8:11:55</div>
+        </div>
+    </div>
+</div>
+
+<!-- 图片放大[[ -->
+<script type="text/ng-template" id="enlarge.html">
+    <div class="EnlargeDiv">
+        <img ng-src="{{ en_img |setImgSize:600:600 }}">
+        <button ng-click="turnBack();">返回</button>
+    </div>
+</script>
+<!-- 图片放大]] -->

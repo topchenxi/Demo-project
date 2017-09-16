@@ -1,0 +1,344 @@
+<div class="oms-crumbs"> <i>会员套餐设置</i>
+    <p>
+        <a href="">会员套餐管理</a> /
+        <span>会员套餐设置</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-member">
+        <uib-tabset class="tab-cfec-bordertop tab-menber" active="0" justified="false">
+            <uib-tab index="0" ng-click="tools.initFreeMem();">
+                <uib-tab-heading>普通供应商</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="tools.initContMem();">
+                <uib-tab-heading>在约供应商</uib-tab-heading>
+            </uib-tab>
+            <p ng-if="vm.currentTab=='freeMem'">
+                共有
+                <span class="font-orange font-weight">{{vm.freeMemCount}}</span> 个普通用户
+            </p>
+            <p ng-if="vm.currentTab=='contMem'">
+                共有
+                <span class="font-orange font-weight">{{vm.contMemCount}}</span> 个在约用户
+            </p>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix" ng-if="vm.currentTab=='freeMem'">
+            <div class="form-group fl member-cfec">
+                <label for="">广交会参展商</label>
+                <div>
+                    <input type="checkbox" id="isCantonfairC" name="isCantonfairC" ng-true-value="1" ng-false-value="0" ng-model="paging.isExhibitor" ng-change=tools.getFreeMemList()>
+                    <span class="product-cfec"> </span>
+                    <p>是否是广交会参展商</p>
+                </div>
+            </div>
+            <div class="form-group fl">
+                <label for="">搜索信息</label>
+                <div class="oms-search">
+                    <select name="searchTypeC" ng-model="paging.sKey">
+                        <option value="1">公司名称</option>
+                        <option value="2">营业执照号</option>
+                    </select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter action="tools.searchFreeMem" name="search" ng-model="paging.sValue"> </div>
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.searchFreeMem();">查&nbsp;询</button>
+            </div>
+        </div>
+        <div class="search-content form-group-main clearfix" ng-if="vm.currentTab=='contMem'">
+            <div class="form-group fl">
+                <label for="">时间类型</label>
+                <select class="select-oms" name="activeNote" id="activeNote" ng-model="paging.timeKey">
+                    <option value="1">生效时间</option>
+                    <option value="2">过期时间</option>
+                    <option value="3">操作时间</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">搜索时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.timeBegin" id="timeBegin" max-date="{{paging.timeEnd}}" ng-required />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.timeEnd" id="timeEnd" min-date="{{paging.timeBegin}}" ng-required />
+            </div>
+            <div class="form-group fl">
+                <label for="">套餐类型</label>
+                <select ngc-select-search class="select-oms" name="activeNote" id="activeNote" ng-options="ob.packageId as ob.packageName for ob in vm.packageList" ng-model="paging.packageId" ng-change="tools.getContMemList()">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">搜索信息</label>
+                <div class="oms-search">
+                    <select name="searchType" ng-model="paging.sKey">
+                        <option value="1">公司名称</option>
+                        <option value="2">公司营业执照</option>
+                        <option value="3">开通人</option>
+                    </select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter action="tools.searchContMem" name="search" ng-model="paging.sValue"> </div>
+            </div>
+            <div class="form-group fl member-cfec">
+                <label for="">广交会参展商</label>
+                <div>
+                    <input type="checkbox" id="isCantonfair" name="isCantonfair" ng-model="paging.isExhibitor" ng-true-value="1" ng-false-value="0" ng-change="tools.getContMemList()">
+                    <span class="product-cfec"> </span>
+                    <p>是否是广交会参展商</p>
+                </div>
+            </div>
+            <div class="form-group fl member-cfec">
+                <label for="">快过期供应商</label>
+                <div>
+                    <input type="checkbox" id="isToExpire" name="isToExpire" ng-model="paging.isExpireSoon" ng-true-value="1" ng-false-value="0" ng-change="tools.getContMemList()">
+                    <span class="iconfont">&#xe618;</span>
+                    <p>是否是快过期供应商</p>
+                </div>
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="tools.searchContMem();">查&nbsp;询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.resetCont();">重&nbsp;置</button>
+            </div>
+        </div>
+        <div class="container-list table-cfec table-cfec-theme2" ng-if="vm.currentTab=='freeMem'">
+            <table class="table table-hover">
+                <col width="3%" />
+                <col width="47%" />
+                <col width="30%" />
+                <col width="20%" />
+                <thead>
+                    <tr ng-hide="vm.freeMCheckDatas!= 'undefined' && vm.freeMCheckDatas.length > 0">
+                        <th>
+                            <input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.checkAll(vm.isAllChecked)">
+                        </th>
+                        <th>公司名称</th>
+                        <th>营业执照号</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-show="vm.freeMCheckDatas!= 'undefined' && vm.freeMCheckDatas.length > 0">
+                        <th><input type="checkbox" ng-model="vm.isAllChecked" ng-change="tools.checkAll(vm.isAllChecked)"></th>
+                        <th colspan="3">
+                            <div class="btn-group" ngc-permission="member_membersellerList_buyvipmember">
+                                <button ng-click="tools.setMemPackage(true,null)" type="button" class="btn btn-default btn-cfec-white btn-cfec-sm fl">开通套餐</button>
+                                
+                            </div>
+                        </th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr ng-repeat="it in vm.items">
+                        <td>
+                            <input type="checkbox" ng-model="it.$checked" ng-change="tools.setCheckedData()">
+                        </td>
+                        <td>
+                            <em style="margin-left:-8px;" ng-class="{true:'icon-member icon-cantonfair-s',false:'icon-block'}[it.isExhibitor==1]"></em>{{it.companyName}}
+                        </td>
+                        <td>{{it.bizLicense}}</td>
+                        <td><a ngc-permission="member_membersellerList_buyvipmember" ng-click="tools.setMemPackage(false,$index)" href="javascript:void(0)">开通套餐</a></td>
+                    </tr>
+                    <tr ng-if="vm.items.length==0">
+                        <td colspan="3">
+                            <p class="nodata">
+                                <i class="iconfont icon-xunwenoms"></i>没有符合条件的数据!
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 分页[[ -->
+            <div class="middivs clearfix" ng-include="paginationTemplate"> </div>
+        </div>
+        <div class="container-list table-cfec table-cfec-theme2" ng-if="vm.currentTab=='contMem'">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="16%">公司名称</th>
+                        <th width="10.5%">营业执照号</th>
+                        <th width="10%">套餐类型</th>
+                        <th width="10.5%">生效日期</th>
+                        <th width="10.5%">到期日期</th>
+                        <th width="10.5%">所有套餐过期日期</th>
+                        <th width="10%">开通人</th>
+                        <th width="10.5%">操作时间</th>
+                        <th width="12.5%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ng-class="{true:'icon icon-cantonfair-s',false:'icon-block'}[it.isExhibitor==1]" -->
+                    <tr ng-repeat="it in vm.items track by $index" ng-class="{true:'bg-grey'}[it.isExpireSoon==1]" title="{{it.isExpireSoon==1?'快过期供应商':''}}">
+                        <td class="check-cell">
+                            <label>
+                                <em ng-class="{true:'icon-member icon-cantonfair-s',false:'icon-block'}[it.isExhibitor==1]"> </em> {{it.companyName}}
+                            </label>
+                        </td>
+                        <td>{{it.bizLicense}}</td>
+                        <td>
+                            <a class="link-cfec-inherit" href="javascript:" ng-click="tools.toPackageDetail(it.packageId)">{{it.packageName}}</a>
+                        </td>
+                        <td>{{it.effectiveTime | date:'yyyy-MM-dd'}}</td>
+                        <td>{{it.expireTimeNow | date:'yyyy-MM-dd'}}</td>
+                        <td>{{it.expireTime | date:'yyyy-MM-dd'}}</td>
+                        <td>{{it.userName}}</td>
+                        <td>
+                            {{it.updateTime| date:'yyyy-MM-dd'}}
+                            <br/> {{it.updateTime| date:'HH:mm:ss'}}
+                        </td>
+                        <td>
+                            <a ngc-permission="member_membersellerList_detail" ng-click="tools.toDetail(it.packageRecordId)" href="javascript:void(0)">详情</a>
+                            <a ngc-permission="member_membersellerList_set" ng-click="tools.auditMember($index)" href="javascript:void(0)">设置</a>
+                            <a ngc-permission="member_membersellerList_rebuy" ng-click="tools.renewMember(it.packageRecordIdLast,it.packageName)" href="javascript:void(0)">续费</a>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.items.length==0">
+                        <td colspan="8">
+                            <p class="nodata">
+                                <i class="iconfont icon-xunwenoms"></i> 没有符合条件的数据!
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 分页[[ -->
+            <div class="middivs clearfix" ng-include="paginationTemplate"> </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="activeDlgId">
+    <div class="activeDlg">
+        <div class="dlg-title">会员套餐开通</div>
+        <form class="dlg-content form-group-main" novalidate="novalidate" name="forms.activeForm" role="form" ng-submit="tools.activeMemberDb()">
+            <p>以下所选公司目前是免费用户</p>
+            <p class="companys"><span ng-repeat="name in vm.dialogData.chkNameArr track by $index">{{name}}</span></p>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c" text-right">套餐选择</label>
+                <select ngc-select-search name="packageType"  class="select-oms mr10"  ng-options="ob.packageId as ob.packageName for ob in vm.addPackageList" ng-model="vm.dialogData.packageId" ng-required="true"> </select> <span class="error-valid" ng-show="(forms.activeForm.$dirty||forms.activeForm.$submitted) && forms.activeForm.packageType.$invalid">请选择套餐</span> 
+            </div>
+            <!-- <div class="row pt-10"> <label class="col-xs-4 text-right">生效类型</label> <div class="col-xs-8"> <input type="radio" id="activeTypeD0" name="activeTypeD" value="0"> <label for="activeTypeD0">立即生效</label> <input type="radio" id="activeTypeD1" name="activeTypeD" value="1"> <label for="activeTypeD0">顺延</label> </div> </div> -->
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">套餐时间</label>
+                <input ngc-lay-date readonly disabled="disabled" type="text" style="width:125px" class="laydate-icon" ng-model="vm.dialogData.sEffectiveTime" id="actTimeBegin" ng-click="tools.initStartDate();" min-date="{{vm.dialogData.minDate}}" max-date="{{vm.dialogData.sExpireTime}}"  ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" style="width:125px" class="laydate-icon" ng-model="vm.dialogData.sExpireTime" id="actTimeEnd" ng-click="tools.initEndDate();" min-date="{{vm.dialogData.sEffectiveTime}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group formgroup-cfec-inline row Memo ">
+            	 <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">备注：</label>
+            	 <input ngc-lay-memo type="text" style="width:195px" class="infomsg" ng-model="vm.dialogData.remark"/>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" type="submit" ng-disabled="vm.dialogData.doing">
+                    <span ng-hide="vm.dialogData.doing">确定</span>
+                    <span ng-show="vm.dialogData.doing">提交中...</span></button>
+                <button class="btn btn-cfec-white" ng-click="tools.closeDlg()">取消</button>
+          
+            </div>
+        </form>
+    </div>
+</script>
+<script type="text/ng-template" id="auditDlgId">
+    <div class="activeDlg">
+        <div class="dlg-title">会员套餐开通</div>
+
+        <form class="dlg-content form-group-main" novalidate="novalidate" name="forms.activeForm" role="form" ng-submit="tools.auditMemberDb()">
+            <p class="mb10">【{{vm.dialogData.companyName}}】目前是【{{vm.dialogData.packageName}}】</p>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">套餐选择</label>
+               
+                <select ngc-select-search name="packageType" class="select-oms mr10" ng-options="ob.packageId as ob.packageName for ob in vm.addPackageList" ng-model="vm.dialogData.packageId" ng-required="true"> </select><span class="error-valid" ng-show="(forms.activeForm.$dirty||forms.activeForm.$submitted) && forms.activeForm.packageType.$invalid">请选择套餐</span>
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">生效类型</label>
+               
+                <input class="mr10 mt8" type="radio" id="activeTypeD0" name="activeTypeD" ng-model="vm.dialogData.setType" value="1" ng-change="tools.setEffectiveTime()">
+                <label for="activeTypeD0">立即生效</label>
+                <input class="mr10 mt8" type="radio" id="activeTypeD1" name="activeTypeD" value="2" ng-model="vm.dialogData.setType" ng-change="tools.setEffectiveTime()">
+                <label for="activeTypeD1">顺延</label>
+                
+            </div>
+            <div class="form-group formgroup-cfec-inline row">
+                <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">套餐时间</label>
+                
+                    <div class="f-left">
+                       <input ngc-lay-date disabled="disabled" type="text" style="width:125px" class="laydate-icon" max-date="{{vm.dialogData.sExpireTime}}" ng-model="vm.dialogData.sEffectiveTime" ng-required="true" title="不能手动选择" id="startTime2" name="startTime">
+                        <div class="error-valid" ng-show="(forms.activeForm.$dirty||forms.activeForm.$submitted) && forms.activeForm.startTime.$invalid">请选择套餐</div>
+                    </div>
+                    
+                    <span class="text-inline ml0">至</span>
+                    <div class="f-left">
+                       <input ngc-lay-date readonly type="text" style="width:125px" class="laydate-icon"  type="text" name="endTime" placeholder="结束日期" min-date="{{vm.dialogData.sEffectiveTime}}" ng-model="vm.dialogData.sExpireTime" ng-required="true" id="endTime2">
+                        <div class="error-valid" ng-show="(forms.activeForm.$dirty||forms.activeForm.$submitted) && forms.activeForm.endTime.$invalid">请选择套餐</div>
+                    </div>
+                
+            </div>
+            <!---->
+            <div class="form-group formgroup-cfec-inline row Memo ">
+            	 <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ta-c">备注：</label>
+            	 <input ngc-lay-memo type="text" style="width:195px; outline: none;" class="infomsg" ng-model="vm.dialogData.remark"/>
+            </div>
+            <div class="btn-toolbar clearfix">
+                <button class="btn btn-cfec-red" type="submit" ng-disabled="vm.dialogData.doing">
+                    <span ng-hide="vm.dialogData.doing">确定</span>
+                    <span ng-show="vm.dialogData.doing">提交中...</span></button>
+                <button class="btn btn-cfec-white" ng-click="tools.closeDlg()">取消</button>
+            </div>
+        </form>
+    </div>
+</script>
+<script type="text/ng-template" id="detailDlgId">
+    <div class="activeDlg">
+        <div class="dlg-title">会员套餐详情</div>
+        <div class="dlg-content pt20">
+            <div class="table-cfec table-cfec-theme3">
+            <table class="table table-bordered">
+                <col class="bg-slight" width="20%">
+                <col width="30%">
+                <col class="bg-slight" width="20%">
+                <col width="30%">
+                <tr>
+                    <td>公司名称</td>
+                    <td>{{vm.contMemDetail.companyName}}</td>
+                    <td>营业执照号</td>
+                    <td>{{vm.contMemDetail.bizLicense}}</td>
+                </tr>
+                <tr>
+                    <td>套餐名称</td>
+                    <td>{{vm.contMemDetail.packageName}}</td>
+                    <td>英文名称</td>
+                    <td>{{vm.contMemDetail.packageEnName}}</td>
+                </tr>
+                <tr>
+                    <td>套餐别称</td>
+                    <td>{{vm.contMemDetail.packageNickName}}</td>
+                    <td>套餐金额</td>
+                    <td><span class="font-deepred">{{vm.contMemDetail.price}} </span> 元</td>
+                </tr>
+                <tr>
+                    <td>套餐开通人</td>
+                    <td>{{vm.contMemDetail.userName}}</td>
+                    <td>开通情况</td>
+                    <td>{{vm.contMemDetail.openState | memOpenStatus}}</td>
+                </tr>
+                <tr>
+                    <td>生效时间</td>
+                    <td>{{vm.contMemDetail.effectiveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>过期时间</td>
+                    <td>{{vm.contMemDetail.expireTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                    <td>操作时间</td>
+                    <td>{{vm.contMemDetail.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>是否续费</td>
+                    <td>{{vm.contMemDetail.isRenew==1?'是':'否' }}</td>
+                </tr>
+                <tr>
+                    <td>套餐等级</td>
+                    <td>{{vm.contMemDetail.typeName}}</td>
+                    <td>备注</td>
+                    <td>{{vm.contMemDetail.remark}}</td>
+                </tr>
+            </table>
+            </div>
+            <div class="text-right"><a href="javascript:void(0)">更多套餐记录</a></div>
+            <div class="btn-toolbar mt10 clearfix">
+                <button ngc-permission="member_membersellerList_set" class="btn btn-cfec-red" ng-click="tools.auditMember('',true)">设置</button>
+                <button class="btn btn-cfec-white" ng-click="tools.closeDlg()">关闭</button>
+            </div>
+        </div>
+    </div>
+</script>
+

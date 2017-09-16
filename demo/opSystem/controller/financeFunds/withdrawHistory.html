@@ -1,0 +1,60 @@
+<div class="top-help clearfix ">
+    <div class="help-form-class ng-pristine ng-valid">
+        <p class="p-help-style">
+            财务资金管理 &gt;
+            <a ng-if="vm.isBack" onclick="tools.goBack()">提现资金审核 </a>
+            <span ng-if="!vm.isBack">提现资金审核 </span>
+            &gt; 操作历史
+        </p>
+
+    </div>
+</div>
+<div class="child-detail content bg-white">
+    <div class="row">
+        <div class="col-xs-6">
+            <table class="table table-bordered mb-20">
+                <tbody>
+                <tr> <td class="bg-slight col-xs-2">虚拟资金流水号</td><td>{{vm.logDTO.capitalTurnoverId}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">生成时间</td><td>{{vm.logDTO.requestTime|date:'yyyy-MM-dd HH:mm::ss'}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">卖家帐号</td><td>{{vm.logDTO.sellerName}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">提现银行账号</td><td>{{vm.logDTO.bankAccount}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">交易币种</td><td>{{vm.logDTO.currency}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">提现金额</td><td>{{vm.logDTO.amount}}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6">
+            <table class="table table-bordered mb-20">
+                <tbody>
+                <tr> <td class="bg-slight col-xs-2">汇率</td><td>{{vm.logDTO.exchangeRate}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">手续费</td><td>{{vm.logDTO.procedureFee}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">提现币种</td><td>{{vm.logDTO.toCurrency}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">实际金额</td><td>{{vm.logDTO.actualAmount}}</td></tr>
+                <tr> <td class="bg-slight col-xs-2">交易流水号</td><td>{{vm.logDTO.tranNo}}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tabTable">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td width="20%">操作时间</td>
+                    <td width="20%">操作人</td>
+                    <td width="20%">操作结果</td>
+                    <td width="40%">操作注</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in vm.logList">
+                    <td>{{item.auditTime|date:'yyyy-MM-dd HH:mm::ss'}}</td>
+                    <td>{{item.auditByName}}</td>
+                    <td>{{item.auditStatus|withdrawnAuditType}}</td>
+                    <td>{{item.reason}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

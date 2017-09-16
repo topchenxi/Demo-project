@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>标签组列表</title>
+	<link rel="stylesheet" href="/pubpage/components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="/pubpage/operation/view/css/category.css">
+	<link rel="stylesheet" href="/pubpage/operation/view/css/operation.css"></head>
+<body>
+	<!--<div class="search clearfix">-->
+		<!--<form action="" >-->
+			<!--<p class="search-text search-sellerList-text search-width">-->
+				<!--<input type="text" name="search" ></p>-->
+			<!--<button type="button" value="搜索" class="search-but btn" >搜索</button>-->
+		<!--</form>-->
+	<!--</div>-->
+
+	<div class="navtop">
+		<div class="navlist">
+			<ul>
+				<li class="navlist line40">类目属性管理&nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">标签管理 &nbsp;&nbsp;<span class="grey"> > &nbsp;&nbsp;</span>  </li>
+				<li class="navlist line40">属性规格列表&nbsp;&nbsp;<span class="grey"> >&nbsp;&nbsp;</span>  </li>
+			</ul>
+		</div>
+		<div class="navsearch">
+			<input type="text" placeholder="请输入中/英文名称进行搜索"/>
+		</div>
+	</div>
+	<div class="container-list">
+		<div class=" att-middiv-style clearfix">
+			<div class="divleft">
+				<label class=" label-style">行业名称</label>
+				<label class=" label-style">---></label>
+				<label class=" label-style">一级类目</label>
+				<label class=" label-style">---></label>
+				<label class=" label-style">二级类目</label>
+			</div>
+			<div class="divright clearfix">
+				<button class="btn btn-default tbuttons" id="delBut">删除</button>
+				<button class="btn btn-default tbuttons" onclick="setIframe('parentattrlist')">选择父级属性规格</button>
+				<button class="btn btn-default tbuttons" onclick="setIframe('attrtypeAdd')">添加特性属性规格</button>
+			</div>
+		</div>
+
+		<div class=" att-mid-mar clearfix">
+			<div class="divleft divleft-height">
+				<button class="btn btn-default buttons att-button-select" >属性</button>
+				<button class="btn btn-default buttons att-button-select" >规格</button>
+			</div>
+		</div>
+
+		<table class="table table-bordered table-hover tablestyle" id="selectPanel">
+			<thead class="color-grey">
+				<tr class="trstyle">
+					<td class="tdstyle-w145">
+						<label class="w40"><input type="checkbox" name="" id="alldel"></label>
+						<label class="w60">中文名称</label>
+					</td>
+					<td class="tdstyle-w145">英文名称</td>
+					<td class="tdstyle">属性值</td>
+					<td class="tdstyle">是否必填</td>
+					<td class="tdstyle">是否多选</td>
+					<td class="tdstyle">排序</td>
+					<td class="tdstyle">操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="trstyle">
+					<td class="tdstyle">
+						<label class="w40"><input type="checkbox" name="" class="del" value="1"></label>
+						<label class="w60">手机</label>
+					</td>
+					<td class="tdstyle" >Brand</td>
+					<td class="tdstyle" >耐克(nike),阿迪(adidas)</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >1</td>
+					<td class="tdstyle">
+						<a class="aColor" onclick="setIframe('attrtypeUpdate')">修改</a>
+					</td>
+				</tr>
+				<tr class="trstyle">
+					<td class="tdstyle">
+						<label class="w40"><input type="checkbox" name="" class="del" value="2"></label>
+						<label class="w60">手机</label>
+					</td>
+					<td class="tdstyle" >Brand</td>
+					<td class="tdstyle" >
+						<label class="label-style-red" for=""></label>
+						红色(red)
+						<label class="label-style-black" for=""></label>
+						黑色(black)
+					</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >1</td>
+					<td class="tdstyle">
+						<a class="aColor" onclick="setIframe('attrtypeUpdate')">修改</a>
+					</td>
+				</tr>
+				<tr class="trstyle">
+					<td class="tdstyle">
+						<label class="w40"><input type="checkbox" name="" class="del" value="3"></label>
+						<label class="w60">手机</label></td>
+					<td class="tdstyle" >Brand</td>
+					<td class="tdstyle" >耐克(nike),阿迪(adidas)</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >是</td>
+					<td class="tdstyle" >1</td>
+					<td class="tdstyle">
+						<a class="aColor" onclick="setIframe('attrtypeUpdate')">修改</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class=" middivs clearfix">
+
+			<div class="divright clearfix">
+				<button  class="btn btn-default lastbuttons" ng-click="tools.getnewpage();">GO</button>
+				<input type="text" class="inputs" ng-model="tools.newpagesize">
+				<label class="page-list-style label-style">转到页</label>
+				<ul class="page-list-style pagination ng-isolate-scope ng-valid" boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" ng-change="tools.getBuyers()" previous-text="‹" next-text="›" first-text="«" last-text="»">
+					<!-- ngIf: boundaryLinks -->
+					<li ng-if="boundaryLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">
+						<a href="" ng-click="selectPage(1, $event)" class="ng-binding">«</a>
+					</li>
+					<!-- end ngIf: boundaryLinks -->
+					<!-- ngIf: directionLinks -->
+					<li ng-if="directionLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">
+						<a href="" ng-click="selectPage(page - 1, $event)" class="ng-binding">‹</a>
+					</li>
+					<!-- end ngIf: directionLinks -->
+					<!-- ngRepeat: page in pages track by $index -->
+					<li ng-repeat="page in pages track by $index" ng-class="{active: page.active}" class="ng-scope active">
+						<a href="" ng-click="selectPage(page.number, $event)" class="ng-binding">1</a>
+					</li>
+					<!-- end ngRepeat: page in pages track by $index -->
+					<!-- ngIf: directionLinks -->
+					<li ng-if="directionLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">
+						<a href="" ng-click="selectPage(page + 1, $event)" class="ng-binding">›</a>
+					</li>
+					<!-- end ngIf: directionLinks -->
+					<!-- ngIf: boundaryLinks -->
+					<li ng-if="boundaryLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">
+						<a href="" ng-click="selectPage(totalPages, $event)" class="ng-binding">»</a>
+					</li>
+					<!-- end ngIf: boundaryLinks -->
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	<script src="http://192.168.200.234:3333/components_module/requirejs/require.js"></script>
+	<script src="http://crab.e-cantonfair.com:3333/dev/components/require-config.js"></script>
+	<script src="../../../../components/jquery/dist/jquery.js"></script>
+	<script src="../category.js"></script>
+	<script type="text/javascript" src="../../../view/js/attrtype.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<div class="oms-crumbs"> <i>数据报表</i>
+    <p>
+        <a href="">买家注册</a> /
+        <span>数据报表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">买家ID</label>
+                <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" placeholder="买家ID" ng-model="paging.buyerId" id="buyerId">
+            </div>
+            <div class="form-group fl">
+                <label for="">买家姓名</label>
+                <input ngc-auto-input type="text" ngc-monitor-enter class="input-cfec" placeholder="买家姓名" ng-model="paging.buyerName" id="buyerName">
+            </div>
+            <div class="form-group fl">
+                <label for="">买家类型</label>
+                <select class="select-oms" id="companyNature" ng-model="paging.companyNature" ng-options="obj.code as obj.cnName for obj in vm.companyNatureList">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">性别</label>
+                <select class="select-oms" ng-model="paging.gender">
+                    <option value="">请选择</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">所在地</label>
+                <select ngc-select-search name="districtId" class="select-oms" ng-change="tools.changeDistrict()" ng-options="ob.tradeAreaId as ob.tradeAreaCnName for ob in vm.areaList" ng-model="paging.districtId">
+                    <option value="">请选择地区</option>
+                </select>
+                <span class="text-inline">-</span>
+                <select ngc-select-search class="select-oms" ng-options="obj.countryId as obj.countryCnName for obj in vm.countryList" ng-model="paging.countryId" name="country">
+                    <option value="">请选择国家</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">注册时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.startTime" id="startTime" max-date="{{paging.endTime}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.endTime" id="endTime" min-date="{{paging.startTime}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group btns-group clear">
+                <input type="hidden" ng-model="paging.categoryId">
+                <button class="btn btn-cfec-red" ng-click="tools.getList();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.exportData()">导出excel表格</button>
+                <button class="btn btn-cfec-white" ng-click="tools.initCondition(false)">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec report-data">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="23%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="12%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="ta-c">序号</th>
+                        <th>买家ID</th>
+                        <th>买家姓名</th>
+                        <th class="ta-c">买家性别</th>
+                        <th>买家类型</th>
+                        <th>所在地</th>
+                        <th>注册时间</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat="item in vm.items track by $index">
+                        <!-- 序号 -->
+                        <td class="ta-c">{{$index+1}}</td>
+                        <!-- 买家ID -->
+                        <td>{{item.buyerId}}</td>
+                        <!-- 买家姓名 -->
+                        <td>{{item.buyerName}}</td>
+                        <!-- 买家性别 -->
+                        <td class="ta-c">{{item.gender|gender}}</td>
+                        <!-- 买家类型 -->
+                        <td>{{item.companyNatureName}}</td>
+                        <!-- 所在地 -->
+                        <td>{{item.districtName}} {{item.countryName}}</td>
+                        <!-- 注册时间 -->
+                        <td>{{item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="7">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+    </div>
+</div>

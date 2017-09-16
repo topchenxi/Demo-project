@@ -1,0 +1,13 @@
+<!-- 分页组件[[ -->
+<div class="row-page clearfix">
+    <select class="item" ng-model="paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages"
+            ng-change="tools.getnewpage(0)"></select>
+    <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage()" max-size="5"
+                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    <label class="item">共<big>{{paging.total}}</big>条</label>
+    <label class="item">转到第</label>
+    <input class="ngc-jumppage" type="number" class="item" ng-model="tools.newpagesize">
+    <label class="item">页</label>
+    <button  class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+</div>
+<!-- 分页组件[[ -->

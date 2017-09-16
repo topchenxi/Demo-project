@@ -1,0 +1,127 @@
+<div class="oms-crumbs"> <i>数据报表</i>
+    <p>
+        <a href="">卖家商品</a> /
+        <span>数据报表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">卖家ID</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="卖家ID" ng-model="paging.sellerId" id="sellerId"> </div>
+            <div class="form-group fl">
+                <label for="">店铺名称</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="店铺名称" ng-model="paging.shopName" id="shopName"> </div>
+            <div class="form-group fl">
+                <label for="">商品名称</label>
+                <input ngc-auto-input class="input-cfec" type="text" placeholder="商品名称" ng-model="paging.productName" id="productName"> </div>
+            <div class="form-group fl">
+                <label for="">商品状态</label>
+                <select class="select-oms" id="productStatus" ng-model="paging.productStatus">
+                    <option value="">请选择</option>
+                    <option value="3">审核通过</option>
+                    <option value="2">待审核</option>
+                    <option value="-1">审核不通过</option>
+                    <option value="21">审核通过(上架)</option>
+                    <option value="-21">审核通过(下架)</option>
+                    <!-- <option value="0">数据不完整</option> -->
+                    <option value="-3">删除</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">一级类目/二级类目</label>
+                <select ngc-select-search name="indusId" class="select-oms" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys1List" ng-model="paging.categoryId" ng-change="tools.changeCategroy()">
+                    <option value="">请选择</option>
+                </select>
+                <span class="text-inline">-</span>
+                <select ngc-select-search name="category2Id" class="select-oms" ng-options="obj.categoryId as obj.categoryName for obj in vm.categorys2List" ng-model="paging.category2Id">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">商品上传时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.uploadStart" id="uploadStart" max-date="{{paging.uploadEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.uploadEnd" id="uploadEnd" min-date="{{paging.uploadStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group fl">
+                <label for="">最后更新时间</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.updateStart" id="updateStart" max-date="{{paging.updateEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.updateEnd" id="updateEnd" min-date="{{paging.updateStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group btns-group clear">
+                <input type="hidden" ng-model="paging.categoryId">
+                <button class="btn btn-cfec-red" ng-click="tools.getList();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="tools.exportData()">导出excel表格</button>
+                <button class="btn btn-cfec-white" ng-click="tools.initCondition(false)">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec report-data">
+            <table class="table table-hover ">
+                <colgroup>
+                <col width="5%">
+                <col width="10%">
+                <col width="20%">
+                <col width="20%">
+                <col width="10%">
+                <col width="15%">
+                <col width="10%">
+                <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="ta-c">序号</th>
+                        <th>卖家ID</th>
+                        <th>店铺名称</th>
+                        <th>商品名称</th>
+                        <th>商品状态</th>
+                        <th>所属类目</th>
+                        <th>商品上传时间</th>
+                        <th>最新更新时间</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.items.length>0">
+                    <tr ng-repeat="item in vm.items track by $index">
+                        <!-- 序号 -->
+                        <td class="ta-c">{{$index+1}}</td>
+                        <!-- 卖家ID -->
+                        <td>{{item.sellerId}}</td>
+                        <!-- 店铺名称 -->
+                        <td>{{item.shopName}}</td>
+                        <!-- 商品名称 -->
+                        <td>{{item.productName}}</td>
+                        <!-- 商品状态 -->
+                        <td>{{item.productStatus|productStatus}}</td>
+                        <!-- 所属类目 -->
+                        <td>{{item.categoryName}}</td>
+                        <!-- 商品上传时间 -->
+                        <td>
+                            <p>{{item.createTime|date:'yyyy-MM-dd'}}</p>
+                            <p>{{item.createTime|date:'HH:mm:ss'}}</p>
+                        </td>
+                        <!-- 最新更新时间 -->
+                        <td>
+                            <p>{{item.updateTime|date:'yyyy-MM-dd'}}</p>
+                            <p>{{item.updateTime|date:'HH:mm:ss'}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="vm.items==undefined||vm.items.length==0" class="ng-scope">
+                    <tr>
+                        <td colspan="8">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="middivs clearfix" ng-include="paginationTemplate">
+        </div>
+   
+    </div>
+</div>
+

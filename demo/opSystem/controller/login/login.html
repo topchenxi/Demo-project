@@ -1,0 +1,26 @@
+<div class="oms-login-container">
+	<div class="oms-font-title">oms-font-title</div>
+	<div class="oms-login-content">
+		<div class="oms-login-main">
+			<h5>登录</h5>
+			<div class="oms-login-o">
+				<span class="icon iconfont">&#xe618;</span>
+				<input type="text" placeholder="请输入帐号" 
+						ng-model="vm.username" 
+						ng-change="tools.hideAlert();"
+						ng-keyup="tools.checkKeyUp($event);">
+			</div>
+			<div class="oms-login-o">
+				<span class="icon iconfont">&#xe617;</span>
+				<input type="password" placeholder="请输入密码" class="j-login" 
+						ng-model="vm.password" 
+						ng-change="tools.hideAlert();" 
+						ng-keyup="tools.checkKeyUp($event);">
+			</div>
+			<button class="btn btn-cfec-red" ng-click="tools.checkLogin();">立即登录</button>
+		</div>
+	</div>
+	<h6>
+		2012-2017 CantonFair E-commerce Co,.Ltd All Rights Reserved. 粤ICP备 12071919 号
+	</h6>
+</div>

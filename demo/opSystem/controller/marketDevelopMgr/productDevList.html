@@ -1,0 +1,115 @@
+<div class="oms-crumbs"> <i>产品开发计划列表</i>
+    <p>
+        <a ui-sref="marketDevelopMgr.productDevelopMgr">市场开发管理</a> /
+        <span>产品开发计划列表</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="1" justified="false">
+            <uib-tab index="0" ng-click="vm.initTab()">
+                <uib-tab-heading>全部</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" ng-click="vm.initTab(2)">
+                <uib-tab-heading>待审核</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" ng-click="vm.initTab(3)">
+                <uib-tab-heading>审核通过</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="3" ng-click="vm.initTab(-1)">
+                <uib-tab-heading>审核不通过</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+        <div class="search-content form-group-main clearfix">
+            <div class="form-group fl">
+                <label for="">搜索</label>
+                <div class="oms-search">
+                    <select name="" id="" ng-model="vm.paging.key" ng-options="obj.value as obj.key for obj in vm.searchTypeArray">
+                        <option value="">搜索类型</option>
+                    </select> <em></em>
+                    <input ngc-auto-input ngc-monitor-enter type="text" name="" id="" ng-model="vm.paging.value" />
+                </div>
+            </div>
+            <div class="form-group fl" ng-if="!vm.currentStatus">
+                <label for="">审核状态</label>
+                <select name="status" id="status" class="select-oms" ng-model="vm.paging.aduitStatus">
+                    <option value="">请选择</option>
+                    <option value="1">待审核</option>
+                    <option value="3">审核通过</option>
+                    <option value="2">审核不通过</option>
+                </select>
+            </div>
+            <div class="form-group fl">
+                <label for="">发布日期</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="vm.paging.pushDateStart" id="pushDateStart" max-date="{{vm.paging.pushDateEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="vm.paging.pushDateEnd" id="pushDateEnd" min-date="{{vm.paging.pushDateStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group fl">
+                <label for="">计划终结日期</label>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="vm.paging.planFinshTimeStart" id="planFinshTimeStart" max-date="{{vm.paging.planFinshTimeEnd}}" ng-required placeholder="开始日期" />
+                <span class="text-inline">至</span>
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="vm.paging.planFinshTimeEnd" id="planFinshTimeEnd" min-date="{{vm.paging.planFinshTimeStart}}" placeholder="结束日期" ng-required/>
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="vm.search();">查&nbsp询</button>
+                <button class="btn btn-cfec-white" ng-click="vm.reset();">重&nbsp置</button>
+            </div>
+        </div>
+        <div class="list-content table-cfec">
+            <table class="table table-hover ">
+                <!-- 全部 -->
+                <colgroup>
+                    <col width="30%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>商品信息</th>
+                        <th>商品类目</th>
+                        <th>公司名称</th>
+                        <th>发布时间</th>
+                        <th>计划终结时间</th>
+                        <th>推广成效
+                            <br> （询盘数量）
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody ng-if="vm.list.length">
+                    <tr ng-repeat='item in vm.list'>
+                        <td>
+                            <a target="_blank" ng-href="/#/goods/barginDetail?productId={{item.productId}}&sellerId={{item.sellerId}}">
+                            {{item.productName}}
+                        </a>
+                        </td>
+                        <td>{{item.categoryName}}</td>
+                        <td>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.companyEnName}}</p>
+                        </td>
+                        <td>
+                            <p>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                        </td>
+                        <td>
+                            <p>{{item.planFinshTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                        </td>
+                        <td>{{item.resultCount}}</td>
+                        <td>
+                            <p><a target="_blank" ng-href="/#/marketDevelopMgr/productDevDetail?id={{item.marketTabloidId}}">查看</a></p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-if="!vm.list||!vm.list.length" class="ng-scope">
+                    <tr>
+                        <td colspan="8">
+                            <p class="noResult-Text pt100 pb100 ta-c"><i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="middivs clearfix" ng-include="paginationTemp"></div>
+    </div>
+</div>

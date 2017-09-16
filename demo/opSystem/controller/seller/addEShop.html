@@ -1,0 +1,67 @@
+<div class="oms-crumbs"> <i>e店通</i>
+    <p>
+        <a href="">供应商管理</a> /
+        <span>e店通</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content oms-detail">
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                <span>*</span> 供应商
+            </label>
+            <div class="col-sm-10">
+                <button ng-if="!vm.hasCheckSeller" type="button" class="btn btn-cfec-white w195" ng-click="tools.selectSeller();">请选择供应商</button>
+                <p class="ad-product-link w400" ng-if="vm.hasCheckSeller">
+					{{vm.hasCheckSeller.companyName}} <span class="mr5"></span> {{vm.hasCheckSeller.companyEnName}}
+                </p>
+                <p ng-if="vm.hasCheckSeller&&vm.hasCheckSeller.packageInfo">
+                    {{vm.hasCheckSeller.companyName}} 已经有套餐 ({{vm.hasCheckSeller.packageInfo.packageName}})
+                </p>
+                <a ng-if="vm.hasCheckSeller" href="javascript:void(0);" ng-click="tools.selectSeller();">重选</a>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+               套餐
+            </label>
+            <div class="col-sm-10">
+               <input type="text" class="input-cfec" disabled="disabled" value="E店铺服务套餐">
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                <span>*</span> 技术服务费
+            </label>
+            <div class="col-sm-10">
+                <input type="number" class="input-cfec" ng-model="eShopInfo.serviceFee"><span class="ml10">元</span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                <span>*</span> 保证金
+            </label>
+            <div class="col-sm-10">
+                <input type="number" class="input-cfec" ng-model="eShopInfo.deposit"><span class="ml10">元</span>
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+                <span>*</span> 开通时间
+            </label>
+            <div class="col-sm-10">
+                <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="eShopInfo.effectiveTimeStr" id="effectiveTimeStr" ng-required />
+            </div>
+        </div>
+        <div class="form-group formgroup-cfec-inline row line">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 ta-l">
+            </label>
+            <div class="col-sm-10">
+                <div class="form-group btns-group clear">
+                    <button class="btn btn-cfec-red" ng-click="tools.save();">保存</button>
+                    <button class="btn btn-cfec-white" ng-click="tools.back();">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

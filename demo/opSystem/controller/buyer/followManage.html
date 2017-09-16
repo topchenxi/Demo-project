@@ -1,0 +1,466 @@
+<div class="oms-crumbs"> <i>采购商分配管理</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>采购商分配管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0">
+            <uib-tab index="0" select="tools.initTab(1);">
+                <uib-tab-heading class="h5">平台采购商</uib-tab-heading>
+                <ul class="tab-list-cfec p20 pb0">
+                    <li ng-click="vm.followMgStatus=1;tools.getFollowBuyerList();" ng-class="{true: 'active', false: ''}[vm.followMgStatus==1]">未分配</li>
+                    <li ng-click="vm.followMgStatus=2;tools.getFollowBuyerList();" ng-class="{true: 'active', false: ''}[vm.followMgStatus==2]
+                    ">已分配</li>
+                </ul>
+                <div class="search-content form-group-main clearfix">
+                    <div class="form-group fl">
+                        <label for="">搜索</label>
+                        <div class="oms-search">
+                            <select name="" id="" ng-model="paging.accountType" ng-options="obj.value as obj.key for obj in vm.searchTypeArray">
+                                <option value="">搜索类型</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.accountTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司区域</label>
+                        <select ngc-select-search class="select-oms" ng-model="paging.tradeAreaId" ng-options="obj.tradeAreaId as obj.tradeAreaCnName for obj in vm.districtList" name="tradeArea" ng-change="tools.chxTradeAreaById();">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="paging.tradeAreaId!=''&&paging.tradeAreaId!=null&&paging.tradeAreaId!=-1">
+                        <label for="">国家</label>
+                        <select ngc-select-search class="select-oms" ng-model="paging.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countries" name="country">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">创建时间</label>
+                        <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.fromDate" id="fromDate" max-date="{{paging.toDate}}" ng-required placeholder="开始日期" />
+                        <span class="text-inline">至</span>
+                        <input ngc-lay-date readonly type="text" class="laydate-icon" ng-model="paging.toDate" id="toDate" min-date="{{paging.fromDate}}" placeholder="结束日期" ng-required/>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.followMgStatus==2">
+                        <label for="">跟进人</label>
+                        <select ngc-select-search class="select-oms" name="follower" ng-model="paging.follower" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">来源</label>
+                        <select class="select-oms" ng-model="paging.source" ng-options="obj.type2 as obj.type2Name for obj in vm.sourceArray" ng-change="tools.getSecondSource(vm.sourceArray)">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.secondSourceArray.length>
+                        0&&paging.source!=null&&paging.source!=''">
+                        <label for="">细分来源</label>
+                        <select class="select-oms" ng-model="paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">                       	
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">采购产品分类</label>
+                        <select ngc-select-search name="fircategoryId" class="select-oms" ng-model="paging.parentcategoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.firstLevelCate" ng-change="tools.chxCategotyById()">
+                            <option value="">请选择</option>
+                        </select>
+                        <span></span>
+                        <select ngc-select-search name="categoryId" ng-if="vm.secLevelCate.length>
+                            0" class="select-oms" ng-model="paging.categoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.secLevelCate" ng-change="vm.batchFlag=false;">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                     <div class="form-group fl hasPhone"  >
+                    	<span ng-class="{true: 'chose', false: ''}[paging.hasMobile==1]" ng-click="paging.hasMobile=(paging.hasMobile?0:1); tools.search()">
+                    		有手机或固话的
+                    		<i class="icon-checked"></i>
+                    	</span>
+                    	<span ng-class="{true: 'chose', false: ''}[paging.hasEmail==1]" ng-click="paging.hasEmail=(paging.hasEmail?0:1); tools.search()">
+                    		有邮箱的
+                    		<i class="icon-checked"></i>
+                    	</span> 
+                    </div>
+                    <!---->                                       
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tools.search();">查&nbsp询</button>
+                        <button class="btn btn-cfec-white" ng-click="tools.reset();">重&nbsp置</button>
+                    </div>
+                    <!---->                   
+                </div>
+                <div class="list-content table-cfec table-cfec-theme2">
+                    <table class="table table-hover " ng-if="vm.followMgStatus==1">
+                        <colgroup>
+                            <col width="50%">
+                            <col width="50%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="ta-c">查询结果数</th>
+                                <th class="ta-c">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ta-c">{{vm.plotItems}}</td>
+                                <td class="ta-c">
+                                    <a ngc-permission="buyer_buyerfollow_platDistribute" ng-if="vm.plotItems!=null&&vm.plotItems>
+                                    0" href="javascript:void(0)" class="link" ng-click="tools.batchSaveFollowBuyer(vm.plotItems,vm.followMgStatus);">批量分配跟进人
+                                </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover " ng-if="vm.followMgStatus==2">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="15%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="25%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr ng-if="vm.showOperateFlag==false">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                </th>
+                                <th>采购商</th>
+                                <th>来源</th>
+                                <th>公司国家</th>
+                                <th>采购产品分类</th>
+                                <th>创建时间</th>
+                                <th>跟进人</th>
+                                <th class="ta-c">操作</th>
+                            </tr>
+                            <tr ng-if="vm.showOperateFlag==true">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                </th>
+                                <th colspan="7">
+                                    <div class="btn-toolbar">
+                                        <button ngc-permission="buyer_buyerfollow_platNotifyFollower" ng-if="vm.followMgStatus==2" type="button" ng-click="tools.chxFollowBuyerByAll();" class="btn btn-default btn-cfec-white btn-cfec-sm">修改跟进人</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="vm.items.length">
+                            <tr ng-repeat='item in vm.items'>
+                                <td>
+                                    <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                                </td>
+                                <td>
+                                    <p title="用户ID">{{item.userId}}</p>
+                                    <p title="广交会ID">{{item.cantonfairId}}</p>
+                                    <p title="姓名">{{item.name}}</p>
+                                    <p>
+                                        <span title="商务合作采购商" ng-if="item.businessCooper==1" class="iconfont blue mr5">&#xe629;</span>
+                                        <span title="其他展会采购商" ng-if="item.otherExhibition==1" class="iconfont blue mr5">&#xe62a;</span>
+                                    </p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li ng-if="item.userId">
+                                                    <span>用户ID：</span> {{item.userId}}
+                                                </li>
+                                                <li ng-if="item.name">
+                                                    <span>姓名：</span> {{item.name}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}({{item.emailValidationSecond | emailValidationFilter}})
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.source}}</td>
+                                <td>{{item.companyCountryName}}</td>
+                                <td>{{item.categroyName}}</td>
+                                <td>
+                                    <p>{{item.createTime | date:'yyyy-MM-dd' }}</p>
+                                    <p>{{item.createTime | date:'hh:mm:ss' }}</p>
+                                </td>
+                                <td>{{item.follower}}</td>
+                                <td class="ta-c">
+                                    <a ngc-permission="buyer_buyerfollow_platDetail" class="link" href="/#/buyer/detail?buyerId={{item.buyerId}}" target="_blank">查看</a>
+                                    <a ngc-permission="buyer_buyerfollow_platNotifyFollower" class="link" href="javascript:void(0)" ng-click="tools.chxFollowBuyer(item.companyId)">修改跟进人</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="vm.items==undefined||vm.items==null||vm.items.length==0" class="ng-scope">
+                            <tr>
+                                <td colspan="10">
+                                    <p class="noResult-Text pt100 pb100 ta-c"> <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="vm.followMgStatus==2" class="middivs clearfix" ng-include="paginationTemplate"></div>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" select="tools.initTab(3);">
+                <uib-tab-heading class="h5">广交会采购商</uib-tab-heading>
+                <ul class="tab-list-cfec p20 pb0">
+                    <li ng-click="vm.followMgStatus=3;tools.getFollowBuyerList();" ng-class="{true: 'active', false: ''}[vm.followMgStatus==3]">未分配</li>
+                    <li ng-click="vm.followMgStatus=4;tools.getFollowBuyerList();" ng-class="{true: 'active', false: ''}[vm.followMgStatus==4]">已分配</li>
+                </ul>
+                <div class="search-content form-group-main clearfix">
+                    <div class="form-group fl">
+                        <label for="">搜索</label>
+                        <div class="oms-search">
+                            <select name="" id="" ng-model="paging.accountType" ng-options="obj.value as obj.key for obj in vm.cfecSearchTypeArray">
+                                <option value="">搜索类型</option>
+                            </select> <em></em>
+                            <input ngc-auto-input type="text" ngc-monitor-enter name="" id="" ng-model="paging.accountTypeValue" />
+                        </div>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">公司区域</label>
+                        <select ngc-select-search class="select-oms" ng-model="paging.tradeAreaId" ng-options="obj.tradeAreaId as obj.tradeAreaCnName for obj in vm.districtList" name="tradeArea" ng-change="tools.chxTradeAreaById();">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="paging.tradeAreaId!=''&&paging.tradeAreaId!=null&&paging.tradeAreaId!=-1">
+                        <label for="">国家</label>
+                        <select ngc-select-search class="select-oms" ng-model="paging.countryId" ng-options="obj.countryId as obj.countryCnName for obj in vm.countries" name="country">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">与会届数</label>
+                        <select name="fircategoryId" class="select-oms" ng-model="paging.boothNo" ng-options="obj.value as obj.key for obj in vm.cfecTimesArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl" ng-if="vm.followMgStatus==4">
+                        <label for="">跟进人</label>
+                        <select ngc-select-search class="select-oms" name="follower" ng-model="paging.follower" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    <div class="form-group fl">
+                        <label for="">
+                             采购产品分类
+                        </label>
+                        <select ngc-select-search name="fircategoryId" class="select-oms" ng-model="paging.parentcategoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.firstLevelCate" ng-change="tools.chxCategotyById();">
+                            <option value="">请选择</option>
+                        </select>
+                        <span></span>
+                        <select ngc-select-search name="categoryId" ng-if="vm.secLevelCate.length>
+                    0" class="select-oms" ng-model="paging.categoryId" ng-options="obj.categoryId as obj.categoryName for obj in vm.secLevelCate" ng-change="vm.batchFlag=false;">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                    
+                    <!---->
+                     <div class="form-group fl hasPhone"  >
+                    	<span ng-class="{true: 'chose', false: ''}[paging.hasMobilethird==1]" ng-click="paging.hasMobilethird=(paging.hasMobilethird?0:1); tools.search()">
+                    		有手机或固话的
+                    		<i class="icon-checked"></i>
+                    	</span>
+                    	<span ng-class="{true: 'chose', false: ''}[paging.hasEmailthird==1]" ng-click="paging.hasEmailthird=(paging.hasEmailthird?0:1); tools.search()">
+                    		有邮箱的
+                    		<i class="icon-checked"></i>
+                    	</span> 
+                    </div>
+                    <!---->
+                    <div class="form-group btns-group clear">
+                        <button class="btn btn-cfec-red" ng-click="tools.search();">查&nbsp询</button>
+                        <button class="btn btn-cfec-white" ng-click="tools.reset();">重&nbsp置</button>
+                    </div>
+                </div>
+                <div class="list-content table-cfec table-cfec-theme2">
+                    <table class="table table-hover " ng-if="vm.followMgStatus==3">
+                        <colgroup>
+                            <col width="50%">
+                            <col width="50%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="ta-c">查询结果数</th>
+                                <th class="ta-c">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ta-c">{{vm.cfecItems}}</td>
+                                <td class="ta-c">
+                                    <a ngc-permission="buyer_buyerfollow_cfecDistribute" href="javascript:void(0)" ng-if="vm.cfecItems" class="link" ng-click="tools.batchSaveFollowBuyer(vm.cfecItems,vm.followMgStatus);">批量分配跟进人
+                        </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover " ng-if="vm.followMgStatus==4">
+                        <colgroup>
+                            <col width="2%">
+                            <col width="15%">
+                            <col width="23%">
+                            <col width="10%">
+                            <col width="10%">
+                            <col width="9%">
+                            <col width="8%">
+                            <col width="13%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr ng-if="vm.showOperateFlag==false">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                </th>
+                                <th>采购商</th>
+                                <th>采购产品分类</th>
+                                <th>公司名称</th>
+                                <th>公司国家</th>
+                                <th>与会届数</th>
+                                <th>跟进人</th>
+                                <th class="ta-c">操作</th>
+                            </tr>
+                            <tr ng-if="vm.showOperateFlag==true">
+                                <th>
+                                    <input type="checkbox" ng-model="vm.allChecked" ng-change="tools.checkAll(vm.allChecked)">
+                                </th>
+                                <th colspan="7">
+                                    <div class="btn-toolbar">
+                                        <button ngc-permission="buyer_buyerfollow_cfecNotifyFollower" ng-if="vm.followMgStatus==4" type="button" ng-click="tools.chxFollowBuyerByAll();" class="btn btn-default btn-cfec-white btn-cfec-sm" ng-click="">修改跟进人</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="vm.items.length">
+                            <tr ng-repeat='item in vm.items'>
+                                <td>
+                                    <input type="checkbox" ng-model="item.$checked" ng-change="tools.selection()">
+                                </td>
+                                <td>
+                                    <p title="姓名">{{item.buyerName}}</p>
+                                    <p title="广交会ID">{{item.cantonfairId}}</p>
+                                    <div class="show-info">
+                                        <i class="iconfont">&#xe62c;</i>
+                                        <div class="child-warp">
+                                            <ul>
+                                                <li ng-if="item.userId">
+                                                    <span>用户ID：</span> {{item.userId}}
+                                                </li>
+                                                <li ng-if="item.buyerName">
+                                                    <span>姓名：</span> {{item.buyerName}}
+                                                </li>
+                                                <li ng-if="item.email">
+                                                    <span>邮箱：</span> {{item.email}}({{item.emailValidation | emailValidationFilter}})
+                                                </li>
+                                                <li ng-if="item.mobile">
+                                                    <span>手机：</span> {{item.mobile}}
+                                                </li>
+                                                <li ng-if="item.telephone">
+                                                    <span>固话：</span> {{item.telephone}}
+                                                </li>
+                                            </ul>
+                                            <span class="icon-arrow-up"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.categoryNames}}</td>
+                                <td>
+                                    <span title="商务合作采购商" ng-if="item.businessCooper==1" class="iconfont blue mr5">&#xe629;</span>
+                                    <span title="其他展会采购商" ng-if="item.otherExhibition==1" class="iconfont blue mr5">&#xe62a;</span> {{item.companyName}}
+                                </td>
+                                <td>{{item.companyCountryName}}</td>
+                                <td>{{item.boothNos.split(',') | showCfecTimes }}</td>
+                                <td>{{item.follower}}</td>
+                                <td class="ta-c">
+                                    <a ngc-permission="buyer_buyerfollow_cfecDetail" class="link" href="/#/buyer/cfecDetail?buyerId={{item.operBuyerId}}" target="_blank">查看</a>
+                                    <a ngc-permission="buyer_buyerfollow_cfecNotifyFollower" class="link" href="javascript:void(0)" ng-click="tools.chxFollowBuyer(item.companyId)">修改跟进人</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="!vm.items.length" class="ng-scope">
+                            <tr>
+                                <td colspan="9">
+                                    <p class="noResult-Text pt100 pb100 ta-c">
+                                        <i class="iconfont icon-jingshioms"></i> 没有符合条件的操作记录
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="vm.followMgStatus==4" class="middivs clearfix" ng-include="paginationTemplate"></div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="batchSaveBuyer.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <p class="mb20">采购商分配总数： {{vm.amount}}
+            <button class="btn btn-cfec-white ml20" ng-click="tools.addDistribute()" ng-disabled="vm.distributeList.length >= vm.followPeopleArray.length">添加跟进人</button>
+        </p>
+        <div class="list-content table-cfec table-cfec-theme2">
+            <table class="table table-hover ">
+                <colgroup>
+                    <col width="40%">
+                    <col width="40%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="ta-c">跟进人</th>
+                        <th class="ta-c">分配数量</th>
+                        <th class="ta-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in vm.distributeList" class="follow-item">
+                        <td class="ta-c">
+                            <select ngc-select-search class="select-oms w150" name="followerUserId" ng-model="item.followerUserId" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray"></select>
+                        </td>
+                        <td class="ta-c">
+                            <input type="number" class="input-cfec w150" ng-model="item.number" ng-change="tools.chxNumber(item);">
+                        </td>
+                        <td class="ta-c">
+                            <span class="follow-del" ng-click="tools.delDistribute($index)">-</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-disabled="btnFlag" ng-click="tools.submit()">保存</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="chxStatusByNotify.html">
+    <div class="dlg-title">提示</div>
+    <div class="dlg-content form">
+        <div class="clearfix">
+            <label for="chxType2" class="fl mr20" style="height: 30px;line-height: 30px;">
+                <input type="radio" class="mr10" id="chxType2" name="chxType2" ng-model="vm.chxType" value="2">修改跟进人:</label>
+            <div class="fl">
+                <select ngc-select-search class="select-oms" name="followPeople" id="followPeople" ng-model="vm.follower" ng-options="obj.userId as obj.realName for obj in vm.followPeopleArray">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="mt40">
+            <label for="chxType1">
+                <input type="radio" class="mr10" id="chxType1" name="chxType1" ng-model="vm.chxType" value="1" checked="checked">删除跟进人</label>
+        </div>
+        <div class="btn-toolbar clearfix">
+            <button class="btn btn-cfec-red" ng-click="tools.submit()">确定</button>
+            <button class="btn btn-cfec-white" ng-click="tools.close()">取消</button>
+        </div>
+    </div>
+</script>

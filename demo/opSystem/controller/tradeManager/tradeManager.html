@@ -1,0 +1,164 @@
+
+    <form class="searchTop clearfix">
+        <select name="tradeCurrency" class="ipt ipt-s">
+            <option value="all">全部交易币种</option>
+            <option value="us">美元</option>
+            <option value="cn">人民币</option>
+        </select>
+        <select name="tradeType" class="ipt ipt-s">
+            <option value="all">全部交易类型</option>
+            <option value="consume">消费类</option>
+            <option value="recharge">充值</option>
+            <option value="withdraw">提现</option>
+            <option value="refund">退款</option>
+        </select>
+        <select name="bankrollType" class="ipt ipt-s">
+            <option value="all">全部资金类型</option>
+            <option value="flowin">流入</option>
+            <option value="flowout">流出</option>
+        </select>
+        <div class="row">
+            <div class="tradeMoney">
+                <label for="from">交易金额</label>
+                <input ngc-auto-input class="ipt" type="text" id="from" />
+                <label for="to">至</label>
+                <input ngc-auto-input class="ipt" type="text" id="to"/>
+            </div>
+            <div class="time">
+                <label for="start">起始时间</label>
+                <input class="ipt" type="text"  id="start" placeholder="起始日期" uib-datepicker-popup="yyyy/MM/dd" is-open="opened1" min-date="'1997-06-22'" max-date="maxDate" ng-required="true" close-text="Close"
+                       ng-model="paging.startDate">
+                <span class="glyphicon glyphicon-calendar calendar-in-input" ng-click="open1($event)"></span>
+                <label for="end">至</label>
+                <input class="ipt" type="text" id="end" uib-datepicker-popup="yyyy/MM/dd" placeholder="结束日期" is-open="opened2" min-date="'1997-06-22'" max-date="maxDate" ng-required="true" close-text="Close" ng-model="paging.endDate">
+                <span class="glyphicon glyphicon-calendar calendar-in-input" ng-click="open2($event)"></span>
+            </div>
+        </div>
+        <div class="but">
+            <input type="submit" value="查询"/>
+            <input type="reset" value="重置"/>
+            <input type="button" value="导出excel表格"/>
+        </div>
+    </form>
+    <div class="bankroll">
+        <table class="table table-bordered">
+            <caption class="bg-pink text-center">资金总账</caption>
+            <thead>
+            <tr>
+                <td>币种</td>
+                <td>余额</td>
+                <td>流入资金</td>
+                <td>流出资金</td>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>美元($)</td>
+                    <td>100000.00</td>
+                    <td>100000.00</td>
+                    <td>100000.00</td>
+                </tr>
+                <tr>
+                    <td>人民币(￥)</td>
+                    <td>100000.00</td>
+                    <td>100000.00</td>
+                    <td>100000.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bankroll">
+        <table class="table table-bordered">
+            <caption class="bg-pink text-center">资金明细/天</caption>
+            <tr>
+                <td rowspan="2">交易时间</td>
+                <td rowspan="2">交易币种</td>
+                <td colspan="2">流入资金</td>
+                <td colspan="2">流出资金</td>
+                <td rowspan="2">实际金额</td>
+            </tr>
+            <tr style="border-bottom: 2px solid #eee">
+                <td>消费</td>
+                <td>充值</td>
+                <td>退款</td>
+                <td>提现</td>
+            </tr>
+
+                <tr>
+                    <td rowspan="2">2015-07-30</td>
+                    <td>美元($)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+                <tr>
+                    <td>人民币(￥)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">2015-07-30</td>
+                    <td>美元($)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+                <tr>
+                    <td>人民币(￥)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr><tr>
+                    <td rowspan="2">2015-07-30</td>
+                    <td>美元($)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+                <tr>
+                    <td>人民币(￥)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr><tr>
+                    <td rowspan="2">2015-07-30</td>
+                    <td>美元($)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+                <tr>
+                    <td>人民币(￥)</td>
+                    <td>50000.00手续费(100.00)</td>
+                    <td>0</td>
+                    <td>-4900.00</td>
+                    <td>-4900.00</td>
+                    <td>2333.00</td>
+                </tr>
+
+        </table>
+        <div class=" middivs clearfix">
+            <div class="divright clearfix">
+                <button  class="btn btn-default lastbuttons" ng-click="tools.getnewpage();">GO</button>
+                <input type="text" class="inputs" ng-model="tools.newpagesize">
+                <label class="page-list-style label-style">转到页</label>
+                <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class=" page-list-style" ng-change="tools.getBuyers()"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+            </div>
+        </div>
+    </div>

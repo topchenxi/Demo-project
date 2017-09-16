@@ -1,0 +1,191 @@
+<div class="oms-crumbs"> <i>采购需求匹配管理</i>
+    <p>
+        <a href="">采购商管理</a> /
+        <span>采购需求匹配管理</span>
+    </p>
+</div>
+<div class="oms-container">
+    <div class="oms-content">
+        <uib-tabset class="tab-cfec-bordertop" active="0" justified="false">
+            <uib-tab index="0" select="tools.initTab(0,'waitDeal')">
+                <uib-tab-heading>待干预匹配</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="1" select="tools.initTab(0,'dealHasResult')">
+                <uib-tab-heading>干预匹配有结果</uib-tab-heading>
+            </uib-tab>
+            <uib-tab index="2" select="tools.initTab(0,'dealNoResult')">
+                <uib-tab-heading>干预匹配无结果</uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+        <div class="search-content scondition-box form-group-main">
+            <div class="form-group fl">
+                <label for="">来源</label>
+                <select class="select-oms" ng-model="paging.source" ng-options="ob.type2 as ob.type2Name for ob in tools.purchaseSources" ng-change="tools.getSecondSource()">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group fl" ng-if="paging.source!=''&&vm.secondSourceArray.length>
+				0">
+                <label for="">细分来源</label>
+                <select class="select-oms" ng-model="paging.sourceFourType" ng-options="obj.type4 as obj.type4Name for obj in vm.secondSourceArray">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group fl">
+                <label for="">行业</label>
+                <select ngc-select-search name="indusId" ng-model="paging.productCategoryId" ng-options="obj.categoryId as obj.categoryEname for obj in tools.categorys" class="select-oms">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group fl">
+                <label for="">国家</label>
+                <select ngc-select-search name="countryId" ng-model="paging.countryId" ng-options="obj.countryId as obj.countryEnName for obj in tools.countries" class="select-oms">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group fl">
+                <label for="">质量</label>
+                <select ng-model="paging.quality" class="select-oms">
+					<option value="">请选择</option>
+					<option value="1">高</option>
+					<option value="2">中</option>
+					<option value="3">低</option>
+				</select>
+            </div>
+            <div class="form-group fl">
+                <label for="">采购商</label>
+                <div class="oms-search">
+                    <select ng-model="paging.buyerDropdownType">
+						<option value="1">采购商ID</option>
+						<option value="2">采购商姓名</option>
+						<option value="3">采购商公司名</option>
+						<option value="4">采购商邮箱</option>
+					</select> <em></em>
+                    <input ngc-auto-input type="text" ngc-monitor-enter action="tools.getPurchaseMatchList" ng-model="paging.buyerDropdownValue" />
+                </div>
+            </div>
+            <div class="form-group fl">
+                <label for="">主题</label>
+                <input ngc-auto-input ngc-monitor-enter action="tools.getPurchaseMatchList" ng-model="paging.productName" class="input-cfec" type="text" />
+            </div>
+            <div class="form-group fl">
+                <label>发布时间</label>
+                <input type="text" ngc-lay-date ng-model="paging.startTime" readonly="readonly" id="startTime" class="input-cfec laydate-icon">
+                <span class="text-inline">至</span>
+                <input type="text" ngc-lay-date ng-model="paging.endTime" readonly="readonly" id="endTime" class="input-cfec laydate-icon"></div>
+            <div class="form-group fl" ng-if="tools.currentTab=='dealHasResult'||tools.currentTab=='dealNoResult'">
+                <label>最后匹配时间</label>
+                <input type="text" ngc-lay-date ng-model="paging.matchTimeStart" readonly="readonly" id="matchTimeStart" class="input-cfec laydate-icon" max-date="{{paging.matchTimeEnd}}">
+                <span class="text-inline">至</span>
+                <input type="text" ngc-lay-date ng-model="paging.matchTimeEnd" readonly="readonly" id="matchTimeEnd" class="input-cfec laydate-icon" min-date="{{paging.matchTimeStart}}"></div>
+            <div class="form-group fl" ng-if="tools.currentTab=='dealHasResult'">
+                <label>匹配结果</label>
+                <input type="number" ng-model="paging.matchQtyStart" id="matchQtyStart" class="input-cfec">
+                <span class="text-inline">-</span>
+                <input type="number" ng-model="paging.matchQtyEnd" id="matchQtyEnd" class="input-cfec"></div>
+            <div class="form-group fl" ng-if="tools.currentTab=='dealHasResult'||tools.currentTab=='dealNoResult'">
+                <label for="">干预人</label>
+                <select name="auditor" class="select-oms" ng-model="paging.matchById" ng-options="obj.userId as obj.realName for obj in vm.sellerArray">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group fl" ng-if="tools.currentTab=='dealNoResult'">
+                <label for="">零匹配原因</label>
+                <select class="select-oms" ng-model="paging.zeroMatchReasonId" ng-options="obj.id as obj.reason for obj in vm.unMatchReasonArr">
+					<option value="">请选择</option>
+				</select>
+            </div>
+            <div class="form-group btns-group clear">
+                <button class="btn btn-cfec-red" ng-click="paging.page=1;tools.getPurchaseMatchList()">查 询</button>
+                <button class="btn btn-cfec-white ml20" ng-click="tools.initTab(1)">重 置</button>
+            </div>
+        </div>
+        <div class="container-list table-cfec table-cfec-theme2">
+            <table class="table table-hover">
+                <!-- 10列 -->
+                <colgroup>
+                    <col width="10%" />
+                    <col width="12%" />
+                    <col width="10%" />
+                    <col width="12%" />
+                    <col width="14%" />
+
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>来源</th>
+                        <th>行业</th>
+                        <th>国家</th>
+                        <th>主题</th>
+                        <th>采购商</th>
+                        <th>发布时间</th>
+                        <th ng-if="tools.currentTab!='waitDeal'">最后匹配时间</th>
+                        <th>质量</th>
+                        <th>匹配结果</th>
+                        <th ng-if="tools.currentTab!='waitDeal'">干预人</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in tools.items track by $index">
+                        <!-- 来源 -->
+                        <td>{{item.sourceValue}}</td>
+                        <!-- 行业 -->
+                        <td>{{item.productCategory}}</td>
+                        <!-- 国家 -->
+                        <td>{{item.countryEnName}}</td>
+                        <!-- 主题 -->
+                        <td>
+                            <span ng-show="item.boothProcurement==1" class="iconfont blue" title="展会现场采购需求">&#xe62a;</span>
+                            <span ng-bind-html="item.productName"></span>
+                        </td>
+                        <!-- 采购商 -->
+                        <td>
+                            <div title="Id">{{item.userId}}</div>
+                            <div title="公司名">{{item.buyerCompanyName}}</div>
+                        </td>
+                        <!-- 发布时间 {{item.startTime|date:'yyyy-MM-dd'}}-->
+                        <td>
+                            {{item.sendTime|date:'yyyy-MM-dd'}}
+                            <br/> {{item.sendTime|date:'HH:mm:ss'}}
+                        </td>
+                        <!-- 最后匹配时间 -->
+                        <td ng-if="tools.currentTab!='waitDeal'">
+                            <p>{{item.matchTime |date:'yyyy-MM-dd'}}</p>
+                            <p>{{item.matchTime |date:'HH:mm:ss'}}</p>
+
+                        </td>
+                        <!-- 质量 -->
+                        <td>{{item.quality|purchaseQuality}}</td>
+                        <!-- 匹配结果 -->
+                        <td>{{item.matchQty}}</td>
+                        <!-- 干预人 -->
+                        <td ng-if="tools.currentTab!='waitDeal'">{{item.matchBy}}</td>
+                        <!-- 操作 -->
+                        <td>
+                            <a ngc-permission="purchase_purchasepurchaseMatchList_detail" href="javascript:void(0)" class="link-cfec" ng-click="tools.toDetail(item.procurementId)">详情</a>
+                            <br/>
+                            <a ngc-permission="purchase_purchasepurchaseMatchList_opear" ng-show="tools.currentTab=='waitDeal'" href="javascript:void(0)" class="link-cfec" ng-click="tools.toInterveneMatch(item.procurementId)">干预匹配</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 分页组件[[ -->
+        <div class="row-page clearfix">
+            <select class="item" ng-model="paging.pageSize" ng-options="obj.pageSize as obj.pagename for obj in vm.pages" ng-change="tools.getnewpage(0)"></select>
+            <uib-pagination boundary-links="true" total-items="paging.total" ng-model="paging.page" items-per-page="paging.pageSize" class="page-list-style item" ng-change="tools.getnewpage(null)" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                last-text="&raquo;"></uib-pagination>
+            <label class="item">
+			共
+			<big>{{paging.total}}</big>
+			条
+		</label>
+            <label class="item">转到第</label>
+            <input class="ngc-jumppage" type="number" class="item" ng-model="tools.newpagesize">
+            <label class="item">页</label>
+            <button class="j-jump item" ng-click="tools.getnewpage(1);">GO</button>
+        </div>
+        <!-- 分页组件[[ -->
+    </div>
+</div>
