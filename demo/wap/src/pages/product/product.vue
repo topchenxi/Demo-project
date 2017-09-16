@@ -113,7 +113,7 @@
                         this.$nextTick(() => {
                             this.detail = Object.assign({}, this.detail, res.data.data);
                             let product = res.data.data.product;
-                            let shopInfo = res.data.data.shopInfo;
+                            let shopInfo = res.data.data.hasOwnProperty('shopInfo')?res.data.data.shopInfo:{};
                             this.$set(this.products, "name", product.name);
                             this.$set(this.products, "fobPriceFrom", product.fobPriceFrom);
                             this.$set(this.products, "fobPriceTo", product.fobPriceTo);
